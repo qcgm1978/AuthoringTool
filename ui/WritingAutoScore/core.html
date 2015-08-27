@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/purple/style/common.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <style type="text/css">
+        .tex {
+            width: 700px;
+            height: 220px;
+            margin-top: 20px;
+        }
+
+        .box {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div class="headBar">
+        <div class="title">
+            <span class="title_style"></span>
+            <span class="title_font">Writing Task 2 practice test lesson</span>
+        </div>
+        <div class="headLine"></div>
+        <div class="title_right"></div>
+    </div>
+    <div class="subhead">
+        <div>
+            <span class="sub_icon"></span>
+            <span class="subhead_style">Themes<em></em></span>
+        </div>
+    </div>
+    <div class="content">
+        <div class="question_title">
+            <span class="number">2</span>
+
+            <div>What themes might appear in the IELTS exam on the topic of the environment?</div>
+        </div>
+        <div class="question_cont">
+            <ul class="generated">
+                <li class="list clearfix" data-order="">
+                    <div class="right_r">
+                        <textarea class="tex mb5 fb_blank" id="blank_1_1" type="text" data-answer="">There are many famos people from my country.  Where to begin? Im not shure.</textarea>
+                    </div>
+                    <a href="javascript:checkAnswer();">check answer</a>
+                    <a href="javascript:showAnswer();">show answer</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .checkSpells {
+        display: none;
+        /*
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0,0,0,.1);
+        */
+    }
+
+    .title {
+        display: none;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        font-size: 14px;
+        font-style: normal;
+    }
+    .preview {
+        display: none;
+        position: relative;
+        padding: 10px;
+        vertical-align: middle;
+        font-size: 12px;
+    }
+    .preview span {
+        padding: 10px;
+    }
+
+    .preview span, .preview img {
+        vertical-align: middle;
+    }
+
+    .preview .img {
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        width: 600px;
+        height: 10px;
+        background-size: 600px 10px;
+        background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAAAFCAIAAAD0aPZvAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wMAQ45HipxYUMAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAABf0lEQVRIx5VWQZLDIAyz+P8v+sa9VntISwm2hMMhQwgxkpAN+Hu9AhGIiNg7sz+fIz4tz9wmz5HrdaSvW0wVLWNQy63wRmO+p6wAZJwQmiQ6jM/z6ry//3EZ5H0kD+aO+WpCTQCdhd4RqJZ7Co8L5Uy/SaTEPwfHbWxt28T4clob0uTcsAfh9YqQLXOKu2/KCEidso8KGzQSE3/VGBVxOIo4aQmNCCeZDXxWAHBakSIs76jYcISnkKtH6SlWZYS/moYE1my2csxxhMsbxbrKmptmWLBBJ1JYgct98FyOrdwH1upGtTJszjb1ZhsdTiy9sUw6hRA1hN48/eVZ83cVQKW00YY6ATz8TnrmnaQQYHqa1scZHnrVN3fQsLs+XqAPCQWZDR+UGuMUPKqbgF9LaQkRxJBFz6O5tGKBXVp1HFThueI+cLbPX6SdZCoR0Dei0kxo7OpmVgjtUZzWNExxtjrsBcPf9Yy5TbVRpzafFHL2rhCdSxz0tiAVE5N7M84/4ZfoROIzDQIAAAAASUVORK5CYII=');
+    }
+
+    .sentences {
+    }
+
+    .sentences .checked {
+        border: 1px dashed #555;
+    }
+
+    .sentences em.suspect {
+        margin-right: 10px;
+        font-style: normal;
+        text-decoration: underline;
+    }
+
+    .sentences i.error {
+        border: 2px solid red;
+    }
+
+</style>
+
+<div class="checkSpells">
+    <div class="inner tex">
+        <h2 class="title">
+            Feedback
+        </h2>
+        <div class="preview">
+            <span>-1</span>
+            <div class="img">
+            </div>
+            <span>+1</span>
+        </div>
+
+        <div class="sentences">
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function() {
+
+    });
+
+    var sampleResponse = {
+      "type": "success",
+      "code": 200,
+      "overall_score": 2.64069,
+      "sentence_scores": [
+        [0, 44, -1],
+        [46, 61, -0.457825],
+        [62, 75, -1]
+      ],
+      "suspect_tokens": [[0,44], [62,75]],
+      "textual_errors": [
+        [15, 20, "famous", "S"],
+        [62, 64, "I'm", "MP"],
+        [69, 74, "sure", "S"]
+      ]
+     };
+
+    function readFn() {
+        return JSON.stringify([{"order":1, "answer": $("#blank_1_1").val()}]);
+    }
+
+    function checkFn(str) {
+        var response = sampleResponse;
+        if (str!=null) {
+            response = JSON.parse(str);
+        }
+        var html = JSON.parse(readFn())[0].answer;
+        var accurent = [];
+
+        for (var i = 0; i < response.sentence_scores.length; i++) {
+            var score = response.sentence_scores[i];
+            html = insertByIndex(html, getPositionExclude(html,score[0], /<\/?[^>]*>/g), '<span class="score" style="background-color:hsl(' + (score[2] * 50 + 50) + ',80%, 80%)" data-value="' + score[2] + '">');
+            html = insertByIndex(html, getPositionExclude(html,score[1], /<\/?[^>]*>/g), '</span>');
+        }
+
+        for (var i = 0; i < response.suspect_tokens.length; i++) {
+            var st = response.suspect_tokens[i];
+            html = insertByIndex(html, getPositionExclude(html,st[0], /<\/?[^>]*>/g), '<em class="suspect">');
+            html = insertByIndex(html, getPositionExclude(html,st[1], /<\/?[^>]*>/g), '</em>');
+        }
+
+        for (var i = 0; i < response.textual_errors.length; i++) {
+            var te = response.textual_errors[i];
+            html = insertByIndex(html, getPositionExclude(html,te[0], /<\/?[^>]*>/g), '<i class="error" data-value="' + te[2] + '" data-error="' + te[3]  + '">');
+            html = insertByIndex(html, getPositionExclude(html,te[1], /<\/?[^>]*>/g), '</i>');
+        }
+
+        $(".sentences").html(html);
+
+        $(".checkSpells").show();
+        $(".checkSpells .inner").css("height", $("#blank_1_1").css("height"));
+
+        $("#blank_1_1").hide().after($(".checkSpells"));
+
+        function getPositionExclude(src, index, regex) {
+            var matches = regex.exec(src);
+            while(matches!=null) {
+                if (matches.index>index) {
+                    return index;
+                }
+                index += matches[0].length;
+                matches = regex.exec(src);
+            }
+            return index;
+        }
+
+        function insertByIndex(src, index, toInsert) {
+            return src.substring(0, index) + toInsert + src.substring(index);
+        }
+    }
+
+
+    function checkAnswer() {
+        if ($("#blank_1_1").val()!="") {
+            s = $("#blank_1_1").val();
+        }
+        $(".checkSpells").show();
+        $(".inner").fadeIn();
+        var sentences = s.split(".");
+
+        $(".sentences").html('');
+
+        for(var i=0; i<sentences.length; i++) {
+            if (sentences[i]=="") continue;
+            var scoren = Math.floor(Math.random()*100);
+            var score = "hsl(" + scoren + ", 80%, 80%)";
+
+            var spa = $("<span>" + sentences[i] + ". </span>");
+            spa.css("background-color", score);
+            spa.data("score", scoren);
+            spa.click(function() {
+                $(".preview .img .arrow").css("left", 6 * $(this).data("score"));
+                $(".sentences span.checked").removeClass("checked");
+                $(this).addClass("checked");
+            });
+            $(".sentences").append(spa);
+        }
+    }
+
+    //checkAnswer();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+
+.keyBox {
+  border: #dbe1e6 1px solid;
+  padding: 4px;
+  display: none;
+  background-color: #666;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 2;
+  width: 750px;
+  /*margin-left: 20px;*/
+  text-align: center;
+}
+.keyBox input {
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  margin: 2px;
+  background-color: #000;
+  border: 1px solid #dbe1e6;
+  border-radius: 10px;
+  box-shadow: 0 0 2px #fff;
+  outline: none;
+  font-family: "Arial";
+  font-size: 20px;
+  color: #fff;
+}
+.keyBox .del,
+.keyBox .shift {
+  width: 80px;
+}
+.keyBox .space {
+  width: 380px;
+}
+
