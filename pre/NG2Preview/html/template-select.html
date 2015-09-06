@@ -1,0 +1,24 @@
+<div class="temlate-select hidden">
+    <div class="left" >
+        <input #activitytype (keyup)="doneTyping($event)" class="search">
+        <ul>
+            <li>Recents</li>
+            <li>Popular</li>
+            <li>Blank</li>
+        </ul>
+
+        <ul class="types">
+            <li *ng-for="#type of types">
+                <div (click)="openType($event);"> {{type.name}} </div>
+                <ul class="children hidden">
+                    <li *ng-for="#name of type.children" (click)="filterTemplate(name)">{{name}}</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="right">
+        <template-list></template-list>
+    </div>
+
+</div>

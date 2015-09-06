@@ -1,0 +1,165 @@
+$font-base: 14px;
+$btn-for: #222;
+$cbd: #ccc;
+$shv: #f1f1f1;
+$btnbg : #0086B3;
+
+@import "mixins";
+
+body {
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: $font-base;
+    color: #404040;
+}
+
+.new {
+  margin: 200px auto;
+  width: 800px;
+  text-align: center;
+  a {
+    font-size: $font-base;
+    &.create {
+      color: #fff;
+      background-color: $btnbg;
+      padding: 8px 18px;
+    }
+  }
+}
+
+div.toolbar {
+  height: 40px;
+  line-height: 40px;
+  background-color: $btnbg;
+  color: #fff;
+
+  .logo {
+    float: left;
+  }
+
+  .switches {
+    float: left;
+    margin-left: 20px;
+    li {
+      float: left;
+      padding: 0 15px;
+
+      &.pc {
+        background-color: #fff;
+        color: $btnbg;
+      }
+    }
+  }
+
+  li {
+    float: left;
+    padding: 0 15px;
+
+    &.pc {
+      background-color: #fff;
+      color: $btnbg;
+    }
+  }
+
+
+  .ops {
+    float: right;
+  }
+}
+
+
+div.temlate-select {
+  width: 1200px;
+
+  margin: 100px auto;
+  border: 1px solid $cbd;
+
+  @extend %clearfix;
+  .left {
+    width: 280px;
+    float: left;
+    border-right: 1px solid $cbd;
+    input.search {
+      font-size: 14px;
+      padding: 5px;
+      width: 220px;
+      margin: 10px;
+    }
+
+    ul {
+      margin: 10px 0 20px 0;
+      border-bottom: 1px solid $cbd;
+      @extend %clearfix;
+      li {
+        cursor: pointer;
+        padding: 10px;
+        &:hover {
+        }
+      }
+    }
+
+  }
+
+  .right {
+    width: 910px;
+    float: left;
+
+    .list {
+      .preview {
+        width: 420px;
+        box-sizing:border-box;
+        float: left;
+        position: relative;
+        border: 1px solid $cbd;
+        @extend %clearfix;
+        margin: 10px;
+        &:hover {
+          border: 1px solid $btnbg;
+        }
+        .title {
+          padding: 10px;
+          line-height: 30px;
+          height: 30px;
+          border-bottom: 1px solid $cbd;
+        }
+
+        .enabled {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+
+          img {
+            margin-left: 10px;
+          }
+        }
+
+        .thumb {
+          width: 415px;
+          height: 240px;
+          overflow: hidden;
+          div {
+            width: 415px;
+            height: 240px;
+            background-size: cover;
+            transition: transform .5s ease-in;
+            &:hover {
+              transform: scale(1.2);
+            }
+          }
+        }
+
+        .btns {
+          border-top: 1px solid $cbd;
+          height:  30px;
+          padding: 10px;
+          line-height: 30px;
+          a {
+            color: #fff;
+            cursor: pointer;
+            padding: 5px 15px;
+            background-color: $btnbg;
+          }
+        }
+      }
+    }
+  }
+}
