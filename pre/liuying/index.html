@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="js/libs/bootstrap-3.3.5/css/bootstrap.min.css">
+    <title>课件制作工具</title>
+	<link rel="stylesheet" href="js/libs/fancyBox-v2.1.5/jquery.fancybox.css"/>
+    <link rel="stylesheet" href="css/angularap.css"/>
+</head>
+<body>
+<div id="content" class="container">
+    <ul id="select_tag" class="row">
+        <li id="select_json" class="col-md-4 on">编辑JSON</li>
+        <li id="select_layer" class="col-md-4">设置布局</li>
+        <li id="export" class="col-md-4">导出页面</li>
+    </ul>
+    <div id="json_editor" class="row">
+        <pre id="editor_box" contenteditable="true">
+{
+	"texts": [
+		{
+			"name":"head",
+			"content":"this is the head"
+		},
+		{
+			"name":"main",
+			"content":"this is the main"
+		},
+		{
+			"name":"foot",
+			"content":"this is the foot"
+		}
+	],
+	"files": [
+		{
+			"type":"image",
+			"name":"image1",
+			"src":"temp/images/image1.jpg"
+		},
+		{
+			"type":"audio",
+			"name":"audio1",
+			"src":"temp/audios/audio1.mp3"
+		},
+		{
+			"type":"video",
+			"name":"video1",
+			"src":"temp/videos/video1.mp4"
+		}
+	],
+	"quests":[
+		{
+			"type":"fillblank",
+            "name":"quest1",
+			"order":"1",
+			"quest":"here has been a decrease in the {{blank_1}} fruit consumed by {{blank_2}} in the last 20 years.",
+			"answer":[
+				["quantity of","amount of"],
+				"children"
+			]
+		}
+	]
+}
+        </pre>
+    </div>
+    <div id="layer_editor">
+        <ul class="items row">
+            <li class="col-md-3"><div class="item1"></div></li>
+            <li class="col-md-3"><div class="item2"></div></li>
+            <li class="col-md-3"><div class="item3"></div></li>
+            <li class="col-md-3"><div class="item4"></div></li>
+        </ul>
+        <div id="main"></div>
+    </div>
+</div>
+<script src="js/libs/jquery-1.11.2.min.js"></script>
+<script src="js/libs/fancyBox-v2.1.5/jquery.fancybox.pack.js" type="text/javascript" charset="utf-8"></script>
+<!--<script src="js/libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="js/libs/angular/angular.js"></script>-->
+<!-- 压缩相关的js代码 -->
+<script type="text/javascript" src="js/files/jszip.min.js"></script>
+<script type="text/javascript" src="js/files/jszip-utils.js"></script>
+<script type="text/javascript" src="js/files/FileSaver.js"></script>
+
+<script src="js/common.js"></script>
+<script src="js/tools.js"></script>
+<script src="js/layout.js"></script>
+</body>
+</html>

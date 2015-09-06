@@ -1,0 +1,162 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+img,
+video {
+  max-width: 100%;
+}
+#content {
+  border: solid 1px #204d74;
+}
+.audio_ico {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  background: url('../images/icon.png') -24px -30px no-repeat;
+}
+#select_tag li {
+  text-align: center;
+  border-bottom: solid 1px #204d74;
+  padding: 5px;
+  cursor: pointer;
+}
+#select_tag li.on {
+  background-color: #204d74;
+  color: #fff;
+}
+#json_editor {
+  position: relative;
+  min-height: 500px;
+  padding: 20px;
+}
+#json_editor > pre {
+  position: relative;
+  width: 100%;
+  min-height: 460px;
+}
+#layer_editor {
+  display: none;
+  padding-bottom: 20px;
+}
+#layer_editor .items {
+  margin-bottom: 3em;
+  border-bottom: solid 2px darkgrey;
+}
+#layer_editor .items li {
+  margin: 2em 0;
+}
+#layer_editor .items div {
+  height: 50px;
+  box-shadow: 0 0 0 2px #9cf;
+  margin: 0 20px;
+}
+#layer_editor .items .item1 {
+  background: url("../images/bgs.jpg") no-repeat;
+  background-size: 100% 400%;
+}
+#layer_editor .items .item2 {
+  background: url("../images/bgs.jpg") no-repeat 0 -50px;
+  background-size: 100% 400%;
+}
+#layer_editor .items .item3 {
+  background: url("../images/bgs.jpg") no-repeat 0 -100px;
+  background-size: 100% 400%;
+}
+#layer_editor .items .item4 {
+  background: url("../images/bgs.jpg") no-repeat 0 -150px;
+  background-size: 100% 400%;
+}
+#layer_editor #main > ul > li > div {
+  min-height: 30px;
+  padding: 5px;
+  border: solid 1px #204d74;
+  text-align: center;
+  cursor: pointer;
+}
+#main_select {
+  width: 500px;
+  height: 400px;
+  border: 1px solid #66c;
+  position: relative;
+}
+#main_select #con_nav {
+  height: 30px;
+  margin-bottom: 0;
+}
+#main_select #con_nav li {
+  width: 33%;
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  background-color: #66c;
+  color: #fff;
+  float: left;
+  text-align: center;
+  cursor: pointer;
+}
+#main_select #con_nav li.on {
+  width: 34%;
+  background-color: #fff;
+  color: #66c;
+}
+#main_select #con_main {
+  height: 325px;
+}
+#main_select #con_main .list {
+  display: none;
+  width: 20%;
+  float: left;
+  height: 325px;
+}
+#main_select #con_main .list li {
+  cursor: pointer;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  margin-top: 1px;
+  background-color: #eeeeee;
+}
+#main_select #con_main .list li.on {
+  background-color: #fff;
+}
+#main_select #con_main ul.on {
+  display: block;
+  background: #ddd;
+}
+#main_select #con_main #con_view {
+  float: left;
+  width: 80%;
+  padding: 12px;
+  height: 260px;
+  overflow: auto;
+}
+#main_select #con_main #con_style {
+  float: left;
+  width: 80%;
+  padding: 5px;
+  height: 65px;
+  overflow: auto;
+}
+#main_select #con_main #con_style input.num {
+  width: 80px;
+}
+#main_select #con_operate {
+  height: 30px;
+  padding: 0 142px;
+}
+#main_select #con_operate #con_confirm,
+#main_select #con_operate #con_cancel {
+  background-color: #66c;
+  color: #fff;
+  float: left;
+  line-height: 30px;
+  font-size: 16px;
+  padding: 0 15px;
+  margin: 0 20px;
+  cursor: pointer;
+}
+/*# sourceMappingURL=angularap.css.map */

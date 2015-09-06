@@ -1,0 +1,75 @@
+@bgSize4:100% 400%;
+* {margin: 0;padding: 0;}
+li {list-style: none;}
+img,video {max-width: 100%;}
+#content {border: solid 1px #204d74;}
+.audio_ico {width: 30px;height: 30px;display: inline-block;background: url('../images/icon.png')-24px -30px no-repeat;}
+#select_tag {
+  li {text-align: center;border-bottom: solid 1px #204d74;padding: 5px;cursor: pointer}
+  li.on {background-color: #204d74;color: #fff;}
+}
+#json_editor {
+  position: relative;
+  min-height: 500px;
+  padding: 20px;
+  > pre {
+    position:relative;
+    width: 100%;
+    min-height: 460px;
+  }
+}
+#layer_editor {
+  display: none;
+  padding-bottom: 20px;
+  .items {
+    margin-bottom: 3em;
+    border-bottom: solid 2px darkgrey;
+    li {margin: 2em 0;}
+    div {height: 50px; box-shadow: 0 0 0 2px #9cf;margin: 0 20px;}
+    .item1 {background: url("../images/bgs.jpg") no-repeat;background-size: @bgSize4;}
+    .item2 {background: url("../images/bgs.jpg") no-repeat 0 -50px;background-size: @bgSize4;}
+    .item3 {background: url("../images/bgs.jpg") no-repeat 0 -100px;background-size: @bgSize4;}
+    .item4 {background: url("../images/bgs.jpg") no-repeat 0 -150px;background-size: @bgSize4;}
+  }
+  #main {
+     > ul {
+       > li {
+         > div {
+           min-height: 30px;
+           padding: 5px;
+           border: solid 1px #204d74;
+           text-align: center;
+           cursor: pointer;
+         }
+       }
+     }
+   }
+}
+#main_select {
+  width: 500px;height: 400px;border: 1px solid #66c;position: relative;
+  #con_nav {
+    height: 30px; margin-bottom: 0;
+    li {width: 33%; height: 30px; line-height: 30px; font-size: 16px; background-color: #66c; color: #fff; float: left;text-align: center;cursor: pointer;}
+    li.on {width: 34%; background-color: #fff; color: #66c;}
+  }
+  #con_main {
+    height: 325px;
+    .list {
+      display: none;width: 20%;float: left;height: 325px;
+      li {cursor: pointer;height: 28px;line-height: 28px;text-align: center;margin-top: 1px;background-color: #eee}
+      li.on {background-color: #fff;}
+    }
+    ul.on {display: block;background: #ddd;}
+    #con_view {
+      float: left;width: 80%;padding: 12px;height: 260px;overflow:auto;
+    }
+    #con_style {
+      float: left;width: 80%;padding: 5px;height: 65px;overflow:auto;
+      input.num {width: 80px;}
+    }
+  }
+  #con_operate {
+    height: 30px;padding: 0 142px;
+    #con_confirm,#con_cancel {background-color: #66c;color: #fff;float: left;line-height: 30px; font-size: 16px; padding: 0 15px;margin: 0 20px;cursor: pointer;}
+  }
+}
