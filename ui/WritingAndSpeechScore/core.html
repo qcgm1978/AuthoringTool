@@ -45,10 +45,68 @@
             <ul class="generated">
                 <li class="list clearfix" data-order="">
                     <div class="right_r">
-                        <textarea class="tex mb5 fb_blank" id="blank_1_1" type="text" data-answer="">There are many famos people from my country.  Where to begin? Im not shure.</textarea>
+                        <textarea class="tex mb5 fb_blank" id="blank_1_1" type="text" data-answer="">There are many famos people from my country.  Where to begin? I'm not shure.</textarea>
                     </div>
-                    <a href="javascript:checkAnswer();">check answer</a>
-                    <a href="javascript:showAnswer();">show answer</a>
+
+
+                    <style>
+
+                        .speechCheck {
+                            display: none;
+                            width: 724px;
+                            margin: 20px 0px;
+                        }
+
+                        .speechCheck table td {
+                            padding: 10px;
+                            border: 1px solid #8E71A2;
+                        }
+                        .speechCheck table td:first-child {
+                            width: 200px;
+                        }
+
+                        .speechCheck table td:last-child {
+                            width: 524px;
+                        }
+
+                    </style>
+                    <div class="speechCheck">
+                        <table>
+                            <tr>
+                                <td > score </td>
+                                <td class="score">  </td>
+                            </tr>
+                            <tr>
+                                <td>  score_explanation  </td>
+                                <td class="score_explanation">  </td>
+                            </tr>
+                            <tr>
+                                <td>   rank   </td>
+                                <td class="rank">  </td>
+                            </tr>
+                            <tr>
+                                <td>  detailed_scores   </td>
+                                <td class="detailed_scores">  </td>
+                            </tr>
+
+                            <tr>
+                                <td>sentence_breakdown</td>
+                                <td class="sentence_breakdown">  </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <a href="javascript:checkFn();">checkWrting</a>
+
+                    <a href="javascript:checkSpeech();">checkSpeeking</a>
+
+                    <a href="javascript:refresh();">Refresh</a>
+                </li>
+
+                <li>
+
+
                 </li>
             </ul>
         </div>
@@ -58,6 +116,7 @@
 <style>
     .checkSpells {
         display: none;
+        margin-bottom: 10px;
         /*
         position: absolute;
         top: 0;
@@ -117,6 +176,22 @@
         border: 2px solid red;
     }
 
+    .sentence_breakdown unclear {
+       border: 1px solid rgba(255, 0, 0, 0.8);
+        padding: 2px 5px;
+    }
+
+    .sentence_breakdown insertion {
+        border: 1px solid rgba(0, 255, 0, 0.8);
+        padding: 2px 5px;
+    }
+
+    .sentence_breakdown absent {
+        border: 1px solid rgba(0, 0, 255, 0.8);
+        padding: 2px 5px;
+    }
+
+
 </style>
 
 <div class="checkSpells">
@@ -144,21 +219,21 @@
     });
 
     var sampleResponse = {
-      "type": "success",
-      "code": 200,
-      "overall_score": 2.64069,
-      "sentence_scores": [
-        [0, 44, -1],
-        [46, 61, -0.457825],
-        [62, 75, -1]
-      ],
-      "suspect_tokens": [[0,44], [62,75]],
-      "textual_errors": [
-        [15, 20, "famous", "S"],
-        [62, 64, "I'm", "MP"],
-        [69, 74, "sure", "S"]
-      ]
-     };
+        "type": "success",
+                "code": 200,
+                "overall_score": 2.64069,
+                "sentence_scores": [
+            [0, 44, -1],
+            [46, 61, -0.457825],
+            [62, 75, -1]
+        ],
+                "suspect_tokens": [[0,44], [62,75]],
+                "textual_errors": [
+            [15, 20, "famous", "S"],
+            [62, 65, "I'm", "MP"],
+            [70, 75, "sure", "S"]
+        ]
+    };
 
     function readFn() {
         return JSON.stringify([{"order":1, "answer": $("#blank_1_1").val()}]);
@@ -214,6 +289,36 @@
         }
     }
 
+    function refresh() {
+        $(".checkSpells").hide();
+        $(".speechCheck").hide();
+        $("#blank_1_1").show();
+    }
+
+    var speechExample = {
+        "score": 3.6,
+        "score_explanation": "A good score",
+        "rank": 74,
+        "detailed_scores": [["fluency", 61, "Quite fluent"], ["pronunciation", 80, "Good pronunciation"]],
+        "sentence_breakdown": "I like <unclear>going</unclear> to the beach because I <insertion>like to</insertion> swim <absent>in the sea</absent>."
+    }
+
+    function checkSpeech(str) {
+        var result = speechExample;
+        $(".speechCheck .score").html(result.score);
+        $(".speechCheck .score").css("color", "hsl(" + (result.score * 20) + ",100%, 35%)");
+        $(".speechCheck .score_explanation").html(result.score_explanation);
+        $(".speechCheck .rank").html(result.rank);
+        $(".speechCheck .rank").css("color", "hsl(" + result.rank + ",100%, 35%)");
+        $(".speechCheck .sentence_breakdown").html(result.sentence_breakdown);
+        var ul = $("<ul></ul>")
+        for(var i=0; i<result.detailed_scores.length; i++) {
+            ul.append("<li>" + result.detailed_scores[i][0] + ": " + result.detailed_scores[i][1] + "(" + result.detailed_scores[i][2] + ")</li>");
+        }
+        $(".speechCheck .detailed_scores").html(ul);
+
+        $(".speechCheck").show();
+    }
 
     function checkAnswer() {
         if ($("#blank_1_1").val()!="") {
@@ -241,7 +346,6 @@
             $(".sentences").append(spa);
         }
     }
-
     //checkAnswer();
 
 </script>
