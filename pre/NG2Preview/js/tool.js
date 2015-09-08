@@ -27,6 +27,14 @@ $(function() {
 
 function ToolBarComponent() {
 
+    this.displayModel = function(type) {
+        $(".deviceShell").removeClass().addClass("deviceShell").addClass(type);
+
+        $(".switches .current").removeClass("current");
+        $(".switches ." + type ).addClass("current");
+
+    }
+
 }
 
 ToolBarComponent.annotations = [
@@ -182,7 +190,6 @@ ActivityPageComponent.annotations = [
         ]
     })
 ];
-
 
 
 function PagePreivewComponent(){

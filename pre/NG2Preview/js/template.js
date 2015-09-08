@@ -66,5 +66,5 @@ function bindTotemplate(baseUrl, html, jsonObj) {
 
 
     });
-    $(".page-preview").append(html);
+    $(".page-preview .deviceShell .screen").html(html);
 }

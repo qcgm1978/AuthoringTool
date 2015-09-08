@@ -43,7 +43,7 @@ div.toolbar {
       float: left;
       padding: 0 15px;
 
-      &.pc {
+      &.current {
         background-color: #fff;
         color: $btnbg;
       }
@@ -54,7 +54,7 @@ div.toolbar {
     float: left;
     padding: 0 15px;
 
-    &.pc {
+    &.current {
       background-color: #fff;
       color: $btnbg;
     }
@@ -160,6 +160,91 @@ div.temlate-select {
           }
         }
       }
+    }
+  }
+}
+
+
+.deviceShell {
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  margin: 0 auto;
+  background: #fff;
+  position: relative;
+
+  &.ipad {
+    width: 1170px;
+    height: 800px;
+    .screen {
+      width: 1024px;
+      height: 768px;
+      border: 1px solid #ccc;
+      position: absolute;
+      left: 70px;
+      top: 10px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .home {
+      width: 3rem;
+      height: 3rem;
+      border: 1px solid #ccc;
+      position: absolute;
+      right: 1rem;
+      top:50%;
+      margin: -1.5rem 0;
+      border-radius: 50%;
+    }
+
+    .speaker {
+      height: 3rem;
+      width: .4rem;
+      border: 1px solid #ccc;
+      border-radius: .4rem;
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      margin: -1.5rem 0rem;
+    }
+  }
+
+  &.phone {
+    width: 320px;
+    height: 640px;
+    .screen {
+      width: 300px;
+      height: 520px;
+      border: 1px solid #ccc;
+      position: absolute;
+      left: 10px;
+      top: 50px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .home {
+      width: 3rem;
+      height: 3rem;
+      border: 1px solid #ccc;
+      position: absolute;
+      bottom: .5rem;
+      left: 50%;
+      margin: 0 -1.5rem;
+      border-radius: 50%;
+    }
+
+    .speaker {
+      width: 3rem;
+      height: .4rem;
+      border: 1px solid #ccc;
+      border-radius: .4rem;
+      position: absolute;
+      left: 50%;
+      top: 2rem;
+      margin: 0 -1.5rem;
     }
   }
 }
