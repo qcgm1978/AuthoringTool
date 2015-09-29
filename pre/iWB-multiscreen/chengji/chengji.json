@@ -1,0 +1,82 @@
+var initData = [
+    {
+        "id": "allen_mark",
+        "name": "Mark",
+        "right": 0,
+        "total": 0,
+        "percent": 0,
+        "description": null
+    },
+    {
+        "id": "emily_watson",
+        "name": "Watson",
+        "right": 0,
+        "total": 0,
+        "percent": 0,
+        "description": null
+    },
+    {
+        "id": "fei_meng",
+        "name": "Meng",
+        "right": 0,
+        "total": 0,
+        "percent": 0,
+        "description": null
+    },
+    {
+        "id": "jessica_winner",
+        "name": "Winner",
+        "right": 0,
+        "total": 0,
+        "percent": 0,
+        "description": null
+    },
+    {
+        "id": "lei_han",
+        "name": "Han",
+        "right": 0,
+        "total": 0,
+        "percent": 0,
+        "description": null
+    },
+    {
+        "id": "meimei_han",
+        "name": "Han",
+        "right": 0,
+        "total": 0,
+        "percent": 0,
+        "description": null
+    },
+    {
+        "id": "ming_li",
+        "name": "Li",
+        "right": 0,
+        "total": 0,
+        "percent": 0,
+        "description": null
+    },
+    {
+        "id": "raj_miller",
+        "name": "Miller",
+        "right": 0,
+        "total": 0,
+        "percent": 0,
+        "description": null
+    },
+    {
+        "id": "steve_paul",
+        "name": "Paul",
+        "right": 0,
+        "total": 0,
+        "percent": 0,
+        "description": null
+    },
+    {
+        "id": "yanan_li",
+        "name": "Li",
+        "right": 0,
+        "total": 0,
+        "percent": 0,
+        "description": null
+    }
+]

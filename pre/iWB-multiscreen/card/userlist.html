@@ -1,0 +1,345 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>the page power by liuying</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        #root_boxs {
+            width: 1700px;
+            margin: 40px auto;
+        }
+
+        h1 {
+            background-color: #b41827;
+            color: #fff;
+            font-size: 35px;
+            line-height: 65px;
+            padding:0 20px;
+        }
+
+        h1 span {
+            display: block;
+            float: right;
+        }
+
+        h2 {
+            font-size: 36px;
+            display: block;
+            text-align: center;
+            line-height: 36px;
+            margin-bottom: 25px;
+        }
+
+        .title {
+            clear: both;
+            height: 60px;
+            margin-top: 10px;
+        }
+
+        .title div {
+            background-color: #d7848c;
+            font-size: 40px;
+            color: #fff;
+            width: 700px;
+            float: left;
+            padding-left: 25px;
+        }
+
+        .title div i {
+            border-bottom: 31px solid #fff;
+            width: 0;
+            height: 0;
+            display: block;
+            float: right;
+            border-left: 31px solid #d7848c;
+            margin-top: 26px;
+        }
+
+        .title span {
+            color: #625a5a;
+            font-size: 40px;
+            display: block;
+            float: right;
+            width: 210px;
+            padding-right: 30px;
+        }
+
+        article table, tbody {
+            background-color: #fff;
+            width: 1700px;
+        }
+
+        article td {
+            width: 160px;
+            height: 35px;
+            padding: 15px 25px;
+            background-color: #c2e9c9;
+            border: none; /** 1px solid #fff;*/
+            text-align: right;
+            vertical-align: bottom;
+            font-size: 21px;
+            color: #625a5a;
+        }
+
+        article .row1 td {
+            height: 55px;
+            color: #fff;
+            text-align: center;
+            padding: 0 25px;
+            vertical-align: middle;
+        }
+
+        article .row2 td {
+            height: 55px;
+            background-color: #fff;
+            font-weight: bold;
+            text-align: center;
+            padding: 0 25px;
+            color: #000;
+            vertical-align: middle;
+        }
+
+        .white {
+            background-color: #fff;
+            color: #6b7986;
+            font-size: 24px;
+            text-align: center;
+            font-family: "黑体";
+            padding: 0;
+            vertical-align: middle;
+        }
+
+        .yellow {
+            background-color: #f0d086;
+        }
+
+        .red {
+            background-color: #f39a9a;
+            color: #625a5a;
+        }
+
+        .purple {
+            background-color: #c69ed7;
+        }
+
+        .blue {
+            background-color: #94afd8;
+        }
+
+        .gray {
+            background-color: #908d8d;
+            color: #f3f3f3
+        }
+    </style>
+    <script src="jquery-2.1.4.min.js"></script>
+    <script>
+        var uinfos = [{
+            "head": "img/p1.jpg",
+            "name": "WINNER,Jessica",
+            "id": "jessica_winner",
+            "email": "jessica_winner@css.com",
+            "mobile": "+44 02234569876"
+        }, {
+            "head": "img/p2.jpg",
+            "name": "LI,Yanan",
+            "id": "yanan_li",
+            "email": "yanan_li@css.com",
+            "mobile": "+86 13911391118"
+        }, {
+            "head": "img/p3.jpg",
+            "name": "HAN,Lei",
+            "id": "lei_han",
+            "email": "lei_han@css.com",
+            "mobile": "+86 13911391115"
+        }, {
+            "head": "img/p4.jpg",
+            "name": "MILLER,Raj",
+            "id": "raj_miller",
+            "email": "raj_miller@css.com",
+            "mobile": "+44    02231234567"
+        }, {
+            "head": "img/p5.jpg",
+            "name": "MENG,Fei",
+            "id": "fei_meng",
+            "email": "fei_meng@css.com",
+            "mobile": "+86    13911391117"
+        }, {
+            "head": "img/p6.jpg",
+            "name": "LI,Ming",
+            "id": "ming_li",
+            "email": "ming_li@css.com"
+        }, {
+            "head": "img/p7.jpg",
+            "name": "HAN,Meimei",
+            "id": "meimei_han",
+            "email": "meimei_han@css.com",
+            "mobile": "+86    13911391116"
+        }, {
+            "head": "img/p8.jpg",
+            "name": "MARK,Allen",
+            "id": "allen_mark",
+            "email": "allen_mark@css.com",
+            "mobile": "+44    02234564567"
+        }, {
+            "head": "img/p9.jpg",
+            "name": "PAUL,Steve",
+            "id": "steve_paul",
+            "email": "steve_paul@css.com",
+            "mobile": "+44    02234567890"
+        }, {
+            "head": "img/p10.jpg",
+            "name": "WATSON,Emily",
+            "id": "emily_watson",
+            "email": "emily_watson@css.com",
+            "mobile": "+44    02234561234"
+        }];
+
+
+        $(function() {
+            var i = 0;
+            $("table tr").not(".row1,.row2").each(function() {
+                $(this).children().first().html(uinfos[i].name);
+                i++;
+            });
+        });
+    </script>
+</head>
+
+
+<body>
+<div id="root_boxs">
+    <h1>Skills and Strategies | Reading <span>Unit 1:Orientating yourself to a text</span></h1>
+
+    <div class="title">
+        <div>Useing paragraphs and main ideas <i></i></div>
+        <span>Class 101</span>
+    </div>
+    <article>
+        <h2>PREVIEW ACTIVITIES</h2>
+        <table>
+            <tr class="row1">
+                <td class="white"></td>
+                <td colspan="2" class="yellow">Lexis</td>
+                <td colspan="3" class="purple">Comprehension</td>
+                <td colspan="2" class="blue">Grammar</td>
+            </tr>
+            <tr class="row2">
+                <td></td>
+                <td>Ex.1</td>
+                <td>Ex.2</td>
+                <td>Ex.3</td>
+                <td>Ex.4</td>
+                <td>Ex.5</td>
+                <td>Ex.6</td>
+                <td>Ex.7</td>
+            </tr>
+            <tr>
+                <td class="white">STUDENT 1</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td class="red">09:30</td>
+                <td class="red">09:30</td>
+                <td>09:30</td>
+                <td class="red">09:30</td>
+            </tr>
+            <tr>
+                <td class="white">STUDENT 2</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td class="red">09:30</td>
+                <td class="red">09:30</td>
+                <td class="red">09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+            </tr>
+            <tr>
+                <td class="white">STUDENT 3</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+            </tr>
+            <tr>
+                <td class="white">STUDENT 4</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+            </tr>
+            <tr>
+                <td class="white">STUDENT 5</td>
+                <td>09:30</td>
+                <td class="gray">09:30</td>
+                <td>09:30</td>
+                <td class="gray">09:30</td>
+                <td>09:30</td>
+                <td class="gray">09:30</td>
+                <td class="gray">09:30</td>
+            </tr>
+            <tr>
+                <td class="white">STUDENT 6</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+            </tr>
+            <tr>
+                <td class="white">STUDENT 7</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td class="red">09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+            </tr>
+            <tr>
+                <td class="white">STUDENT 5</td>
+                <td>09:30</td>
+                <td class="gray">09:30</td>
+                <td>09:30</td>
+                <td class="gray">09:30</td>
+                <td>09:30</td>
+                <td class="gray">09:30</td>
+                <td class="gray">09:30</td>
+            </tr>
+            <tr>
+                <td class="white">STUDENT 6</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+            </tr>
+            <tr>
+                <td class="white">STUDENT 7</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+                <td class="red">09:30</td>
+                <td>09:30</td>
+                <td>09:30</td>
+            </tr>
+        </table>
+    </article>
+</div>
+</body>
+</html>

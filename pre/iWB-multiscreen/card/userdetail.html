@@ -1,0 +1,300 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>the page power by liuying</title>
+	<script src="jquery-2.1.4.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<style>
+		* {margin: 0;padding: 0}
+		#root_boxs {width: 1700px;margin: 40px auto; position: relative;}
+		header {display:block;clear: both; height: 320px;}
+
+		 header #info_boxs {width: 600px;height: 260px;float: left;}
+
+		header #scope {width: 1096px;height: 168px;margin-top: 130px;float: left;border: 2px solid #979797;border-radius:0 5px 5px 0;}
+		header #scope li {width: 33.33%;float: left;list-style: none;}
+		header #scope div {color:#6b7986;font-size: 18px;text-align: center;line-height: 65px;}
+		header #scope b {display:block;color: #4a4a4a;font-size: 45px;text-align: center;}
+		.left {float: left;}
+		.right {float: right;}
+		article .right {width: 600px;}
+		article .right b {color: #74818e;font-size: 27px;font-weight: bold;}
+		article .right div {color: #757575;border: 1px solid #b1b1b1;font-size: 24px;line-height: 36px;padding: 0 6px}
+
+		html {
+			font-size: 22px;
+			/*font-size: 16.5px;*/
+			font-family: Arial;
+			background-color: #fff;
+		}
+		.template, .hidden {
+			display: none;
+		}
+
+		a {
+			text-decoration: none;
+			color: #444;
+		}
+		/**
+         * Mixin to put items on a circle
+         * [1] - Allows children to be absolutely positioned
+         * [2] - Allows the mixin to be used on a list
+         * [3] - In case box-sizing: border-box has been enabled
+         * [4] - Allows any type of direct children to be targeted
+         */
+		.circle-container {
+			position: relative;
+			/* [1] */
+			width: 12rem;
+			height: 12rem;
+			padding: 0;
+			border-radius: 50%;
+			list-style: none;
+			/* [2] */
+			-moz-box-sizing: content-box;
+			-webkit-box-sizing: content-box;
+			box-sizing: content-box;
+			/* [3] */
+			margin: 3rem auto 0;
+			border: solid 1px #d0f8ff;
+			z-index: 191;
+		}
+
+		.circle-container > li {
+			/* [4] */
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 5rem;
+			height: 5rem;
+			margin: -2.5rem;
+			opacity: 0;
+			-webkit-transform: none;
+			-webkit-transition: -webkit-transform .3s ease-out, opacity .3s ease-out;
+		}
+
+		.circle-container a {
+			display: block;
+			border-radius: 50%;
+			box-shadow: 0 0 0 5px #fff8af;
+		}
+
+		.circle-container img {
+			display: block;
+			width: 100%;
+			border-radius: 50%;
+			/*
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+            */
+		}
+
+		.circle-container img:hover {
+			-webkit-filter: grayscale(0);
+			filter: grayscale(0);
+		}
+
+		.card {
+			width: 24rem;
+			height: 13rem;
+			border: 2px solid #888888;
+			border-radius: .5rem;
+			background: url('img/cardbg.png');
+			background-size: cover;
+			position: absolute;
+			margin-top: .5rem;
+			margin-left: 1.6rem;
+			-webkit-transition: -webkit-transform .5s ease-out, opacity .5s ease-out;
+		}
+
+		.card.group {
+			width: 20rem;
+			height: 25rem;
+			opacity: 0;
+		}
+
+		.card .content {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			top: 7rem;
+			background-color: #fff;
+			border-radius: .5rem;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+			-webkit-transition: top .5s cubic-bezier(0.31, 1.01, 0.44, 1.14);
+		}
+
+		.card .content .sub {
+			text-align: right;
+			font-size: .7rem;
+			padding-right: 1rem;
+			line-height: 1.3rem;
+			color: #666;
+			opacity: 0;
+			-webkit-transition: opacity .5s cubic-bezier(0.31, 1.01, 0.44, 1.14);
+		}
+		.card.group .content {
+			top: 0;
+			-webkit-transition: top .3s cubic-bezier(0, 0.79, 0.56, 1.01);
+		}
+
+		.card.disabled {
+			-webkit-filter: grayscale(100%);
+			filter: grayscale(100%);
+		}
+
+		.card .head {
+			position: absolute;
+			z-index: 99;
+			left: 8.4rem;
+			top: 2.5rem;
+			-webkit-transition: transform .5s cubic-bezier(0.31, 1.01, 0.44, 1.14);
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+			-webkit-transform: rotateY(0deg);
+		}
+
+		.card .content .name {
+			margin-top: 3.5rem;
+			text-align: center;
+			font-size: 1.2rem;
+			font-weight: 700;
+		}
+
+		.card.detailed .head {
+			transform: scale(.7) translate(-9rem,-4rem);
+		}
+
+		.card.detailed .content .name {
+			margin-top: 1rem;
+			text-align: right;
+			padding-right: 1rem;
+			margin-bottom: 4rem;
+		}
+
+		.card.detailed .content {
+			top: 2.5rem;
+		}
+		.card.detailed .content .sub {
+			display: block;
+			font-size: .9rem;
+			line-height: 1.6rem;
+			opacity: 1;
+		}
+
+
+		.card.group .content .name {
+			font-size: 1rem;
+			font-weight: 300;
+			font-style: normal;
+			margin-top: 1.5rem;
+		}
+
+		.card .content .emailicon {
+			margin-top: .8rem;
+			text-align: center;
+			font-size: 1.2rem;
+			font-weight: 700;
+		}
+
+		.card .head.back {
+			-webkit-transform: rotateY(-180deg);
+		}
+
+		.card .head.grey {
+			-webkit-filter: grayscale(100%);
+			filter: grayscale(100%);
+			z-index: 99;
+		}
+
+		.card .head img {
+			width: 5.6rem;
+			height: 5.6rem;
+			border-radius: 50%;
+			border: .5rem solid #fff8af;
+		}
+
+		/*
+        .card .content .email {
+            text-align: center;
+            margin-top: -0.7rem;
+            font-size: .8rem;
+        }
+        */
+	</style>
+
+	<script>
+		$(function() {
+			$("#info_boxs .head img").attr("src", querystring("head")[0]);
+			$("#info_boxs .name span").html(querystring("name")[0]);
+		});
+
+		function querystring(key) {
+			var re=new RegExp('(?:\\?|&)'+key+'=(.*?)(?=&|$)','gi');
+			var r=[], m;
+			while ((m=re.exec(document.location.search)) != null) r.push(m[1]);
+			return r;
+		}
+	</script>
+</head>
+<body>
+
+<div id="root_boxs">
+	<div style=" position: absolute;
+    right: 0px;
+    top: 50px;
+    font-size: 30px;"><a href="index.html">RETURN </a></div>
+	<header>
+		<div id="info_boxs">
+			<div class="card user">
+				<div class="head">
+					<img src='img/p1.jpg'>
+				</div>
+
+
+				<div class="content">
+					<div class="name"><span> LIU, Calvin</span></div>
+					<div class="account sub">Account:<span>liuqiang</span></div>
+					<div class="email sub">Email:<span> liuqiang@collegepre.com</span></div>
+					<div class="mobile sub">Mobilephone:<span>  +86 123456778</span></div>
+				</div>
+			</div>
+		</div>
+		<ul id="scope">
+			<li>
+				<div>PREVIEW</div>
+				<b>74%</b>
+			</li>
+			<li>
+				<div>IN CLASS</div>
+				<b>81%</b>
+			</li>
+			<li>
+				<div>AFTER　CLASS</div>
+				<b>68%</b>
+			</li>
+		</ul>
+	</header>
+	<article>
+		<div class="left"><img src="images/aa.png" style="width: 900px;margin: 30px;" alt="aa"/></div>
+		<div class="right">
+			<b>TEACHER LOG</b>
+			<div>Excellent pair work today.You helped you classMates …</div>
+			<div>You demonstrated a thorough understanding of the preview material …</div>
+			<div>You produced an excellent written response to our lesson text …</div>
+			<div>You presentation was wery good and you answered the questions really well …</div>
+			<div>Good application of the vocabulary wo looked at last week …</div>
+		</div>
+	</article>
+	<footer>
+		<div class="left"><img src="images/bb.png" style="width: 1000px;" alt="bb"/></div>
+		<div class="right"><img src="images/cc.png" style="width: 600px;" alt="cc"/></div>
+	</footer>
+
+</div>
+</body>
+</html>

@@ -16,6 +16,7 @@ ToolComponent.annotations = [
             EmptyNewComponent,
             TemplateSelectComponent,
             PagePreivewComponent,
+            JsonEditComponent,
             angular.NgFor,
             angular.NgIf]
     })
@@ -44,6 +45,7 @@ ToolBarComponent.annotations = [
     new angular.ViewAnnotation({
         templateUrl : 'html/toolbar.html',
         directives: [
+            PagePreivewComponent,
             angular.NgFor,
             angular.NgIf
         ]
@@ -138,6 +140,7 @@ TemplateSelectComponent.annotations = [
         directives: [angular.NgFor,angular.NgIf,TemplateListComponent]
     })
 ];
+
 TemplateSelectComponent.parameters = [[TemplatesService]];
 
 function TemplateListComponent(templatesService){
@@ -208,6 +211,28 @@ PagePreivewComponent.annotations = [
         ]
     })
 ];
+
+
+
+function JsonEditComponent(){
+
+}
+
+JsonEditComponent.annotations = [
+    new angular.ComponentAnnotation({
+        selector: "json-edit"
+    }),
+    new angular.ViewAnnotation({
+        templateUrl : 'html/json-edit.html',
+        directives: [
+            angular.NgFor,
+            angular.NgIf
+        ]
+    })
+];
+
+
+
 
 
 

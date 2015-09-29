@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>成绩示例</title>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/highcharts.min.js"></script>
+<script type="text/javascript" src="lycharts.js"></script>
+<script type="text/javascript" src="chengji.json"></script>
+<script language="javascript">
+var initFun=function(str){
+	var data;
+	if(typeof(str)=="string"){
+		data=JSON.parse(str);
+	}else{
+		data=str;
+	}
+	initTable(data,$("#main3"));
+	var highconfig=initCharts(data);
+	$('#main1').highcharts(highconfig[0]);
+	$('#main2').highcharts(highconfig[1]);
+}
+$(function () {
+	initTable(initData,$("#main").find(".dataBox"));
+	var highconfig=initCharts(initData);
+	$('#main1').highcharts(highconfig[0]);
+	$('#main2').highcharts(highconfig[1]);
+	$('.a1').click(function(){
+		$("#page1").hide();
+		$("#page2").show();
+	})
+	$('.a2').click(function(){
+		$("#page1").show();
+		$("#page2").hide();
+	})
+});
+</script>
+<style>
+* {margin: 0;padding: 0;font-family: "Microsoft Yahei";}
+h1 {background: #0d6571 url("aa.png") no-repeat scroll right -135px;line-height:2em;color:#eee;padding: 0 12px;}
+li {list-style: none;}
+.fl {float: left;}
+.clear {clear: both;}
+.a1 {background: url("aa.png") no-repeat 0 -40px;width: 135px;height: 40px;cursor: pointer;}
+.a2 {background: url("aa.png") no-repeat;width: 135px;height: 40px;cursor: pointer;}
+#main {width: 1500px;margin: 0 auto;}
+#main1 {width: 500px; height:500px; float: left;clear: left;}
+#main2 {width: 1000px; height:500px;float: left;}
+
+#page2 {display: none;}
+#main ul {background-color: #00b3bf;margin-top: 1px;height: 48px;line-height: 48px;clear: both;}
+#main ul li {text-align: center;width:60px;color:#fff;}
+#main ul li.name {float: left;width: 215px;}
+#main ul li.percent {float: left;width: 85px;}
+#main ul li.num {float: left;background:url("aa.png") no-repeat scroll -50px -90px;color: #403b5d;font-weight: bold;}
+#main ul li.desc {display:inline-block;clear:none;width:auto;}
+#main ul li.a {float: right;width:30px;}
+#main ul li a {background: url("aa.png") no-repeat scroll -110px -90px;display: block;width: 20px;height: 40px;}
+</style>
+</head>
+
+<body>
+<div id="main">
+	<h1 onclick="location.href='userlist.html';">Class 101</h1>
+	<div id="page1">
+		<span class="fl clear a1"></span>
+		<div id="main1"></div>
+		<div id="main2"></div>
+	</div>
+	<div id="page2">
+		<div class="dataBox" id="main3"></div>
+		<span class="fl clear a2"></span>
+	</div>
+</div>
+</body>
+</html>

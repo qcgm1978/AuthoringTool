@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
+    <meta name="browsermode" content="application"/>
+
+    <script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/animate.css">
+    <link rel="stylesheet" type="text/css" href="css/hexagon.css">
+
+
+    <style>
+        html {
+            font-size: 54px;
+            font-family: Arial;
+            -webkit-font-smoothing: subpixel-antialiased;
+            background-color: #fff;
+        }
+        .level {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hexagon {
+            cursor: pointer;
+            text-align: center;
+            font-size: 1rem;
+            color: white;
+            line-height: 5rem;
+            background-size: cover;
+            position: absolute;
+            width: 5rem;
+            height: 5.15rem;
+            /* margin-right: 1.3rem; */
+            background-position: center;
+            background-size: 4.4rem 5.15rem;
+            background-repeat: no-repeat;
+        }
+        .hexagon>div {
+            margin-top: 1.5rem;
+            font-size: .7rem;
+            line-height: 0.9rem;
+            font-weight: bold;
+        }
+
+        .l11 {
+            left: 15rem;
+            top:6rem;
+        }
+
+        .l12 {
+            left: 10.5rem;
+            top:6rem;
+        }
+        .l13 {
+            left: 19.5rem;
+            top:6rem;
+        }
+
+        .l21 {
+            left: 8.25rem;
+            top:6rem;
+        }
+
+        .l22 {
+            left: 12.75rem;
+            top:6rem;
+        }
+        .l23 {
+            left: 17.25rem;
+            top:6rem;
+        }
+        .l24 {
+            left: 21.75rem;
+            top:6rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        var current = 1;
+        $(function() {
+            show1();
+        });
+
+        function show1() {
+            $(".l1.level").show();
+            $(".l1 .hexagon").addClass("flipInX animated");
+
+            $(".l1 .hexagon").click(function() {
+                showNext($(this));
+            });
+        }
+        function showNext(t) {
+
+            $(".l" + current + " .hexagon").removeClass("zoomIn").addClass("flipOutX");
+            $(t).removeClass("flipOutX").addClass("zoomOut");
+            current ++;
+
+            $(".l" + current + ".level").show();
+            $(".l" + current + " .hexagon").addClass("zoomIn animated");
+
+            $(".l" + current + " .hexagon").click(function() {
+                showNext($(this));
+                if (current===8) {
+                    testme();
+                }
+            });
+        }
+
+        function testme() {
+            jsObj.ExecCsharpFunc();
+        }
+    </script>
+</head>
+<body>
+
+
+<style>
+    .l2 .hexagon div {
+        line-height: 2.2rem;
+    }
+
+    .l3 .hexagon div {
+        margin-top: 1.3rem;
+    }
+
+    .l3 .hexagon p {
+        margin: 0;
+        line-height: 1.6rem;
+        font-size: 1.6rem;
+    }
+
+    .l4 .hexagon div {
+        margin-top: 2.5rem;
+    }
+
+    .l5 .hexagon div {
+        font-size: .6rem;
+        margin-top: 1.7rem;
+    }
+
+    .l5 .hexagon div.line3 {
+        margin-top: 1.4rem;
+        line-height: .8rem;
+    }
+
+    .l6 {
+        -webkit-transform: scale(.8) translateY(2rem);
+    }
+
+    .l6 .hexagon div {
+        margin-top: 1.2rem;
+    }
+    .l6 .hexagon div.mt22 {
+        font-size: .65rem;
+        margin-top: 1.5rem;
+    }
+
+    .l6 .hexagon p {
+        font-size: .4rem;
+        line-height: .5rem;
+        margin: .2rem .2rem;
+    }
+
+    .l7 div {
+        font-size: .5rem;
+        margin-top: 1rem;
+    }
+    .l7 p {
+        margin: .2rem .4rem;
+        font-size: .4rem;
+        line-height: .5rem;
+    }
+</style>
+<div class="l1 level hidden">
+    <div class="hexagon l11" style=" background-image: url('img/L1.png');"><div class="hidden">CollegePre<br>Institute</div></div>
+</div>
+
+<div class="l2 level hidden">
+    <div class="hexagon l11 h12"><div >Achieve</div></div>
+    <div class="hexagon l12 h1"><div >Target </div></div>
+    <div class="hexagon l13 h10"><div >Instensive</div></div>
+</div>
+
+<div class="l3 level hidden">
+    <div class="hexagon l11 h8"><div>Achieve</div><p>2</p></div>
+    <div class="hexagon l12 h7"><div>Achieve</div><p>1</p></div>
+    <div class="hexagon l13 h9"><div>Achieve</div><p>3</p></div>
+</div>
+
+<div class="l4 level hidden">
+    <div class="hexagon l21 h11"><div class="font2">Listening</div></div>
+    <div class="hexagon l22 h6"><div class="font2">Reading</div></div>
+    <div class="hexagon l23 h13"><div class="font2">Writing</div></div>
+    <div class="hexagon l24 h14"><div class="font2">Speaking</div></div>
+</div>
+
+<div class="l5 level hidden">
+    <div class="hexagon l21 h3"><div class="line3">Skill<br>and<br>Strategies</div></div>
+    <div class="hexagon l22 h4"><div>IELTS <br>test practice</div></div>
+    <div class="hexagon l23 h5"><div class="mt19">Enabling<br>skills</div></div>
+    <div class="hexagon l24 h6"><div class="mt19">Project<br>work</div></div>
+</div>
+
+<div class="l6 level hidden">
+
+    <div class="hexagon hx-11 h12">
+        <div class="mt22">Unit 1</div>
+        <p>Orientating yourself to a text</p>
+    </div>
+    <div class="hexagon hx-12 h12">
+        <div class="mt22">Unit 2</div>
+        <p>Scanning for specific detail and skimming for general understanding</p>
+    </div>
+    <div class="hexagon hx-13 h1">
+        <div class="mt22">Reading <br>Test Practice <br>1</div>
+    </div>
+
+
+    <div class="hexagon hx-21 h12">
+        <div class="mt22">Unit 3</div>
+        <p>Identifying main and supporting ideas</p>
+    </div>
+    <div class="hexagon hx-22 h12">
+        <div class="mt22">Unit 4</div>
+        <p>Paraphrasing the main ideas 1</p>
+    </div>
+    <div class="hexagon hx-23 h1">
+        <div class="mt22">Reading <br>Test Practice <br>2</div>
+    </div>
+
+
+    <div class="hexagon hx-31 h12">
+        <div class="mt22">Unit 5</div>
+        <p>Paraphrasing the main ideas 2</p>
+    </div>
+    <div class="hexagon hx-32 h12">
+        <div class="mt22">Unit 6</div>
+        <p>Using context to guess the meaning of words</p>
+    </div>
+    <div class="hexagon hx-33 h1">
+        <div class="mt22">Reading <br>Test Practice <br>3</div>
+    </div>
+
+
+    <div class="hexagon hx-41 h12">
+        <div class="mt22">Unit 7</div>
+        <p>Locating information in paragraphs</p>
+    </div>
+    <div class="hexagon hx-42 h12">
+        <div class="mt22">Unit 7</div>
+        <p>Recognising arguments in texts</p>
+    </div>
+    <div class="hexagon hx-43 h1">
+        <div class="mt22">Reading <br>Test Practice <br> 4</div>
+    </div>
+
+    <div class="hexagon hx-51 h12">
+        <div class="mt22">Unit 5</div>
+        <p>Identifying the writer's views and claims</p>
+    </div>
+    <div class="hexagon hx-52 h12">
+        <div class="mt22">Unit 6</div>
+        <p>Analysing the passage</p>
+    </div>
+    <div class="hexagon hx-53 h2">
+        <div class="mt22">Complete <br>Practice Test</div>
+    </div>
+</div>
+
+
+<div class="l7 level hidden">
+    <div class="hexagon l22 h12">
+        <div>Lesson A</div>
+        <p>Orientating yourself  to a text</p>
+        <p>Using paragraphs and main ideas</p>
+    </div>
+    <div class="hexagon l23 h12">
+        <div>Lesson B</div>
+        <p>Orientating yourself  to a text</p>
+        <p>Using titles and subheadings</p>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+$linc : 17.25-12.75;
+$tinc : 6-2.1;
+
+$startl: 12.75;
+$startt: 0;
+
+@for $i from 0 to 5 {
+  @for $j from 0 to 5 {
+  .hx-#{$i+1}#{$j+1} {
+    @if floor($i%2)==0 {
+      left: $startl + $j*$linc + rem;
+    } @else {
+      left: $startl + $j*$linc -$linc/2 + rem;
+    }
+    top: $startt + $i*$tinc + rem;
+  }
+  }
+}
+
+
+@for $i from 1 to 15 {
+  .hexagon {
+    &.h#{$i} {
+      background-image: url('../img/h' + $i + '.png');
+    }
+  }
+}

@@ -1,0 +1,85 @@
+[
+  {
+    "isSelected": false,
+    "GroupId": "0",
+    "GroupName": null,
+    "IsSelected": false,
+    "StudentsListItemColl": [],
+    "GroupNum": "0"
+  },
+  {
+    "isSelected": false,
+    "GroupId": "1",
+    "GroupName": null,
+    "IsSelected": false,
+    "StudentsListItemColl": [
+      {
+        "ImageIndex": 3,
+        "StudentName": "xin_student5",
+        "RealFirstName": "李",
+        "MiddleName": "长",
+        "SurName": "东",
+        "Alias": "官 家",
+        "FullName": "李   东",
+        "NameVisibility": 1,
+        "GroupId": "1",
+        "StudentPwd": null,
+        "Questionbyuser": null,
+        "PhotoInfo": null,
+        "IsOnLine": false,
+        "IsS elected": false,
+        "IsChecked": false,
+        "Type": 0,
+        "TotalGrade": 0
+      },
+      {
+        "ImageIndex": 3,
+        "StudentName": "xin_student6",
+        "RealFirstName": "武",
+        "MiddleName": "棠",
+        "SurName": "海",
+        "Alias": "阿 Sa",
+        "FullName": "武   海",
+        "NameVisibility": 1,
+        "GroupId": "1",
+        "StudentPwd": null,
+        "Questionbyuser": null,
+        "PhotoInfo": null,
+        "IsOnLine": false,
+        "IsS elected": false,
+        "IsChecked": false,
+        "Type": 0,
+        "TotalGrade": 0
+      }
+    ],
+    "GroupNum": null
+  },
+  {
+    "isSelected": false,
+    "GroupId": "2",
+    "GroupName": null,
+    "IsSelected": false,
+    "StudentsListItemColl": [
+      {
+        "ImageIndex": 3,
+        "StudentName": "xin_student7",
+        "RealFirstName": "刘",
+        "MiddleName": "夏",
+        "SurName": "七",
+        "Alias": "夏 天",
+        "FullName": "刘   七",
+        "NameVisibility": 1,
+        "GroupId": "2",
+        "StudentPwd": null,
+        "Questionbyuser": null,
+        "PhotoInfo": null,
+        "IsOnLine": false,
+        "IsS elected": false,
+        "IsChecked": false,
+        "Type": 0,
+        "TotalGrade": 0
+      }
+    ],
+    "GroupNum": null
+  }
+]
