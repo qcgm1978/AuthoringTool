@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>index</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="component/highlight/highlight.js"></script>
+    <script type="text/javascript" src="component/fillblank/fills-up.js"></script>
+    <script type="text/javascript" src="component/fillblank/keyboard.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript">
+        /*var checkAnswer=null,checkFn=null;*/
+        $(document).ready(function() {
+            loadActionByData(data, highLight);
+        });
+    </script>
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <div class="a_head">
+    	<div class="a_head_bor">
+            <span class="a_head_bold"></span>
+            <span class="a_head_txt">Orientating yourself to the text</span>
+            <hr>
+            <div class="b_head">Using paragraphs and main ideas</div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="main_content">
+    	<div class="content">
+            <div class="number">1</div>
+            <div class="main_right_text">
+            	<div class="question_text">Read the passage and select the main idea in each paragraph.</div>
+                <div class="clearfix ">
+                	<div class="con_left pos_r">
+                        <div class="highlight generated spcW">
+                            <div class="row" data-choice="mult">
+                                <div class="cell">
+                                    <div class="plain">A</div>
+                                    <div class="hl" id="highlight_1"> <i data-answer="answer1" class="">In the murky </i><i class=""> and mysterious </i><i data-answer="answer1"> depths of our oceans, </i><i> where otherworldly creatures drift past each other, </i><i> like ships in the night, </i><i data-answer="answer1"> the gift of sight is of little or no use. </i> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="highlight generated spcW1">
+                            <div class="row" data-choice="mult">
+                                <div class="cell">
+                                    <div class="plain">B</div>
+                                    <div class="hl" id="highlight_2"> <i>Surrounded by flashing lights and bright colours, we humans would find it impossible to live under such conditions. </i><i> However, </i><i data-answer="answer1"> for ocean-dwelling mammals </i><i> (some species even live in muddy rivers and estuaries), </i><i> the cold and dark are of no consequence. </i><i data-answer="answer1"> What matters to them is sound. </i> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="highlight generated spcW2">
+                            <div class="row" data-choice="mult">
+                                <div class="cell">
+                                    <div class="plain">C</div>
+                                    <div class="hl" id="highlight_3"> <i>Using </i><i data-answer="answer1"> sound </i><i> to send out and receive messages in water is effective as </i><i data-answer="answer1"> it travels five times as fast in water as it does in air. </i><i> One human calling to another will not be heard a kilometre away, but one whale calling to another may be heard hundreds of kilometres away. </i> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="images/picture.jpg" class="pic"/>
+                    </div>
+
+                    <div class="con_right">
+
+                        <div class="highlight generated">
+                            <div class="row" data-choice="mult">
+                                <div class="cell">
+                                    <div class="plain">D</div>
+                                    <div class="hl" id="highlight_4"> <i data-answer="answer1">The two main reasons for which whales, dolphins and porpoises use sound are communication and echolocation. </i><i> They transmit a variety of groans, squeals, whistles and barks at high frequency in order to communicate with each other. </i> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="highlight generated">
+                            <div class="row" data-choice="mult">
+                                <div class="cell">
+                                    <div class="plain">E</div>
+                                    <div class="hl" id="highlight_5"> <i>As well as communication, </i><i data-answer="answer1"> ocean-dwelling mammals use echolocation to help them learn about their immediate surroundings. </i><i> They emit brief pulses of sound, clicks, each one usually lasting less than a millisecond, </i><i> to find out, for example, if there is any prey nearby. </i> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

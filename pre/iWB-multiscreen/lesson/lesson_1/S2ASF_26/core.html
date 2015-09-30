@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>index</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="application/javascript">
+
+        window.onload=function(){
+            var isFireFox=navigator.userAgent.indexOf('Firefox') >= 0;
+            var videoEles=document.getElementsByTagName("video");
+            for(var i=0;i<videoEles.length;i++){
+                var videoEle=videoEles[i];
+                if(!isFireFox){
+                    videoEle.setAttribute("poster","images/play.jpg");
+                    videoEle.setAttribute("onclick","onVideoClick.bind(this)()");
+                }
+            }
+        }
+
+        function onVideoClick() {
+            if (navigator.userAgent.indexOf('Firefox') >= 0)return false;
+            this.paused?this.play():this.pause();
+        }
+
+    </script>
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <div class="a_head">
+    	<div class="a_head_bor">
+            <span class="a_head_bold"></span>
+            <span class="a_head_txt">Orientating yourself to the text</span>
+            <hr>
+            <div class="b_head">Using paragraphs and main ideas</div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="main_content">
+    	<div class="content">
+            <div class="main_right_text" style="width: 100%; max-width: 100%;">
+            	<div class="question_text">Watch the video.</div>
+                <div class="clearfix">
+                	<div class="con_left">
+                        <div class="video" id="video-x" style="text-align: center;">
+                            <video width="480" height="270"  controls poster="">
+                                <source src="media/sp_dontlikelesson~1.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="con_right mt10">
+                        <P>High resolution video of a whale in in the ocean. The video should have music and IDEALLY an English voice over describing the scene. It would be PERFECT if we could hear some of the sounds made by the whales / other animals as this is the topic of the reading text.</P>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+
+<div class="videox" style="">
+    <video width="1920" height="1080" controls poster="">
+        <source src="media/sp_dontlikelesson.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+</body>
+</html>

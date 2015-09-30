@@ -1,0 +1,5 @@
+var data = {"id": "jalsdfkjl300lj230jl-2342jl23", "name": "", "image": "", "type": "fill in the blank", "type id": "1104", "creator": "Hugo", "date of birth": "2013-12-21", "description": "", "tags": ["exercise", "test", "fill in the blank"], "estimated duration": "5", "count": "2", "content": [
+    {"order": "", "title": "", "text": "#blank_1#", "splitAnswer": 0,"showAnswerStyle": "other", "questions": [
+        {"id": "blank_1", "answer": "It is sound, not sight, that is important beneath the oceans.\nSound travels much faster through water than through air and whales and dolphins use it to communicate and to find food.", "order type": "1"}
+    ]}
+]}

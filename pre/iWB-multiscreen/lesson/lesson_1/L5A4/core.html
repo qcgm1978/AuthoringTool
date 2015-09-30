@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>index</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="keyboard/keyboard.css">
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="component/fillblank/fills-up.js"></script>
+    <script type="text/javascript" src="component/fillblank/keyboard.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            loadActionByData(data, fillUpBlank)});</script>
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <div class="a_head">
+    	<div class="a_head_bor">
+            <span class="a_head_bold"></span>
+            <span class="a_head_txt">Identifying main ideas</span>
+            <hr>
+            <div class="b_head">Thinking around a topic</div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="main_content">
+    	<div class="content">
+            <div class="number">2</div>
+            <div class="main_right_text">
+            	<div class="question_text"><i id="audioPl" class="listen"><audio src="media/SB_L_20_EDIT.mp3"></audio></i>You are going to hear six short conversations based on the topics in exercise 1. Listen and say</div>
+                <div class="clearfix">
+                	<div class="con_left">
+                        <p>what the topic is</p>
+                        <p>how many speakers there are in each conversation.</p>
+                        <p>The first one has been done as an example.</p>
+                    </div>
+                    <div class="con_right">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab">
+                            <tr class="tab_one">
+                                <td class="width1">Conversation</td>
+                                <td>Topic</td>
+                                <td>Number and type of speakers</td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="middle"><strong>1</strong></td>
+                                <td><i>The cost of university education</i></td>
+                                <td><i>2 / one man, one woman</i></td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="middle"><strong>2</strong></td>
+                                <td><input id="blank_1_1" type="text" class="tex" ></td>
+                                <td><input id="blank_1_2" type="text" class="tex" ></td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="middle"><strong>3</strong></td>
+                                <td><input id="blank_2_1" type="text" class="tex" ></td>
+                                <td><input id="blank_2_2" type="text" class="tex" ></td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="middle"><strong>4</strong></td>
+                                <td><input id="blank_3_1" type="text" class="tex" ></td>
+                                <td><input id="blank_3_2" type="text" class="tex" ></td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="middle"><strong>5</strong></td>
+                                <td><input id="blank_4_1" type="text" class="tex" ></td>
+                                <td><input id="blank_4_2" type="text" class="tex" ></td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="middle"><strong>6</strong></td>
+                                <td><input id="blank_5_1" type="text" class="tex" ></td>
+                                <td><input id="blank_5_2" type="text" class="tex" ></td>
+                            </tr>
+                        </table>
+                        <div class="annotation">
+                            <div class="correct"></div><span>correct</span>
+                            <div class="error"></div><span>error</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

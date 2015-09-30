@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>index</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="keyboard/keyboard.css"/>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="component/fillblank/fills-up.js"></script>
+    <script type="text/javascript" src="component/fillblank/keyboard.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            loadActionByData(data, fillUpBlank)});</script>
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <div class="a_head">
+    	<div class="a_head_bor">
+            <span class="a_head_bold"></span>
+            <span class="a_head_txt">Orientating yourself to the text</span>
+            <hr>
+            <div class="b_head">Using paragraphs and main ideas</div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="main_content">
+    	<div class="content">
+            <div class="number">4</div>
+            <div class="main_right_text">
+            	<div class="question_text">Discuss what you selected with a partner, then write two sentences that summarise the passage.</div>
+                <div class="clearfix">
+                	<div class="con_left">
+                        <textarea class="tex_area tex" id="blank_1_1"></textarea>
+                        <div class="keyBox" id="skb"></div>
+                        <div class="annotation">
+                            <div class="correct"></div><span>correct</span>
+                            <div class="error"></div><span>error</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

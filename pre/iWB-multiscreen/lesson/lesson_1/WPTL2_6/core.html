@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>index</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="component/highlight/highlight.js"></script>
+    <script type="text/javascript" src="component/fillblank/fills-up.js"></script>
+    <script type="text/javascript" src="component/fillblank/keyboard.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript">
+        /*var checkAnswer=null,checkFn=null;*/
+        $(document).ready(function() {
+            loadActionByData(data, highLight);
+        });
+    </script>
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <div class="a_head">
+    	<div class="a_head_bor">
+            <span class="a_head_bold"></span>
+            <span class="a_head_txt">Writing practice test lesson 2</span>
+            <hr>
+            <div class="b_head">Writing Task 1 training: the introduction</div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="main_content">
+    	<div class="content">
+            <div class="number">4</div>
+            <div class="main_right_text">
+            	<div class="question_text">Select any useful words or phrases in the introductions drawing attention to important data that you might use when writing about other topics.</div>
+                <div class="clearfix ">
+                	<div class="con_left pos_r">
+                        <div class="list">
+                            <strong>1</strong>
+                            <div class="hl" id="highlight_1">
+                                <i data-answer="answer1">In the table we can see some information about</i> <i>students enrolled at</i> <i>Bristol University</i> <i>from the year</i> <i>1928 till 2008</i>.
+                            </div>
+                        <div class="list">
+                            <strong>2</strong>
+                            <div class="hl" id="highlight_2">
+                                <i data-answer="answer1">The table shows</i> <i>the numbers of</i> <i>student enrolments at</i> <i>Bristol University</i>, <i data-answer="answer1">covering</i> <i>the number of students</i>, <i>the percentages of female and male</i>, <i>and where they came from</i>, <i>in three different years</i>.
+                            </div>
+                        </div>
+                        <div class="list">
+                        	<strong>3</strong>
+                            <div class="hl" id="highlight_3">
+                                <i data-answer="answer1">This table shows</i> <i>the number of people</i> <i>who are studying at</i> <i>Bristol University</i> <i>and the number of</i> <i>people of each gender</i> <i>as well.</i> <i>Also,</i> <i>it shows the distance</i> <i>that students come from,</i> <i data-answer="answer1">divided into two categories</i>: <i>within 30 miles of Bristol</i> <i>and overseas.</i>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <strong>4</strong>
+                            <div class="hl" id="highlight_4">
+                                <i data-answer="answer1">The table illustrates some information about</i> <i>student enrolments at Bristol University.</i> <i data-answer="answer1">The table shows the percentages</i> <i>of male and female students</i> <i>and how many students</i> <i>came from overseas</i> <i>or within 30 miles of Bristol</i> <i>in 1928, 1958 and 2008.</i>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <strong>5</strong>
+                            <div class="hl" id="highlight_5">
+                                <i data-answer="answer1">The table gives information about</i> <i>Bristol University student enrolments,</i> <i>the percentages of males and females</i> <i>and what area they came from</i>, <i>in the years 1928, 1958 and 2008.</i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="con_right"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</body>

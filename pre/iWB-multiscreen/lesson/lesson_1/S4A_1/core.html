@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>index</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="keyboard/keyboard.css">
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="component/fillblank/fills-up.js"></script>
+    <script type="text/javascript" src="component/fillblank/keyboard.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript">
+        var checkAnswer=null,checkFn=null,showAnswer=null;
+        $(document).ready(function() {
+            loadActionByData(data, fillUpBlank)});</script>
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <div class="a_head">
+    	<div class="a_head_bor">
+            <span class="a_head_bold"></span>
+            <span class="a_head_txt">Becoming more fluent</span>
+            <hr>
+            <div class="b_head">Speaking Part 1 training: expanding your answers</div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="main_content">
+    	<div class="content">
+            <div class="left clearfix">
+                <div class="number">1</div>
+                <div class="main_right_text">
+                    <div class="question_text">Choose one of the topics in the box to talk about. Think about how you can expand on your chosen topic.</div>
+                    <div class="clearfix">
+                        <div class="con_left">
+                            <div class=" black_box dis_i_b pos_r">
+                                <p class="pb10">your interests</p>
+                                <p class="pb10">clothes and fashion</p>
+                                <p class="pb10">entertainment</p>
+                                <p class="pb10">the climate in your country</p>
+                                <p class="pb10">travel plans</p>
+                                <p>your education</p>
+                                <p class="pos_a" style="top:7px; right:-40px; z-index:9;"><img src="images/arrow01.png"></p>
+
+                            </div>
+                            <p class="dis_i_b fl note pl20" style="vertical-align:top">e.g. football <img src="images/arrow02.png"> supporting my local team <img src="images/arrow02.png"> playing with friends</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right mt30">
+                <div class="number">2</div>
+                <div class="main_right_text">
+                    <div class="question_text">Write your chosen topic and your additional ideas below and then show them to your partner.</div>
+                    <div class="clearfix">
+                        <div class="con_right">
+                            <textarea name="" cols="" rows="" class="tex purple_input mb5" id="blank_1_1"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+html,
+body,
+ul,
+li,
+ol,
+dl,
+dd,
+dt,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+legend,
+img {
+  margin: 0;
+  padding: 0;
+}
+fieldset,
+img {
+  border: none;
+}
+img {
+  display: block;
+}
+address,
+caption,
+cite,
+code,
+dfn,
+th,
+var {
+  font-style: normal;
+  font-weight: normal;
+}
+ul,
+ol {
+  list-style: none;
+}
+input {
+  padding-top: 0;
+  padding-bottom: 0;
+  font-family: "SimSun", "宋体";
+}
+input::-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+select,
+input {
+  vertical-align: middle;
+}
+select,
+input,
+textarea {
+  font-size: 12px;
+  margin: 0;
+}
+input[type="text"],
+input[type="password"],
+textarea {
+  outline-style: none;
+  -webkit-appearance: none;
+}
+textarea {
+  resize: none;
+}
+input,
+textarea {
+  background: none;
+  border: none;
+}
+table {
+  border-collapse: collapse;
+}
+body {
+  color: #333;
+  font: 12px/20px "SimSun", "宋体", "Arial Narrow", HELVETICA;
+  background: #fff;
+}
+a {
+  color: #666;
+  text-decoration: none;
+}
+a:visited {
+  color: #666;
+}
+a:hover,
+a:active,
+a:focus {
+  color: #ff8400;
+  text-decoration: underline;
+}
+.box {
+  width: 1024px;
+  margin: 0 auto;
+  font-family: "Arial", "serif";
+}
+.headBar {
+  height: 92px;
+}
+.headBar .title {
+  float: left;
+  display: inline;
+  width: 957px;
+  height: 47px;
+  padding: 40px 0 0 50px;
+  color: #feffff;
+  background: url(../img/background.png) left top no-repeat;
+}
+.headBar .title .title_bold {
+  font-size: 60px;
+  font-weight: bold;
+}
+.headBar .title .title_style {
+  font-size: 30px;
+  margin: 0 20px;
+}
+.headBar .title .title_font {
+  font-size: 18px;
+}
+.content {
+  padding: 60px 50px;
+}
+.content .cont_list {
+  width: 1024px -120 -80;
+  height: 195px;
+  padding: 15px 40px 0 ;
+  border-top: 1px solid #724D8B;
+  background: url(../img/cont01.png) left top no-repeat;
+  color: #000000;
+}
+.content .cont_list div {
+  margin-bottom: 15px;
+}
+.content .cont_list h3 {
+  padding-left: 20px;
+  background: url(../commonImg/insets_01.png) left center no-repeat;
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+.content .cont_list p {
+  line-height: 25px;
+  padding-left: 20px;
+  font-size: 17px;
+}

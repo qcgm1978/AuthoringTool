@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>index</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="component/highlight/highlight.js"></script>
+    <script type="text/javascript" src="component/fillblank/fills-up.js"></script>
+    <script type="text/javascript" src="component/fillblank/keyboard.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript">
+        /*var checkAnswer=null,checkFn=null;*/
+        $(document).ready(function() {
+            loadActionByData(data, highLight);
+        });
+    </script>
+</head>
+<body>
+<!-- header -->
+<div class="header">
+    <div class="a_head">
+    	<div class="a_head_bor">
+            <span class="a_head_bold"></span>
+            <span class="a_head_txt">Writing practice test lesson 2</span>
+            <hr>
+            <div class="b_head">Writing Task 1 training: drawing attention to important data</div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="main_content">
+    	<div class="content">
+            <div class="number">5</div>
+            <div class="main_right_text">
+            	<div class="question_text">These sentences were written by IELTS candidates to describe different graphs and tables. <br>Select the words in each one that you could use in writing about other topics.</div>
+                <div class="clearfix ">
+                	<div class="con_left pos_r">
+                        <div class="list">
+                            <strong>1</strong>
+                            <div class="hl" id="highlight_1">
+                                <i>Also</i> <i data-answer="answer1">noteworthy</i> <i>is the low government expenditure</i> <i>on education.</i> <i></i>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <strong>2</strong>
+                            <div class="hl" id="highlight_2">
+                                <i data-answer="answer1">This graph shows a striking difference</i> <i>between the younger age group</i> <i>and the older one.</i>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <strong>3</strong>
+                            <div class="hl" id="highlight_3">
+                                <i data-answer="answer1">The most striking feature of the graph</i> <i>is</i> <i data-answer="answer1">the sudden increase</i> <i>in the popularity of computer games.</i>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <strong>4</strong>
+                            <div class="hl" id="highlight_4">
+                                <i data-answer="answer1">Another fact worth noticing</i> <i>in the table is that females are more numerous</i> <i>than males.</i>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <strong>5</strong>
+                            <div class="hl" id="highlight_5">
+                                <i data-answer="answer1">The most remarkable point</i> <i>is that the number of males with a criminal record</i> <i data-answer="answer1">increased dramatically.</i>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <strong>6</strong>
+                            <div class="hl" id="highlight_6">
+                                <i data-answer="answer1">It is noticeable that</i> <i>expenditure on photography</i> <i data-answer="answer1">remained stable</i> <i>from 1992 to 2000.</i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="con_right"></div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</body>

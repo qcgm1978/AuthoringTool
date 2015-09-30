@@ -1,0 +1,942 @@
+{
+  "lesson_id": "",
+  "type": "lesson",
+  "idc_version": "1.0.0",
+  "title": {
+    "en": "ClassServer 4 screen demonstration",
+    "zh": ""
+  },
+  "author": [],
+  "date_of_birth": "",
+  "publication_date": "",
+  "image": [],
+  "interface_language": [
+    "zh-CN",
+    "en-GB"
+  ],
+  "subject": {
+    "name": "English",
+    "sub_subject": {
+      "name": "Map Labelling",
+      "sub_subject": {
+        "name": "IELTS",
+        "sub_subject": {
+          "name": "ClassServer 4 screen demonstration",
+          "sub_subject": ""
+        }
+      }
+    }
+  },
+  "version": "1.0",
+  "description": {
+    "en": "",
+    "zh": ""
+  },
+  "objective": {
+    "en": "",
+    "zh": ""
+  },
+  "tags": [
+    "English",
+    "IELTS",
+    "Listening",
+    "Education",
+    "Foundation",
+    "In Class"
+  ],
+  "level": [
+    {
+      "value": "4",
+      "standard": "CollegePre"
+    },
+    {
+      "value": "A",
+      "standard": "CEFR for Languages"
+    }
+  ],
+  "children": [
+    {
+      "order": "0",
+      "bundle_id": "",
+      "name": {
+        "en": "Lesson overview",
+        "zh": ""
+      },
+      "type": "leaf",
+      "bundle": {
+        "core": {
+          "order" :"0",
+          "core_id": "",
+          "name": {
+            "en": "Lesson overview",
+            "zh": ""
+          },
+          "type": "html",
+          "interactive": "no",
+          "interactive_type": {
+            "type": "",
+            "name": ""
+          },
+          "tags": [],
+          "data": "",
+          "address": "lesson_1/main/core.html",
+          "knowledge_points": {
+            "name": {
+              "en": "Knowledge Points",
+              "zh": "知识点"
+            },
+            "subjects": []
+          },
+          "teaching_plan": {
+            "name": {
+              "en": "Teaching Plan",
+              "zh": "教案"
+            },
+            "contents": []
+          }
+        },
+        "supports": []
+      }
+    },
+    {
+      "order": "1",
+      "bundle_id": "",
+      "name": {
+        "en": "Lesson introduction",
+        "zh": ""
+      },
+      "type": "leaf",
+      "bundle": {
+        "core": {
+          "order" :"0",
+          "core_id": "",
+          "name": {
+            "en": "Lesson introduction",
+            "zh": ""
+          },
+          "type": "html",
+          "interactive": "no",
+          "interactive_type": {
+            "type": "",
+            "name": ""
+          },
+          "tags": [],
+          "data": "",
+          "address": "lesson_1/R1A_7/core.html",
+          "knowledge_points": {
+            "name": {
+              "en": "Knowledge Points",
+              "zh": "知识点"
+            },
+            "subjects": []
+          },
+          "teaching_plan": {
+            "name": {
+              "en": "Teaching Plan",
+              "zh": "教案"
+            },
+            "contents": []
+          }
+        },
+        "supports": []
+      }
+    },
+    {
+      "order": "2",
+      "bundle_id": "",
+      "name": {
+        "en": "Video",
+        "zh": ""
+      },
+      "type": "leaf",
+      "bundle": {
+        "core": {
+          "order" :"0",
+          "core_id": "",
+          "name": {
+            "en": "Video",
+            "zh": ""
+          },
+          "type": "html",
+          "interactive": "no",
+          "interactive_type": {
+            "type": "",
+            "name": ""
+          },
+          "tags": [],
+          "data": "",
+          "address": "lesson_1/S2ASF_26/core.html",
+          "knowledge_points": {
+            "name": {
+              "en": "Knowledge Points",
+              "zh": "知识点"
+            },
+            "subjects": []
+          },
+          "teaching_plan": {
+            "name": {
+              "en": "Teaching Plan",
+              "zh": "教案"
+            },
+            "contents": []
+          }
+        }
+      }
+    },
+    {
+      "order": "3",
+      "bundle_id": "",
+      "name": {
+        "en": "Exercise 1",
+        "zh": ""
+      },
+      "type": "leaf",
+      "bundle": {
+        "core": {
+          "order" :"0",
+          "core_id": "",
+          "name": {
+            "en": "Ex.1 Activity",
+            "zh": "练习"
+          },
+          "type": "html",
+          "interactive": "yes",
+          "interactive_type": {
+            "type": "1125",
+            "name": "highlight"
+          },
+          "tags": [],
+          "data": "",
+          "address": "lesson_1/R1B_5/core.html",
+          "knowledge_points": {
+            "name": {
+              "en": "Knowledge Points",
+              "zh": "知识点"
+            },
+            "subjects": []
+          },
+          "teaching_plan": {
+            "name": {
+              "en": "Teaching Plan",
+              "zh": "教案"
+            },
+            "contents": []
+          }
+        },
+        "supports":[]
+      }
+    },
+    {
+      "order": "4",
+      "bundle_id": "",
+      "name": {
+        "en": "Exercise 2",
+        "zh": ""
+      },
+      "type": "leaf",
+      "bundle": {
+        "core": {
+          "order" :"0",
+          "core_id": "",
+          "name": {
+            "en": "Ex.2 Activity",
+            "zh": "练习"
+          },
+          "type": "html",
+          "interactive": "yes",
+          "interactive_type": {
+            "type": "1125",
+            "name": "highlight"
+          },
+          "tags": [],
+          "data": "",
+          "address": "lesson_1/R1B_5a/core.html",
+          "knowledge_points": {
+            "name": {
+              "en": "Knowledge Points",
+              "zh": "知识点"
+            },
+            "subjects": []
+          },
+          "teaching_plan": {
+            "name": {
+              "en": "Teaching Plan",
+              "zh": "教案"
+            },
+            "contents": []
+          }
+        },
+        "supports": []
+      }
+    },
+    {
+      "order": "5",
+      "bundle_id": "",
+      "name": {
+        "en": "Exercise 3",
+        "zh": ""
+      },
+      "type": "leaf",
+      "bundle": {
+        "core": {
+          "order" :"0",
+          "core_id": "",
+          "name": {
+            "en": "Ex.3 Activity",
+            "zh": ""
+          },
+          "type": "html",
+          "interactive": "yes",
+          "interactive_type": {
+            "type": "1102",
+            "name": "single-choice"
+          },
+          "tags": [],
+          "data": "",
+          "address": "lesson_1/R1B_8/core.html",
+          "knowledge_points": {
+            "name": {
+              "en": "Knowledge Points",
+              "zh": "知识点"
+            },
+            "subjects": []
+          },
+          "teaching_plan": {
+            "name": {
+              "en": "Teaching Plan",
+              "zh": "教案"
+            },
+            "contents": []
+          }
+        },
+        "supports": []
+      }
+    },
+    {
+      "order": "6",
+      "bundle_id": "",
+      "name": {
+        "en": "Exercise 3",
+        "zh": ""
+      },
+      "type": "leaf",
+      "bundle": {
+        "core": {
+          "order" :"0",
+          "core_id": "",
+          "name": {
+            "en": "Ex.4 Activity",
+            "zh": "练习"
+          },
+          "type": "html",
+          "interactive": "yes",
+          "interactive_type": {
+            "type": "1104",
+            "name": "fill in the blanks"
+          },
+          "tags": [],
+          "data": "",
+          "address": "lesson_1/R1B_6/core.html",
+          "knowledge_points": {
+            "name": {
+              "en": "Knowledge Points",
+              "zh": "知识点"
+            },
+            "subjects": []
+          },
+          "teaching_plan": {
+            "name": {
+              "en": "Teaching Plan",
+              "zh": "教案"
+            },
+            "contents": []
+          }
+        },
+        "supports": []
+      }
+    },
+    {
+      "order": "7",
+      "bundle_id": "",
+      "name": {
+        "en": "Listening lesson",
+        "zh": ""
+      },
+      "type": "leaf",
+      "bundle": {
+        "core": {
+          "order" :"0",
+          "core_id": "",
+          "name": {
+            "en": "Lesson overview",
+            "zh": ""
+          },
+          "type": "html",
+          "interactive": "no",
+          "interactive_type": {
+            "type": "",
+            "name": ""
+          },
+          "tags": [],
+          "data": "",
+          "address": "lesson_1/L5A0/core.html",
+          "knowledge_points": {
+            "name": {
+              "en": "Knowledge Points",
+              "zh": "知识点"
+            },
+            "subjects": []
+          },
+          "teaching_plan": {
+            "name": {
+              "en": "Teaching Plan",
+              "zh": "教案"
+            },
+            "contents": []
+          }
+        },
+        "supports": [
+          {
+            "order": "1",
+            "support_id": "",
+            "name": {
+              "en": "Ex.1 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "yes",
+            "interactive_type": {
+              "type": "1104",
+              "name": "fill in the blanks"
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/L5A1/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "2",
+            "support_id": "",
+            "name": {
+              "en": "Ex.2 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "1104",
+              "name": "fill in the blanks"
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/L5A4/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "3",
+            "support_id": "",
+            "name": {
+              "en": "Tip",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/L5A6/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "order": "8",
+      "bundle_id": "",
+      "name": {
+        "en": "Speaking lesson",
+        "zh": ""
+      },
+      "type": "leaf",
+      "bundle": {
+        "core": {
+          "order" :"0",
+          "core_id": "",
+          "name": {
+            "en": "Lesson overview",
+            "zh": ""
+          },
+          "type": "html",
+          "interactive": "no",
+          "interactive_type": {
+            "type": "",
+            "name": ""
+          },
+          "tags": [],
+          "data": "",
+          "address": "lesson_1/S4A_0/core.html",
+          "knowledge_points": {
+            "name": {
+              "en": "Knowledge Points",
+              "zh": "知识点"
+            },
+            "subjects": []
+          },
+          "teaching_plan": {
+            "name": {
+              "en": "Teaching Plan",
+              "zh": "教案"
+            },
+            "contents": []
+          }
+        },
+        "supports": [
+          {
+            "order": "1",
+            "support_id": "",
+            "name": {
+              "en": "Ex.1 and Ex.2 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/S4A_1/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "2",
+            "support_id": "",
+            "name": {
+              "en": "Ex.3 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/S4A_2/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "3",
+            "support_id": "",
+            "name": {
+              "en": "Ex.4 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/S4A_5/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "4",
+            "support_id": "",
+            "name": {
+              "en": "Transcript",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/S4A_6/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          }
+        ]
+      }
+    },
+    {
+      "order": "9",
+      "bundle_id": "",
+      "name": {
+        "en": "Writing lesson",
+        "zh": ""
+      },
+      "type": "leaf",
+      "bundle": {
+        "core": {
+          "order" :"0",
+          "core_id": "",
+          "name": {
+            "en": "Lesson overview",
+            "zh": ""
+          },
+          "type": "html",
+          "interactive": "no",
+          "interactive_type": {
+            "type": "",
+            "name": ""
+          },
+          "tags": [],
+          "data": "",
+          "address": "lesson_1/WPTL2_0/core.html",
+          "knowledge_points": {
+            "name": {
+              "en": "Knowledge Points",
+              "zh": "知识点"
+            },
+            "subjects": []
+          },
+          "teaching_plan": {
+            "name": {
+              "en": "Teaching Plan",
+              "zh": "教案"
+            },
+            "contents": []
+          }
+        },
+        "supports": [
+          {
+            "order": "1",
+            "support_id": "",
+            "name": {
+              "en": "Ex.1 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/WPTL2_1/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "2",
+            "support_id": "",
+            "name": {
+              "en": "Question",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/WPTL2_3/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "3",
+            "support_id": "",
+            "name": {
+              "en": "Ex.2 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/WPTL2_2/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "4",
+            "support_id": "",
+            "name": {
+              "en": "Ex.3 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/WPTL2_4/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "5",
+            "support_id": "",
+            "name": {
+              "en": "Ex.4 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/WPTL2_6/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "6",
+            "support_id": "",
+            "name": {
+              "en": "Ex.5 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/WPTL2_7/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          },
+          {
+            "order": "7",
+            "support_id": "",
+            "name": {
+              "en": "Ex.6 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "no",
+            "interactive_type": {
+              "type": "",
+              "name": ""
+            },
+            "tags": [],
+            "data": "",
+            "address": "lesson_1/WPTL2_8/core.html",
+            "knowledge_points": {
+              "name": {
+                "en": "Knowledge Points",
+                "zh": "知识点"
+              },
+              "subjects": []
+            },
+            "teaching_plan": {
+              "name": {
+                "en": "Teaching Plan",
+                "zh": "教案"
+              },
+              "contents": []
+            }
+          }
+        ]
+      }
+    }
+
+  ],
+  "knowledge_points": {
+    "name": {
+      "en": "Knowledge Points",
+      "zh": "知识点"
+    },
+    "subjects": []
+  },
+  "teaching_plan": {
+    "name": {
+      "en": "Teaching Plan",
+      "zh": "教案"
+    },
+    "contents": []
+  },
+  "pre_class": "",
+  "post_class": ""
+}

@@ -1,0 +1,275 @@
+﻿* {padding:0px; margin:0px;}
+html,body {
+  width: 100%;
+  margin:0;
+  padding:0;
+overflow:hidden;
+}
+body {
+  background:url(../images/bg.png);
+  color:#333;
+  font-size:62.5%;/*这就使em值变为 16px*62.5%=1em, 这样12px=1.2em, 1em=1em, 也就是说只需要将你的原来的px数值除以10，然后换上em作为单位就行了。*/
+  font-family: "Arial", "serif";
+  
+  
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Arial", "serif";
+}
+ul,li {list-style:none;}
+ul,ol {list-style-type:none;}
+img {
+  border: none;
+}
+input,
+select,
+textarea {
+  outline: none;
+  border: none;
+  background: none;
+}
+textarea {
+  resize: none;
+}
+a{text-decoration:none; hide-focus:expression(this.hideFocus=true); outline:none;}
+a:link,a:visited,a:hover,a:active {text-decoration:none;outline:none;}
+a:focus{outline:0;}
+a:link {color:#4A0707;outline:none;}
+a:hover {color:#600;}
+
+.text_ellipsis {text-overflow:ellipsis; white-space:nowrap; overflow:hidden;}
+.fl{float:left;}
+.fr{float:right;}
+.clear{clear:both;margin:0;padding:0;height:0;}
+.clearfix:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+.clearfix {zoom: 1; display: inline-block; _height:0.1em;}
+*html .clearfix {height: 1%;}
+*+html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* position */
+.pos_r {position:relative;}
+.pos_a {position:absolute;}
+/* font-size */
+.font18 {font-size:1.8em;}
+.font20 {font-size:2em;}
+/* color */
+.bgffffff {background:#fff;}
+.colfff {color:#fff;}
+/* margin and padding */
+.mt5{margin-top:0.5em;}
+.mt10{margin-top:1em;}
+.mt15{margin-top:1.5em;}
+.mt20{margin-top:2em;}
+.mt25{margin-top:2.5em;}
+.mt30{margin-top:3em;}
+.mt35{margin-top:3.5em;}
+.mt40{margin-top:4em;}
+.mt45{margin-top:4.5em;}
+.mt50{margin-top:5em;}
+.ml5{margin-left:0.5em;}
+.ml10{margin-left:1em;}
+.ml15{margin-left:1.5em;}
+.ml20{margin-left:2em;}
+.ml25{margin-left:2.5em;}
+.ml30{margin-left:3em;}
+.ml35{margin-left:3.5em;}
+.ml40{margin-left:4em;}
+.ml45{margin-left:4.5em;}
+.ml50{margin-left:5em;}
+.mr5{margin-right:0.5em;}
+.mr10{margin-right:1em;}
+.mr15{margin-right:1.5em;}
+.mr20{margin-right:2em;}
+.mr25{margin-right:2.5em;}
+.mr30{margin-right:3em;}
+.mr35{margin-right:3.5em;}
+.mr40{margin-right:4em;}
+.mr45{margin-right:4.5em;}
+.mr50{margin-right:5em;}
+.mb5{margin-bottom:0.5em;}
+.mb10{margin-bottom:1em;}
+.mb15{margin-bottom:1.5em;}
+.mb20{margin-bottom:2em;}
+.mb25{margin-bottom:2.5em;}
+.mb30{margin-bottom:3em;}
+.mb35{margin-bottom:3.5em;}
+.mb40{margin-bottom:4em;}
+.mb45{margin-bottom:4.5em;}
+.mb50{margin-bottom:5em;}
+.pt5{padding-top:0.5em;}
+.pt10{padding-top:1em;}
+.pt15{padding-top:1.5em;}
+.pt20{padding-top:2em;}
+.pt25{padding-top:2.5em;}
+.pt30{padding-top:3em;}
+.pt35{padding-top:3.5em;}
+.pt40{padding-top:4em;}
+.pt45{padding-top:4.5em;}
+.pt50{padding-top:5em;}
+.pl5{padding-left:0.5em;}
+.pl10{padding-left:1em;}
+.pl15{padding-left:1.5em;}
+.pl20{padding-left:2em;}
+.pl25{padding-left:2.5em;}
+.pl30{padding-left:3em;}
+.pl35{padding-left:3.5em;}
+.pl40{padding-left:4em;}
+.pl45{padding-left:4.5em;}
+.pl50{padding-left:5em;}
+.pr5{padding-right:0.5em;}
+.pr10{padding-right:1em;}
+.pr15{padding-right:1.5em;}
+.pr20{padding-right:2em;}
+.pr25{padding-right:2.5em;}
+.pr30{padding-right:3em;}
+.pr35{padding-right:3.5em;}
+.pr40{padding-right:4em;}
+.pr45{padding-right:4.5em;}
+.pr50{padding-right:5em;}
+.pb5{padding-bottom:0.5em;}
+.pb10{padding-bottom:1em;}
+.pb15{padding-bottom:1.5em;}
+.pb20{padding-bottom:2em;}
+.pb25{padding-bottom:2.5em;}
+.pb30{padding-bottom:3em;}
+.pb35{padding-bottom:3.5em;}
+.pb40{padding-bottom:4em;}
+.pb45{padding-bottom:4.5em;}
+.pb50{padding-bottom:5em;}
+/*line-height*/
+.lh20{line-height:2em;}
+.lh22{line-height:2.2em;}
+.lh24{line-height:2.4em;}
+.lh28{line-height:2.8em;}
+.lh30{line-height:3em;}
+.lh32{line-height:3.2em;}
+.lh34{line-height:3.4em;}
+.lh35{line-height:3.5em;}
+.lh40{line-height:4em;}
+/* align */
+.tac{text-align:center;}
+.tar{text-align:right;}
+.tal{text-align:left;}
+/* display */
+.normal{font-weight:normal;}
+.dis_i_b{ display:inline-block;}
+.dis_b{ display:block;}
+.dis_i{ display:inline;}
+
+/* header*/
+.header {width:95%; background:url(../images/title_bg.png) repeat-x; height:144px; border:solid 0.1em #BAAA9A; margin:2em auto; color:#4a0707;}
+.a_head {background:url(../images/title_01.png) left top no-repeat; margin:1em 4em;}
+.a_head .a_head_bor {margin-left:4em; display:inline-block; padding-top:0.3em;}
+.a_head hr {background:#4a0707; height:0.3em; border:0; margin:0.5em 0;}
+.a_head_bold,.a_head_txt {font-size:4.5em; font-weight:bold;}
+.b_head {font-size:3.5em;}
+/* header end*/
+
+.main {width:95%; background:url(../images/main_bg.png); height:785px; margin:0 auto 2em;}
+.main_content {padding:2em 4em 2em 8em;}
+.content {margin-bottom:2em;}
+.number {float:left; display:inline-block; width:2em; height:2em; line-height:2em; margin-right:0.5em; font-size:2.5em; background-color:#4A0707; text-align:center; color:#FFF;}
+.main_right_text {float:left; max-width:90%; margin-top:1em;}
+.main_right_text .question_text {font-size:3em; margin-bottom:1.5em;}
+
+.con_left,.con_right {font-size:2.4em;}
+
+@media (min-width: 0px) and (max-width: 1023px) {
+  .main {
+    height: auto;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1920px) {
+
+}
+
+.video {
+  margin: 0 auto;
+  display:none;
+}
+
+.videox {
+  position: absolute;
+  width: 640px;
+  height: 360px;
+  top: 280px;
+  left: 140px;
+}
+
+.videox video {
+  width: 640px;
+  height: 360px;
+
+}
+
+.con_right {
+  margin-top: 400px;
+}
+
+@media (max-width:1024px) {
+  .video {
+    display: block;
+  }
+
+  .videox {
+    display: none;!important;
+  }
+
+}
+@media (min-width:1921px) {
+
+  .video {
+    display: none;
+  }
+
+  .con_right {
+    margin-top: 0px;
+  }
+  .videox {    
+    display: block;
+    position: absolute;
+    background-color: #000;
+    right: 0;
+    top: 0;
+    left: auto;
+    bottom: 0;
+    width: 1900px;
+    overflow: hidden;
+    height: 1070px;
+  }
+
+.videox video {
+  width: 1900px;
+  height: 1070px;
+}
+
+
+  .header {
+    position: absolute;
+    background: url(../images/title_bg.png) repeat-x;
+    height: 144px;
+    border: solid 0.1em #BAAA9A;
+    color: #4a0707;
+    left: 30px;
+    right: 1950px;
+    width: auto;
+  }
+
+  .main {
+    position: absolute;
+    top: 164px;
+    left: 30px;
+    right: 1950px;
+    width: auto;
+    position: absolute;
+    top: 204px;
+    left: 30px;
+    right: 1950px;
+  }
+
+}
