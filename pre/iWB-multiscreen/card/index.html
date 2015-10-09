@@ -15,6 +15,8 @@
         font-family: Arial;
         background-color: #fff8cd;
     }
+
+
     .template, .hidden {
         display: none;
     }
@@ -60,7 +62,7 @@
     .circle-container a {
         display: block;
         border-radius: 50%;
-        box-shadow: 0 0 0 5px #fff8af;
+        box-shadow: 0 0 0 5px #9cec1d;
     }
 
     .circle-container img {
@@ -83,12 +85,12 @@
         height: 15rem;
         border: 2px solid #888888;
         border-radius: .5rem;
-        background: url('img/cardbg.png');
+        background-image: url('img/bg_offline.png');
         background-size: cover;
         position: absolute;
         margin-top: .5rem;
         margin-left: 1.6rem;
-        -webkit-transition: -webkit-transform .5s ease-out, opacity .5s ease-out;
+        -webkit-transition: -webkit-transform .5s ease-out, opacity .5s ease-out,  background .5s ease-out;
     }
 
     .card.group {
@@ -197,7 +199,19 @@
         width: 5.6rem;
         height: 5.6rem;
         border-radius: 50%;
-        border: .5rem solid #fff8af;
+        border: .5rem solid #9cec1d;
+    }
+    .card .head.grey img {
+        border: .5rem solid #fff;
+    }
+
+    @media screen and (max-width: 1024px)  {
+        html {
+            font-size: 12px;
+        }
+        .card {
+            margin-left: 0px;
+        }
     }
 
     /*
@@ -224,7 +238,7 @@
         addUserCard({head:"img/p9.jpg",name:"PAUL,Steve", id:"steve_paul",email:"steve_paul@css.com", mobile:"+44    02234567890"}, "group3", 8);
         addUserCard({head:"img/p10.jpg",name:"WATSON,Emily", id:"emily_watson",email:"emily_watson@css.com", mobile:"+44    02234561234"}, "group3", 9);
 
-        $(".user.card").css("margin-left", ($(window).width()-1848)/2 + "px");
+        //$(".user.card").css("margin-left", ($(window).width()-1848)/2 + "px");
         $(window).resize(function() {
             $(".user.card").css("margin-left", ($(window).width()-1848)/2 + "px");
         });
@@ -284,6 +298,13 @@
         } else {
             groupInfo = JSON.parse(groupInfo);
         }
+
+        var groupCount = 0;
+        for(var i=0;i<groupInfo.length; i++) {
+            /**we may have empty groups*/
+            if (groupInfo[i].StudentsListItemColl.length==0) continue;
+        }
+
         for(var i=0;i<groupInfo.length; i++) {
 
             if (groupInfo[i].StudentsListItemColl.length==0) continue;
@@ -402,6 +423,9 @@
 
     function userOnline(i) {
         var ucard = $("#usercard-" + i);
+
+        ucard.css("background-image", "url('img/bg_online.png')");
+
         ucard.find(".head.back").removeClass("back");
         ucard.find(".head.grey").addClass("back");
     }
