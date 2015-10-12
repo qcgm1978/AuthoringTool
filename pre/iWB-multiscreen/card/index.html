@@ -59,6 +59,19 @@
         -webkit-transition: -webkit-transform .3s ease-out, opacity .3s ease-out;
     }
 
+    .circle-container > li.gpt-9:after {
+        content: "";
+        border-bottom: inherit;
+        background: inherit;
+        border-radius: inherit;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 0;
+        clip: rect(35px 50px 50px 0);
+    }
     .circle-container a {
         display: block;
         border-radius: 50%;
@@ -244,6 +257,44 @@
         });
     });
 
+
+    var demoGroupInOne = [
+        {
+            "GroupName": "group1",
+            "StudentsListItemColl": [
+                {
+                    "StudentName": "jessica_winner"
+                },
+                {
+                    "StudentName": "yanan_li"
+                },
+                {
+                    "StudentName": "lei_han"
+                },
+                {
+                    "StudentName": "raj_miller"
+                },
+                {
+                    "StudentName": "fei_meng"
+                },
+                {
+                    "StudentName": "ming_li"
+                },
+                {
+                    "StudentName": "meimei_han"
+                },
+                {
+                    "StudentName": "allen_mark"
+                },
+                {
+                    "StudentName": "steve_paul"
+                },
+                {
+                    "StudentName": "emily_watson"
+                }
+            ]
+        }
+    ];
     var demoInfo = [
         {
             "GroupName": "group1",
@@ -273,6 +324,12 @@
                 },
                 {
                     "StudentName": "meimei_han"
+                },
+                {
+                    "StudentName": "emily_watson"
+                },
+                {
+                    "StudentName": "steve_paul"
                 }
             ]
         },
@@ -281,12 +338,6 @@
             "StudentsListItemColl": [
                 {
                     "StudentName": "allen_mark"
-                },
-                {
-                    "StudentName": "steve_paul"
-                },
-                {
-                    "StudentName": "emily_watson"
                 }
             ]
         }
@@ -369,19 +420,18 @@
         */
     }
 
-    function groupShow(i) {
-        console.log("groupshow " + i);
-        var group = $("#group-" + i);
+    function groupShow(m) {
+        console.log("groupshow " + m);
+        var group = $("#group-" + m);
         group.find(".content").css("top", "19rem");
         group.css("opacity", 1);
         var users = group.data("users");
         for(var i=0; i<users.length; i++) {
-            group.find(".circle-container").append("<li><a href='#'><img src='" + users[i].head + "'></a></li>");
+            group.find(".circle-container").append("<li class='gpt-" + i + "'><a href='#'><img src='" + users[i].head + "'></a></li>");
         }
     }
 
     function showHead(i){
-        console.log("showHead " + i);
         var group = $("#group-" + i);
         group.find('.circle-container').children("li").each(function () {
             var l = $(this).parent().children("li").length;
@@ -391,7 +441,7 @@
             //$(this).addClass('item' + ($(this).index() + 1));
             $(this).css("opacity", "1");
             $(this).css("-webkit-transform", "rotate(" + (e*c) + "deg) translate(5rem) rotate(-" + (e*c) + "deg)");
-
+/*
             $(this).click(function() {
                 if ($(this).hasClass("current")) {
                     $(this).removeClass("current");
@@ -412,23 +462,81 @@
                     });
                 }
             });
+            */
         });
+
+        if( group.find('.circle-container').children("li").length>5) {
+            setTimeout(function() {
+                var last = group.find('.circle-container').children("li").last();
+                last.css("z-index", "-1");
+                var cloned = last.clone().css("z-index", "10").css("-webkit-clip-path", "polygon(0 0, 0 100%, 100% 0)");
+                group.find('.circle-container').append(cloned);
+            }, 500);
+        }
     }
 
     function userOffline(i) {
         var ucard = $("#usercard-" + i);
+        ucard.removeClass("online");
         ucard.find(".head:not(.back)").addClass("back");
         ucard.find(".head.grey").removeClass("back");
+        ucard.css("background-image", "url('img/bg_offline.png')");
+
+        if (showOnline) {
+            ucard.hide();
+            onlineFlows();
+        }
     }
 
     function userOnline(i) {
         var ucard = $("#usercard-" + i);
 
+        ucard.addClass("online");
         ucard.css("background-image", "url('img/bg_online.png')");
 
         ucard.find(".head.back").removeClass("back");
         ucard.find(".head.grey").addClass("back");
+
+        if (showOnline) {
+            ucard.show();
+            onlineFlows();
+        }
     }
+
+    var showOnline = false;
+
+    function showOnlineUsers() {
+        showOnline = true;
+        $(".card.user:not(.online)").hide();
+
+        onlineFlows();
+    }
+
+    function onlineFlows() {
+        var i=0;
+        $(".card.user.online").each(function() {
+            var left = i%4;
+            var top = Math.floor(i/4);
+            left  = left * 21;
+            top = top * 16;
+            $(this).css("-webkit-transform", "translate(" + left + "rem, " + top + "rem)");
+            i++;
+        });
+    }
+
+    function showAllUsers() {
+        showOnline = false;
+        var i=0;
+        $(".card.user").not(".template").show().each(function() {
+            var left = i%4;
+            var top = Math.floor(i/4);
+            left  = left * 21;
+            top = top * 16;
+            $(this).css("-webkit-transform", "translate(" + left + "rem, " + top + "rem)");
+            i++;
+        });
+    }
+
 
     /*根据数据类型新增一个用户卡片*/
     function addUserCard(user, group, i) {
