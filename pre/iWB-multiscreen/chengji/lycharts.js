@@ -28,6 +28,11 @@ var initCharts = function(data) {
 		tooltip: {
 			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 		},
+		legend:{
+			itemStyle: {
+                fontSize: '24px'
+            }
+		},
 		plotOptions: {
 			pie: {
 				allowPointSelect: true,
@@ -48,14 +53,14 @@ var initCharts = function(data) {
 		series: [{
 			type:"pie",
 			name: 'Score Data',
-			center: [200, 220],
-			size: 350,
+			center: [210, 210],
+			size: 450,
 			data:[{
-				name: 'wrong',
+				name: 'Wrong',
 				y: shuju4,
 				color: "#d56a6a"
 			},{
-				name: 'right',
+				name: 'Right',
 				y: shuju3,
 				color: "#50a066"
 			}]
@@ -75,6 +80,11 @@ var initCharts = function(data) {
 			},
 			stackLabels: {
 				enabled: true
+			},
+			labels:{
+				style: {
+					fontSize:'18px'
+				}
 			}
 		},
 		yAxis: {
@@ -82,10 +92,20 @@ var initCharts = function(data) {
 			max: 100,
 			title: {
 				text: null
+			},
+			labels:{
+				style: {
+					fontSize:'12px'
+				}
 			}
 		},
 		tooltip: {
 			valueSuffix: ' %'
+		},
+		legend:{
+			itemStyle: {
+                fontSize: '24px'
+            }
 		},
 		plotOptions: {
 			bar: {
@@ -105,11 +125,11 @@ var initCharts = function(data) {
 			enabled: false
 		},
 		series: [{
-			name: 'wrong',
+			name: 'Wrong',
 			data: shuju2,
 			color: "#d56a6a"
 		},{
-			name: 'right',
+			name: 'Right',
 			data: shuju1,
 			color: "#50a066"
 		}]
@@ -126,8 +146,7 @@ var initTable=function(data,target){
 		htmlStr+='</li><li class="percent">'+data[i].percent;
 		htmlStr+='%</li><li class="num">'+data[i].right;
 		htmlStr+='</li><li class="desc">'+data[i].description;
-		htmlStr+='</li><li class="a"><a href="'+data[i].id;
-		htmlStr+='"></a></li></ul>';
+		htmlStr+='</li><li class="a"></li></ul>';
 	}
 	target.html(htmlStr)
 }

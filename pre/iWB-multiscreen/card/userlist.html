@@ -12,6 +12,7 @@
         #root_boxs {
             width: 1700px;
             margin: 40px auto;
+            position: relative;
         }
 
         h1 {
@@ -135,8 +136,12 @@
             background-color: #908d8d;
             color: #f3f3f3
         }
+
+        a {
+            text-decoration: none;
+        }
     </style>
-    <script src="jquery-2.1.4.min.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
     <script>
         var uinfos = [{
             "head": "img/p1.jpg",
@@ -219,6 +224,10 @@
         <div>Useing paragraphs and main ideas <i></i></div>
         <span>Class 101</span>
     </div>
+
+    <div style="position: absolute; left:10px; top:150px; font-size: 24px; color: #444;color: #6b7986;
+    font-size: 24px;
+    font-family: '黑体';"><a href="highcharts.html">RETURN</a></div>
     <article>
         <h2>PREVIEW ACTIVITIES</h2>
         <table>
@@ -241,102 +250,102 @@
             <tr>
                 <td class="white">STUDENT 1</td>
                 <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td class="red">09:30</td>
-                <td class="red">09:30</td>
-                <td>09:30</td>
-                <td class="red">09:30</td>
+                <td>08:14</td>
+                <td>02:34</td>
+                <td>01:59</td>
+                <td>01:32</td>
+                <td>04:11</td>
+                <td>03:55</td>
             </tr>
             <tr>
                 <td class="white">STUDENT 2</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td class="red">09:30</td>
-                <td class="red">09:30</td>
-                <td class="red">09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
+                <td>07:42</td>
+                <td>12:49</td>
+                <td>07:41</td>
+                <td class="red">06:27</td>
+                <td class="red">08:51</td>
+                <td>03:44</td>
+                <td>08:18</td>
             </tr>
             <tr>
                 <td class="white">STUDENT 3</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
+                <td>04:23</td>
+                <td>02:56</td>
+                <td class="red">00:56</td>
+                <td class="red">02:12</td>
+                <td class="red">06:47</td>
+                <td>03:58</td>
+                <td>04:12</td>
             </tr>
             <tr>
                 <td class="white">STUDENT 4</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
+                <td>07:47</td>
+                <td>05:55</td>
+                <td class="red">02:10</td>
+                <td>00:57</td>
+                <td>00:22</td>
+                <td class="red">01:45</td>
+                <td>00:52</td>
             </tr>
             <tr>
                 <td class="white">STUDENT 5</td>
-                <td>09:30</td>
-                <td class="gray">09:30</td>
-                <td>09:30</td>
-                <td class="gray">09:30</td>
-                <td>09:30</td>
-                <td class="gray">09:30</td>
-                <td class="gray">09:30</td>
+                <td>03:32</td>
+                <td>12:53</td>
+                <td class="gray">03:10</td>
+                <td class="red">22:25</td>
+                <td>05:01</td>
+                <td>15:37</td>
+                <td class="gray">00:00</td>
             </tr>
             <tr>
                 <td class="white">STUDENT 6</td>
+                <td>04:01</td>
+                <td>06:34</td>
+                <td>04:44</td>
+                <td>08:33</td>
+                <td>15:43</td>
                 <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
+                <td class="red">13:56</td>
             </tr>
             <tr>
                 <td class="white">STUDENT 7</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td class="red">09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
+                <td>16:25</td>
+                <td>08:42</td>
+                <td>12:54</td>
+                <td>17:02</td>
+                <td class="red">09:43</td>
+                <td>15:26</td>
+                <td>17:35</td>
             </tr>
             <tr>
                 <td class="white">STUDENT 5</td>
-                <td>09:30</td>
-                <td class="gray">09:30</td>
-                <td>09:30</td>
-                <td class="gray">09:30</td>
-                <td>09:30</td>
-                <td class="gray">09:30</td>
-                <td class="gray">09:30</td>
+                <td>09:47</td>
+                <td class="gray">12:53</td>
+                <td>19:22</td>
+                <td class="red">16:09</td>
+                <td>17:49</td>
+                <td class="gray">14:57</td>
+                <td class="gray">19:42</td>
             </tr>
             <tr>
                 <td class="white">STUDENT 6</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
+                <td>17:22</td>
+                <td>09:40</td>
+                <td>11:37</td>
+                <td>08:25</td>
+                <td>19:15</td>
+                <td>22:09</td>
+                <td>15:28</td>
             </tr>
             <tr>
                 <td class="white">STUDENT 7</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
-                <td class="red">09:30</td>
-                <td>09:30</td>
-                <td>09:30</td>
+                <td>14:25</td>
+                <td>15:28</td>
+                <td>09:42</td>
+                <td>11:30</td>
+                <td class="red">16:55</td>
+                <td>17:37</td>
+                <td>10:26</td>
             </tr>
         </table>
     </article>

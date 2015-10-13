@@ -356,6 +356,8 @@
             if (groupInfo[i].StudentsListItemColl.length==0) continue;
         }
 
+        $("body").find(".card.group").not(".template").remove();
+
         for(var i=0;i<groupInfo.length; i++) {
 
             if (groupInfo[i].StudentsListItemColl.length==0) continue;
@@ -426,6 +428,9 @@
         group.find(".content").css("top", "19rem");
         group.css("opacity", 1);
         var users = group.data("users");
+
+        group.find(".circle-container").find("li").remove();
+
         for(var i=0; i<users.length; i++) {
             group.find(".circle-container").append("<li class='gpt-" + i + "'><a href='#'><img src='" + users[i].head + "'></a></li>");
         }

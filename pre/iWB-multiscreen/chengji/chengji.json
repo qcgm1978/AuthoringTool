@@ -4,79 +4,79 @@ var initData = [
         "name": "Mark",
         "right": 0,
         "total": 0,
-        "percent": 0,
-        "description": null
+        "percent": 80,
+        "description": ""
     },
     {
         "id": "emily_watson",
         "name": "Watson",
         "right": 0,
         "total": 0,
-        "percent": 0,
-        "description": null
+        "percent": 20,
+        "description": ""
     },
     {
         "id": "fei_meng",
         "name": "Meng",
         "right": 0,
         "total": 0,
-        "percent": 0,
-        "description": null
+        "percent": 100,
+        "description": ""
     },
     {
         "id": "jessica_winner",
         "name": "Winner",
         "right": 0,
         "total": 0,
-        "percent": 0,
-        "description": null
+        "percent": 100,
+        "description": ""
     },
     {
         "id": "lei_han",
         "name": "Han",
         "right": 0,
         "total": 0,
-        "percent": 0,
-        "description": null
+        "percent": 100,
+        "description": ""
     },
     {
         "id": "meimei_han",
         "name": "Han",
         "right": 0,
         "total": 0,
-        "percent": 0,
-        "description": null
+        "percent": 100,
+        "description": ""
     },
     {
         "id": "ming_li",
         "name": "Li",
         "right": 0,
         "total": 0,
-        "percent": 0,
-        "description": null
+        "percent": 100,
+        "description": ""
     },
     {
         "id": "raj_miller",
         "name": "Miller",
         "right": 0,
         "total": 0,
-        "percent": 0,
-        "description": null
+        "percent": 100,
+        "description": ""
     },
     {
         "id": "steve_paul",
         "name": "Paul",
         "right": 0,
         "total": 0,
-        "percent": 0,
-        "description": null
+        "percent": 100,
+        "description": ""
     },
     {
         "id": "yanan_li",
         "name": "Li",
         "right": 0,
         "total": 0,
-        "percent": 0,
-        "description": null
+        "percent": 100,
+        "description": ""
     }
 ]
