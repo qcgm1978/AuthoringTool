@@ -1,0 +1,9 @@
+{
+  "name"    : "template-column-2",
+  "version" : "0.1.0",
+  "main"    : "template.html",
+  "description" : "Tool for CollegePre Authorings",
+  "author": "CollegePre",
+  "preview": ["preview/s1.png", "preview/s2.png"],
+  "scripts": []
+}

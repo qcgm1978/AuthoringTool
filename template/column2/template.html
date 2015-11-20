@@ -1,0 +1,47 @@
+<style >
+
+    .template-column-2 {
+        font-size: 20px;
+    }
+
+    .template-column-2 .title {
+        margin: .5em;
+        border: 1px solid #ccc;
+        height: 4em;
+    }
+    .template-column-2 .main {
+        margin: .5rem;
+        border: 1px solid #ccc;
+        padding: 2em;
+        min-height: 200px;
+    }
+    @media screen and (min-aspect-ratio : 2048/768) {
+        .main {
+            -webkit-column-count: 2;
+        }
+    }
+
+    .dds .main {
+        -webkit-column-count: 2;
+    }
+
+    .template-column-2 .media {
+        margin: 1em;
+        float: right;
+        width: 20em;
+        height: 20em;
+        border: 1px solid #ccc;
+    }
+</style>
+
+<div class="template-column-2 activity-template">
+    <div class="title" data-accept="title" style="background-color: #003eff">
+    </div>
+
+    <div class="main">
+        <div class="media resizable select-image" data-accept="image" style="background-color: #bb3eff">
+        </div>
+        <div class="content portrait" data-accept="activity" style="background-color: #003eff">
+        </div>
+    </div>
+</div>

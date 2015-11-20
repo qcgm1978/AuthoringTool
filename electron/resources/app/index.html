@@ -1,0 +1,86 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Authoring Tool</title>
+    <script src="js/jquery-2.1.0.min.js"></script>
+    <script>
+        window.$ = window.jQuery = require('jquery');
+    </script>
+
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/tool-1.1.js"></script>
+
+    <link href="css/main.css" media="all" rel="stylesheet"/>
+    <link href="css/fontello.css" media="all" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="start scene fullscreen">
+    <div class="opers">
+        <div class="btn" onclick="openDialog('select-template')">
+            <i class="icon-newspaper"></i>
+            <span>创建</span>
+        </div>
+        <div class="btn">
+            <i class="icon-folder-open-empty"></i>
+            <span>打开</span>
+        </div>
+    </div>
+</div>
+
+<div class="dialog hidden select-template " style="position: relative;">
+    <div class="d-title">Select Template</div>
+    <div class="icon-close">X</div>
+
+    <div class="nav">
+        <ul>
+            <li onclick="useThisTemplate();">AutoColumn2</li>
+        </ul>
+    </div>
+    <div class="intro">
+        <img src="img/s1.png">
+        <img src="img/s2.png">
+    </div>
+</div>
+
+<div class="activity-editor scene fullscreen hidden">
+    <div class="tools">
+        <div class="title">
+            Add Resources
+        </div>
+        <ul>
+            <li><i class="icon-font"></i>Text Content</li>
+        </ul>
+
+        <div class="title">Activities</div>
+        <ul>
+            <li>Single Choice</li>
+        </ul>
+    </div>
+
+    <div class="screenctr">
+        <span>屏幕分辨率: </span>
+        <select id="screenratio">
+            <option value="x169">1920x1080(16:9)</option>
+            <option value="x1610">1200x800(16:10)</option>
+            <option value="x43">1024x768(4:3)</option>
+        </select>
+        <input type="checkbox" id="siderbar-show">
+        <span>显示侧边栏</span>
+        <input type="checkbox" id="headerbar-show">
+        <span>显示上边栏</span>
+        <input type="checkbox" id="ddscreen-show">
+        <span>双屏</span>
+    </div>
+    <div class="ground">
+        <div class="screen">
+            <div class="viewheader">Header containing students</div>
+            <div class="viewsider">Sider for package nav</div>
+            <div class="viewables"></div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
