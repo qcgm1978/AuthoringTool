@@ -14,9 +14,8 @@ html {
   font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif;
 }
 
-
 body {
-  background-color: #fefefe;
+  background-color: #7f7f7f;
 }
 
 .template, .hidden {
@@ -121,48 +120,50 @@ body {
 }
 
 
-.activity-editor {
-  background-color: #fefefe;
-  overflow: auto;
-
-  .tools {
-    width: 360px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    background-color: #fff;
-    background-color: #efefef;
-    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
-
-
-    >title {
-      background-color: #eee;
-    }
-    li {
-      list-style: none;
-    }
-  }
-
-  .screenctr {
-    position: absolute;
-    left: 360px;
-    right: 0;
-    top: 0;
-    padding: 5px;
+.menu-bar {
     font-size: 14px;
     background-color: #444;
     color: #fff;
     padding: 10px;
+}
+
+.tools-bar {
+  width: 240px;
+  left: 10px;
+  top: 50px;
+  background-color: #efefef;
+  box-shadow: 0 0 0px 2px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  bottom: 10px;
+
+  >.title {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 14px;
+    font-weight: bold;
   }
 
+  >ul {
+    border-bottom: 1px solid #ddd;
+    >li {
+      padding: 5px 10px;
+      background-color: #fff;
+      list-style: none;
+    }
+  }
+}
+
+.activity-editor {
+  overflow: auto;
   .ground {
     overflow: auto;
     position: absolute;
-    left: 360px;
+    left: 260px;
     top: 40px;
     right: 0;
     bottom: 0;
+
     background-color: #7f7f7f;
 
     >.screen {
@@ -177,30 +178,29 @@ body {
       overflow-y: scroll;
       background-color: #fff;
 
-      > .viewheader {
+      >.viewheader {
         position: absolute;
         left: 0;
         right: 0;
         top: 0;
         height: 80px;
         display: none;
-      }
 
-      > .viewsider {
+      }
+      >.viewsider {
         position: absolute;
         left: 0;
         top: 0;
         width: 80px;
         display: none;
       }
-      > .viewables {
+      >.viewables {
         position: absolute;
         right: 0;
         top: 0;
         bottom: 0;
         left: 0;
       }
-
       &.ho {
         > .viewheader {
           display: block;

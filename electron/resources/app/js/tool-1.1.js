@@ -8,9 +8,7 @@ var dialog = remote.require('dialog');
 var fs = require("fs");
 
 $(function() {
-    fs.readdir("c:/", function(error, files) {
-        console.log(files);
-    });
+
 });
 
 
@@ -60,7 +58,7 @@ function useThisTemplate() {
 var AuthoringTools = (function($) {
 
     $(function() {
-       $("#screenratio,#siderbar-show,#headerbar-show,#ddscreen-show").change(function() {
+       $("#screenratio,#zoom,#ddscreen-show").change(function() {
             renderViewPort();
        });
     });
@@ -78,7 +76,7 @@ var AuthoringTools = (function($) {
         });
     }
 
-    function renderViewPort(ratio, sider, hider, ddscreen) {
+    function renderViewPort() {
         var ratio = $("#screenratio").val();
         if (ratio==="x169") {
             $(".screen").css("width", 1920);
@@ -98,18 +96,7 @@ var AuthoringTools = (function($) {
             $(".screen").removeClass("dds");
         }
 
-        if ($("#siderbar-show").prop("checked")) {
-            $(".screen").addClass("so");
-        } else {
-            $(".screen").removeClass("so");
-        }
-
-        if ($("#headerbar-show").prop("checked")) {
-            $(".screen").addClass("ho");
-        } else {
-            $(".screen").removeClass("ho");
-        }
-
+        $(".screen").css("-webkit-transform", "scale(" + parseInt($("#zoom").val())/100 + ")");
     }
 
     return  {
