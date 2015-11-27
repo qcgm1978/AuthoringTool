@@ -1,8 +1,8 @@
 {
-  "name"    : "AuthoringTool",
-  "version" : "0.1.0",
-  "main"    : "main.js",
-  "description" : "Tool for CollegePre Authorings",
+  "name": "AuthoringTool",
+  "version": "0.1.0",
+  "main": "main.js",
+  "description": "Tool for CollegePre Authorings",
   "author": "CollegePre",
   "maintainers": [
     {
@@ -13,5 +13,11 @@
       "name": "liuqiang",
       "email": "liuqiang@collegepre.com"
     }
-  ]
+  ],
+  "dependencies": {
+    "babel-preset-react": "^6.1.18",
+    "babelify": "^7.2.0",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
+  }
 }

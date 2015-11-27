@@ -11,7 +11,6 @@ $(function() {
 
 });
 
-
 function openDialog(name) {
     $(".dialog." + name).show().css("z-index", 9999);
     if ($(".masklayer").length===0) {
