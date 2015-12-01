@@ -23,4 +23,3 @@
 2. 启动watcher
  > babel --presets react src --watch --out-dir build
 
-
