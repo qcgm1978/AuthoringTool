@@ -1,6 +1,7 @@
 # Built application files
 .idea
 *.iml
+build
 
 
 #Log Files

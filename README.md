@@ -23,3 +23,13 @@
 2. 启动watcher
  > babel --presets react src --watch --out-dir build
 
+- webpack
+1. 即时打包
+ > webpack --progress --colors --watch
+
+2. 安装reactjs
+ > 安装babel loader: npm install babel-loader babel-core babel-preset-es2015 --save-dev
+ > 安装react  npm install --save react react-dom babelify babel-loader babel-preset-react
+
+
+
