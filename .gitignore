@@ -1,8 +1,9 @@
 # Built application files
 .idea
 *.iml
-build
 
+build
+node_modules
 
 #Log Files
 *.log

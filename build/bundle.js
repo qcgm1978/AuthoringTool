@@ -9688,7 +9688,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  padding: 10px; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin: 0 auto;\n  background-color: #2c3e50; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #000000;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n", ""]);
 
 	// exports
 
@@ -9728,7 +9728,7 @@
 
 
 	// module
-	exports.push([module.id, ".gridster {\n    position:relative;\n}\n\n.gridster > * {\n    margin: 0 auto;\n    -webkit-transition: height .4s, width .4s;\n    -moz-transition: height .4s, width .4s;\n    -o-transition: height .4s, width .4s;\n    -ms-transition: height .4s, width .4s;\n    transition: height .4s, width .4s;\n}\n\n.gridster .gs-w {\n    z-index: 2;\n    position: absolute;\n}\n\n.ready .gs-w:not(.preview-holder) {\n    -webkit-transition: opacity .3s, left .3s, top .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s;\n    -o-transition: opacity .3s, left .3s, top .3s;\n    transition: opacity .3s, left .3s, top .3s;\n}\n\n.ready .gs-w:not(.preview-holder),\n.ready .resize-preview-holder {\n    -webkit-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -o-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n}\n\n.gridster .preview-holder {\n    z-index: 1;\n    position: absolute;\n    background-color: #fff;\n    border-color: #fff;\n    opacity: 0.3;\n}\n\n.gridster .player-revert {\n    z-index: 10!important;\n    -webkit-transition: left .3s, top .3s!important;\n    -moz-transition: left .3s, top .3s!important;\n    -o-transition: left .3s, top .3s!important;\n    transition:  left .3s, top .3s!important;\n}\n\n.gridster .dragging,\n.gridster .resizing {\n    z-index: 10!important;\n    -webkit-transition: all 0s !important;\n    -moz-transition: all 0s !important;\n    -o-transition: all 0s !important;\n    transition: all 0s !important;\n}\n\n\n.gs-resize-handle {\n    position: absolute;\n    z-index: 1;\n}\n\n.gs-resize-handle-both {\n    width: 20px;\n    height: 20px;\n    bottom: -8px;\n    right: -8px;\n    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=');\n    background-position: top left;\n    background-repeat: no-repeat;\n    cursor: se-resize;\n    z-index: 20;\n}\n\n.gs-resize-handle-x {\n    top: 0;\n    bottom: 13px;\n    right: -5px;\n    width: 10px;\n    cursor: e-resize;\n}\n\n.gs-resize-handle-y {\n    left: 0;\n    right: 13px;\n    bottom: -5px;\n    height: 10px;\n    cursor: s-resize;\n}\n\n.gs-w:hover .gs-resize-handle,\n.resizing .gs-resize-handle {\n    opacity: 1;\n}\n\n.gs-resize-handle,\n.gs-w.dragging .gs-resize-handle {\n    opacity: 0;\n}\n\n.gs-resize-disabled .gs-resize-handle {\n    display: none!important;\n}\n\n[data-max-sizex=\"1\"] .gs-resize-handle-x,\n[data-max-sizey=\"1\"] .gs-resize-handle-y,\n[data-max-sizey=\"1\"][data-max-sizex=\"1\"] .gs-resize-handle {\n    display: none !important;\n}\n\n.gridster li {\n    list-style: none;\n}\n\n.gridster .gs-w {\n    background: #FFF;\n    cursor: pointer;\n    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.3);\n    box-shadow: 0 0 5px rgba(0,0,0,0.3);\n}\n\n.gridster .player {\n    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n}\n\n.gridster .gs-w.try {\n    background-repeat: no-repeat;\n    background-position: 37px -169px;\n\n}\n\n.gridster .preview-holder {\n    border: none!important;\n    border-radius: 0!important;\n    background: rgba(255,255,255,.2)!important;\n}\n\n\n\n/* Uncomment this if you set helper : \"clone\" in draggable options */\n/*.gridster .player {\n  opacity:0;\n}\n*/", ""]);
+	exports.push([module.id, ".gridster {\n    position:relative;\n}\n\n.gridster > * {\n    margin: 0 auto;\n    -webkit-transition: height .4s, width .4s;\n    -moz-transition: height .4s, width .4s;\n    -o-transition: height .4s, width .4s;\n    -ms-transition: height .4s, width .4s;\n    transition: height .4s, width .4s;\n}\n\n.gridster .gs-w {\n    z-index: 2;\n    position: absolute;\n}\n\n.ready .gs-w:not(.preview-holder) {\n    -webkit-transition: opacity .3s, left .3s, top .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s;\n    -o-transition: opacity .3s, left .3s, top .3s;\n    transition: opacity .3s, left .3s, top .3s;\n}\n\n.ready .gs-w:not(.preview-holder),\n.ready .resize-preview-holder {\n    -webkit-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -o-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n}\n\n.gridster .preview-holder {\n    z-index: 1;\n    position: absolute;\n    background-color: #fff;\n    border-color: #fff;\n    opacity: 0.3;\n}\n\n.gridster .player-revert {\n    z-index: 10!important;\n    -webkit-transition: left .3s, top .3s!important;\n    -moz-transition: left .3s, top .3s!important;\n    -o-transition: left .3s, top .3s!important;\n    transition:  left .3s, top .3s!important;\n}\n\n.gridster .dragging,\n.gridster .resizing {\n    z-index: 10!important;\n    -webkit-transition: all 0s !important;\n    -moz-transition: all 0s !important;\n    -o-transition: all 0s !important;\n    transition: all 0s !important;\n}\n\n\n.gs-resize-handle {\n    position: absolute;\n    z-index: 1;\n}\n\n.gs-resize-handle-both {\n    width: 20px;\n    height: 20px;\n    bottom: -8px;\n    right: -8px;\n    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=');\n    background-position: top left;\n    background-repeat: no-repeat;\n    cursor: se-resize;\n    z-index: 20;\n}\n\n.gs-resize-handle-x {\n    top: 0;\n    bottom: 13px;\n    right: -5px;\n    width: 10px;\n    cursor: e-resize;\n}\n\n.gs-resize-handle-y {\n    left: 0;\n    right: 13px;\n    bottom: -5px;\n    height: 10px;\n    cursor: s-resize;\n}\n\n.gs-w:hover .gs-resize-handle,\n.resizing .gs-resize-handle {\n    opacity: 1;\n}\n\n.gs-resize-handle,\n.gs-w.dragging .gs-resize-handle {\n    opacity: 0;\n}\n\n.gs-resize-disabled .gs-resize-handle {\n    display: none!important;\n}\n\n[data-max-sizex=\"1\"] .gs-resize-handle-x,\n[data-max-sizey=\"1\"] .gs-resize-handle-y,\n[data-max-sizey=\"1\"][data-max-sizex=\"1\"] .gs-resize-handle {\n    display: none !important;\n}\n\n.gridster li {\n    list-style: none;\n}\n\n.gridster .gs-w {\n    background: #FFF;\n    cursor: pointer;\n    border: 1px solid #bbb;\n}\n\n.gridster .player {\n    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n}\n\n.gridster .gs-w.try {\n    background-repeat: no-repeat;\n    background-position: 37px -169px;\n\n}\n\n.gridster .preview-holder {\n    border: none!important;\n    border-radius: 0!important;\n    background: rgba(255,255,255,.2)!important;\n}\n\n\n\n/* Uncomment this if you set helper : \"clone\" in draggable options */\n/*.gridster .player {\n  opacity:0;\n}\n*/", ""]);
 
 	// exports
 
@@ -10543,7 +10543,7 @@
 	    *
 	    * @method set_dom_grid_width
 	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.set_dom_grid_width=function(cols){if(typeof cols==='undefined'){cols=this.get_highest_occupied_cell().col}var max_cols=this.options.autogrow_cols?this.options.max_cols:this.cols;cols=Math.min(max_cols,Math.max(cols,this.options.min_cols));this.container_width=cols*this.min_widget_width;this.$el.css('width',this.container_width);return this}; /**
+	    */fn.set_dom_grid_width=function(cols){if(typeof cols==='undefined'){cols=this.get_highest_occupied_cell().col}var max_cols=this.options.autogrow_cols?this.options.max_cols:this.cols;cols=Math.min(max_cols,Math.max(cols,this.options.min_cols));this.container_width=cols*this.min_widget_width;console.log(this.min_widget_width);this.$el.css('width',this.container_width);return this}; /**
 	    * It generates the neccessary styles to position the widgets.
 	    *
 	    * @method generate_stylesheet
@@ -10630,17 +10630,36 @@
 
 	var React = __webpack_require__(17);
 	var ReactDOM = __webpack_require__(174);
+
 	var $ = __webpack_require__(1);
+	var GridLines = __webpack_require__(175);
 
 	var PageEditor = React.createClass({
 	    displayName: 'PageEditor',
 
 	    getInitialState: function getInitialState() {
-	        return { ratio: 1920, zoom: 1 };
+	        return { width: 1024, minHeight: 768, zoom: 1, doubleScreen: false };
 	    },
 
 	    ratioChange: function ratioChange(event) {
-	        this.setState({ ratio: event.target.value });
+	        var ratio = event.target.value;
+	        if (ratio === "x169") {
+	            this.setState({ width: 1920, minHeight: 1080 });
+	        } else if (ratio === "x1610") {
+	            this.setState({ width: 1280, minHeight: 800 });
+	        } else if (ratio === "x43") {
+	            this.setState({ width: 1024, minHeight: 768 });
+	        }
+	    },
+
+	    toggleScreen: function toggleScreen(event) {
+	        this.setState({
+	            doubleScreen: event.target.checked
+	        });
+	    },
+
+	    addGrid: function addGrid() {
+	        this.refs["screen"].addGridX();
 	    },
 
 	    zoomChange: function zoomChange(event) {
@@ -10651,59 +10670,88 @@
 	    componentDidMount: function componentDidMount() {},
 
 	    render: function render() {
-	        var ratio = this.state.ratio;
-	        var width = 1920;
-	        if (ratio === "x169") {
-	            width = 1920;
-	        } else if (ratio === "x1610") {
-	            width = 1080 / 10 * 16;
-	        } else if (ratio === "x43") {
-	            width = 1080 / 3 * 4;
-	        }
 	        return React.createElement(
 	            'div',
 	            null,
 	            React.createElement(
-	                'div',
-	                { className: 'tools-bar' },
+	                'nav',
+	                { className: 'navbar navbar-default navbar-fixed-top' },
 	                React.createElement(
-	                    'span',
-	                    null,
-	                    'screen : '
+	                    'a',
+	                    { className: 'navbar-brand', href: '#' },
+	                    'Authoring Tool'
 	                ),
 	                React.createElement(
-	                    'select',
-	                    { onChange: this.ratioChange },
+	                    'ul',
+	                    { className: 'nav navbar-nav navbar-right' },
 	                    React.createElement(
-	                        'option',
-	                        { value: 'x169' },
-	                        '1920x1080(16:9)'
+	                        'li',
+	                        null,
+	                        React.createElement(
+	                            'button',
+	                            { type: 'button', className: 'btn btn-success navbar-btn', onClick: this.addGrid },
+	                            'Add Grid'
+	                        )
 	                    ),
 	                    React.createElement(
-	                        'option',
-	                        { value: 'x1610' },
-	                        '1200x800(16:10)'
+	                        'li',
+	                        null,
+	                        React.createElement(
+	                            'select',
+	                            { onChange: this.ratioChange },
+	                            React.createElement(
+	                                'option',
+	                                { value: 'x43' },
+	                                '1024x768(4:3)'
+	                            ),
+	                            React.createElement(
+	                                'option',
+	                                { value: 'x169' },
+	                                '1920x1080(16:9)'
+	                            ),
+	                            React.createElement(
+	                                'option',
+	                                { value: 'x1610' },
+	                                '1200x800(16:10)'
+	                            )
+	                        )
 	                    ),
 	                    React.createElement(
-	                        'option',
-	                        { value: 'x43' },
-	                        '1024x768(4:3)'
+	                        'li',
+	                        null,
+	                        React.createElement('input', { type: 'checkbox', onClick: this.toggleScreen })
+	                    ),
+	                    React.createElement(
+	                        'li',
+	                        null,
+	                        React.createElement(
+	                            'a',
+	                            { href: '#' },
+	                            'Save'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'li',
+	                        null,
+	                        React.createElement(
+	                            'a',
+	                            { href: '#' },
+	                            'Preview'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'li',
+	                        null,
+	                        React.createElement(
+	                            'a',
+	                            { href: '#' },
+	                            'Export'
+	                        )
 	                    )
-	                ),
-	                React.createElement(
-	                    'span',
-	                    null,
-	                    'x2'
-	                ),
-	                React.createElement('input', { type: 'checkbox' }),
-	                React.createElement(
-	                    'span',
-	                    null,
-	                    'zoom'
-	                ),
-	                React.createElement('input', { type: 'number', onChange: this.zoomChange })
+	                )
 	            ),
-	            React.createElement(Screen, { width: width, zoom: this.state.zoom })
+	            React.createElement(Screen, { doubleScreen: this.state.doubleScreen, width: this.state.width, minHeight: this.state.minHeight, zoom: this.state.zoom, ref: 'screen' }),
+	            React.createElement(GridLines, { width: this.state.width, minHeight: this.state.minHeight, doubleScreen: this.state.doubleScreen })
 	        );
 	    }
 	});
@@ -10714,19 +10762,60 @@
 	    componentDidMount: function componentDidMount() {
 	        $(".gridster ul").gridster({
 	            widget_margins: [1, 1],
-	            widget_base_dimensions: [140, 140],
+	            widget_base_dimensions: [Math.floor(this.props.width / 12 - 2), this.props.minHeight / 12 - 2],
+	            min_cols: 12,
 	            resize: {
 	                enabled: true
 	            }
 	        });
 	    },
 
+	    componentDidUpdate: function componentDidUpdate() {
+	        var rhtml = $(".gridster").html();
+	        $(".gridster ul").remove();
+	        $(".gridster").append(rhtml);
+
+	        var col = 12;
+	        var dimension_x = Math.floor(this.props.width / 12 - 2);
+
+	        if (this.props.doubleScreen) {
+	            col = col * 2;
+	        }
+
+	        $(".gridster ul").gridster({
+	            widget_margins: [1, 1],
+	            widget_base_dimensions: [this.props.width / 12 - 2, this.props.minHeight / 12 - 2],
+	            min_cols: col,
+	            resize: {
+	                enabled: true
+	            }
+	        });
+	        /*
+	        // This section was for existing widgets. Apparently the code for drawing the droppable zones is based on the data stored in the widgets at creation time
+	        for (var i = 0; i < gridster.$widgets.length; i++) {
+	            gridster.resize_widget($(gridster.$widgets[i]));
+	        }
+	         gridster.recalculate_faux_grid();
+	        gridster.generate_grid_and_stylesheet();
+	        */
+	    },
+
+	    addGridX: function addGridX() {
+	        var gridster = $(".gridster ul").gridster().data('gridster');
+	        gridster.add_widget("<li></li>", 12, 2, 1, 1);
+	    },
+
 	    render: function render() {
+	        var swidth = this.props.width;
+
+	        if (this.props.doubleScreen) {
+	            swidth = swidth * 2;
+	        }
 	        return React.createElement(
 	            'div',
 	            { className: 'screen', style: {
-	                    width: 1024, //this.props.width,
-	                    minHeight: 768,
+	                    width: this.props.width,
+	                    minHeight: this.props.minHeight,
 	                    WebkitTransform: 'scale(' + this.props.zoom + ')' } },
 	            React.createElement(
 	                'div',
@@ -10734,13 +10823,8 @@
 	                React.createElement(
 	                    'ul',
 	                    null,
-	                    React.createElement('li', { 'data-row': '1', 'data-col': '1', 'data-sizex': '1', 'data-sizey': '1' }),
-	                    React.createElement('li', { 'data-row': '2', 'data-col': '1', 'data-sizex': '1', 'data-sizey': '1' }),
-	                    React.createElement('li', { 'data-row': '3', 'data-col': '1', 'data-sizex': '1', 'data-sizey': '1' }),
-	                    React.createElement('li', { 'data-row': '1', 'data-col': '2', 'data-sizex': '2', 'data-sizey': '1' }),
-	                    React.createElement('li', { 'data-row': '2', 'data-col': '2', 'data-sizex': '2', 'data-sizey': '2' }),
-	                    React.createElement('li', { 'data-row': '1', 'data-col': '4', 'data-sizex': '1', 'data-sizey': '1' }),
-	                    React.createElement('li', { 'data-row': '2', 'data-col': '4', 'data-sizex': '2', 'data-sizey': '1' })
+	                    React.createElement('li', { 'data-row': '1', 'data-col': '1', 'data-sizex': '12', 'data-sizey': '2' }),
+	                    React.createElement('li', { 'data-row': '3', 'data-col': '1', 'data-sizex': '8', 'data-sizey': '2' })
 	                )
 	            )
 	        );
@@ -30335,6 +30419,84 @@
 
 	module.exports = __webpack_require__(19);
 
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	/**
+	 * Created by Liuhan on 2015/12/8.
+	 */
+	var React = __webpack_require__(17);
+	var $ = __webpack_require__(1);
+
+	var GridLines = React.createClass({
+	    displayName: "GridLines",
+
+	    getInitialState: function getInitialState() {
+	        return { lines: [] };
+	    },
+
+	    render: function render() {
+	        var w_width = $(window).innerWidth();
+
+	        this.state.lines = [{
+	            key: "l1",
+	            x1: 70,
+	            y1: 0,
+	            x2: 70,
+	            y2: "100%"
+	        }, {
+	            key: "l2",
+	            x1: 70 + this.props.width,
+	            y1: 0,
+	            x2: 70 + this.props.width,
+	            y2: "100%"
+	        }, {
+	            key: "t1",
+	            x1: 0,
+	            y1: 70,
+	            x2: "100%",
+	            y2: 70
+	        }, {
+	            key: "t2",
+	            x1: 0,
+	            y1: 70 + this.props.minHeight,
+	            x2: "100%",
+	            y2: 70 + this.props.minHeight
+	        }];
+
+	        var svgWidth = 140 + this.props.width;
+	        if (svgWidth < w_width) {
+	            svgWidth = w_width;
+	        }
+	        if (this.props.doubleScreen) {
+	            this.state.lines.push({
+	                key: "l3",
+	                x1: 70 + this.props.width * 2,
+	                y1: 0,
+	                x2: 70 + this.props.width * 2,
+	                y2: "100%"
+	            });
+	            svgWidth = (this.props.width + 70) * 2;
+	        }
+	        var lines = this.state.lines.map(function (line) {
+	            return React.createElement("line", { key: line.key, x1: line.x1, y1: line.y1, x2: line.x2, y2: line.y2, className: "frontLine" });
+	        });
+
+	        return React.createElement(
+	            "svg",
+	            { className: "gridLines", style: {
+	                    width: svgWidth
+	                } },
+	            lines
+	        );
+	    }
+	});
+
+	module.exports = GridLines;
 
 /***/ }
 /******/ ]);

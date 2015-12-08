@@ -4,16 +4,36 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+
 var $ = require("jquery");
+var  GridLines = require("./GridLines.jsx");
 
 var PageEditor = React.createClass({
 
     getInitialState: function() {
-        return {ratio: 1920, zoom:1};
+        return {width: 1024, minHeight: 768, zoom:1, doubleScreen: false};
     },
 
     ratioChange: function(event) {
-        this.setState({ratio: event.target.value});
+        var ratio = event.target.value;
+        if (ratio==="x169") {
+            this.setState({width: 1920, minHeight: 1080});
+        } else if (ratio==="x1610") {
+            this.setState({width: 1280, minHeight: 800});
+        } else if (ratio==="x43") {
+            this.setState({width: 1024, minHeight: 768});
+        }
+    },
+
+    toggleScreen: function(event) {
+        this.setState({
+            doubleScreen: event.target.checked
+        });
+    },
+
+    addGrid: function() {
+       this.refs["screen"].addGridX();
+
     },
 
     zoomChange: function(event) {
@@ -22,35 +42,38 @@ var PageEditor = React.createClass({
 
     /**在这个DOM ready之中使用jquery与grister初始化格子系统*/
     componentDidMount: function() {
+
     },
 
     render: function() {
-        var ratio = this.state.ratio;
-        var width = 1920;
-        if (ratio==="x169") {
-            width = 1920;
-        } else
-        if (ratio==="x1610") {
-            width = 1080/10*16;
-        } else
-        if (ratio==="x43") {
-            width = 1080/3*4;
-        }
         return (
             <div>
-                <div className="tools-bar">
-                    <span>screen : </span>
-                    <select onChange={this.ratioChange}>
-                        <option value="x169" >1920x1080(16:9)</option>
-                        <option value="x1610" >1200x800(16:10)</option>
-                        <option value="x43" >1024x768(4:3)</option>
-                    </select>
-                    <span>x2</span>
-                    <input type="checkbox"/>
-                    <span>zoom</span>
-                    <input type="number" onChange={this.zoomChange}/>
-                </div>
-                <Screen width={width} zoom={this.state.zoom}/>
+                <nav className="navbar navbar-default navbar-fixed-top">
+                    <a className="navbar-brand" href="#">Authoring Tool</a>
+                    <ul className="nav navbar-nav navbar-right">
+                        <li>
+                            <button type="button" className="btn btn-success navbar-btn" onClick={this.addGrid}>Add Grid</button>
+                        </li>
+
+                        <li >
+                            <select onChange={this.ratioChange}>
+                                <option value="x43" >1024x768(4:3)</option>
+                                <option value="x169" >1920x1080(16:9)</option>
+                                <option value="x1610" >1200x800(16:10)</option>
+                            </select>
+                        </li>
+
+                        <li>
+                            <input type="checkbox" onClick={this.toggleScreen}/>
+                        </li>
+
+                        <li><a href="#">Save</a></li>
+                        <li><a href="#">Preview</a></li>
+                        <li><a href="#">Export</a></li>
+                    </ul>
+                </nav>
+                <Screen doubleScreen={this.state.doubleScreen} width={this.state.width} minHeight={this.state.minHeight} zoom={this.state.zoom} ref="screen"/>
+                <GridLines width={this.state.width} minHeight={this.state.minHeight} doubleScreen={this.state.doubleScreen}/>
             </div>
         );
     }
@@ -60,36 +83,73 @@ var Screen = React.createClass({
     componentDidMount: function() {
         $(".gridster ul").gridster({
             widget_margins: [1, 1],
-            widget_base_dimensions: [140, 140],
+            widget_base_dimensions: [Math.floor((this.props.width)/12-2), (this.props.minHeight)/12-2],
+            min_cols: 12,
             resize: {
                 enabled: true
             }
         });
     },
 
+    componentDidUpdate: function() {
+        var rhtml = $(".gridster").html();
+        $(".gridster ul").remove();
+        $(".gridster").append(rhtml);
+
+        var col = 12;
+        var dimension_x = Math.floor((this.props.width)/12-2);
+
+        if (this.props.doubleScreen) {
+            col = col * 2;
+        }
+
+        $(".gridster ul").gridster({
+            widget_margins: [1, 1],
+            widget_base_dimensions: [(this.props.width)/12-2, (this.props.minHeight)/12-2],
+            min_cols: col,
+            resize: {
+                enabled: true
+            }
+        });
+        /*
+
+    // This section was for existing widgets. Apparently the code for drawing the droppable zones is based on the data stored in the widgets at creation time
+        for (var i = 0; i < gridster.$widgets.length; i++) {
+            gridster.resize_widget($(gridster.$widgets[i]));
+        }
+
+        gridster.recalculate_faux_grid();
+        gridster.generate_grid_and_stylesheet();
+        */
+    },
+
+    addGridX: function() {
+        var gridster = $(".gridster ul").gridster().data('gridster');
+        gridster.add_widget("<li></li>", 12, 2, 1, 1);
+    },
+
     render: function() {
+        var swidth = this.props.width;
+
+        if (this.props.doubleScreen) {
+            swidth = swidth * 2;
+        }
         return (
             <div className="screen" style={{
-                width: 1024,//this.props.width,
-                minHeight: 768,
-                WebkitTransform:'scale(' + this.props.zoom + ')'}}>
+                        width:  this.props.width,
+                        minHeight: this.props.minHeight,
+                        WebkitTransform:'scale(' + this.props.zoom + ')'}}>
                 <div className="gridster">
                     <ul>
-                        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1"></li>
-                        <li data-row="2" data-col="1" data-sizex="1" data-sizey="1"></li>
-                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="1"></li>
-
-                        <li data-row="1" data-col="2" data-sizex="2" data-sizey="1"></li>
-                        <li data-row="2" data-col="2" data-sizex="2" data-sizey="2"></li>
-
-                        <li data-row="1" data-col="4" data-sizex="1" data-sizey="1"></li>
-                        <li data-row="2" data-col="4" data-sizex="2" data-sizey="1"></li>
+                        <li data-row="1" data-col="1" data-sizex="12" data-sizey="2"></li>
+                        <li data-row="3" data-col="1" data-sizex="8" data-sizey="2"></li>
                     </ul>
                 </div>
             </div>
         );
     }
 });
+
 
 
 ReactDOM.render(

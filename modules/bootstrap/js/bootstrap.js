@@ -8,6 +8,8 @@
  * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=8e2342e11e22927e4687)
  * Config saved to config.json and https://gist.github.com/8e2342e11e22927e4687
  */
+
+var jQuery = require("jquery");
 if (typeof jQuery === 'undefined') {
   throw new Error('Bootstrap\'s JavaScript requires jQuery')
 }
