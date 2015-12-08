@@ -6,12 +6,10 @@
 
 - ui： UI交互组件
 - components： Activity组件
-- common: 通用类
 - pre ： 学习、预研和原型系统相关
 - doc： 相关文档
-- resource: 引用的开源库版本及源代码
 - electron: 打包本地的nodejs/electron 本地程序
-
+- src css
 
 ### 安装、部署工具使用
 

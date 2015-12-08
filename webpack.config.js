@@ -2,7 +2,7 @@
  * Created by liuhan on 2015/12/4.
  */
 module.exports = {
-    entry: "./src/entry.js",
+    entry: "./modules/entry.js",
     output: {
         path: "build",
         filename: "bundle.js"

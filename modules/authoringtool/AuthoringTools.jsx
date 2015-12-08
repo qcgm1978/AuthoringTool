@@ -97,30 +97,18 @@ var Screen = React.createClass({
         $(".gridster").append(rhtml);
 
         var col = 12;
-        var dimension_x = Math.floor((this.props.width)/12-2);
-
         if (this.props.doubleScreen) {
             col = col * 2;
         }
 
         $(".gridster ul").gridster({
             widget_margins: [1, 1],
-            widget_base_dimensions: [(this.props.width)/12-2, (this.props.minHeight)/12-2],
+            widget_base_dimensions: [(this.props.width) / 12 - 2, (this.props.minHeight) / 12 - 2],
             min_cols: col,
             resize: {
                 enabled: true
             }
         });
-        /*
-
-    // This section was for existing widgets. Apparently the code for drawing the droppable zones is based on the data stored in the widgets at creation time
-        for (var i = 0; i < gridster.$widgets.length; i++) {
-            gridster.resize_widget($(gridster.$widgets[i]));
-        }
-
-        gridster.recalculate_faux_grid();
-        gridster.generate_grid_and_stylesheet();
-        */
     },
 
     addGridX: function() {
