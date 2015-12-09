@@ -50,13 +50,13 @@ var EditPanel = React.createClass({
         var panelId = this.initialOptions.panelId;
         return (
             <div  id="j-edit-panel" className="edit-panel panel-drag hide">
-            <div className="" >
-                <div className="edit-panel-title">
-                    <span className="">Editor</span>
-                    <span className="edit-panel-close" onClick={this.closePanelHandler}>CLOSE</span>
+                <div className="" >
+                    <div className="edit-panel-title">
+                        <span className="">Editor</span>
+                        <span className="edit-panel-close" onClick={this.closePanelHandler}>CLOSE</span>
+                    </div>
+                    <div className="edit-panel-text"></div>
                 </div>
-                <div className="edit-panel-text"></div>
-            </div>
             </div>
         )
     }

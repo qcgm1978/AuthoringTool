@@ -1,19 +1,8 @@
-
-.graybox {
-	background-color: lightgray;
-	border: 1px white solid;
-}
-
-.row {
-	background-color: transparent;
-	border: 0;
-}
 .hide {
 	display: none;
 }
 
-
-.edit-bar {
+.edit-bar{
 	width: auto;
 	background-color: transparent;
 	position: absolute;
@@ -56,34 +45,3 @@
 	box-shadow: 0 2px 6px 0 rgba(22, 45, 61, 0.55);
 	border-radius: 16px;
 }
-.edit-panel {
-	position: absolute;
-	box-sizing: border-box;
-	border-radius: 5px ;
-	box-shadow: 0 2px 6px 0 rgba(22, 45, 61, 0.55);
-	background-color: #eeeeee;
-	max-width: 1024px;
-}
-.edit-panel-title {
-	min-height: 40px;
-	width: 100%;
-	padding: 10px;
-	background-color: #4183c4;
-	border-top-left-radius: 5px ;
-	border-top-right-radius: 5px ;
-	color: white;
-
-}
-.edit-panel-close {
-	float: right;
-	margin-right: 10px;
-	cursor: pointer;
-}
-.edit-text {
-	min-width: 300px;
-}
-
-ul {
-	list-style-type: none;
-}
-

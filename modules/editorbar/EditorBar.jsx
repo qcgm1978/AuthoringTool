@@ -1,5 +1,5 @@
 
-require("./panel.css");
+require("./editbar.css");
 
 var React = require('react');
 var $ = require("jquery");
