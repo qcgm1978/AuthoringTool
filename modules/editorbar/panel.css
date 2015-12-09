@@ -1,0 +1,89 @@
+
+.graybox {
+	background-color: lightgray;
+	border: 1px white solid;
+}
+
+.row {
+	background-color: transparent;
+	border: 0;
+}
+.hide {
+	display: none;
+}
+
+
+.edit-bar {
+	width: auto;
+	background-color: transparent;
+	position: absolute;
+}
+.edit-bar-icon {
+}
+.edit-bar-icon span{
+	margin-right: 5px;
+	cursor: pointer;
+}
+.edit-bar-icon img {
+	height: 25px;
+}
+.edit-bar-icon .bar-set {
+
+}
+.edit-bar-icon .bar-set:hover {
+
+}
+.edit-btn {
+	min-width: 18px;
+	cursor: pointer;
+	position: relative;
+	color: #2d4150;
+	line-height: 22px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 0 7px 0 0;
+	padding: 0;
+	font-size: 14px;
+	list-style: none;
+	vertical-align: top;
+	font-family: HelveticaNeueW01-45Ligh, HelveticaNeueW02-45Ligh, HelveticaNeueW10-45Ligh, Helvetica Neue, Helvetica, Arial, hiragino kaku gothic pro, sans-serif;
+	font-size: 10px;
+	display: inline-block;
+	box-sizing: border-box;
+	height: 18px;
+	background: linear-gradient(to bottom, white 0%, #eeeeee 100%);
+	box-shadow: 0 2px 6px 0 rgba(22, 45, 61, 0.55);
+	border-radius: 16px;
+}
+.edit-panel {
+	position: absolute;
+	box-sizing: border-box;
+	border-radius: 5px ;
+	box-shadow: 0 2px 6px 0 rgba(22, 45, 61, 0.55);
+	background-color: #eeeeee;
+	max-width: 1024px;
+}
+.edit-panel-title {
+	min-height: 40px;
+	width: 100%;
+	padding: 10px;
+	background-color: #4183c4;
+	border-top-left-radius: 5px ;
+	border-top-right-radius: 5px ;
+	color: white;
+
+}
+.edit-panel-close {
+	float: right;
+	margin-right: 10px;
+	cursor: pointer;
+}
+.edit-text {
+	min-width: 300px;
+}
+
+ul {
+	list-style-type: none;
+}
+

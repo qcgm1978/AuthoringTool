@@ -6,7 +6,10 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var $ = require("jquery");
-var  GridLines = require("./GridLines.jsx");
+
+var GridLines = require("./GridLines.jsx");
+var EditPanel = require("../panel/EditorPanel.jsx");
+var EditBar = require("../editorbar/EditorBar.jsx");
 
 var PageEditor = React.createClass({
 
@@ -74,6 +77,8 @@ var PageEditor = React.createClass({
                 </nav>
                 <Screen doubleScreen={this.state.doubleScreen} width={this.state.width} minHeight={this.state.minHeight} zoom={this.state.zoom} ref="screen"/>
                 <GridLines width={this.state.width} minHeight={this.state.minHeight} doubleScreen={this.state.doubleScreen}/>
+                <EditBar/>
+                <EditPanel/>
             </div>
         );
     }
@@ -89,13 +94,13 @@ var Screen = React.createClass({
                 enabled: true
             }
         });
+        EditPanel.init();
     },
 
     componentDidUpdate: function() {
         var rhtml = $(".gridster").html();
         $(".gridster ul").remove();
         $(".gridster").append(rhtml);
-
         var col = 12;
         if (this.props.doubleScreen) {
             col = col * 2;
@@ -109,11 +114,13 @@ var Screen = React.createClass({
                 enabled: true
             }
         });
+        EditPanel.init();
     },
 
     addGridX: function() {
         var gridster = $(".gridster ul").gridster().data('gridster');
-        gridster.add_widget("<li></li>", 12, 2, 1, 1);
+        gridster.add_widget("<li class='j-grid-block player-revert'></li>", 12, 2, 1, 1);
+        EditPanel.init();
     },
 
     render: function() {
@@ -129,8 +136,8 @@ var Screen = React.createClass({
                         WebkitTransform:'scale(' + this.props.zoom + ')'}}>
                 <div className="gridster">
                     <ul>
-                        <li data-row="1" data-col="1" data-sizex="12" data-sizey="2"></li>
-                        <li data-row="3" data-col="1" data-sizex="8" data-sizey="2"></li>
+                        <li data-row="1" data-col="1" data-sizex="12" data-sizey="2" className="j-grid-block player-revert"></li>
+                        <li data-row="3" data-col="1" data-sizex="8" data-sizey="2" className="j-grid-block player-revert"></li>
                     </ul>
                 </div>
             </div>
