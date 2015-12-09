@@ -82,8 +82,8 @@ var EditPanel = React.createClass({
         return (
             <div className="">
                 <div className="edit-panel-title">
-                    <div className="">Editor</div>
-                    <div className="" onClick={this.closePanelHandler}>关闭</div>
+                    <span className="">Editor</span>
+                    <span className="edit-panel-close" onClick={this.closePanelHandler}>关闭</span>
                 </div>
                 <div className="edit-panel-text"></div>
             </div>
