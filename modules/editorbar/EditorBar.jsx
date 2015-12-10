@@ -43,15 +43,17 @@ var EditBar = React.createClass({
     render: function() {
         return (
             <div id="j-edit-bar" className="edit-bar hide">
-                <div className="edit-bar-icon">
-                    <span onClick={this.panelOpenHandler}><img src="images/set.png" alt="" className="bar-set"/></span>
-                    <span><img src="images/text.png" alt=""/></span>
-                    <span><img src="images/link.png" alt=""/></span>
-                    <span><img src="images/fix.png" alt=""/></span>
-                    <span><img src="images/auto.png" alt=""/></span>
-                    <span><img src="images/help.png" alt=""/></span>
+                <div className="model-0">
+                    <div className="float-btn-group">
+                        <button className="btn-float btn-triger pink"><i className="icon-bars"></i></button>
+                        <div className="btn-list">
+                            <a href="javascript:void(0);" className="btn-float blue" onClick={this.panelOpenHandler}><i className="fa fa-align-justify"></i></a>
+                            <a href="javascript:void(0);" className="btn-float blue"><i className="fa fa-cloud-download"> </i></a>
+                            <a href="javascript:void(0);" className="btn-float blue"><i className="fa fa-paperclip">   </i></a>
+                            <a href="javascript:void(0);" className="btn-float blue"><i className="fa fa-floppy-o"> </i></a>
+                        </div>
+                    </div>
                 </div>
-
             </div>
         );
     }
