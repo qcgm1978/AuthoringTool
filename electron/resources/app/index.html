@@ -1,89 +1,16 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <title>Authoring Tool</title>
-    <script>
-        window.$ = window.jQuery = require('jquery');
-        // main.js
-        var React = require('react');
-        var ReactDOM = require('react-dom');
-    </script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/tool-1.1.js"></script>
-    <link href="css/main.css" media="all" rel="stylesheet"/>
-    <link href="css/fontello.css" media="all" rel="stylesheet"/>
+
 </head>
 <body>
 
-<!--<div class="dialog hidden select-template " style="position: relative;">-->
-    <!--<div class="d-title">Select Template</div>-->
-    <!--<div class="icon-close">X</div>-->
+<div id="AuthoringTool">
 
-    <!--<div class="nav">-->
-        <!--<ul>-->
-            <!--<li onclick="useThisTemplate();">AutoColumn2</li>-->
-        <!--</ul>-->
-    <!--</div>-->
-    <!--<div class="intro">-->
-        <!--<img src="img/s1.png">-->
-        <!--<img src="img/s2.png">-->
-    <!--</div>-->
-<!--</div>-->
-
-<div class="activity-editor scene fullscreen">
-
-    <div class="menu-bar">
-        <a>新建</a>
-        <a>打开</a>
-        <span>屏幕分辨率: </span>
-        <select id="screenratio">
-            <option value="x169">1920x1080(16:9)</option>
-            <option value="x1610">1200x800(16:10)</option>
-            <option value="x43">1024x768(4:3)</option>
-        </select>
-        <span>双屏</span>
-        <input type="checkbox" id="ddscreen-show">
-
-        <span>Zoom</span>
-        <input type="number" value="50" style="width: 4rem;" id="zoom">%
-    </div>
-
-
-    <div class="tools-bar">
-        <div class="title">
-            Add Resources
-        </div>
-        <ul>
-            <li>Text Title</li>
-            <li>Text Content</li>
-            <li>Audio</li>
-            <li>Image</li>
-            <li>Video</li>
-        </ul>
-
-        <div class="title">Add Activities</div>
-        <ul>
-            <li>Single Choice</li>
-            <li>Multiple Choice</li>
-        </ul>
-    </div>
-
-    <div class="ground">
-        <div class="screen">
-            <div class="viewables">
-
-            </div>
-        </div>
-    </div>
 </div>
 
-
-<script type="text/babel">
-    ReactDOM.render(
-    <h1>Hello, world!</h1>,
-            document.getElementById('example')
-    );
-</script>
-
+<script type="text/javascript" src="build/bundle.js" charset="utf-8"></script>
 </body>
 </html>

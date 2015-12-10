@@ -3,8 +3,10 @@ var jQuery = require("jquery");
 
 require("./wysiwyg");
 require("./wysiwyg-editor");
-require("./css/wysiwyg-editor.css");
+
 require("./css/font-awesome.min.css");
+require("./css/wysiwyg-editor.css");
+
 
 /*  my plugin  */
 (function ($) {
