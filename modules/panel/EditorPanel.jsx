@@ -27,6 +27,10 @@ var EditPanel = React.createClass({
             });
 
             $(".edit-panel-title").dragDiv("#j-edit-panel");
+
+            $('.btn-triger').click(function () {
+                $(this).closest('.float-btn-group').toggleClass('open');
+            });
         }
     },
 
