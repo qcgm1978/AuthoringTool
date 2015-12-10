@@ -1,7 +1,5 @@
-
-require("./panel.css");
-
 require("../rtfeditor/mytexteditor");
+require("./panel.css");
 var React = require('react');
 var $ = require("jquery");
 
@@ -26,7 +24,7 @@ var EditPanel = React.createClass({
                     _top = $offset.top,
                     _left = $offset.left;
                 console.log($offset);
-                $("#j-edit-bar").css({"top":_top -23,"left":_left}).removeClass("hide").attr("data-bar-index",$(this).index());
+                $("#j-edit-bar").css({"top":_top + 5,"left":_left + 10}).removeClass("hide").attr("data-bar-index",$(this).index());
             });
 
             $(".edit-panel-title").dragDiv("#j-edit-panel");
