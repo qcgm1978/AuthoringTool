@@ -19,6 +19,7 @@
 	box-shadow: 0 2px 6px 0 rgba(22, 45, 61, 0.55);
 	background-color: #eeeeee;
 	max-width: 1024px;
+	z-index: 101;
 }
 .edit-panel-title {
 	min-height: 40px;
