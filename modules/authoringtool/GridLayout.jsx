@@ -25,7 +25,7 @@ var GridLayout = React.createClass({
                 enabled: true
             }
         });
-        EditPanel.init();
+        //EditPanel.init();
     },
 
     componentDidUpdate: function () {
@@ -35,7 +35,7 @@ var GridLayout = React.createClass({
     addGrid: function () {
         var gridster = $(".gridster ul").gridster().data('gridster');
         gridster.add_widget("<li class='j-grid-block player-revert'></li>", 12, 2, 1, 1);
-        EditPanel.init();
+        //EditPanel.init();
     },
 
     saveGridInfo: function () {

@@ -4,10 +4,8 @@
 var React = require('react');
 var $ = require("jquery");
 
-var ThemeMixins = require("./ThemeMixins");
-
 var GridLines = React.createClass({
-    mixins: [ThemeMixins],
+
     getInitialState: function() {
         return {lines: []};
     },

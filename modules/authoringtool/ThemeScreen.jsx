@@ -40,6 +40,12 @@ var ThemeScreen = React.createClass({
         });
     },
 
+
+    /**
+     * 这个方法会在页面加载header和footer， 根据设置计算好他们所占的高度，
+     * 然后根据剩余高度更新state， 重绘Layout和参考线
+     * @param html
+     */
     handleTemplateLoaded: function(html) {
         var props = this.props;
         $(".styles").empty();
@@ -61,7 +67,7 @@ var ThemeScreen = React.createClass({
             contentHeight -= themeConfig.default.padding[0];
             contentHeight -= themeConfig.default.padding[2];
         }
-
+        console.log(contentHeight);
         this.setState({
             minHeight: contentHeight
         });
