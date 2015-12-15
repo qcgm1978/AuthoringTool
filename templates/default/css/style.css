@@ -285,14 +285,14 @@ h6 {
 .site-footer {
 	width:100%;
 	background:#6092C0;
-	position:fixed;
-	bottom:0px;
 	color: #ffffff;
 	height:60px;
 	line-height:60px;
 	text-align:center;
 	word-spacing:2px;
 }
+
+
 @media screen and (width:1024px){
 	.A-head {font-size:16px;}
 	.A-head .A-head-bold {font-size:20px;}
