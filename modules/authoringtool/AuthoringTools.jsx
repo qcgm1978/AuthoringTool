@@ -7,76 +7,46 @@ var ReactDOM = require('react-dom');
 
 var $ = require("jquery");
 
-var GridLines = require("./GridLines.jsx");
+var NavBar = require("./NavBar.jsx");
+var ThemeScreen = require("./ThemeScreen.jsx");
+
 var EditPanel = require("../panel/EditorPanel.jsx");
 var EditBar = require("../editorbar/EditorBar.jsx");
 
 var PageEditor = React.createClass({
 
-    getInitialState: function() {
-        return {width: 1024, minHeight: 768, zoom:1, doubleScreen: false};
+    getInitialState: function () {
+        return {
+            width: 1024,
+            minHeight: 768,
+            zoom: 1,
+            doubleScreen: false,
+            showHeader: true,
+            showFooter: true,
+            theme: "default",
+            showGrid: true
+        };
     },
 
-    ratioChange: function(event) {
-        var ratio = event.target.value;
-        if (ratio==="x169") {
-            this.setState({width: 1920, minHeight: 1080});
-        } else if (ratio==="x1610") {
-            this.setState({width: 1280, minHeight: 800});
-        } else if (ratio==="x43") {
-            this.setState({width: 1024, minHeight: 768});
-        }
-    },
-
-    toggleScreen: function(event) {
-        this.setState({
-            doubleScreen: event.target.checked
-        });
-    },
-
-    addGrid: function() {
-       this.refs["screen"].addGridX();
+    componentDidMount: function () {
 
     },
 
-    zoomChange: function(event) {
-        this.setState({zoom: event.target.value});
-    },
-
-    /**在这个DOM ready之中使用jquery与grister初始化格子系统*/
-    componentDidMount: function() {
+    themeInitialize: function() {
 
     },
 
-    render: function() {
+    updateState: function(state) {
+        this.setState(state);
+    },
+
+    render: function () {
         return (
             <div>
-                <nav className="navbar navbar-default navbar-fixed-top">
-                    <a className="navbar-brand" href="#">Authoring Tool</a>
-                    <ul className="nav navbar-nav navbar-right">
-                        <li>
-                            <button type="button" className="btn btn-success navbar-btn" onClick={this.addGrid}>Add Grid</button>
-                        </li>
-
-                        <li >
-                            <select onChange={this.ratioChange}>
-                                <option value="x43" >1024x768(4:3)</option>
-                                <option value="x169" >1920x1080(16:9)</option>
-                                <option value="x1610" >1200x800(16:10)</option>
-                            </select>
-                        </li>
-
-                        <li>
-                            <input type="checkbox" onClick={this.toggleScreen}/>
-                        </li>
-
-                        <li><a href="#">Save</a></li>
-                        <li><a href="#">Preview</a></li>
-                        <li><a href="#">Export</a></li>
-                    </ul>
-                </nav>
-                <Screen doubleScreen={this.state.doubleScreen} width={this.state.width} minHeight={this.state.minHeight} zoom={this.state.zoom} ref="screen"/>
-                <GridLines width={this.state.width} minHeight={this.state.minHeight} doubleScreen={this.state.doubleScreen}/>
+                <NavBar onChange={this.updateState}/>
+                <ThemeScreen theme={this.state.theme} resize={this.themeInitialize} doubleScreen={this.state.doubleScreen} width={this.state.width}
+                             showHeader={this.state.showHeader} showFooter={this.state.showFooter} showGrid={this.state.showGrid}
+                             minHeight={this.state.minHeight} ref="themescreen"/>
                 <EditBar/>
                 <EditPanel/>
             </div>
@@ -85,10 +55,12 @@ var PageEditor = React.createClass({
 });
 
 var Screen = React.createClass({
-    componentDidMount: function() {
+    componentDidMount: function () {
+        this.loadTheme();
+
         $(".gridster ul").gridster({
             widget_margins: [1, 1],
-            widget_base_dimensions: [Math.floor((this.props.width)/12-2), (this.props.minHeight)/12-2],
+            widget_base_dimensions: [Math.floor((this.props.width) / 12 - 2), (this.props.minHeight) / 30 - 2],
             min_cols: 12,
             resize: {
                 enabled: true
@@ -97,11 +69,12 @@ var Screen = React.createClass({
         EditPanel.init();
     },
 
-    componentDidUpdate: function() {
+    componentDidUpdate: function () {
         var rhtml = $(".gridster").html();
         $(".gridster ul").remove();
         $(".gridster").append(rhtml);
         var col = 12;
+
         if (this.props.doubleScreen) {
             col = col * 2;
         }
@@ -117,13 +90,17 @@ var Screen = React.createClass({
         EditPanel.init();
     },
 
-    addGridX: function() {
+    addGrid: function () {
         var gridster = $(".gridster ul").gridster().data('gridster');
         gridster.add_widget("<li class='j-grid-block player-revert'></li>", 12, 2, 1, 1);
         EditPanel.init();
     },
 
-    render: function() {
+    saveGridInfo: function () {
+
+    },
+
+    render: function () {
         var swidth = this.props.width;
 
         if (this.props.doubleScreen) {
@@ -134,18 +111,21 @@ var Screen = React.createClass({
                         width:  this.props.width,
                         minHeight: this.props.minHeight,
                         WebkitTransform:'scale(' + this.props.zoom + ')'}}>
+                <div className="styles"></div>
+                <div className="header"></div>
                 <div className="gridster">
                     <ul>
-                        <li data-row="1" data-col="1" data-sizex="12" data-sizey="2" className="j-grid-block player-revert"></li>
-                        <li data-row="3" data-col="1" data-sizex="8" data-sizey="2" className="j-grid-block player-revert"></li>
+                        <li data-row="1" data-col="1" data-sizex="12" data-sizey="2"
+                            className="j-grid-block player-revert"></li>
+                        <li data-row="3" data-col="1" data-sizex="8" data-sizey="2"
+                            className="j-grid-block player-revert"></li>
                     </ul>
                 </div>
+                <div className="footer"></div>
             </div>
         );
     }
 });
-
-
 
 ReactDOM.render(
     <PageEditor />,

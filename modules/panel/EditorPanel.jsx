@@ -82,8 +82,8 @@ var EditPanel = React.createClass({
                     <div className="pop_title">{_nameEditor.img} <a href="javascript:void(0);" onClick={this.closePanelHandler} >x</a></div>
                     <div className="pop_main">
                         <div className="main_editbg"></div>
-                        <p><a href="#">Change</a></p>
-                        <p><a href="#">Edit</a></p>
+                        <p><a href="javascript:;">Change</a></p>
+                        <p><a href="javascript:;">Edit</a></p>
                     </div>
                     <div className="pop_content">
                         <p>How's this image resized?</p>

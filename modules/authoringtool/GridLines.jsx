@@ -4,15 +4,16 @@
 var React = require('react');
 var $ = require("jquery");
 
-var GridLines = React.createClass({
+var ThemeMixins = require("./ThemeMixins");
 
+var GridLines = React.createClass({
+    mixins: [ThemeMixins],
     getInitialState: function() {
         return {lines: []};
     },
 
     render: function() {
         var w_width = $(window).innerWidth();
-
         this.state.lines = [
             {
                 key: "l1",
