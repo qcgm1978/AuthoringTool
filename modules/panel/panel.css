@@ -42,6 +42,7 @@ img {
 	border-top-right-radius: 5px ;
 	color: white;
 	padding: 10px 10px 10px 15px;
+	cursor: move;
 }
 .edit-panel-close {
 	float: right;
@@ -79,11 +80,11 @@ img {
 .pop_title a {display:inline-block; background:#2B81CB; color:#fff; width:24px; height:24px; line-height:24px; cursor:pointer; text-align:center; border-radius:12px;}
 .pop_title a:first-child {position:absolute; right:55px; top:15px;}
 .pop_title a:last-child {position:absolute; right:20px; top:15px;}
-.pop_main {height:150px; position:relative; background:#EAF7FF url(images/mainbg.png) center bottom no-repeat; background-size:contain;}
+.pop_main {height:150px; position:relative; background:#EAF7FF url(../images/mainbg.png) center bottom no-repeat; background-size:contain;}
 .main_editbg {height:60px; background:#3899EC; opacity:0.1; position:absolute; bottom:0px; left:0px; right:0px;}
 .pop_main p {width:100px; padding:7px 10px; text-align:center; border-radius:20px; float:left;}
-.pop_main p:nth-child(2) {position:absolute; left:20px; bottom:12px; background:#fff url(images/change.png) 10px 9px no-repeat;}
-.pop_main p:nth-child(3) {position:absolute; right:20px; bottom:12px; background:#fff url(images/edit.png) 10px 9px no-repeat;}
+.pop_main p:nth-child(2) {position:absolute; left:20px; bottom:12px; background:#fff url(../images/change.png) 10px 9px no-repeat;}
+.pop_main p:nth-child(3) {position:absolute; right:20px; bottom:12px; background:#fff url(../images/edit.png) 10px 9px no-repeat;}
 .pop_content {height:130px; background:#fff; border-top:solid 1px #D9E1E8; padding:20px;}
 .pop_content p {color:#2B5672; font-size:14px; padding-bottom:20px; clear:both;}
 .content_list {float:left; width:55px; margin-right:13px; text-align:center;}

@@ -3,6 +3,7 @@ require("./editbar.css");
 
 var React = require('react');
 var $ = require("jquery");
+require("./jquery.notebook");
 
 var EditBar = React.createClass({
     initialOptions : {

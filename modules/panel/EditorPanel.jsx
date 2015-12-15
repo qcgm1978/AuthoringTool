@@ -1,4 +1,4 @@
-/*require("../rtfeditor/mytexteditor");*/
+require("../rtfeditor/mytexteditor");
 require("./panel.css");
 var React = require('react');
 var $ = require("jquery");
