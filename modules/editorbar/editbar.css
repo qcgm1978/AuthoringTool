@@ -2,10 +2,16 @@
 	display: none;
 }
 
+
+/**  edit button **/
+*, *:after, *:before {
+	box-sizing: border-box;
+}
 .edit-bar{
-	width: auto;
+	width: 250px;
 	background-color: transparent;
 	position: absolute;
+	display: none;
 }
 
 .btn-float {
@@ -119,4 +125,3 @@
 .model-0 .float-btn-group.open .btn-list {
 	opacity: 1;
 }
-
