@@ -36,6 +36,10 @@ var PageEditor = React.createClass({
 
     },
 
+    addGrid: function() {
+        this.refs["themescreen"].moreGrid();
+    },
+
     updateState: function(state) {
         this.setState(state);
     },
@@ -43,10 +47,11 @@ var PageEditor = React.createClass({
     render: function () {
         return (
             <div>
-                <NavBar onChange={this.updateState}/>
-                <ThemeScreen theme={this.state.theme} resize={this.themeInitialize} doubleScreen={this.state.doubleScreen} width={this.state.width}
+                <NavBar onChange={this.updateState} onAddGrid={this.addGrid}/>
+                <ThemeScreen theme={this.state.theme} resize={this.themeInitialize} doubleScreen={this.state.doubleScreen}
+                             width={this.state.width} height={this.state.minHeight}
                              showHeader={this.state.showHeader} showFooter={this.state.showFooter} showGrid={this.state.showGrid}
-                             minHeight={this.state.minHeight} ref="themescreen"/>
+                             ref="themescreen"/>
                 <EditBar/>
                 <EditPanel/>
             </div>

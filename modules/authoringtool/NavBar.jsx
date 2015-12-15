@@ -32,7 +32,7 @@ var NavBar = React.createClass({
     },
 
     addGridClick: function () {
-        this.refs["screen"].addGrid();
+        this.props.onAddGrid();
     },
 
     zoomChange: function (event) {
