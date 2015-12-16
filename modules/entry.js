@@ -3,6 +3,7 @@
  */
 
 require("../modules/bootstrap/css/bootstrap.css");
+require("../modules/bootstrap/js/bootstrap");
 require("../modules/gridster/jquery.gridster.css");
 require("../modules/gridster/jquery.gridster");
 require("./authoringtool/main.scss");

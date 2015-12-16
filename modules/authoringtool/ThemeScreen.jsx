@@ -42,6 +42,10 @@ var ThemeScreen = React.createClass({
         });
     },
 
+    moreGrid: function() {
+        this.refs["layout"].addBlock();
+    },
+
     /**
      * 这个方法会在页面加载header和footer， 根据设置计算好他们所占的高度，
      * 然后根据剩余高度更新state， 重绘Layout和参考线
@@ -84,8 +88,15 @@ var ThemeScreen = React.createClass({
             swidth = swidth * 2;
         }
 
+        var headerWidth = "100%";
+        if (this.props.doubleScreen) {
+            if (this.props.expandMode===3||this.props.expandMode===1) {
+                headerWidth = "50%";
+            }
+        }
+
         var contentHeight = this.props.height;
-        var headerHeight = 0 ;
+        var contentWidth = this.props.width;
         if (this.props.showHeader) {
             contentHeight -= this.state.headerHeight;
         }
@@ -96,24 +107,32 @@ var ThemeScreen = React.createClass({
             contentHeight -= this.themeConfig.default.padding[0];
             contentHeight -= this.themeConfig.default.padding[2];
         }
-        var contentWidth =  this.props.width;
-
         /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
+
         return (
             <div className="screen" style={{
-                            width:  swidth,
-                            minHeight: this.props.minHeight
-                        }}>
-                <div className="styles"></div>
-                <div className="header"></div>
+                        width:  swidth,
+                        minHeight: this.props.minHeight
+                    }}>
+                <div className="display">
+                    <div className="styles"></div>
+                    <div className="header" style={{
+                        width: headerWidth
+                    }}></div>
 
-                <GridLayout width={this.props.width} height={this.props.height} contentHeight={contentHeight}
-                            contentWidth={contentWidth}
-                            doubleScreen={this.props.doubleScreen}/>
+                    <GridLayout width={this.props.width} height={this.props.height}
+                                showHeader={this.props.showHeader} showFooter={this.props.showFooter}
+                                doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}
+                                headerHeight={this.state.headerHeight} footerHeight={this.state.footerHeight}
+                                padding={this.state.padding}
+                                ref="layout"/>
+                    <div className="footer" style={{
+                        width: headerWidth
+                    }}></div>
+                </div>
                 <AxisLines width={this.props.width} height={this.props.height} headerHeight={this.state.headerHeight}
                            contentWidth={contentWidth}
-                           doubleScreen={this.props.doubleScreen}/>
-                <div className="footer"></div>
+                           doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}/>
             </div>
         );
     }

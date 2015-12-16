@@ -54,7 +54,8 @@
 	__webpack_require__(10);
 	__webpack_require__(12);
 	__webpack_require__(14);
-	__webpack_require__(16);
+	__webpack_require__(15);
+	__webpack_require__(17);
 
 /***/ },
 /* 1 */
@@ -440,1061 +441,2187 @@
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
+	'use strict';
 
-	// load the styles
-	var content = __webpack_require__(11);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(9)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./jquery.gridster.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./jquery.gridster.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
+	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
+	/*!
+	 * Bootstrap v3.3.5 (http://getbootstrap.com)
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 */
+
+	/*!
+	 * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=8e2342e11e22927e4687)
+	 * Config saved to config.json and https://gist.github.com/8e2342e11e22927e4687
+	 */
+
+	var jQuery = __webpack_require__(11);
+	if (typeof jQuery === 'undefined') {
+	  throw new Error('Bootstrap\'s JavaScript requires jQuery');
 	}
+	+(function ($) {
+	  'use strict';
+
+	  var version = $.fn.jquery.split(' ')[0].split('.');
+	  if (version[0] < 2 && version[1] < 9 || version[0] == 1 && version[1] == 9 && version[2] < 1 || version[0] > 2) {
+	    throw new Error('Bootstrap\'s JavaScript requires jQuery version 1.9.1 or higher, but lower than version 3');
+	  }
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: alert.js v3.3.6
+	 * http://getbootstrap.com/javascript/#alerts
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // ALERT CLASS DEFINITION
+	  // ======================
+
+	  ;
+	  var dismiss = '[data-dismiss="alert"]';
+	  var Alert = function Alert(el) {
+	    $(el).on('click', dismiss, this.close);
+	  };
+
+	  Alert.VERSION = '3.3.6';
+
+	  Alert.TRANSITION_DURATION = 150;
+
+	  Alert.prototype.close = function (e) {
+	    var $this = $(this);
+	    var selector = $this.attr('data-target');
+
+	    if (!selector) {
+	      selector = $this.attr('href');
+	      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, ''); // strip for ie7
+	    }
+
+	    var $parent = $(selector);
+
+	    if (e) e.preventDefault();
+
+	    if (!$parent.length) {
+	      $parent = $this.closest('.alert');
+	    }
+
+	    $parent.trigger(e = $.Event('close.bs.alert'));
+
+	    if (e.isDefaultPrevented()) return;
+
+	    $parent.removeClass('in');
+
+	    function removeElement() {
+	      // detach from parent, fire event then clean up data
+	      $parent.detach().trigger('closed.bs.alert').remove();
+	    }
+
+	    $.support.transition && $parent.hasClass('fade') ? $parent.one('bsTransitionEnd', removeElement).emulateTransitionEnd(Alert.TRANSITION_DURATION) : removeElement();
+	  };
+
+	  // ALERT PLUGIN DEFINITION
+	  // =======================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.alert');
+
+	      if (!data) $this.data('bs.alert', data = new Alert(this));
+	      if (typeof option == 'string') data[option].call($this);
+	    });
+	  }
+
+	  var old = $.fn.alert;
+
+	  $.fn.alert = Plugin;
+	  $.fn.alert.Constructor = Alert;
+
+	  // ALERT NO CONFLICT
+	  // =================
+
+	  $.fn.alert.noConflict = function () {
+	    $.fn.alert = old;
+	    return this;
+	  };
+
+	  // ALERT DATA-API
+	  // ==============
+
+	  $(document).on('click.bs.alert.data-api', dismiss, Alert.prototype.close);
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: button.js v3.3.6
+	 * http://getbootstrap.com/javascript/#buttons
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // BUTTON PUBLIC CLASS DEFINITION
+	  // ==============================
+
+	  ;
+	  var Button = function Button(element, options) {
+	    this.$element = $(element);
+	    this.options = $.extend({}, Button.DEFAULTS, options);
+	    this.isLoading = false;
+	  };
+
+	  Button.VERSION = '3.3.6';
+
+	  Button.DEFAULTS = {
+	    loadingText: 'loading...'
+	  };
+
+	  Button.prototype.setState = function (state) {
+	    var d = 'disabled';
+	    var $el = this.$element;
+	    var val = $el.is('input') ? 'val' : 'html';
+	    var data = $el.data();
+
+	    state += 'Text';
+
+	    if (data.resetText == null) $el.data('resetText', $el[val]());
+
+	    // push to event loop to allow forms to submit
+	    setTimeout($.proxy(function () {
+	      $el[val](data[state] == null ? this.options[state] : data[state]);
+
+	      if (state == 'loadingText') {
+	        this.isLoading = true;
+	        $el.addClass(d).attr(d, d);
+	      } else if (this.isLoading) {
+	        this.isLoading = false;
+	        $el.removeClass(d).removeAttr(d);
+	      }
+	    }, this), 0);
+	  };
+
+	  Button.prototype.toggle = function () {
+	    var changed = true;
+	    var $parent = this.$element.closest('[data-toggle="buttons"]');
+
+	    if ($parent.length) {
+	      var $input = this.$element.find('input');
+	      if ($input.prop('type') == 'radio') {
+	        if ($input.prop('checked')) changed = false;
+	        $parent.find('.active').removeClass('active');
+	        this.$element.addClass('active');
+	      } else if ($input.prop('type') == 'checkbox') {
+	        if ($input.prop('checked') !== this.$element.hasClass('active')) changed = false;
+	        this.$element.toggleClass('active');
+	      }
+	      $input.prop('checked', this.$element.hasClass('active'));
+	      if (changed) $input.trigger('change');
+	    } else {
+	      this.$element.attr('aria-pressed', !this.$element.hasClass('active'));
+	      this.$element.toggleClass('active');
+	    }
+	  };
+
+	  // BUTTON PLUGIN DEFINITION
+	  // ========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.button');
+	      var options = (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option;
+
+	      if (!data) $this.data('bs.button', data = new Button(this, options));
+
+	      if (option == 'toggle') data.toggle();else if (option) data.setState(option);
+	    });
+	  }
+
+	  var old = $.fn.button;
+
+	  $.fn.button = Plugin;
+	  $.fn.button.Constructor = Button;
+
+	  // BUTTON NO CONFLICT
+	  // ==================
+
+	  $.fn.button.noConflict = function () {
+	    $.fn.button = old;
+	    return this;
+	  };
+
+	  // BUTTON DATA-API
+	  // ===============
+
+	  $(document).on('click.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+	    var $btn = $(e.target);
+	    if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn');
+	    Plugin.call($btn, 'toggle');
+	    if (!($(e.target).is('input[type="radio"]') || $(e.target).is('input[type="checkbox"]'))) e.preventDefault();
+	  }).on('focus.bs.button.data-api blur.bs.button.data-api', '[data-toggle^="button"]', function (e) {
+	    $(e.target).closest('.btn').toggleClass('focus', /^focus(in)?$/.test(e.type));
+	  });
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: carousel.js v3.3.6
+	 * http://getbootstrap.com/javascript/#carousel
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // CAROUSEL CLASS DEFINITION
+	  // =========================
+
+	  ;
+	  var Carousel = function Carousel(element, options) {
+	    this.$element = $(element);
+	    this.$indicators = this.$element.find('.carousel-indicators');
+	    this.options = options;
+	    this.paused = null;
+	    this.sliding = null;
+	    this.interval = null;
+	    this.$active = null;
+	    this.$items = null;
+
+	    this.options.keyboard && this.$element.on('keydown.bs.carousel', $.proxy(this.keydown, this));
+
+	    this.options.pause == 'hover' && !('ontouchstart' in document.documentElement) && this.$element.on('mouseenter.bs.carousel', $.proxy(this.pause, this)).on('mouseleave.bs.carousel', $.proxy(this.cycle, this));
+	  };
+
+	  Carousel.VERSION = '3.3.6';
+
+	  Carousel.TRANSITION_DURATION = 600;
+
+	  Carousel.DEFAULTS = {
+	    interval: 5000,
+	    pause: 'hover',
+	    wrap: true,
+	    keyboard: true
+	  };
+
+	  Carousel.prototype.keydown = function (e) {
+	    if (/input|textarea/i.test(e.target.tagName)) return;
+	    switch (e.which) {
+	      case 37:
+	        this.prev();break;
+	      case 39:
+	        this.next();break;
+	      default:
+	        return;
+	    }
+
+	    e.preventDefault();
+	  };
+
+	  Carousel.prototype.cycle = function (e) {
+	    e || (this.paused = false);
+
+	    this.interval && clearInterval(this.interval);
+
+	    this.options.interval && !this.paused && (this.interval = setInterval($.proxy(this.next, this), this.options.interval));
+
+	    return this;
+	  };
+
+	  Carousel.prototype.getItemIndex = function (item) {
+	    this.$items = item.parent().children('.item');
+	    return this.$items.index(item || this.$active);
+	  };
+
+	  Carousel.prototype.getItemForDirection = function (direction, active) {
+	    var activeIndex = this.getItemIndex(active);
+	    var willWrap = direction == 'prev' && activeIndex === 0 || direction == 'next' && activeIndex == this.$items.length - 1;
+	    if (willWrap && !this.options.wrap) return active;
+	    var delta = direction == 'prev' ? -1 : 1;
+	    var itemIndex = (activeIndex + delta) % this.$items.length;
+	    return this.$items.eq(itemIndex);
+	  };
+
+	  Carousel.prototype.to = function (pos) {
+	    var that = this;
+	    var activeIndex = this.getItemIndex(this.$active = this.$element.find('.item.active'));
+
+	    if (pos > this.$items.length - 1 || pos < 0) return;
+
+	    if (this.sliding) return this.$element.one('slid.bs.carousel', function () {
+	      that.to(pos);
+	    }); // yes, "slid"
+	    if (activeIndex == pos) return this.pause().cycle();
+
+	    return this.slide(pos > activeIndex ? 'next' : 'prev', this.$items.eq(pos));
+	  };
+
+	  Carousel.prototype.pause = function (e) {
+	    e || (this.paused = true);
+
+	    if (this.$element.find('.next, .prev').length && $.support.transition) {
+	      this.$element.trigger($.support.transition.end);
+	      this.cycle(true);
+	    }
+
+	    this.interval = clearInterval(this.interval);
+
+	    return this;
+	  };
+
+	  Carousel.prototype.next = function () {
+	    if (this.sliding) return;
+	    return this.slide('next');
+	  };
+
+	  Carousel.prototype.prev = function () {
+	    if (this.sliding) return;
+	    return this.slide('prev');
+	  };
+
+	  Carousel.prototype.slide = function (type, next) {
+	    var $active = this.$element.find('.item.active');
+	    var $next = next || this.getItemForDirection(type, $active);
+	    var isCycling = this.interval;
+	    var direction = type == 'next' ? 'left' : 'right';
+	    var that = this;
+
+	    if ($next.hasClass('active')) return this.sliding = false;
+
+	    var relatedTarget = $next[0];
+	    var slideEvent = $.Event('slide.bs.carousel', {
+	      relatedTarget: relatedTarget,
+	      direction: direction
+	    });
+	    this.$element.trigger(slideEvent);
+	    if (slideEvent.isDefaultPrevented()) return;
+
+	    this.sliding = true;
+
+	    isCycling && this.pause();
+
+	    if (this.$indicators.length) {
+	      this.$indicators.find('.active').removeClass('active');
+	      var $nextIndicator = $(this.$indicators.children()[this.getItemIndex($next)]);
+	      $nextIndicator && $nextIndicator.addClass('active');
+	    }
+
+	    var slidEvent = $.Event('slid.bs.carousel', { relatedTarget: relatedTarget, direction: direction }); // yes, "slid"
+	    if ($.support.transition && this.$element.hasClass('slide')) {
+	      $next.addClass(type);
+	      $next[0].offsetWidth; // force reflow
+	      $active.addClass(direction);
+	      $next.addClass(direction);
+	      $active.one('bsTransitionEnd', function () {
+	        $next.removeClass([type, direction].join(' ')).addClass('active');
+	        $active.removeClass(['active', direction].join(' '));
+	        that.sliding = false;
+	        setTimeout(function () {
+	          that.$element.trigger(slidEvent);
+	        }, 0);
+	      }).emulateTransitionEnd(Carousel.TRANSITION_DURATION);
+	    } else {
+	      $active.removeClass('active');
+	      $next.addClass('active');
+	      this.sliding = false;
+	      this.$element.trigger(slidEvent);
+	    }
+
+	    isCycling && this.cycle();
+
+	    return this;
+	  };
+
+	  // CAROUSEL PLUGIN DEFINITION
+	  // ==========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.carousel');
+	      var options = $.extend({}, Carousel.DEFAULTS, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option);
+	      var action = typeof option == 'string' ? option : options.slide;
+
+	      if (!data) $this.data('bs.carousel', data = new Carousel(this, options));
+	      if (typeof option == 'number') data.to(option);else if (action) data[action]();else if (options.interval) data.pause().cycle();
+	    });
+	  }
+
+	  var old = $.fn.carousel;
+
+	  $.fn.carousel = Plugin;
+	  $.fn.carousel.Constructor = Carousel;
+
+	  // CAROUSEL NO CONFLICT
+	  // ====================
+
+	  $.fn.carousel.noConflict = function () {
+	    $.fn.carousel = old;
+	    return this;
+	  };
+
+	  // CAROUSEL DATA-API
+	  // =================
+
+	  var clickHandler = function clickHandler(e) {
+	    var href;
+	    var $this = $(this);
+	    var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
+	    if (!$target.hasClass('carousel')) return;
+	    var options = $.extend({}, $target.data(), $this.data());
+	    var slideIndex = $this.attr('data-slide-to');
+	    if (slideIndex) options.interval = false;
+
+	    Plugin.call($target, options);
+
+	    if (slideIndex) {
+	      $target.data('bs.carousel').to(slideIndex);
+	    }
+
+	    e.preventDefault();
+	  };
+
+	  $(document).on('click.bs.carousel.data-api', '[data-slide]', clickHandler).on('click.bs.carousel.data-api', '[data-slide-to]', clickHandler);
+
+	  $(window).on('load', function () {
+	    $('[data-ride="carousel"]').each(function () {
+	      var $carousel = $(this);
+	      Plugin.call($carousel, $carousel.data());
+	    });
+	  });
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: dropdown.js v3.3.6
+	 * http://getbootstrap.com/javascript/#dropdowns
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // DROPDOWN CLASS DEFINITION
+	  // =========================
+
+	  ;
+	  var backdrop = '.dropdown-backdrop';
+	  var toggle = '[data-toggle="dropdown"]';
+	  var Dropdown = function Dropdown(element) {
+	    $(element).on('click.bs.dropdown', this.toggle);
+	  };
+
+	  Dropdown.VERSION = '3.3.6';
+
+	  function getParent($this) {
+	    var selector = $this.attr('data-target');
+
+	    if (!selector) {
+	      selector = $this.attr('href');
+	      selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, ''); // strip for ie7
+	    }
+
+	    var $parent = selector && $(selector);
+
+	    return $parent && $parent.length ? $parent : $this.parent();
+	  }
+
+	  function clearMenus(e) {
+	    if (e && e.which === 3) return;
+	    $(backdrop).remove();
+	    $(toggle).each(function () {
+	      var $this = $(this);
+	      var $parent = getParent($this);
+	      var relatedTarget = { relatedTarget: this };
+
+	      if (!$parent.hasClass('open')) return;
+
+	      if (e && e.type == 'click' && /input|textarea/i.test(e.target.tagName) && $.contains($parent[0], e.target)) return;
+
+	      $parent.trigger(e = $.Event('hide.bs.dropdown', relatedTarget));
+
+	      if (e.isDefaultPrevented()) return;
+
+	      $this.attr('aria-expanded', 'false');
+	      $parent.removeClass('open').trigger($.Event('hidden.bs.dropdown', relatedTarget));
+	    });
+	  }
+
+	  Dropdown.prototype.toggle = function (e) {
+	    var $this = $(this);
+
+	    if ($this.is('.disabled, :disabled')) return;
+
+	    var $parent = getParent($this);
+	    var isActive = $parent.hasClass('open');
+
+	    clearMenus();
+
+	    if (!isActive) {
+	      if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
+	        // if mobile we use a backdrop because click events don't delegate
+	        $(document.createElement('div')).addClass('dropdown-backdrop').insertAfter($(this)).on('click', clearMenus);
+	      }
+
+	      var relatedTarget = { relatedTarget: this };
+	      $parent.trigger(e = $.Event('show.bs.dropdown', relatedTarget));
+
+	      if (e.isDefaultPrevented()) return;
+
+	      $this.trigger('focus').attr('aria-expanded', 'true');
+
+	      $parent.toggleClass('open').trigger($.Event('shown.bs.dropdown', relatedTarget));
+	    }
+
+	    return false;
+	  };
+
+	  Dropdown.prototype.keydown = function (e) {
+	    if (!/(38|40|27|32)/.test(e.which) || /input|textarea/i.test(e.target.tagName)) return;
+
+	    var $this = $(this);
+
+	    e.preventDefault();
+	    e.stopPropagation();
+
+	    if ($this.is('.disabled, :disabled')) return;
+
+	    var $parent = getParent($this);
+	    var isActive = $parent.hasClass('open');
+
+	    if (!isActive && e.which != 27 || isActive && e.which == 27) {
+	      if (e.which == 27) $parent.find(toggle).trigger('focus');
+	      return $this.trigger('click');
+	    }
+
+	    var desc = ' li:not(.disabled):visible a';
+	    var $items = $parent.find('.dropdown-menu' + desc);
+
+	    if (!$items.length) return;
+
+	    var index = $items.index(e.target);
+
+	    if (e.which == 38 && index > 0) index--; // up
+	    if (e.which == 40 && index < $items.length - 1) index++; // down
+	    if (! ~index) index = 0;
+
+	    $items.eq(index).trigger('focus');
+	  };
+
+	  // DROPDOWN PLUGIN DEFINITION
+	  // ==========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.dropdown');
+
+	      if (!data) $this.data('bs.dropdown', data = new Dropdown(this));
+	      if (typeof option == 'string') data[option].call($this);
+	    });
+	  }
+
+	  var old = $.fn.dropdown;
+
+	  $.fn.dropdown = Plugin;
+	  $.fn.dropdown.Constructor = Dropdown;
+
+	  // DROPDOWN NO CONFLICT
+	  // ====================
+
+	  $.fn.dropdown.noConflict = function () {
+	    $.fn.dropdown = old;
+	    return this;
+	  };
+
+	  // APPLY TO STANDARD DROPDOWN ELEMENTS
+	  // ===================================
+
+	  $(document).on('click.bs.dropdown.data-api', clearMenus).on('click.bs.dropdown.data-api', '.dropdown form', function (e) {
+	    e.stopPropagation();
+	  }).on('click.bs.dropdown.data-api', toggle, Dropdown.prototype.toggle).on('keydown.bs.dropdown.data-api', toggle, Dropdown.prototype.keydown).on('keydown.bs.dropdown.data-api', '.dropdown-menu', Dropdown.prototype.keydown);
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: modal.js v3.3.6
+	 * http://getbootstrap.com/javascript/#modals
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // MODAL CLASS DEFINITION
+	  // ======================
+
+	  ;
+	  var Modal = function Modal(element, options) {
+	    this.options = options;
+	    this.$body = $(document.body);
+	    this.$element = $(element);
+	    this.$dialog = this.$element.find('.modal-dialog');
+	    this.$backdrop = null;
+	    this.isShown = null;
+	    this.originalBodyPad = null;
+	    this.scrollbarWidth = 0;
+	    this.ignoreBackdropClick = false;
+
+	    if (this.options.remote) {
+	      this.$element.find('.modal-content').load(this.options.remote, $.proxy(function () {
+	        this.$element.trigger('loaded.bs.modal');
+	      }, this));
+	    }
+	  };
+
+	  Modal.VERSION = '3.3.6';
+
+	  Modal.TRANSITION_DURATION = 300;
+	  Modal.BACKDROP_TRANSITION_DURATION = 150;
+
+	  Modal.DEFAULTS = {
+	    backdrop: true,
+	    keyboard: true,
+	    show: true
+	  };
+
+	  Modal.prototype.toggle = function (_relatedTarget) {
+	    return this.isShown ? this.hide() : this.show(_relatedTarget);
+	  };
+
+	  Modal.prototype.show = function (_relatedTarget) {
+	    var that = this;
+	    var e = $.Event('show.bs.modal', { relatedTarget: _relatedTarget });
+
+	    this.$element.trigger(e);
+
+	    if (this.isShown || e.isDefaultPrevented()) return;
+
+	    this.isShown = true;
+
+	    this.checkScrollbar();
+	    this.setScrollbar();
+	    this.$body.addClass('modal-open');
+
+	    this.escape();
+	    this.resize();
+
+	    this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this));
+
+	    this.$dialog.on('mousedown.dismiss.bs.modal', function () {
+	      that.$element.one('mouseup.dismiss.bs.modal', function (e) {
+	        if ($(e.target).is(that.$element)) that.ignoreBackdropClick = true;
+	      });
+	    });
+
+	    this.backdrop(function () {
+	      var transition = $.support.transition && that.$element.hasClass('fade');
+
+	      if (!that.$element.parent().length) {
+	        that.$element.appendTo(that.$body); // don't move modals dom position
+	      }
+
+	      that.$element.show().scrollTop(0);
+
+	      that.adjustDialog();
+
+	      if (transition) {
+	        that.$element[0].offsetWidth; // force reflow
+	      }
+
+	      that.$element.addClass('in');
+
+	      that.enforceFocus();
+
+	      var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget });
+
+	      transition ? that.$dialog // wait for modal to slide in
+	      .one('bsTransitionEnd', function () {
+	        that.$element.trigger('focus').trigger(e);
+	      }).emulateTransitionEnd(Modal.TRANSITION_DURATION) : that.$element.trigger('focus').trigger(e);
+	    });
+	  };
+
+	  Modal.prototype.hide = function (e) {
+	    if (e) e.preventDefault();
+
+	    e = $.Event('hide.bs.modal');
+
+	    this.$element.trigger(e);
+
+	    if (!this.isShown || e.isDefaultPrevented()) return;
+
+	    this.isShown = false;
+
+	    this.escape();
+	    this.resize();
+
+	    $(document).off('focusin.bs.modal');
+
+	    this.$element.removeClass('in').off('click.dismiss.bs.modal').off('mouseup.dismiss.bs.modal');
+
+	    this.$dialog.off('mousedown.dismiss.bs.modal');
+
+	    $.support.transition && this.$element.hasClass('fade') ? this.$element.one('bsTransitionEnd', $.proxy(this.hideModal, this)).emulateTransitionEnd(Modal.TRANSITION_DURATION) : this.hideModal();
+	  };
+
+	  Modal.prototype.enforceFocus = function () {
+	    $(document).off('focusin.bs.modal') // guard against infinite focus loop
+	    .on('focusin.bs.modal', $.proxy(function (e) {
+	      if (this.$element[0] !== e.target && !this.$element.has(e.target).length) {
+	        this.$element.trigger('focus');
+	      }
+	    }, this));
+	  };
+
+	  Modal.prototype.escape = function () {
+	    if (this.isShown && this.options.keyboard) {
+	      this.$element.on('keydown.dismiss.bs.modal', $.proxy(function (e) {
+	        e.which == 27 && this.hide();
+	      }, this));
+	    } else if (!this.isShown) {
+	      this.$element.off('keydown.dismiss.bs.modal');
+	    }
+	  };
+
+	  Modal.prototype.resize = function () {
+	    if (this.isShown) {
+	      $(window).on('resize.bs.modal', $.proxy(this.handleUpdate, this));
+	    } else {
+	      $(window).off('resize.bs.modal');
+	    }
+	  };
+
+	  Modal.prototype.hideModal = function () {
+	    var that = this;
+	    this.$element.hide();
+	    this.backdrop(function () {
+	      that.$body.removeClass('modal-open');
+	      that.resetAdjustments();
+	      that.resetScrollbar();
+	      that.$element.trigger('hidden.bs.modal');
+	    });
+	  };
+
+	  Modal.prototype.removeBackdrop = function () {
+	    this.$backdrop && this.$backdrop.remove();
+	    this.$backdrop = null;
+	  };
+
+	  Modal.prototype.backdrop = function (callback) {
+	    var that = this;
+	    var animate = this.$element.hasClass('fade') ? 'fade' : '';
+
+	    if (this.isShown && this.options.backdrop) {
+	      var doAnimate = $.support.transition && animate;
+
+	      this.$backdrop = $(document.createElement('div')).addClass('modal-backdrop ' + animate).appendTo(this.$body);
+
+	      this.$element.on('click.dismiss.bs.modal', $.proxy(function (e) {
+	        if (this.ignoreBackdropClick) {
+	          this.ignoreBackdropClick = false;
+	          return;
+	        }
+	        if (e.target !== e.currentTarget) return;
+	        this.options.backdrop == 'static' ? this.$element[0].focus() : this.hide();
+	      }, this));
+
+	      if (doAnimate) this.$backdrop[0].offsetWidth; // force reflow
+
+	      this.$backdrop.addClass('in');
+
+	      if (!callback) return;
+
+	      doAnimate ? this.$backdrop.one('bsTransitionEnd', callback).emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) : callback();
+	    } else if (!this.isShown && this.$backdrop) {
+	      this.$backdrop.removeClass('in');
+
+	      var callbackRemove = function callbackRemove() {
+	        that.removeBackdrop();
+	        callback && callback();
+	      };
+	      $.support.transition && this.$element.hasClass('fade') ? this.$backdrop.one('bsTransitionEnd', callbackRemove).emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) : callbackRemove();
+	    } else if (callback) {
+	      callback();
+	    }
+	  };
+
+	  // these following methods are used to handle overflowing modals
+
+	  Modal.prototype.handleUpdate = function () {
+	    this.adjustDialog();
+	  };
+
+	  Modal.prototype.adjustDialog = function () {
+	    var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight;
+
+	    this.$element.css({
+	      paddingLeft: !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
+	      paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
+	    });
+	  };
+
+	  Modal.prototype.resetAdjustments = function () {
+	    this.$element.css({
+	      paddingLeft: '',
+	      paddingRight: ''
+	    });
+	  };
+
+	  Modal.prototype.checkScrollbar = function () {
+	    var fullWindowWidth = window.innerWidth;
+	    if (!fullWindowWidth) {
+	      // workaround for missing window.innerWidth in IE8
+	      var documentElementRect = document.documentElement.getBoundingClientRect();
+	      fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
+	    }
+	    this.bodyIsOverflowing = document.body.clientWidth < fullWindowWidth;
+	    this.scrollbarWidth = this.measureScrollbar();
+	  };
+
+	  Modal.prototype.setScrollbar = function () {
+	    var bodyPad = parseInt(this.$body.css('padding-right') || 0, 10);
+	    this.originalBodyPad = document.body.style.paddingRight || '';
+	    if (this.bodyIsOverflowing) this.$body.css('padding-right', bodyPad + this.scrollbarWidth);
+	  };
+
+	  Modal.prototype.resetScrollbar = function () {
+	    this.$body.css('padding-right', this.originalBodyPad);
+	  };
+
+	  Modal.prototype.measureScrollbar = function () {
+	    // thx walsh
+	    var scrollDiv = document.createElement('div');
+	    scrollDiv.className = 'modal-scrollbar-measure';
+	    this.$body.append(scrollDiv);
+	    var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+	    this.$body[0].removeChild(scrollDiv);
+	    return scrollbarWidth;
+	  };
+
+	  // MODAL PLUGIN DEFINITION
+	  // =======================
+
+	  function Plugin(option, _relatedTarget) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.modal');
+	      var options = $.extend({}, Modal.DEFAULTS, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option);
+
+	      if (!data) $this.data('bs.modal', data = new Modal(this, options));
+	      if (typeof option == 'string') data[option](_relatedTarget);else if (options.show) data.show(_relatedTarget);
+	    });
+	  }
+
+	  var old = $.fn.modal;
+
+	  $.fn.modal = Plugin;
+	  $.fn.modal.Constructor = Modal;
+
+	  // MODAL NO CONFLICT
+	  // =================
+
+	  $.fn.modal.noConflict = function () {
+	    $.fn.modal = old;
+	    return this;
+	  };
+
+	  // MODAL DATA-API
+	  // ==============
+
+	  $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
+	    var $this = $(this);
+	    var href = $this.attr('href');
+	    var $target = $($this.attr('data-target') || href && href.replace(/.*(?=#[^\s]+$)/, '')); // strip for ie7
+	    var option = $target.data('bs.modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data());
+
+	    if ($this.is('a')) e.preventDefault();
+
+	    $target.one('show.bs.modal', function (showEvent) {
+	      if (showEvent.isDefaultPrevented()) return; // only register focus restorer if modal will actually get shown
+	      $target.one('hidden.bs.modal', function () {
+	        $this.is(':visible') && $this.trigger('focus');
+	      });
+	    });
+	    Plugin.call($target, option, this);
+	  });
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: tooltip.js v3.3.6
+	 * http://getbootstrap.com/javascript/#tooltip
+	 * Inspired by the original jQuery.tipsy by Jason Frame
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // TOOLTIP PUBLIC CLASS DEFINITION
+	  // ===============================
+
+	  ;
+	  var Tooltip = function Tooltip(element, options) {
+	    this.type = null;
+	    this.options = null;
+	    this.enabled = null;
+	    this.timeout = null;
+	    this.hoverState = null;
+	    this.$element = null;
+	    this.inState = null;
+
+	    this.init('tooltip', element, options);
+	  };
+
+	  Tooltip.VERSION = '3.3.6';
+
+	  Tooltip.TRANSITION_DURATION = 150;
+
+	  Tooltip.DEFAULTS = {
+	    animation: true,
+	    placement: 'top',
+	    selector: false,
+	    template: '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
+	    trigger: 'hover focus',
+	    title: '',
+	    delay: 0,
+	    html: false,
+	    container: false,
+	    viewport: {
+	      selector: 'body',
+	      padding: 0
+	    }
+	  };
+
+	  Tooltip.prototype.init = function (type, element, options) {
+	    this.enabled = true;
+	    this.type = type;
+	    this.$element = $(element);
+	    this.options = this.getOptions(options);
+	    this.$viewport = this.options.viewport && $($.isFunction(this.options.viewport) ? this.options.viewport.call(this, this.$element) : this.options.viewport.selector || this.options.viewport);
+	    this.inState = { click: false, hover: false, focus: false };
+
+	    if (this.$element[0] instanceof document.constructor && !this.options.selector) {
+	      throw new Error('`selector` option must be specified when initializing ' + this.type + ' on the window.document object!');
+	    }
+
+	    var triggers = this.options.trigger.split(' ');
+
+	    for (var i = triggers.length; i--;) {
+	      var trigger = triggers[i];
+
+	      if (trigger == 'click') {
+	        this.$element.on('click.' + this.type, this.options.selector, $.proxy(this.toggle, this));
+	      } else if (trigger != 'manual') {
+	        var eventIn = trigger == 'hover' ? 'mouseenter' : 'focusin';
+	        var eventOut = trigger == 'hover' ? 'mouseleave' : 'focusout';
+
+	        this.$element.on(eventIn + '.' + this.type, this.options.selector, $.proxy(this.enter, this));
+	        this.$element.on(eventOut + '.' + this.type, this.options.selector, $.proxy(this.leave, this));
+	      }
+	    }
+
+	    this.options.selector ? this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' }) : this.fixTitle();
+	  };
+
+	  Tooltip.prototype.getDefaults = function () {
+	    return Tooltip.DEFAULTS;
+	  };
+
+	  Tooltip.prototype.getOptions = function (options) {
+	    options = $.extend({}, this.getDefaults(), this.$element.data(), options);
+
+	    if (options.delay && typeof options.delay == 'number') {
+	      options.delay = {
+	        show: options.delay,
+	        hide: options.delay
+	      };
+	    }
+
+	    return options;
+	  };
+
+	  Tooltip.prototype.getDelegateOptions = function () {
+	    var options = {};
+	    var defaults = this.getDefaults();
+
+	    this._options && $.each(this._options, function (key, value) {
+	      if (defaults[key] != value) options[key] = value;
+	    });
+
+	    return options;
+	  };
+
+	  Tooltip.prototype.enter = function (obj) {
+	    var self = obj instanceof this.constructor ? obj : $(obj.currentTarget).data('bs.' + this.type);
+
+	    if (!self) {
+	      self = new this.constructor(obj.currentTarget, this.getDelegateOptions());
+	      $(obj.currentTarget).data('bs.' + this.type, self);
+	    }
+
+	    if (obj instanceof $.Event) {
+	      self.inState[obj.type == 'focusin' ? 'focus' : 'hover'] = true;
+	    }
+
+	    if (self.tip().hasClass('in') || self.hoverState == 'in') {
+	      self.hoverState = 'in';
+	      return;
+	    }
+
+	    clearTimeout(self.timeout);
+
+	    self.hoverState = 'in';
+
+	    if (!self.options.delay || !self.options.delay.show) return self.show();
+
+	    self.timeout = setTimeout(function () {
+	      if (self.hoverState == 'in') self.show();
+	    }, self.options.delay.show);
+	  };
+
+	  Tooltip.prototype.isInStateTrue = function () {
+	    for (var key in this.inState) {
+	      if (this.inState[key]) return true;
+	    }
+
+	    return false;
+	  };
+
+	  Tooltip.prototype.leave = function (obj) {
+	    var self = obj instanceof this.constructor ? obj : $(obj.currentTarget).data('bs.' + this.type);
+
+	    if (!self) {
+	      self = new this.constructor(obj.currentTarget, this.getDelegateOptions());
+	      $(obj.currentTarget).data('bs.' + this.type, self);
+	    }
+
+	    if (obj instanceof $.Event) {
+	      self.inState[obj.type == 'focusout' ? 'focus' : 'hover'] = false;
+	    }
+
+	    if (self.isInStateTrue()) return;
+
+	    clearTimeout(self.timeout);
+
+	    self.hoverState = 'out';
+
+	    if (!self.options.delay || !self.options.delay.hide) return self.hide();
+
+	    self.timeout = setTimeout(function () {
+	      if (self.hoverState == 'out') self.hide();
+	    }, self.options.delay.hide);
+	  };
+
+	  Tooltip.prototype.show = function () {
+	    var e = $.Event('show.bs.' + this.type);
+
+	    if (this.hasContent() && this.enabled) {
+	      this.$element.trigger(e);
+
+	      var inDom = $.contains(this.$element[0].ownerDocument.documentElement, this.$element[0]);
+	      if (e.isDefaultPrevented() || !inDom) return;
+	      var that = this;
+
+	      var $tip = this.tip();
+
+	      var tipId = this.getUID(this.type);
+
+	      this.setContent();
+	      $tip.attr('id', tipId);
+	      this.$element.attr('aria-describedby', tipId);
+
+	      if (this.options.animation) $tip.addClass('fade');
+
+	      var placement = typeof this.options.placement == 'function' ? this.options.placement.call(this, $tip[0], this.$element[0]) : this.options.placement;
+
+	      var autoToken = /\s?auto?\s?/i;
+	      var autoPlace = autoToken.test(placement);
+	      if (autoPlace) placement = placement.replace(autoToken, '') || 'top';
+
+	      $tip.detach().css({ top: 0, left: 0, display: 'block' }).addClass(placement).data('bs.' + this.type, this);
+
+	      this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element);
+	      this.$element.trigger('inserted.bs.' + this.type);
+
+	      var pos = this.getPosition();
+	      var actualWidth = $tip[0].offsetWidth;
+	      var actualHeight = $tip[0].offsetHeight;
+
+	      if (autoPlace) {
+	        var orgPlacement = placement;
+	        var viewportDim = this.getPosition(this.$viewport);
+
+	        placement = placement == 'bottom' && pos.bottom + actualHeight > viewportDim.bottom ? 'top' : placement == 'top' && pos.top - actualHeight < viewportDim.top ? 'bottom' : placement == 'right' && pos.right + actualWidth > viewportDim.width ? 'left' : placement == 'left' && pos.left - actualWidth < viewportDim.left ? 'right' : placement;
+
+	        $tip.removeClass(orgPlacement).addClass(placement);
+	      }
+
+	      var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight);
+
+	      this.applyPlacement(calculatedOffset, placement);
+
+	      var complete = function complete() {
+	        var prevHoverState = that.hoverState;
+	        that.$element.trigger('shown.bs.' + that.type);
+	        that.hoverState = null;
+
+	        if (prevHoverState == 'out') that.leave(that);
+	      };
+
+	      $.support.transition && this.$tip.hasClass('fade') ? $tip.one('bsTransitionEnd', complete).emulateTransitionEnd(Tooltip.TRANSITION_DURATION) : complete();
+	    }
+	  };
+
+	  Tooltip.prototype.applyPlacement = function (offset, placement) {
+	    var $tip = this.tip();
+	    var width = $tip[0].offsetWidth;
+	    var height = $tip[0].offsetHeight;
+
+	    // manually read margins because getBoundingClientRect includes difference
+	    var marginTop = parseInt($tip.css('margin-top'), 10);
+	    var marginLeft = parseInt($tip.css('margin-left'), 10);
+
+	    // we must check for NaN for ie 8/9
+	    if (isNaN(marginTop)) marginTop = 0;
+	    if (isNaN(marginLeft)) marginLeft = 0;
+
+	    offset.top += marginTop;
+	    offset.left += marginLeft;
+
+	    // $.fn.offset doesn't round pixel values
+	    // so we use setOffset directly with our own function B-0
+	    $.offset.setOffset($tip[0], $.extend({
+	      using: function using(props) {
+	        $tip.css({
+	          top: Math.round(props.top),
+	          left: Math.round(props.left)
+	        });
+	      }
+	    }, offset), 0);
+
+	    $tip.addClass('in');
+
+	    // check to see if placing tip in new offset caused the tip to resize itself
+	    var actualWidth = $tip[0].offsetWidth;
+	    var actualHeight = $tip[0].offsetHeight;
+
+	    if (placement == 'top' && actualHeight != height) {
+	      offset.top = offset.top + height - actualHeight;
+	    }
+
+	    var delta = this.getViewportAdjustedDelta(placement, offset, actualWidth, actualHeight);
+
+	    if (delta.left) offset.left += delta.left;else offset.top += delta.top;
+
+	    var isVertical = /top|bottom/.test(placement);
+	    var arrowDelta = isVertical ? delta.left * 2 - width + actualWidth : delta.top * 2 - height + actualHeight;
+	    var arrowOffsetPosition = isVertical ? 'offsetWidth' : 'offsetHeight';
+
+	    $tip.offset(offset);
+	    this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], isVertical);
+	  };
+
+	  Tooltip.prototype.replaceArrow = function (delta, dimension, isVertical) {
+	    this.arrow().css(isVertical ? 'left' : 'top', 50 * (1 - delta / dimension) + '%').css(isVertical ? 'top' : 'left', '');
+	  };
+
+	  Tooltip.prototype.setContent = function () {
+	    var $tip = this.tip();
+	    var title = this.getTitle();
+
+	    $tip.find('.tooltip-inner')[this.options.html ? 'html' : 'text'](title);
+	    $tip.removeClass('fade in top bottom left right');
+	  };
+
+	  Tooltip.prototype.hide = function (callback) {
+	    var that = this;
+	    var $tip = $(this.$tip);
+	    var e = $.Event('hide.bs.' + this.type);
+
+	    function complete() {
+	      if (that.hoverState != 'in') $tip.detach();
+	      that.$element.removeAttr('aria-describedby').trigger('hidden.bs.' + that.type);
+	      callback && callback();
+	    }
+
+	    this.$element.trigger(e);
+
+	    if (e.isDefaultPrevented()) return;
+
+	    $tip.removeClass('in');
+
+	    $.support.transition && $tip.hasClass('fade') ? $tip.one('bsTransitionEnd', complete).emulateTransitionEnd(Tooltip.TRANSITION_DURATION) : complete();
+
+	    this.hoverState = null;
+
+	    return this;
+	  };
+
+	  Tooltip.prototype.fixTitle = function () {
+	    var $e = this.$element;
+	    if ($e.attr('title') || typeof $e.attr('data-original-title') != 'string') {
+	      $e.attr('data-original-title', $e.attr('title') || '').attr('title', '');
+	    }
+	  };
+
+	  Tooltip.prototype.hasContent = function () {
+	    return this.getTitle();
+	  };
+
+	  Tooltip.prototype.getPosition = function ($element) {
+	    $element = $element || this.$element;
+
+	    var el = $element[0];
+	    var isBody = el.tagName == 'BODY';
+
+	    var elRect = el.getBoundingClientRect();
+	    if (elRect.width == null) {
+	      // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
+	      elRect = $.extend({}, elRect, { width: elRect.right - elRect.left, height: elRect.bottom - elRect.top });
+	    }
+	    var elOffset = isBody ? { top: 0, left: 0 } : $element.offset();
+	    var scroll = { scroll: isBody ? document.documentElement.scrollTop || document.body.scrollTop : $element.scrollTop() };
+	    var outerDims = isBody ? { width: $(window).width(), height: $(window).height() } : null;
+
+	    return $.extend({}, elRect, scroll, outerDims, elOffset);
+	  };
+
+	  Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
+	    return placement == 'bottom' ? { top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2 } : placement == 'top' ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2 } : placement == 'left' ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
+	    /* placement == 'right' */{ top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width };
+	  };
+
+	  Tooltip.prototype.getViewportAdjustedDelta = function (placement, pos, actualWidth, actualHeight) {
+	    var delta = { top: 0, left: 0 };
+	    if (!this.$viewport) return delta;
+
+	    var viewportPadding = this.options.viewport && this.options.viewport.padding || 0;
+	    var viewportDimensions = this.getPosition(this.$viewport);
+
+	    if (/right|left/.test(placement)) {
+	      var topEdgeOffset = pos.top - viewportPadding - viewportDimensions.scroll;
+	      var bottomEdgeOffset = pos.top + viewportPadding - viewportDimensions.scroll + actualHeight;
+	      if (topEdgeOffset < viewportDimensions.top) {
+	        // top overflow
+	        delta.top = viewportDimensions.top - topEdgeOffset;
+	      } else if (bottomEdgeOffset > viewportDimensions.top + viewportDimensions.height) {
+	        // bottom overflow
+	        delta.top = viewportDimensions.top + viewportDimensions.height - bottomEdgeOffset;
+	      }
+	    } else {
+	      var leftEdgeOffset = pos.left - viewportPadding;
+	      var rightEdgeOffset = pos.left + viewportPadding + actualWidth;
+	      if (leftEdgeOffset < viewportDimensions.left) {
+	        // left overflow
+	        delta.left = viewportDimensions.left - leftEdgeOffset;
+	      } else if (rightEdgeOffset > viewportDimensions.right) {
+	        // right overflow
+	        delta.left = viewportDimensions.left + viewportDimensions.width - rightEdgeOffset;
+	      }
+	    }
+
+	    return delta;
+	  };
+
+	  Tooltip.prototype.getTitle = function () {
+	    var title;
+	    var $e = this.$element;
+	    var o = this.options;
+
+	    title = $e.attr('data-original-title') || (typeof o.title == 'function' ? o.title.call($e[0]) : o.title);
+
+	    return title;
+	  };
+
+	  Tooltip.prototype.getUID = function (prefix) {
+	    do {
+	      prefix += ~ ~(Math.random() * 1000000);
+	    } while (document.getElementById(prefix));
+	    return prefix;
+	  };
+
+	  Tooltip.prototype.tip = function () {
+	    if (!this.$tip) {
+	      this.$tip = $(this.options.template);
+	      if (this.$tip.length != 1) {
+	        throw new Error(this.type + ' `template` option must consist of exactly 1 top-level element!');
+	      }
+	    }
+	    return this.$tip;
+	  };
+
+	  Tooltip.prototype.arrow = function () {
+	    return this.$arrow = this.$arrow || this.tip().find('.tooltip-arrow');
+	  };
+
+	  Tooltip.prototype.enable = function () {
+	    this.enabled = true;
+	  };
+
+	  Tooltip.prototype.disable = function () {
+	    this.enabled = false;
+	  };
+
+	  Tooltip.prototype.toggleEnabled = function () {
+	    this.enabled = !this.enabled;
+	  };
+
+	  Tooltip.prototype.toggle = function (e) {
+	    var self = this;
+	    if (e) {
+	      self = $(e.currentTarget).data('bs.' + this.type);
+	      if (!self) {
+	        self = new this.constructor(e.currentTarget, this.getDelegateOptions());
+	        $(e.currentTarget).data('bs.' + this.type, self);
+	      }
+	    }
+
+	    if (e) {
+	      self.inState.click = !self.inState.click;
+	      if (self.isInStateTrue()) self.enter(self);else self.leave(self);
+	    } else {
+	      self.tip().hasClass('in') ? self.leave(self) : self.enter(self);
+	    }
+	  };
+
+	  Tooltip.prototype.destroy = function () {
+	    var that = this;
+	    clearTimeout(this.timeout);
+	    this.hide(function () {
+	      that.$element.off('.' + that.type).removeData('bs.' + that.type);
+	      if (that.$tip) {
+	        that.$tip.detach();
+	      }
+	      that.$tip = null;
+	      that.$arrow = null;
+	      that.$viewport = null;
+	    });
+	  };
+
+	  // TOOLTIP PLUGIN DEFINITION
+	  // =========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.tooltip');
+	      var options = (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option;
+
+	      if (!data && /destroy|hide/.test(option)) return;
+	      if (!data) $this.data('bs.tooltip', data = new Tooltip(this, options));
+	      if (typeof option == 'string') data[option]();
+	    });
+	  }
+
+	  var old = $.fn.tooltip;
+
+	  $.fn.tooltip = Plugin;
+	  $.fn.tooltip.Constructor = Tooltip;
+
+	  // TOOLTIP NO CONFLICT
+	  // ===================
+
+	  $.fn.tooltip.noConflict = function () {
+	    $.fn.tooltip = old;
+	    return this;
+	  };
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: popover.js v3.3.6
+	 * http://getbootstrap.com/javascript/#popovers
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // POPOVER PUBLIC CLASS DEFINITION
+	  // ===============================
+
+	  ;
+	  var Popover = function Popover(element, options) {
+	    this.init('popover', element, options);
+	  };
+
+	  if (!$.fn.tooltip) throw new Error('Popover requires tooltip.js');
+
+	  Popover.VERSION = '3.3.6';
+
+	  Popover.DEFAULTS = $.extend({}, $.fn.tooltip.Constructor.DEFAULTS, {
+	    placement: 'right',
+	    trigger: 'click',
+	    content: '',
+	    template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+	  });
+
+	  // NOTE: POPOVER EXTENDS tooltip.js
+	  // ================================
+
+	  Popover.prototype = $.extend({}, $.fn.tooltip.Constructor.prototype);
+
+	  Popover.prototype.constructor = Popover;
+
+	  Popover.prototype.getDefaults = function () {
+	    return Popover.DEFAULTS;
+	  };
+
+	  Popover.prototype.setContent = function () {
+	    var $tip = this.tip();
+	    var title = this.getTitle();
+	    var content = this.getContent();
+
+	    $tip.find('.popover-title')[this.options.html ? 'html' : 'text'](title);
+	    $tip.find('.popover-content').children().detach().end()[// we use append for html objects to maintain js events
+	    this.options.html ? typeof content == 'string' ? 'html' : 'append' : 'text'](content);
+
+	    $tip.removeClass('fade top bottom left right in');
+
+	    // IE8 doesn't accept hiding via the `:empty` pseudo selector, we have to do
+	    // this manually by checking the contents.
+	    if (!$tip.find('.popover-title').html()) $tip.find('.popover-title').hide();
+	  };
+
+	  Popover.prototype.hasContent = function () {
+	    return this.getTitle() || this.getContent();
+	  };
+
+	  Popover.prototype.getContent = function () {
+	    var $e = this.$element;
+	    var o = this.options;
+
+	    return $e.attr('data-content') || (typeof o.content == 'function' ? o.content.call($e[0]) : o.content);
+	  };
+
+	  Popover.prototype.arrow = function () {
+	    return this.$arrow = this.$arrow || this.tip().find('.arrow');
+	  };
+
+	  // POPOVER PLUGIN DEFINITION
+	  // =========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.popover');
+	      var options = (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option;
+
+	      if (!data && /destroy|hide/.test(option)) return;
+	      if (!data) $this.data('bs.popover', data = new Popover(this, options));
+	      if (typeof option == 'string') data[option]();
+	    });
+	  }
+
+	  var old = $.fn.popover;
+
+	  $.fn.popover = Plugin;
+	  $.fn.popover.Constructor = Popover;
+
+	  // POPOVER NO CONFLICT
+	  // ===================
+
+	  $.fn.popover.noConflict = function () {
+	    $.fn.popover = old;
+	    return this;
+	  };
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: tab.js v3.3.6
+	 * http://getbootstrap.com/javascript/#tabs
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // TAB CLASS DEFINITION
+	  // ====================
+
+	  ;
+	  var Tab = function Tab(element) {
+	    // jscs:disable requireDollarBeforejQueryAssignment
+	    this.element = $(element);
+	    // jscs:enable requireDollarBeforejQueryAssignment
+	  };
+
+	  Tab.VERSION = '3.3.6';
+
+	  Tab.TRANSITION_DURATION = 150;
+
+	  Tab.prototype.show = function () {
+	    var $this = this.element;
+	    var $ul = $this.closest('ul:not(.dropdown-menu)');
+	    var selector = $this.data('target');
+
+	    if (!selector) {
+	      selector = $this.attr('href');
+	      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, ''); // strip for ie7
+	    }
+
+	    if ($this.parent('li').hasClass('active')) return;
+
+	    var $previous = $ul.find('.active:last a');
+	    var hideEvent = $.Event('hide.bs.tab', {
+	      relatedTarget: $this[0]
+	    });
+	    var showEvent = $.Event('show.bs.tab', {
+	      relatedTarget: $previous[0]
+	    });
+
+	    $previous.trigger(hideEvent);
+	    $this.trigger(showEvent);
+
+	    if (showEvent.isDefaultPrevented() || hideEvent.isDefaultPrevented()) return;
+
+	    var $target = $(selector);
+
+	    this.activate($this.closest('li'), $ul);
+	    this.activate($target, $target.parent(), function () {
+	      $previous.trigger({
+	        type: 'hidden.bs.tab',
+	        relatedTarget: $this[0]
+	      });
+	      $this.trigger({
+	        type: 'shown.bs.tab',
+	        relatedTarget: $previous[0]
+	      });
+	    });
+	  };
+
+	  Tab.prototype.activate = function (element, container, callback) {
+	    var $active = container.find('> .active');
+	    var transition = callback && $.support.transition && ($active.length && $active.hasClass('fade') || !!container.find('> .fade').length);
+
+	    function next() {
+	      $active.removeClass('active').find('> .dropdown-menu > .active').removeClass('active').end().find('[data-toggle="tab"]').attr('aria-expanded', false);
+
+	      element.addClass('active').find('[data-toggle="tab"]').attr('aria-expanded', true);
+
+	      if (transition) {
+	        element[0].offsetWidth; // reflow for transition
+	        element.addClass('in');
+	      } else {
+	        element.removeClass('fade');
+	      }
+
+	      if (element.parent('.dropdown-menu').length) {
+	        element.closest('li.dropdown').addClass('active').end().find('[data-toggle="tab"]').attr('aria-expanded', true);
+	      }
+
+	      callback && callback();
+	    }
+
+	    $active.length && transition ? $active.one('bsTransitionEnd', next).emulateTransitionEnd(Tab.TRANSITION_DURATION) : next();
+
+	    $active.removeClass('in');
+	  };
+
+	  // TAB PLUGIN DEFINITION
+	  // =====================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.tab');
+
+	      if (!data) $this.data('bs.tab', data = new Tab(this));
+	      if (typeof option == 'string') data[option]();
+	    });
+	  }
+
+	  var old = $.fn.tab;
+
+	  $.fn.tab = Plugin;
+	  $.fn.tab.Constructor = Tab;
+
+	  // TAB NO CONFLICT
+	  // ===============
+
+	  $.fn.tab.noConflict = function () {
+	    $.fn.tab = old;
+	    return this;
+	  };
+
+	  // TAB DATA-API
+	  // ============
+
+	  var clickHandler = function clickHandler(e) {
+	    e.preventDefault();
+	    Plugin.call($(this), 'show');
+	  };
+
+	  $(document).on('click.bs.tab.data-api', '[data-toggle="tab"]', clickHandler).on('click.bs.tab.data-api', '[data-toggle="pill"]', clickHandler);
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: affix.js v3.3.6
+	 * http://getbootstrap.com/javascript/#affix
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // AFFIX CLASS DEFINITION
+	  // ======================
+
+	  ;
+	  var Affix = function Affix(element, options) {
+	    this.options = $.extend({}, Affix.DEFAULTS, options);
+
+	    this.$target = $(this.options.target).on('scroll.bs.affix.data-api', $.proxy(this.checkPosition, this)).on('click.bs.affix.data-api', $.proxy(this.checkPositionWithEventLoop, this));
+
+	    this.$element = $(element);
+	    this.affixed = null;
+	    this.unpin = null;
+	    this.pinnedOffset = null;
+
+	    this.checkPosition();
+	  };
+
+	  Affix.VERSION = '3.3.6';
+
+	  Affix.RESET = 'affix affix-top affix-bottom';
+
+	  Affix.DEFAULTS = {
+	    offset: 0,
+	    target: window
+	  };
+
+	  Affix.prototype.getState = function (scrollHeight, height, offsetTop, offsetBottom) {
+	    var scrollTop = this.$target.scrollTop();
+	    var position = this.$element.offset();
+	    var targetHeight = this.$target.height();
+
+	    if (offsetTop != null && this.affixed == 'top') return scrollTop < offsetTop ? 'top' : false;
+
+	    if (this.affixed == 'bottom') {
+	      if (offsetTop != null) return scrollTop + this.unpin <= position.top ? false : 'bottom';
+	      return scrollTop + targetHeight <= scrollHeight - offsetBottom ? false : 'bottom';
+	    }
+
+	    var initializing = this.affixed == null;
+	    var colliderTop = initializing ? scrollTop : position.top;
+	    var colliderHeight = initializing ? targetHeight : height;
+
+	    if (offsetTop != null && scrollTop <= offsetTop) return 'top';
+	    if (offsetBottom != null && colliderTop + colliderHeight >= scrollHeight - offsetBottom) return 'bottom';
+
+	    return false;
+	  };
+
+	  Affix.prototype.getPinnedOffset = function () {
+	    if (this.pinnedOffset) return this.pinnedOffset;
+	    this.$element.removeClass(Affix.RESET).addClass('affix');
+	    var scrollTop = this.$target.scrollTop();
+	    var position = this.$element.offset();
+	    return this.pinnedOffset = position.top - scrollTop;
+	  };
+
+	  Affix.prototype.checkPositionWithEventLoop = function () {
+	    setTimeout($.proxy(this.checkPosition, this), 1);
+	  };
+
+	  Affix.prototype.checkPosition = function () {
+	    if (!this.$element.is(':visible')) return;
+
+	    var height = this.$element.height();
+	    var offset = this.options.offset;
+	    var offsetTop = offset.top;
+	    var offsetBottom = offset.bottom;
+	    var scrollHeight = Math.max($(document).height(), $(document.body).height());
+
+	    if ((typeof offset === 'undefined' ? 'undefined' : _typeof(offset)) != 'object') offsetBottom = offsetTop = offset;
+	    if (typeof offsetTop == 'function') offsetTop = offset.top(this.$element);
+	    if (typeof offsetBottom == 'function') offsetBottom = offset.bottom(this.$element);
+
+	    var affix = this.getState(scrollHeight, height, offsetTop, offsetBottom);
+
+	    if (this.affixed != affix) {
+	      if (this.unpin != null) this.$element.css('top', '');
+
+	      var affixType = 'affix' + (affix ? '-' + affix : '');
+	      var e = $.Event(affixType + '.bs.affix');
+
+	      this.$element.trigger(e);
+
+	      if (e.isDefaultPrevented()) return;
+
+	      this.affixed = affix;
+	      this.unpin = affix == 'bottom' ? this.getPinnedOffset() : null;
+
+	      this.$element.removeClass(Affix.RESET).addClass(affixType).trigger(affixType.replace('affix', 'affixed') + '.bs.affix');
+	    }
+
+	    if (affix == 'bottom') {
+	      this.$element.offset({
+	        top: scrollHeight - height - offsetBottom
+	      });
+	    }
+	  };
+
+	  // AFFIX PLUGIN DEFINITION
+	  // =======================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.affix');
+	      var options = (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option;
+
+	      if (!data) $this.data('bs.affix', data = new Affix(this, options));
+	      if (typeof option == 'string') data[option]();
+	    });
+	  }
+
+	  var old = $.fn.affix;
+
+	  $.fn.affix = Plugin;
+	  $.fn.affix.Constructor = Affix;
+
+	  // AFFIX NO CONFLICT
+	  // =================
+
+	  $.fn.affix.noConflict = function () {
+	    $.fn.affix = old;
+	    return this;
+	  };
+
+	  // AFFIX DATA-API
+	  // ==============
+
+	  $(window).on('load', function () {
+	    $('[data-spy="affix"]').each(function () {
+	      var $spy = $(this);
+	      var data = $spy.data();
+
+	      data.offset = data.offset || {};
+
+	      if (data.offsetBottom != null) data.offset.bottom = data.offsetBottom;
+	      if (data.offsetTop != null) data.offset.top = data.offsetTop;
+
+	      Plugin.call($spy, data);
+	    });
+	  });
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: collapse.js v3.3.6
+	 * http://getbootstrap.com/javascript/#collapse
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // COLLAPSE PUBLIC CLASS DEFINITION
+	  // ================================
+
+	  ;
+	  var Collapse = function Collapse(element, options) {
+	    this.$element = $(element);
+	    this.options = $.extend({}, Collapse.DEFAULTS, options);
+	    this.$trigger = $('[data-toggle="collapse"][href="#' + element.id + '"],' + '[data-toggle="collapse"][data-target="#' + element.id + '"]');
+	    this.transitioning = null;
+
+	    if (this.options.parent) {
+	      this.$parent = this.getParent();
+	    } else {
+	      this.addAriaAndCollapsedClass(this.$element, this.$trigger);
+	    }
+
+	    if (this.options.toggle) this.toggle();
+	  };
+
+	  Collapse.VERSION = '3.3.6';
+
+	  Collapse.TRANSITION_DURATION = 350;
+
+	  Collapse.DEFAULTS = {
+	    toggle: true
+	  };
+
+	  Collapse.prototype.dimension = function () {
+	    var hasWidth = this.$element.hasClass('width');
+	    return hasWidth ? 'width' : 'height';
+	  };
+
+	  Collapse.prototype.show = function () {
+	    if (this.transitioning || this.$element.hasClass('in')) return;
+
+	    var activesData;
+	    var actives = this.$parent && this.$parent.children('.panel').children('.in, .collapsing');
+
+	    if (actives && actives.length) {
+	      activesData = actives.data('bs.collapse');
+	      if (activesData && activesData.transitioning) return;
+	    }
+
+	    var startEvent = $.Event('show.bs.collapse');
+	    this.$element.trigger(startEvent);
+	    if (startEvent.isDefaultPrevented()) return;
+
+	    if (actives && actives.length) {
+	      Plugin.call(actives, 'hide');
+	      activesData || actives.data('bs.collapse', null);
+	    }
+
+	    var dimension = this.dimension();
+
+	    this.$element.removeClass('collapse').addClass('collapsing')[dimension](0).attr('aria-expanded', true);
+
+	    this.$trigger.removeClass('collapsed').attr('aria-expanded', true);
+
+	    this.transitioning = 1;
+
+	    var complete = function complete() {
+	      this.$element.removeClass('collapsing').addClass('collapse in')[dimension]('');
+	      this.transitioning = 0;
+	      this.$element.trigger('shown.bs.collapse');
+	    };
+
+	    if (!$.support.transition) return complete.call(this);
+
+	    var scrollSize = $.camelCase(['scroll', dimension].join('-'));
+
+	    this.$element.one('bsTransitionEnd', $.proxy(complete, this)).emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize]);
+	  };
+
+	  Collapse.prototype.hide = function () {
+	    if (this.transitioning || !this.$element.hasClass('in')) return;
+
+	    var startEvent = $.Event('hide.bs.collapse');
+	    this.$element.trigger(startEvent);
+	    if (startEvent.isDefaultPrevented()) return;
+
+	    var dimension = this.dimension();
+
+	    this.$element[dimension](this.$element[dimension]())[0].offsetHeight;
+
+	    this.$element.addClass('collapsing').removeClass('collapse in').attr('aria-expanded', false);
+
+	    this.$trigger.addClass('collapsed').attr('aria-expanded', false);
+
+	    this.transitioning = 1;
+
+	    var complete = function complete() {
+	      this.transitioning = 0;
+	      this.$element.removeClass('collapsing').addClass('collapse').trigger('hidden.bs.collapse');
+	    };
+
+	    if (!$.support.transition) return complete.call(this);
+
+	    this.$element[dimension](0).one('bsTransitionEnd', $.proxy(complete, this)).emulateTransitionEnd(Collapse.TRANSITION_DURATION);
+	  };
+
+	  Collapse.prototype.toggle = function () {
+	    this[this.$element.hasClass('in') ? 'hide' : 'show']();
+	  };
+
+	  Collapse.prototype.getParent = function () {
+	    return $(this.options.parent).find('[data-toggle="collapse"][data-parent="' + this.options.parent + '"]').each($.proxy(function (i, element) {
+	      var $element = $(element);
+	      this.addAriaAndCollapsedClass(getTargetFromTrigger($element), $element);
+	    }, this)).end();
+	  };
+
+	  Collapse.prototype.addAriaAndCollapsedClass = function ($element, $trigger) {
+	    var isOpen = $element.hasClass('in');
+
+	    $element.attr('aria-expanded', isOpen);
+	    $trigger.toggleClass('collapsed', !isOpen).attr('aria-expanded', isOpen);
+	  };
+
+	  function getTargetFromTrigger($trigger) {
+	    var href;
+	    var target = $trigger.attr('data-target') || (href = $trigger.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, ''); // strip for ie7
+
+	    return $(target);
+	  }
+
+	  // COLLAPSE PLUGIN DEFINITION
+	  // ==========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.collapse');
+	      var options = $.extend({}, Collapse.DEFAULTS, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option);
+
+	      if (!data && options.toggle && /show|hide/.test(option)) options.toggle = false;
+	      if (!data) $this.data('bs.collapse', data = new Collapse(this, options));
+	      if (typeof option == 'string') data[option]();
+	    });
+	  }
+
+	  var old = $.fn.collapse;
+
+	  $.fn.collapse = Plugin;
+	  $.fn.collapse.Constructor = Collapse;
+
+	  // COLLAPSE NO CONFLICT
+	  // ====================
+
+	  $.fn.collapse.noConflict = function () {
+	    $.fn.collapse = old;
+	    return this;
+	  };
+
+	  // COLLAPSE DATA-API
+	  // =================
+
+	  $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
+	    var $this = $(this);
+
+	    if (!$this.attr('data-target')) e.preventDefault();
+
+	    var $target = getTargetFromTrigger($this);
+	    var data = $target.data('bs.collapse');
+	    var option = data ? 'toggle' : $this.data();
+
+	    Plugin.call($target, option);
+	  });
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: scrollspy.js v3.3.6
+	 * http://getbootstrap.com/javascript/#scrollspy
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // SCROLLSPY CLASS DEFINITION
+	  // ==========================
+
+	  ;
+	  function ScrollSpy(element, options) {
+	    this.$body = $(document.body);
+	    this.$scrollElement = $(element).is(document.body) ? $(window) : $(element);
+	    this.options = $.extend({}, ScrollSpy.DEFAULTS, options);
+	    this.selector = (this.options.target || '') + ' .nav li > a';
+	    this.offsets = [];
+	    this.targets = [];
+	    this.activeTarget = null;
+	    this.scrollHeight = 0;
+
+	    this.$scrollElement.on('scroll.bs.scrollspy', $.proxy(this.process, this));
+	    this.refresh();
+	    this.process();
+	  }
+
+	  ScrollSpy.VERSION = '3.3.6';
+
+	  ScrollSpy.DEFAULTS = {
+	    offset: 10
+	  };
+
+	  ScrollSpy.prototype.getScrollHeight = function () {
+	    return this.$scrollElement[0].scrollHeight || Math.max(this.$body[0].scrollHeight, document.documentElement.scrollHeight);
+	  };
+
+	  ScrollSpy.prototype.refresh = function () {
+	    var that = this;
+	    var offsetMethod = 'offset';
+	    var offsetBase = 0;
+
+	    this.offsets = [];
+	    this.targets = [];
+	    this.scrollHeight = this.getScrollHeight();
+
+	    if (!$.isWindow(this.$scrollElement[0])) {
+	      offsetMethod = 'position';
+	      offsetBase = this.$scrollElement.scrollTop();
+	    }
+
+	    this.$body.find(this.selector).map(function () {
+	      var $el = $(this);
+	      var href = $el.data('target') || $el.attr('href');
+	      var $href = /^#./.test(href) && $(href);
+
+	      return $href && $href.length && $href.is(':visible') && [[$href[offsetMethod]().top + offsetBase, href]] || null;
+	    }).sort(function (a, b) {
+	      return a[0] - b[0];
+	    }).each(function () {
+	      that.offsets.push(this[0]);
+	      that.targets.push(this[1]);
+	    });
+	  };
+
+	  ScrollSpy.prototype.process = function () {
+	    var scrollTop = this.$scrollElement.scrollTop() + this.options.offset;
+	    var scrollHeight = this.getScrollHeight();
+	    var maxScroll = this.options.offset + scrollHeight - this.$scrollElement.height();
+	    var offsets = this.offsets;
+	    var targets = this.targets;
+	    var activeTarget = this.activeTarget;
+	    var i;
+
+	    if (this.scrollHeight != scrollHeight) {
+	      this.refresh();
+	    }
+
+	    if (scrollTop >= maxScroll) {
+	      return activeTarget != (i = targets[targets.length - 1]) && this.activate(i);
+	    }
+
+	    if (activeTarget && scrollTop < offsets[0]) {
+	      this.activeTarget = null;
+	      return this.clear();
+	    }
+
+	    for (i = offsets.length; i--;) {
+	      activeTarget != targets[i] && scrollTop >= offsets[i] && (offsets[i + 1] === undefined || scrollTop < offsets[i + 1]) && this.activate(targets[i]);
+	    }
+	  };
+
+	  ScrollSpy.prototype.activate = function (target) {
+	    this.activeTarget = target;
+
+	    this.clear();
+
+	    var selector = this.selector + '[data-target="' + target + '"],' + this.selector + '[href="' + target + '"]';
+
+	    var active = $(selector).parents('li').addClass('active');
+
+	    if (active.parent('.dropdown-menu').length) {
+	      active = active.closest('li.dropdown').addClass('active');
+	    }
+
+	    active.trigger('activate.bs.scrollspy');
+	  };
+
+	  ScrollSpy.prototype.clear = function () {
+	    $(this.selector).parentsUntil(this.options.target, '.active').removeClass('active');
+	  };
+
+	  // SCROLLSPY PLUGIN DEFINITION
+	  // ===========================
+
+	  function Plugin(option) {
+	    return this.each(function () {
+	      var $this = $(this);
+	      var data = $this.data('bs.scrollspy');
+	      var options = (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option;
+
+	      if (!data) $this.data('bs.scrollspy', data = new ScrollSpy(this, options));
+	      if (typeof option == 'string') data[option]();
+	    });
+	  }
+
+	  var old = $.fn.scrollspy;
+
+	  $.fn.scrollspy = Plugin;
+	  $.fn.scrollspy.Constructor = ScrollSpy;
+
+	  // SCROLLSPY NO CONFLICT
+	  // =====================
+
+	  $.fn.scrollspy.noConflict = function () {
+	    $.fn.scrollspy = old;
+	    return this;
+	  };
+
+	  // SCROLLSPY DATA-API
+	  // ==================
+
+	  $(window).on('load.bs.scrollspy.data-api', function () {
+	    $('[data-spy="scroll"]').each(function () {
+	      var $spy = $(this);
+	      Plugin.call($spy, $spy.data());
+	    });
+	  });
+	})(jQuery);
+
+	/* ========================================================================
+	 * Bootstrap: transition.js v3.3.6
+	 * http://getbootstrap.com/javascript/#transitions
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
+	+(function ($) {
+	  'use strict'
+
+	  // CSS TRANSITION SUPPORT (Shoutout: http://www.modernizr.com/)
+	  // ============================================================
+
+	  ;
+	  function transitionEnd() {
+	    var el = document.createElement('bootstrap');
+
+	    var transEndEventNames = {
+	      WebkitTransition: 'webkitTransitionEnd',
+	      MozTransition: 'transitionend',
+	      OTransition: 'oTransitionEnd otransitionend',
+	      transition: 'transitionend'
+	    };
+
+	    for (var name in transEndEventNames) {
+	      if (el.style[name] !== undefined) {
+	        return { end: transEndEventNames[name] };
+	      }
+	    }
+
+	    return false; // explicit for ie8 (  ._.)
+	  }
+
+	  // http://blog.alexmaccaw.com/css-transitions
+	  $.fn.emulateTransitionEnd = function (duration) {
+	    var called = false;
+	    var $el = this;
+	    $(this).one('bsTransitionEnd', function () {
+	      called = true;
+	    });
+	    var callback = function callback() {
+	      if (!called) $($el).trigger($.support.transition.end);
+	    };
+	    setTimeout(callback, duration);
+	    return this;
+	  };
+
+	  $(function () {
+	    $.support.transition = transitionEnd();
+
+	    if (!$.support.transition) return;
+
+	    $.event.special.bsTransitionEnd = {
+	      bindType: $.support.transition.end,
+	      delegateType: $.support.transition.end,
+	      handle: function handle(e) {
+	        if ($(e.target).is(this)) return e.handleObj.handler.apply(this, arguments);
+	      }
+	    };
+	  });
+	})(jQuery);
 
 /***/ },
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(3)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".gridster {\n    position:relative;\n}\n\n.gridster > * {\n    margin: 0 auto;\n    -webkit-transition: height .4s, width .4s;\n    -moz-transition: height .4s, width .4s;\n    -o-transition: height .4s, width .4s;\n    -ms-transition: height .4s, width .4s;\n    transition: height .4s, width .4s;\n}\n\n.gridster .gs-w {\n    z-index: 2;\n    position: absolute;\n}\n\n.ready .gs-w:not(.preview-holder) {\n    -webkit-transition: opacity .3s, left .3s, top .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s;\n    -o-transition: opacity .3s, left .3s, top .3s;\n    transition: opacity .3s, left .3s, top .3s;\n}\n\n.ready .gs-w:not(.preview-holder),\n.ready .resize-preview-holder {\n    -webkit-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -o-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n}\n\n.gridster .preview-holder {\n    z-index: 1;\n    position: absolute;\n    background-color: #fff;\n    border-color: #fff;\n    opacity: 0.3;\n}\n\n.gridster .player-revert {\n    z-index: 10!important;\n    -webkit-transition: left .3s, top .3s!important;\n    -moz-transition: left .3s, top .3s!important;\n    -o-transition: left .3s, top .3s!important;\n    transition:  left .3s, top .3s!important;\n}\n\n.gridster .dragging,\n.gridster .resizing {\n    z-index: 10!important;\n    -webkit-transition: all 0s !important;\n    -moz-transition: all 0s !important;\n    -o-transition: all 0s !important;\n    transition: all 0s !important;\n}\n\n\n.gs-resize-handle {\n    position: absolute;\n    z-index: 1;\n}\n\n.gs-resize-handle-both {\n    width: 20px;\n    height: 20px;\n    bottom: -8px;\n    right: -8px;\n    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=');\n    background-position: top left;\n    background-repeat: no-repeat;\n    cursor: se-resize;\n    z-index: 20;\n}\n\n.gs-resize-handle-x {\n    top: 0;\n    bottom: 13px;\n    right: -5px;\n    width: 10px;\n    cursor: e-resize;\n}\n\n.gs-resize-handle-y {\n    left: 0;\n    right: 13px;\n    bottom: -5px;\n    height: 10px;\n    cursor: s-resize;\n}\n\n.gs-w:hover .gs-resize-handle,\n.resizing .gs-resize-handle {\n    opacity: 1;\n}\n\n.gs-resize-handle,\n.gs-w.dragging .gs-resize-handle {\n    opacity: 0;\n}\n\n.gs-resize-disabled .gs-resize-handle {\n    display: none!important;\n}\n\n[data-max-sizex=\"1\"] .gs-resize-handle-x,\n[data-max-sizey=\"1\"] .gs-resize-handle-y,\n[data-max-sizey=\"1\"][data-max-sizex=\"1\"] .gs-resize-handle {\n    display: none !important;\n}\n\n.gridster li {\n    list-style: none;\n}\n\n.gridster .gs-w {\n    background: #FFF;\n    cursor: pointer;\n    border: 1px solid #bbb;\n}\n\n.gridster .player {\n    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n}\n\n.gridster .gs-w.try {\n    background-repeat: no-repeat;\n    background-position: 37px -169px;\n\n}\n\n.gridster .preview-holder {\n    border: none!important;\n    border-radius: 0!important;\n    background: rgba(255,255,255,.2)!important;\n}\n\n\n\n/* Uncomment this if you set helper : \"clone\" in draggable options */\n/*.gridster .player {\n  opacity:0;\n}\n*/", ""]);
-
-	// exports
-
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;"use strict"; /*! gridster.js - v0.5.6 - 2014-09-25
-	* http://gridster.net/
-		 * Copyright (c) 2014 ducksboard; Licensed MIT */
-		var $ = __webpack_require__(13);
-		var jQuery = __webpack_require__(13);
-		(function (root, factory) {
-			if (true) {
-				!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(13)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_0__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))
-			} else {
-				root.GridsterCoords = factory(root.$ || root.jQuery)
-			}
-		})(undefined, function ($) {
-			/**
-			 * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
-	    * to simulate DOM elements on the screen.
-	    * Coords is used by Gridster to create a faux grid with any DOM element can
-	    * collide.
-	    *
-	    * @class Coords
-	    * @param {HTMLElement|Object} obj The jQuery HTMLElement or a object with: left,
-	    * top, width and height properties.
-	    * @return {Object} Coords instance.
-	    * @constructor
-	    */function Coords(obj){if(obj[0]&&$.isPlainObject(obj[0])){this.data=obj[0]}else {this.el=obj}this.isCoords=true;this.coords={};this.init();return this}var fn=Coords.prototype;fn.init=function(){this.set();this.original_coords=this.get()};fn.set=function(update,not_update_offsets){var el=this.el;if(el&&!update){this.data=el.offset();this.data.width=el.width();this.data.height=el.height()}if(el&&update&&!not_update_offsets){var offset=el.offset();this.data.top=offset.top;this.data.left=offset.left}var d=this.data;typeof d.left==='undefined'&&(d.left=d.x1);typeof d.top==='undefined'&&(d.top=d.y1);this.coords.x1=d.left;this.coords.y1=d.top;this.coords.x2=d.left+d.width;this.coords.y2=d.top+d.height;this.coords.cx=d.left+d.width/2;this.coords.cy=d.top+d.height/2;this.coords.width=d.width;this.coords.height=d.height;this.coords.el=el||false;return this};fn.update=function(data){if(!data&&!this.el){return this}if(data){var new_data=$.extend({},this.data,data);this.data=new_data;return this.set(true,true)}this.set(true);return this};fn.get=function(){return this.coords};fn.destroy=function(){this.el.removeData('coords');delete this.el}; //jQuery adapter
-			$.fn.coords = function () {
-				if (this.data('coords')) {
-					return this.data('coords')
-				}
-				var ins = new Coords(this, arguments[0]);
-				this.data('coords', ins);
-				return ins
-			};
-			return Coords
-		});
-		(function (root, factory) {
-			if (true) {
-				!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(13), __WEBPACK_LOCAL_MODULE_0__], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_1__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))
-			} else {
-				root.GridsterCollision = factory(root.$ || root.jQuery, root.GridsterCoords)
-			}
-		})(undefined, function ($, Coords) {
-			var defaults = {
-				colliders_context: document.body, overlapping_region: 'C' // ,on_overlap: function(collider_data){},
-				// on_overlap_start : function(collider_data){},
-	// on_overlap_stop : function(collider_data){}
-	}; /**
-	    * Detects collisions between a DOM element against other DOM elements or
-	    * Coords objects.
-	    *
-	    * @class Collision
-	    * @uses Coords
-	    * @param {HTMLElement} el The jQuery wrapped HTMLElement.
-	    * @param {HTMLElement|Array} colliders Can be a jQuery collection
-	    *  of HTMLElements or an Array of Coords instances.
-	    * @param {Object} [options] An Object with all options you want to
-	    *        overwrite:
-	    *   @param {String} [options.overlapping_region] Determines when collision
-	    *    is valid, depending on the overlapped area. Values can be: 'N', 'S',
-	    *    'W', 'E', 'C' or 'all'. Default is 'C'.
-	    *   @param {Function} [options.on_overlap_start] Executes a function the first
-	    *    time each `collider ` is overlapped.
-	    *   @param {Function} [options.on_overlap_stop] Executes a function when a
-	    *    `collider` is no longer collided.
-	    *   @param {Function} [options.on_overlap] Executes a function when the
-	    * mouse is moved during the collision.
-	    * @return {Object} Collision instance.
-	    * @constructor
-	    */function Collision(el,colliders,options){this.options=$.extend(defaults,options);this.$element=el;this.last_colliders=[];this.last_colliders_coords=[];this.set_colliders(colliders);this.init()}Collision.defaults=defaults;var fn=Collision.prototype;fn.init=function(){this.find_collisions()};fn.overlaps=function(a,b){var x=false;var y=false;if(b.x1>=a.x1&&b.x1<=a.x2||b.x2>=a.x1&&b.x2<=a.x2||a.x1>=b.x1&&a.x2<=b.x2){x=true}if(b.y1>=a.y1&&b.y1<=a.y2||b.y2>=a.y1&&b.y2<=a.y2||a.y1>=b.y1&&a.y2<=b.y2){y=true}return x&&y};fn.detect_overlapping_region=function(a,b){var regionX='';var regionY='';if(a.y1>b.cy&&a.y1<b.y2){regionX='N'}if(a.y2>b.y1&&a.y2<b.cy){regionX='S'}if(a.x1>b.cx&&a.x1<b.x2){regionY='W'}if(a.x2>b.x1&&a.x2<b.cx){regionY='E'}return regionX+regionY||'C'};fn.calculate_overlapped_area_coords=function(a,b){var x1=Math.max(a.x1,b.x1);var y1=Math.max(a.y1,b.y1);var x2=Math.min(a.x2,b.x2);var y2=Math.min(a.y2,b.y2);return $({left:x1,top:y1,width:x2-x1,height:y2-y1}).coords().get()};fn.calculate_overlapped_area=function(coords){return coords.width*coords.height};fn.manage_colliders_start_stop=function(new_colliders_coords,start_callback,stop_callback){var last=this.last_colliders_coords;for(var i=0,il=last.length;i<il;i++){if($.inArray(last[i],new_colliders_coords)===-1){start_callback.call(this,last[i])}}for(var j=0,jl=new_colliders_coords.length;j<jl;j++){if($.inArray(new_colliders_coords[j],last)===-1){stop_callback.call(this,new_colliders_coords[j])}}};fn.find_collisions=function(player_data_coords){var self=this;var overlapping_region=this.options.overlapping_region;var colliders_coords=[];var colliders_data=[];var $colliders=this.colliders||this.$colliders;var count=$colliders.length;var player_coords=self.$element.coords().update(player_data_coords||false).get();while(count--){var $collider=self.$colliders?$($colliders[count]):$colliders[count];var $collider_coords_ins=$collider.isCoords?$collider:$collider.coords();var collider_coords=$collider_coords_ins.get();var overlaps=self.overlaps(player_coords,collider_coords);if(!overlaps){continue}var region=self.detect_overlapping_region(player_coords,collider_coords); //todo: make this an option
-	if(region===overlapping_region||overlapping_region==='all'){var area_coords=self.calculate_overlapped_area_coords(player_coords,collider_coords);var area=self.calculate_overlapped_area(area_coords);var collider_data={area:area,area_coords:area_coords,region:region,coords:collider_coords,player_coords:player_coords,el:$collider};if(self.options.on_overlap){self.options.on_overlap.call(this,collider_data)}colliders_coords.push($collider_coords_ins);colliders_data.push(collider_data)}}if(self.options.on_overlap_stop||self.options.on_overlap_start){this.manage_colliders_start_stop(colliders_coords,self.options.on_overlap_start,self.options.on_overlap_stop)}this.last_colliders_coords=colliders_coords;return colliders_data};fn.get_closest_colliders=function(player_data_coords){var colliders=this.find_collisions(player_data_coords);colliders.sort(function(a,b){ /* if colliders are being overlapped by the "C" (center) region,
-	             * we have to set a lower index in the array to which they are placed
-	             * above in the grid. */if(a.region==='C'&&b.region==='C'){if(a.coords.y1<b.coords.y1||a.coords.x1<b.coords.x1){return -1}else {return 1}}if(a.area<b.area){return 1}return 1});return colliders};fn.set_colliders=function(colliders){if(typeof colliders==='string'||colliders instanceof $){this.$colliders=$(colliders,this.options.colliders_context).not(this.$element)}else {this.colliders=$(colliders)}}; //jQuery adapter
-			$.fn.collision = function (collider, options) {
-				return new Collision(this, collider, options)
-			};
-			return Collision
-		});
-		(function (window, undefined) { /* Delay, debounce and throttle functions taken from underscore.js
-		 *
-	     * Copyright (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and
-	     * Investigative Reporters & Editors
-	     *
-	     * Permission is hereby granted, free of charge, to any person
-	     * obtaining a copy of this software and associated documentation
-	     * files (the "Software"), to deal in the Software without
-	     * restriction, including without limitation the rights to use,
-	     * copy, modify, merge, publish, distribute, sublicense, and/or sell
-	     * copies of the Software, and to permit persons to whom the
-	     * Software is furnished to do so, subject to the following
-	     * conditions:
-	     *
-	     * The above copyright notice and this permission notice shall be
-	     * included in all copies or substantial portions of the Software.
-	     *
-	     * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-	     * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-	     * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	     * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-	     * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-	     * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-	     * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-	     * OTHER DEALINGS IN THE SOFTWARE.
-		 */
-			window.delay = function (func, wait) {
-				var args = Array.prototype.slice.call(arguments, 2);
-				return setTimeout(function () {
-					return func.apply(null, args)
-				}, wait)
-			};
-			window.debounce = function (func, wait, immediate) {
-				var timeout;
-				return function () {
-					var context = this, args = arguments;
-					var later = function later() {
-						timeout = null;
-						if (!immediate)func.apply(context, args)
-					};
-					if (immediate && !timeout)func.apply(context, args);
-					clearTimeout(timeout);
-					timeout = setTimeout(later, wait)
-				}
-			};
-			window.throttle = function (func, wait) {
-				var context, args, timeout, throttling, more, result;
-				var whenDone = debounce(function () {
-					more = throttling = false
-				}, wait);
-				return function () {
-					context = this;
-					args = arguments;
-					var later = function later() {
-						timeout = null;
-						if (more)func.apply(context, args);
-						whenDone()
-					};
-					if (!timeout)timeout = setTimeout(later, wait);
-					if (throttling) {
-						more = true
-					} else {
-						result = func.apply(context, args)
-					}
-					whenDone();
-					throttling = true;
-					return result
-				}
-			}
-		})(window);
-		(function (root, factory) {
-			if (true) {
-				!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(13)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_2__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))
-			} else {
-				root.GridsterDraggable = factory(root.$ || root.jQuery)
-			}
-		})(undefined, function ($) {
-			var defaults = {
-				items: 'li',
-				distance: 1,
-				limit: true,
-				offset_left: 0,
-				autoscroll: true,
-				ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'], // or function
-				handle:null,container_width:0, // 0 == auto
-	move_element:true,helper:false, // or 'clone'
-	remove_helper:true // drag: function(e) {},
-	// start : function(e, ui) {},
-	// stop : function(e) {}
-	};var $window=$(window);var dir_map={x:'left',y:'top'};var isTouch=!!('ontouchstart' in window);var capitalize=function capitalize(str){return str.charAt(0).toUpperCase()+str.slice(1)};var idCounter=0;var uniqId=function uniqId(){return ++idCounter+''}; /**
-	    * Basic drag implementation for DOM elements inside a container.
-	    * Provide start/stop/drag callbacks.
-	    *
-	    * @class Draggable
-	    * @param {HTMLElement} el The HTMLelement that contains all the widgets
-	    *  to be dragged.
-	    * @param {Object} [options] An Object with all options you want to
-	    *        overwrite:
-	    *    @param {HTMLElement|String} [options.items] Define who will
-	    *     be the draggable items. Can be a CSS Selector String or a
-	    *     collection of HTMLElements.
-	    *    @param {Number} [options.distance] Distance in pixels after mousedown
-	    *     the mouse must move before dragging should start.
-	    *    @param {Boolean} [options.limit] Constrains dragging to the width of
-	    *     the container
-	    *    @param {Object|Function} [options.ignore_dragging] Array of node names
-	    *      that sould not trigger dragging, by default is `['INPUT', 'TEXTAREA',
-	    *      'SELECT', 'BUTTON']`. If a function is used return true to ignore dragging.
-	    *    @param {offset_left} [options.offset_left] Offset added to the item
-	    *     that is being dragged.
-	    *    @param {Number} [options.drag] Executes a callback when the mouse is
-	    *     moved during the dragging.
-	    *    @param {Number} [options.start] Executes a callback when the drag
-	    *     starts.
-	    *    @param {Number} [options.stop] Executes a callback when the drag stops.
-	    * @return {Object} Returns `el`.
-	    * @constructor
-	    */function Draggable(el,options){this.options=$.extend({},defaults,options);this.$document=$(document);this.$container=$(el);this.$dragitems=$(this.options.items,this.$container);this.is_dragging=false;this.player_min_left=0+this.options.offset_left;this.id=uniqId();this.ns='.gridster-draggable-'+this.id;this.init()}Draggable.defaults=defaults;var fn=Draggable.prototype;fn.init=function(){var pos=this.$container.css('position');this.calculate_dimensions();this.$container.css('position',pos==='static'?'relative':pos);this.disabled=false;this.events();$(window).bind(this.nsEvent('resize'),throttle($.proxy(this.calculate_dimensions,this),200))};fn.nsEvent=function(ev){return (ev||'')+this.ns};fn.events=function(){this.pointer_events={start:this.nsEvent('touchstart')+' '+this.nsEvent('mousedown'),move:this.nsEvent('touchmove')+' '+this.nsEvent('mousemove'),end:this.nsEvent('touchend')+' '+this.nsEvent('mouseup')};this.$container.on(this.nsEvent('selectstart'),$.proxy(this.on_select_start,this));this.$container.on(this.pointer_events.start,this.options.items,$.proxy(this.drag_handler,this));this.$document.on(this.pointer_events.end,$.proxy(function(e){this.is_dragging=false;if(this.disabled){return}this.$document.off(this.pointer_events.move);if(this.drag_start){this.on_dragstop(e)}},this))};fn.get_actual_pos=function($el){var pos=$el.position();return pos};fn.get_mouse_pos=function(e){if(e.originalEvent&&e.originalEvent.touches){var oe=e.originalEvent;e=oe.touches.length?oe.touches[0]:oe.changedTouches[0]}return {left:e.clientX,top:e.clientY}};fn.get_offset=function(e){e.preventDefault();var mouse_actual_pos=this.get_mouse_pos(e);var diff_x=Math.round(mouse_actual_pos.left-this.mouse_init_pos.left);var diff_y=Math.round(mouse_actual_pos.top-this.mouse_init_pos.top);var left=Math.round(this.el_init_offset.left+diff_x-this.baseX+$(window).scrollLeft()-this.win_offset_x);var top=Math.round(this.el_init_offset.top+diff_y-this.baseY+$(window).scrollTop()-this.win_offset_y);if(this.options.limit){if(left>this.player_max_left){left=this.player_max_left}else if(left<this.player_min_left){left=this.player_min_left}}return {position:{left:left,top:top},pointer:{left:mouse_actual_pos.left,top:mouse_actual_pos.top,diff_left:diff_x+($(window).scrollLeft()-this.win_offset_x),diff_top:diff_y+($(window).scrollTop()-this.win_offset_y)}}};fn.get_drag_data=function(e){var offset=this.get_offset(e);offset.$player=this.$player;offset.$helper=this.helper?this.$helper:this.$player;return offset};fn.set_limits=function(container_width){container_width||(container_width=this.$container.width());this.player_max_left=container_width-this.player_width+-this.options.offset_left;this.options.container_width=container_width;return this};fn.scroll_in=function(axis,data){var dir_prop=dir_map[axis];var area_size=50;var scroll_inc=30;var is_x=axis==='x';var window_size=is_x?this.window_width:this.window_height;var doc_size=is_x?$(document).width():$(document).height();var player_size=is_x?this.$player.width():this.$player.height();var next_scroll;var scroll_offset=$window['scroll'+capitalize(dir_prop)]();var min_window_pos=scroll_offset;var max_window_pos=min_window_pos+window_size;var mouse_next_zone=max_window_pos-area_size; // down/right
-	var mouse_prev_zone=min_window_pos+area_size; // up/left
-	var abs_mouse_pos=min_window_pos+data.pointer[dir_prop];var max_player_pos=doc_size-window_size+player_size;if(abs_mouse_pos>=mouse_next_zone){next_scroll=scroll_offset+scroll_inc;if(next_scroll<max_player_pos){$window['scroll'+capitalize(dir_prop)](next_scroll);this['scroll_offset_'+axis]+=scroll_inc}}if(abs_mouse_pos<=mouse_prev_zone){next_scroll=scroll_offset-scroll_inc;if(next_scroll>0){$window['scroll'+capitalize(dir_prop)](next_scroll);this['scroll_offset_'+axis]-=scroll_inc}}return this};fn.manage_scroll=function(data){this.scroll_in('x',data);this.scroll_in('y',data)};fn.calculate_dimensions=function(e){this.window_height=$window.height();this.window_width=$window.width()};fn.drag_handler=function(e){var node=e.target.nodeName; // skip if drag is disabled, or click was not done with the mouse primary button
-	if(this.disabled||e.which!==1&&!isTouch){return}if(this.ignore_drag(e)){return}var self=this;var first=true;this.$player=$(e.currentTarget);this.el_init_pos=this.get_actual_pos(this.$player);this.mouse_init_pos=this.get_mouse_pos(e);this.offsetY=this.mouse_init_pos.top-this.el_init_pos.top;this.$document.on(this.pointer_events.move,function(mme){var mouse_actual_pos=self.get_mouse_pos(mme);var diff_x=Math.abs(mouse_actual_pos.left-self.mouse_init_pos.left);var diff_y=Math.abs(mouse_actual_pos.top-self.mouse_init_pos.top);if(!(diff_x>self.options.distance||diff_y>self.options.distance)){return false}if(first){first=false;self.on_dragstart.call(self,mme);return false}if(self.is_dragging===true){self.on_dragmove.call(self,mme)}return false});if(!isTouch){return false}};fn.on_dragstart=function(e){e.preventDefault();if(this.is_dragging){return this}this.drag_start=this.is_dragging=true;var offset=this.$container.offset();this.baseX=Math.round(offset.left);this.baseY=Math.round(offset.top);this.initial_container_width=this.options.container_width||this.$container.width();if(this.options.helper==='clone'){this.$helper=this.$player.clone().appendTo(this.$container).addClass('helper');this.helper=true}else {this.helper=false}this.win_offset_y=$(window).scrollTop();this.win_offset_x=$(window).scrollLeft();this.scroll_offset_y=0;this.scroll_offset_x=0;this.el_init_offset=this.$player.offset();this.player_width=this.$player.width();this.player_height=this.$player.height();this.set_limits(this.options.container_width);if(this.options.start){this.options.start.call(this.$player,e,this.get_drag_data(e))}return false};fn.on_dragmove=function(e){var data=this.get_drag_data(e);this.options.autoscroll&&this.manage_scroll(data);if(this.options.move_element){(this.helper?this.$helper:this.$player).css({'position':'absolute','left':data.position.left,'top':data.position.top})}var last_position=this.last_position||data.position;data.prev_position=last_position;if(this.options.drag){this.options.drag.call(this.$player,e,data)}this.last_position=data.position;return false};fn.on_dragstop=function(e){var data=this.get_drag_data(e);this.drag_start=false;if(this.options.stop){this.options.stop.call(this.$player,e,data)}if(this.helper&&this.options.remove_helper){this.$helper.remove()}return false};fn.on_select_start=function(e){if(this.disabled){return}if(this.ignore_drag(e)){return}return false};fn.enable=function(){this.disabled=false};fn.disable=function(){this.disabled=true};fn.destroy=function(){this.disable();this.$container.off(this.ns);this.$document.off(this.ns);$(window).off(this.ns);$.removeData(this.$container,'drag')};fn.ignore_drag=function(event){if(this.options.handle){return !$(event.target).is(this.options.handle)}if($.isFunction(this.options.ignore_dragging)){return this.options.ignore_dragging(event)}return $(event.target).is(this.options.ignore_dragging.join(', '))}; //jQuery adapter
-			$.fn.drag = function (options) {
-				return new Draggable(this, options)
-			};
-			return Draggable
-		});
-		(function (root, factory) {
-			if (true) {
-				!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(13), __WEBPACK_LOCAL_MODULE_2__, __WEBPACK_LOCAL_MODULE_1__], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
-			} else {
-				root.Gridster = factory(root.$ || root.jQuery, root.GridsterDraggable, root.GridsterCollision)
-			}
-		})(undefined, function ($, Draggable, Collision) {
-			var defaults = {
-				namespace: '',
-				widget_selector: 'li',
-				widget_margins: [10, 10],
-				widget_base_dimensions: [400, 225],
-				extra_rows: 0,
-				extra_cols: 0,
-				min_cols: 1,
-				max_cols: Infinity,
-				min_rows: 15,
-				max_size_x: false,
-				autogrow_cols: false,
-				autogenerate_stylesheet: true,
-				avoid_overlapped_widgets: true,
-				auto_init: true,
-				serialize_params: function serialize_params($w, wgd) {
-					return {col: wgd.col, row: wgd.row, size_x: wgd.size_x, size_y: wgd.size_y}
-				},
-				collision: {},
-				draggable: {items: '.gs-w', distance: 4, ignore_dragging: Draggable.defaults.ignore_dragging.slice(0)},
-				resize: {
-					enabled: false,
-					axes: ['both'],
-					handle_append_to: '',
-					handle_class: 'gs-resize-handle',
-					max_size: [Infinity, Infinity],
-					min_size: [1, 1]
-				}
-			};
-			/**
-			 * @class Gridster
-	    * @uses Draggable
-	    * @uses Collision
-	    * @param {HTMLElement} el The HTMLelement that contains all the widgets.
-	    * @param {Object} [options] An Object with all options you want to
-	    *        overwrite:
-	    *    @param {HTMLElement|String} [options.widget_selector] Define who will
-	    *     be the draggable widgets. Can be a CSS Selector String or a
-	    *     collection of HTMLElements
-	    *    @param {Array} [options.widget_margins] Margin between widgets.
-	    *     The first index for the horizontal margin (left, right) and
-	    *     the second for the vertical margin (top, bottom).
-	    *    @param {Array} [options.widget_base_dimensions] Base widget dimensions
-	    *     in pixels. The first index for the width and the second for the
-	    *     height.
-	    *    @param {Number} [options.extra_cols] Add more columns in addition to
-	    *     those that have been calculated.
-	    *    @param {Number} [options.extra_rows] Add more rows in addition to
-	    *     those that have been calculated.
-	    *    @param {Number} [options.min_cols] The minimum required columns.
-	    *    @param {Number} [options.max_cols] The maximum columns possible (set to null
-	    *     for no maximum).
-	    *    @param {Number} [options.min_rows] The minimum required rows.
-	    *    @param {Number} [options.max_size_x] The maximum number of columns
-	    *     that a widget can span.
-	    *    @param {Boolean} [options.autogenerate_stylesheet] If true, all the
-	    *     CSS required to position all widgets in their respective columns
-	    *     and rows will be generated automatically and injected to the
-	    *     `<head>` of the document. You can set this to false, and write
-	    *     your own CSS targeting rows and cols via data-attributes like so:
-	    *     `[data-col="1"] { left: 10px; }`
-	    *    @param {Boolean} [options.avoid_overlapped_widgets] Avoid that widgets loaded
-	    *     from the DOM can be overlapped. It is helpful if the positions were
-	    *     bad stored in the database or if there was any conflict.
-	    *    @param {Boolean} [options.auto_init] Automatically call gridster init
-	    *     method or not when the plugin is instantiated.
-	    *    @param {Function} [options.serialize_params] Return the data you want
-	    *     for each widget in the serialization. Two arguments are passed:
-	    *     `$w`: the jQuery wrapped HTMLElement, and `wgd`: the grid
-	    *     coords object (`col`, `row`, `size_x`, `size_y`).
-	    *    @param {Object} [options.collision] An Object with all options for
-	    *     Collision class you want to overwrite. See Collision docs for
-	    *     more info.
-	    *    @param {Object} [options.draggable] An Object with all options for
-	    *     Draggable class you want to overwrite. See Draggable docs for more
-	    *     info.
-	    *       @param {Object|Function} [options.draggable.ignore_dragging] Note that
-	    *        if you use a Function, and resize is enabled, you should ignore the
-	    *        resize handlers manually (options.resize.handle_class).
-	    *    @param {Object} [options.resize] An Object with resize config options.
-	    *       @param {Boolean} [options.resize.enabled] Set to true to enable
-	    *        resizing.
-	    *       @param {Array} [options.resize.axes] Axes in which widgets can be
-	    *        resized. Possible values: ['x', 'y', 'both'].
-	    *       @param {String} [options.resize.handle_append_to] Set a valid CSS
-	    *        selector to append resize handles to.
-	    *       @param {String} [options.resize.handle_class] CSS class name used
-	    *        by resize handles.
-	    *       @param {Array} [options.resize.max_size] Limit widget dimensions
-	    *        when resizing. Array values should be integers:
-	    *        `[max_cols_occupied, max_rows_occupied]`
-	    *       @param {Array} [options.resize.min_size] Limit widget dimensions
-	    *        when resizing. Array values should be integers:
-	    *        `[min_cols_occupied, min_rows_occupied]`
-	    *       @param {Function} [options.resize.start] Function executed
-	    *        when resizing starts.
-	    *       @param {Function} [otions.resize.resize] Function executed
-	    *        during the resizing.
-	    *       @param {Function} [options.resize.stop] Function executed
-	    *        when resizing stops.
-	    *
-	    * @constructor
-	    */function Gridster(el,options){this.options=$.extend(true,{},defaults,options);this.$el=$(el);this.$wrapper=this.$el.parent();this.$widgets=this.$el.children(this.options.widget_selector).addClass('gs-w');this.widgets=[];this.$changed=$([]);this.wrapper_width=this.$wrapper.width();this.min_widget_width=this.options.widget_margins[0]*2+this.options.widget_base_dimensions[0];this.min_widget_height=this.options.widget_margins[1]*2+this.options.widget_base_dimensions[1];this.generated_stylesheets=[];this.$style_tags=$([]);this.options.auto_init&&this.init()}Gridster.defaults=defaults;Gridster.generated_stylesheets=[]; /**
-	    * Sorts an Array of grid coords objects (representing the grid coords of
-	    * each widget) in ascending way.
-	    *
-	    * @method sort_by_row_asc
-	    * @param {Array} widgets Array of grid coords objects
-	    * @return {Array} Returns the array sorted.
-	    */Gridster.sort_by_row_asc=function(widgets){widgets=widgets.sort(function(a,b){if(!a.row){a=$(a).coords().grid;b=$(b).coords().grid}if(a.row>b.row){return 1}return -1});return widgets}; /**
-	    * Sorts an Array of grid coords objects (representing the grid coords of
-	    * each widget) placing first the empty cells upper left.
-	    *
-	    * @method sort_by_row_and_col_asc
-	    * @param {Array} widgets Array of grid coords objects
-	    * @return {Array} Returns the array sorted.
-	    */Gridster.sort_by_row_and_col_asc=function(widgets){widgets=widgets.sort(function(a,b){if(a.row>b.row||a.row===b.row&&a.col>b.col){return 1}return -1});return widgets}; /**
-	    * Sorts an Array of grid coords objects by column (representing the grid
-	    * coords of each widget) in ascending way.
-	    *
-	    * @method sort_by_col_asc
-	    * @param {Array} widgets Array of grid coords objects
-	    * @return {Array} Returns the array sorted.
-	    */Gridster.sort_by_col_asc=function(widgets){widgets=widgets.sort(function(a,b){if(a.col>b.col){return 1}return -1});return widgets}; /**
-	    * Sorts an Array of grid coords objects (representing the grid coords of
-	    * each widget) in descending way.
-	    *
-	    * @method sort_by_row_desc
-	    * @param {Array} widgets Array of grid coords objects
-	    * @return {Array} Returns the array sorted.
-	    */Gridster.sort_by_row_desc=function(widgets){widgets=widgets.sort(function(a,b){if(a.row+a.size_y<b.row+b.size_y){return 1}return -1});return widgets}; /** Instance Methods **/var fn=Gridster.prototype;fn.init=function(){this.options.resize.enabled&&this.setup_resize();this.generate_grid_and_stylesheet();this.get_widgets_from_DOM();this.set_dom_grid_height();this.set_dom_grid_width();this.$wrapper.addClass('ready');this.draggable();this.options.resize.enabled&&this.resizable();$(window).bind('resize.gridster',throttle($.proxy(this.recalculate_faux_grid,this),200))}; /**
-	    * Disables dragging.
-	    *
-	    * @method disable
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.disable=function(){this.$wrapper.find('.player-revert').removeClass('player-revert');this.drag_api.disable();return this}; /**
-	    * Enables dragging.
-	    *
-	    * @method enable
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.enable=function(){this.drag_api.enable();return this}; /**
-	    * Disables drag-and-drop widget resizing.
-	    *
-	    * @method disable
-	    * @return {Class} Returns instance of gridster Class.
-	    */fn.disable_resize=function(){this.$el.addClass('gs-resize-disabled');this.resize_api.disable();return this}; /**
-	    * Enables drag-and-drop widget resizing.
-	    *
-	    * @method enable
-	    * @return {Class} Returns instance of gridster Class.
-	    */fn.enable_resize=function(){this.$el.removeClass('gs-resize-disabled');this.resize_api.enable();return this}; /**
-	    * Add a new widget to the grid.
-	    *
-	    * @method add_widget
-	    * @param {String|HTMLElement} html The string representing the HTML of the widget
-	    *  or the HTMLElement.
-	    * @param {Number} [size_x] The nº of rows the widget occupies horizontally.
-	    * @param {Number} [size_y] The nº of columns the widget occupies vertically.
-	    * @param {Number} [col] The column the widget should start in.
-	    * @param {Number} [row] The row the widget should start in.
-	    * @param {Array} [max_size] max_size Maximun size (in units) for width and height.
-	    * @param {Array} [min_size] min_size Minimum size (in units) for width and height.
-	    * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing.
-	    *  the widget that was just created.
-	    */fn.add_widget=function(html,size_x,size_y,col,row,max_size,min_size){var pos;size_x||(size_x=1);size_y||(size_y=1);if(!col&!row){pos=this.next_position(size_x,size_y)}else {pos={col:col,row:row,size_x:size_x,size_y:size_y};this.empty_cells(col,row,size_x,size_y)}var $w=$(html).attr({'data-col':pos.col,'data-row':pos.row,'data-sizex':size_x,'data-sizey':size_y}).addClass('gs-w').appendTo(this.$el).hide();this.$widgets=this.$widgets.add($w);this.register_widget($w);this.add_faux_rows(pos.size_y); //this.add_faux_cols(pos.size_x);
-	if(max_size){this.set_widget_max_size($w,max_size)}if(min_size){this.set_widget_min_size($w,min_size)}this.set_dom_grid_width();this.set_dom_grid_height();this.drag_api.set_limits(this.cols*this.min_widget_width);return $w.fadeIn()}; /**
-	    * Change widget size limits.
-	    *
-	    * @method set_widget_min_size
-	    * @param {HTMLElement|Number} $widget The jQuery wrapped HTMLElement
-	    *  representing the widget or an index representing the desired widget.
-	    * @param {Array} min_size Minimum size (in units) for width and height.
-	    * @return {HTMLElement} Returns instance of gridster Class.
-	    */fn.set_widget_min_size=function($widget,min_size){$widget=typeof $widget==='number'?this.$widgets.eq($widget):$widget;if(!$widget.length){return this}var wgd=$widget.data('coords').grid;wgd.min_size_x=min_size[0];wgd.min_size_y=min_size[1];return this}; /**
-	    * Change widget size limits.
-	    *
-	    * @method set_widget_max_size
-	    * @param {HTMLElement|Number} $widget The jQuery wrapped HTMLElement
-	    *  representing the widget or an index representing the desired widget.
-	    * @param {Array} max_size Maximun size (in units) for width and height.
-	    * @return {HTMLElement} Returns instance of gridster Class.
-	    */fn.set_widget_max_size=function($widget,max_size){$widget=typeof $widget==='number'?this.$widgets.eq($widget):$widget;if(!$widget.length){return this}var wgd=$widget.data('coords').grid;wgd.max_size_x=max_size[0];wgd.max_size_y=max_size[1];return this}; /**
-	    * Append the resize handle into a widget.
-	    *
-	    * @method add_resize_handle
-	    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
-	    *  representing the widget.
-	    * @return {HTMLElement} Returns instance of gridster Class.
-	    */fn.add_resize_handle=function($w){var append_to=this.options.resize.handle_append_to;$(this.resize_handle_tpl).appendTo(append_to?$(append_to,$w):$w);return this}; /**
-	    * Change the size of a widget. Width is limited to the current grid width.
-	    *
-	    * @method resize_widget
-	    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
-	    *  representing the widget.
-	    * @param {Number} size_x The number of columns that will occupy the widget.
-	    *  By default <code>size_x</code> is limited to the space available from
-	    *  the column where the widget begins, until the last column to the right.
-	    * @param {Number} size_y The number of rows that will occupy the widget.
-	    * @param {Function} [callback] Function executed when the widget is removed.
-	    * @return {HTMLElement} Returns $widget.
-	    */fn.resize_widget=function($widget,size_x,size_y,callback){var wgd=$widget.coords().grid;var col=wgd.col;var max_cols=this.options.max_cols;var old_size_y=wgd.size_y;var old_col=wgd.col;var new_col=old_col;size_x||(size_x=wgd.size_x);size_y||(size_y=wgd.size_y);if(max_cols!==Infinity){size_x=Math.min(size_x,max_cols-col+1)}if(size_y>old_size_y){this.add_faux_rows(Math.max(size_y-old_size_y,0))}var player_rcol=col+size_x-1;if(player_rcol>this.cols){this.add_faux_cols(player_rcol-this.cols)}var new_grid_data={col:new_col,row:wgd.row,size_x:size_x,size_y:size_y};this.mutate_widget_in_gridmap($widget,wgd,new_grid_data);this.set_dom_grid_height();this.set_dom_grid_width();if(callback){callback.call(this,new_grid_data.size_x,new_grid_data.size_y)}return $widget}; /**
-	    * Mutate widget dimensions and position in the grid map.
-	    *
-	    * @method mutate_widget_in_gridmap
-	    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
-	    *  representing the widget to mutate.
-	    * @param {Object} wgd Current widget grid data (col, row, size_x, size_y).
-	    * @param {Object} new_wgd New widget grid data.
-	    * @return {HTMLElement} Returns instance of gridster Class.
-	    */fn.mutate_widget_in_gridmap=function($widget,wgd,new_wgd){var old_size_x=wgd.size_x;var old_size_y=wgd.size_y;var old_cells_occupied=this.get_cells_occupied(wgd);var new_cells_occupied=this.get_cells_occupied(new_wgd);var empty_cols=[];$.each(old_cells_occupied.cols,function(i,col){if($.inArray(col,new_cells_occupied.cols)===-1){empty_cols.push(col)}});var occupied_cols=[];$.each(new_cells_occupied.cols,function(i,col){if($.inArray(col,old_cells_occupied.cols)===-1){occupied_cols.push(col)}});var empty_rows=[];$.each(old_cells_occupied.rows,function(i,row){if($.inArray(row,new_cells_occupied.rows)===-1){empty_rows.push(row)}});var occupied_rows=[];$.each(new_cells_occupied.rows,function(i,row){if($.inArray(row,old_cells_occupied.rows)===-1){occupied_rows.push(row)}});this.remove_from_gridmap(wgd);if(occupied_cols.length){var cols_to_empty=[new_wgd.col,new_wgd.row,new_wgd.size_x,Math.min(old_size_y,new_wgd.size_y),$widget];this.empty_cells.apply(this,cols_to_empty)}if(occupied_rows.length){var rows_to_empty=[new_wgd.col,new_wgd.row,new_wgd.size_x,new_wgd.size_y,$widget];this.empty_cells.apply(this,rows_to_empty)} // not the same that wgd = new_wgd;
-	wgd.col=new_wgd.col;wgd.row=new_wgd.row;wgd.size_x=new_wgd.size_x;wgd.size_y=new_wgd.size_y;this.add_to_gridmap(new_wgd,$widget);$widget.removeClass('player-revert'); //update coords instance attributes
-	$widget.data('coords').update({width:new_wgd.size_x*this.options.widget_base_dimensions[0]+(new_wgd.size_x-1)*this.options.widget_margins[0]*2,height:new_wgd.size_y*this.options.widget_base_dimensions[1]+(new_wgd.size_y-1)*this.options.widget_margins[1]*2});$widget.attr({'data-col':new_wgd.col,'data-row':new_wgd.row,'data-sizex':new_wgd.size_x,'data-sizey':new_wgd.size_y});if(empty_cols.length){var cols_to_remove_holes=[empty_cols[0],new_wgd.row,empty_cols.length,Math.min(old_size_y,new_wgd.size_y),$widget];this.remove_empty_cells.apply(this,cols_to_remove_holes)}if(empty_rows.length){var rows_to_remove_holes=[new_wgd.col,new_wgd.row,new_wgd.size_x,new_wgd.size_y,$widget];this.remove_empty_cells.apply(this,rows_to_remove_holes)}this.move_widget_up($widget);return this}; /**
-	    * Move down widgets in cells represented by the arguments col, row, size_x,
-	    * size_y
-	    *
-	    * @method empty_cells
-	    * @param {Number} col The column where the group of cells begin.
-	    * @param {Number} row The row where the group of cells begin.
-	    * @param {Number} size_x The number of columns that the group of cells
-	    * occupy.
-	    * @param {Number} size_y The number of rows that the group of cells
-	    * occupy.
-	    * @param {HTMLElement} $exclude Exclude widgets from being moved.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.empty_cells=function(col,row,size_x,size_y,$exclude){var $nexts=this.widgets_below({col:col,row:row-size_y,size_x:size_x,size_y:size_y});$nexts.not($exclude).each($.proxy(function(i,w){var wgd=$(w).coords().grid;if(!(wgd.row<=row+size_y-1)){return}var diff=row+size_y-wgd.row;this.move_widget_down($(w),diff)},this));this.set_dom_grid_height();return this}; /**
-	    * Move up widgets below cells represented by the arguments col, row, size_x,
-	    * size_y.
-	    *
-	    * @method remove_empty_cells
-	    * @param {Number} col The column where the group of cells begin.
-	    * @param {Number} row The row where the group of cells begin.
-	    * @param {Number} size_x The number of columns that the group of cells
-	    * occupy.
-	    * @param {Number} size_y The number of rows that the group of cells
-	    * occupy.
-	    * @param {HTMLElement} exclude Exclude widgets from being moved.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.remove_empty_cells=function(col,row,size_x,size_y,exclude){var $nexts=this.widgets_below({col:col,row:row,size_x:size_x,size_y:size_y});$nexts.not(exclude).each($.proxy(function(i,widget){this.move_widget_up($(widget),size_y)},this));this.set_dom_grid_height();return this}; /**
-	    * Get the most left column below to add a new widget.
-	    *
-	    * @method next_position
-	    * @param {Number} size_x The nº of rows the widget occupies horizontally.
-	    * @param {Number} size_y The nº of columns the widget occupies vertically.
-	    * @return {Object} Returns a grid coords object representing the future
-	    *  widget coords.
-	    */fn.next_position=function(size_x,size_y){size_x||(size_x=1);size_y||(size_y=1);var ga=this.gridmap;var cols_l=ga.length;var valid_pos=[];var rows_l;for(var c=1;c<cols_l;c++){rows_l=ga[c].length;for(var r=1;r<=rows_l;r++){var can_move_to=this.can_move_to({size_x:size_x,size_y:size_y},c,r);if(can_move_to){valid_pos.push({col:c,row:r,size_y:size_y,size_x:size_x})}}}if(valid_pos.length){return Gridster.sort_by_row_and_col_asc(valid_pos)[0]}return false}; /**
-	    * Remove a widget from the grid.
-	    *
-	    * @method remove_widget
-	    * @param {HTMLElement} el The jQuery wrapped HTMLElement you want to remove.
-	    * @param {Boolean|Function} silent If true, widgets below the removed one
-	    * will not move up. If a Function is passed it will be used as callback.
-	    * @param {Function} callback Function executed when the widget is removed.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.remove_widget=function(el,silent,callback){var $el=el instanceof $?el:$(el);var wgd=$el.coords().grid; // if silent is a function assume it's a callback
-	if($.isFunction(silent)){callback=silent;silent=false}this.cells_occupied_by_placeholder={};this.$widgets=this.$widgets.not($el);var $nexts=this.widgets_below($el);this.remove_from_gridmap(wgd);$el.fadeOut($.proxy(function(){$el.remove();if(!silent){$nexts.each($.proxy(function(i,widget){this.move_widget_up($(widget),wgd.size_y)},this))}this.set_dom_grid_height();if(callback){callback.call(this,el)}},this));return this}; /**
-	    * Remove all widgets from the grid.
-	    *
-	    * @method remove_all_widgets
-	    * @param {Function} callback Function executed for each widget removed.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.remove_all_widgets=function(callback){this.$widgets.each($.proxy(function(i,el){this.remove_widget(el,true,callback)},this));return this}; /**
-	    * Returns a serialized array of the widgets in the grid.
-	    *
-	    * @method serialize
-	    * @param {HTMLElement} [$widgets] The collection of jQuery wrapped
-	    *  HTMLElements you want to serialize. If no argument is passed all widgets
-	    *  will be serialized.
-	    * @return {Array} Returns an Array of Objects with the data specified in
-	    *  the serialize_params option.
-	    */fn.serialize=function($widgets){$widgets||($widgets=this.$widgets);return $widgets.map($.proxy(function(i,widget){var $w=$(widget);return this.options.serialize_params($w,$w.coords().grid)},this)).get()}; /**
-	    * Returns a serialized array of the widgets that have changed their
-	    *  position.
-	    *
-	    * @method serialize_changed
-	    * @return {Array} Returns an Array of Objects with the data specified in
-	    *  the serialize_params option.
-	    */fn.serialize_changed=function(){return this.serialize(this.$changed)}; /**
-	    * Convert widgets from DOM elements to "widget grid data" Objects.
-	    *
-	    * @method dom_to_coords
-	    * @param {HTMLElement} $widget The widget to be converted.
-	    */fn.dom_to_coords=function($widget){return {'col':parseInt($widget.attr('data-col'),10),'row':parseInt($widget.attr('data-row'),10),'size_x':parseInt($widget.attr('data-sizex'),10)||1,'size_y':parseInt($widget.attr('data-sizey'),10)||1,'max_size_x':parseInt($widget.attr('data-max-sizex'),10)||false,'max_size_y':parseInt($widget.attr('data-max-sizey'),10)||false,'min_size_x':parseInt($widget.attr('data-min-sizex'),10)||false,'min_size_y':parseInt($widget.attr('data-min-sizey'),10)||false,'el':$widget}}; /**
-	    * Creates the grid coords object representing the widget an add it to the
-	    * mapped array of positions.
-	    *
-	    * @method register_widget
-	    * @param {HTMLElement|Object} $el jQuery wrapped HTMLElement representing
-	    *  the widget, or an "widget grid data" Object with (col, row, el ...).
-	    * @return {Boolean} Returns true if the widget final position is different
-	    *  than the original.
-	    */fn.register_widget=function($el){var isDOM=$el instanceof jQuery;var wgd=isDOM?this.dom_to_coords($el):$el;var posChanged=false;isDOM||($el=wgd.el);var empty_upper_row=this.can_go_widget_up(wgd);if(empty_upper_row){wgd.row=empty_upper_row;$el.attr('data-row',empty_upper_row);this.$el.trigger('gridster:positionchanged',[wgd]);posChanged=true}if(this.options.avoid_overlapped_widgets&&!this.can_move_to({size_x:wgd.size_x,size_y:wgd.size_y},wgd.col,wgd.row)){$.extend(wgd,this.next_position(wgd.size_x,wgd.size_y));$el.attr({'data-col':wgd.col,'data-row':wgd.row,'data-sizex':wgd.size_x,'data-sizey':wgd.size_y});posChanged=true} // attach Coord object to player data-coord attribute
-	$el.data('coords',$el.coords()); // Extend Coord object with grid position info
-	$el.data('coords').grid=wgd;this.add_to_gridmap(wgd,$el);this.options.resize.enabled&&this.add_resize_handle($el);return posChanged}; /**
-	    * Update in the mapped array of positions the value of cells represented by
-	    * the grid coords object passed in the `grid_data` param.
-	    *
-	    * @param {Object} grid_data The grid coords object representing the cells
-	    *  to update in the mapped array.
-	    * @param {HTMLElement|Boolean} value Pass `false` or the jQuery wrapped
-	    *  HTMLElement, depends if you want to delete an existing position or add
-	    *  a new one.
-	    * @method update_widget_position
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.update_widget_position=function(grid_data,value){this.for_each_cell_occupied(grid_data,function(col,row){if(!this.gridmap[col]){return this}this.gridmap[col][row]=value});return this}; /**
-	    * Remove a widget from the mapped array of positions.
-	    *
-	    * @method remove_from_gridmap
-	    * @param {Object} grid_data The grid coords object representing the cells
-	    *  to update in the mapped array.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.remove_from_gridmap=function(grid_data){return this.update_widget_position(grid_data,false)}; /**
-	    * Add a widget to the mapped array of positions.
-	    *
-	    * @method add_to_gridmap
-	    * @param {Object} grid_data The grid coords object representing the cells
-	    *  to update in the mapped array.
-	    * @param {HTMLElement|Boolean} value The value to set in the specified
-	    *  position .
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.add_to_gridmap=function(grid_data,value){this.update_widget_position(grid_data,value||grid_data.el);if(grid_data.el){var $widgets=this.widgets_below(grid_data.el);$widgets.each($.proxy(function(i,widget){this.move_widget_up($(widget))},this))}}; /**
-	    * Make widgets draggable.
-	    *
-	    * @uses Draggable
-	    * @method draggable
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.draggable=function(){var self=this;var draggable_options=$.extend(true,{},this.options.draggable,{offset_left:this.options.widget_margins[0],offset_top:this.options.widget_margins[1],container_width:this.cols*this.min_widget_width,limit:true,start:function start(event,ui){self.$widgets.filter('.player-revert').removeClass('player-revert');self.$player=$(this);self.$helper=$(ui.$helper);self.helper=!self.$helper.is(self.$player);self.on_start_drag.call(self,event,ui);self.$el.trigger('gridster:dragstart')},stop:function stop(event,ui){self.on_stop_drag.call(self,event,ui);self.$el.trigger('gridster:dragstop')},drag:throttle(function(event,ui){self.on_drag.call(self,event,ui);self.$el.trigger('gridster:drag')},60)});this.drag_api=this.$el.drag(draggable_options);return this}; /**
-	    * Bind resize events to get resize working.
-	    *
-	    * @method resizable
-	    * @return {Class} Returns instance of gridster Class.
-	    */fn.resizable=function(){this.resize_api=this.$el.drag({items:'.'+this.options.resize.handle_class,offset_left:this.options.widget_margins[0],container_width:this.container_width,move_element:false,resize:true,limit:this.options.autogrow_cols?false:true,start:$.proxy(this.on_start_resize,this),stop:$.proxy(function(event,ui){delay($.proxy(function(){this.on_stop_resize(event,ui)},this),120)},this),drag:throttle($.proxy(this.on_resize,this),60)});return this}; /**
-	    * Setup things required for resizing. Like build templates for drag handles.
-	    *
-	    * @method setup_resize
-	    * @return {Class} Returns instance of gridster Class.
-	    */fn.setup_resize=function(){this.resize_handle_class=this.options.resize.handle_class;var axes=this.options.resize.axes;var handle_tpl='<span class="'+this.resize_handle_class+' '+this.resize_handle_class+'-{type}" />';this.resize_handle_tpl=$.map(axes,function(type){return handle_tpl.replace('{type}',type)}).join('');if($.isArray(this.options.draggable.ignore_dragging)){this.options.draggable.ignore_dragging.push('.'+this.resize_handle_class)}return this}; /**
-	    * This function is executed when the player begins to be dragged.
-	    *
-	    * @method on_start_drag
-	    * @param {Event} event The original browser event
-	    * @param {Object} ui A prepared ui object with useful drag-related data
-	    */fn.on_start_drag=function(event,ui){this.$helper.add(this.$player).add(this.$wrapper).addClass('dragging');this.highest_col=this.get_highest_occupied_cell().col;this.$player.addClass('player');this.player_grid_data=this.$player.coords().grid;this.placeholder_grid_data=$.extend({},this.player_grid_data);this.set_dom_grid_height(this.$el.height()+this.player_grid_data.size_y*this.min_widget_height);this.set_dom_grid_width(this.cols);var pgd_sizex=this.player_grid_data.size_x;var cols_diff=this.cols-this.highest_col;if(this.options.autogrow_cols&&cols_diff<=pgd_sizex){this.add_faux_cols(Math.min(pgd_sizex-cols_diff,1))}var colliders=this.faux_grid;var coords=this.$player.data('coords').coords;this.cells_occupied_by_player=this.get_cells_occupied(this.player_grid_data);this.cells_occupied_by_placeholder=this.get_cells_occupied(this.placeholder_grid_data);this.last_cols=[];this.last_rows=[]; // see jquery.collision.js
-	this.collision_api=this.$helper.collision(colliders,this.options.collision);this.$preview_holder=$('<'+this.$player.get(0).tagName+' />',{'class':'preview-holder','data-row':this.$player.attr('data-row'),'data-col':this.$player.attr('data-col'),css:{width:coords.width,height:coords.height}}).appendTo(this.$el);if(this.options.draggable.start){this.options.draggable.start.call(this,event,ui)}}; /**
-	    * This function is executed when the player is being dragged.
-	    *
-	    * @method on_drag
-	    * @param {Event} event The original browser event
-	    * @param {Object} ui A prepared ui object with useful drag-related data
-	    */fn.on_drag=function(event,ui){ //break if dragstop has been fired
-	if(this.$player===null){return false}var abs_offset={left:ui.position.left+this.baseX,top:ui.position.top+this.baseY}; // auto grow cols
-	if(this.options.autogrow_cols){var prcol=this.placeholder_grid_data.col+this.placeholder_grid_data.size_x-1; // "- 1" due to adding at least 1 column in on_start_drag
-	if(prcol>=this.cols-1&&this.options.max_cols>=this.cols+1){this.add_faux_cols(1);this.set_dom_grid_width(this.cols+1);this.drag_api.set_limits(this.container_width)}this.collision_api.set_colliders(this.faux_grid)}this.colliders_data=this.collision_api.get_closest_colliders(abs_offset);this.on_overlapped_column_change(this.on_start_overlapping_column,this.on_stop_overlapping_column);this.on_overlapped_row_change(this.on_start_overlapping_row,this.on_stop_overlapping_row);if(this.helper&&this.$player){this.$player.css({'left':ui.position.left,'top':ui.position.top})}if(this.options.draggable.drag){this.options.draggable.drag.call(this,event,ui)}}; /**
-	    * This function is executed when the player stops being dragged.
-	    *
-	    * @method on_stop_drag
-	    * @param {Event} event The original browser event
-	    * @param {Object} ui A prepared ui object with useful drag-related data
-	    */fn.on_stop_drag=function(event,ui){this.$helper.add(this.$player).add(this.$wrapper).removeClass('dragging');ui.position.left=ui.position.left+this.baseX;ui.position.top=ui.position.top+this.baseY;this.colliders_data=this.collision_api.get_closest_colliders(ui.position);this.on_overlapped_column_change(this.on_start_overlapping_column,this.on_stop_overlapping_column);this.on_overlapped_row_change(this.on_start_overlapping_row,this.on_stop_overlapping_row);this.$player.addClass('player-revert').removeClass('player').attr({'data-col':this.placeholder_grid_data.col,'data-row':this.placeholder_grid_data.row}).css({'left':'','top':''});this.$changed=this.$changed.add(this.$player);this.cells_occupied_by_player=this.get_cells_occupied(this.placeholder_grid_data);this.set_cells_player_occupies(this.placeholder_grid_data.col,this.placeholder_grid_data.row);this.$player.coords().grid.row=this.placeholder_grid_data.row;this.$player.coords().grid.col=this.placeholder_grid_data.col;if(this.options.draggable.stop){this.options.draggable.stop.call(this,event,ui)}this.$preview_holder.remove();this.$player=null;this.$helper=null;this.placeholder_grid_data={};this.player_grid_data={};this.cells_occupied_by_placeholder={};this.cells_occupied_by_player={};this.set_dom_grid_height();this.set_dom_grid_width();if(this.options.autogrow_cols){this.drag_api.set_limits(this.cols*this.min_widget_width)}}; /**
-	    * This function is executed every time a widget starts to be resized.
-	    *
-	    * @method on_start_resize
-	    * @param {Event} event The original browser event
-	    * @param {Object} ui A prepared ui object with useful drag-related data
-	    */fn.on_start_resize=function(event,ui){this.$resized_widget=ui.$player.closest('.gs-w');this.resize_coords=this.$resized_widget.coords();this.resize_wgd=this.resize_coords.grid;this.resize_initial_width=this.resize_coords.coords.width;this.resize_initial_height=this.resize_coords.coords.height;this.resize_initial_sizex=this.resize_coords.grid.size_x;this.resize_initial_sizey=this.resize_coords.grid.size_y;this.resize_initial_col=this.resize_coords.grid.col;this.resize_last_sizex=this.resize_initial_sizex;this.resize_last_sizey=this.resize_initial_sizey;this.resize_max_size_x=Math.min(this.resize_wgd.max_size_x||this.options.resize.max_size[0],this.options.max_cols-this.resize_initial_col+1);this.resize_max_size_y=this.resize_wgd.max_size_y||this.options.resize.max_size[1];this.resize_min_size_x=this.resize_wgd.min_size_x||this.options.resize.min_size[0]||1;this.resize_min_size_y=this.resize_wgd.min_size_y||this.options.resize.min_size[1]||1;this.resize_initial_last_col=this.get_highest_occupied_cell().col;this.set_dom_grid_width(this.cols);this.resize_dir={right:ui.$player.is('.'+this.resize_handle_class+'-x'),bottom:ui.$player.is('.'+this.resize_handle_class+'-y')};this.$resized_widget.css({'min-width':this.options.widget_base_dimensions[0],'min-height':this.options.widget_base_dimensions[1]});var nodeName=this.$resized_widget.get(0).tagName;this.$resize_preview_holder=$('<'+nodeName+' />',{'class':'preview-holder resize-preview-holder','data-row':this.$resized_widget.attr('data-row'),'data-col':this.$resized_widget.attr('data-col'),'css':{'width':this.resize_initial_width,'height':this.resize_initial_height}}).appendTo(this.$el);this.$resized_widget.addClass('resizing');if(this.options.resize.start){this.options.resize.start.call(this,event,ui,this.$resized_widget)}this.$el.trigger('gridster:resizestart')}; /**
-	    * This function is executed every time a widget stops being resized.
-	    *
-	    * @method on_stop_resize
-	    * @param {Event} event The original browser event
-	    * @param {Object} ui A prepared ui object with useful drag-related data
-	    */fn.on_stop_resize=function(event,ui){this.$resized_widget.removeClass('resizing').css({'width':'','height':''});delay($.proxy(function(){this.$resize_preview_holder.remove().css({'min-width':'','min-height':''});if(this.options.resize.stop){this.options.resize.stop.call(this,event,ui,this.$resized_widget)}this.$el.trigger('gridster:resizestop')},this),300);this.set_dom_grid_width();if(this.options.autogrow_cols){this.drag_api.set_limits(this.cols*this.min_widget_width)}}; /**
-	    * This function is executed when a widget is being resized.
-	    *
-	    * @method on_resize
-	    * @param {Event} event The original browser event
-	    * @param {Object} ui A prepared ui object with useful drag-related data
-	    */fn.on_resize=function(event,ui){var rel_x=ui.pointer.diff_left;var rel_y=ui.pointer.diff_top;var wbd_x=this.options.widget_base_dimensions[0];var wbd_y=this.options.widget_base_dimensions[1];var margin_x=this.options.widget_margins[0];var margin_y=this.options.widget_margins[1];var max_size_x=this.resize_max_size_x;var min_size_x=this.resize_min_size_x;var max_size_y=this.resize_max_size_y;var min_size_y=this.resize_min_size_y;var autogrow=this.options.autogrow_cols;var width;var max_width=Infinity;var max_height=Infinity;var inc_units_x=Math.ceil(rel_x/(wbd_x+margin_x*2)-0.2);var inc_units_y=Math.ceil(rel_y/(wbd_y+margin_y*2)-0.2);var size_x=Math.max(1,this.resize_initial_sizex+inc_units_x);var size_y=Math.max(1,this.resize_initial_sizey+inc_units_y);var max_cols=this.container_width/this.min_widget_width-this.resize_initial_col+1;var limit_width=max_cols*this.min_widget_width-margin_x*2;size_x=Math.max(Math.min(size_x,max_size_x),min_size_x);size_x=Math.min(max_cols,size_x);width=max_size_x*wbd_x+(size_x-1)*margin_x*2;max_width=Math.min(width,limit_width);min_width=min_size_x*wbd_x+(size_x-1)*margin_x*2;size_y=Math.max(Math.min(size_y,max_size_y),min_size_y);max_height=max_size_y*wbd_y+(size_y-1)*margin_y*2;min_height=min_size_y*wbd_y+(size_y-1)*margin_y*2;if(this.resize_dir.right){size_y=this.resize_initial_sizey}else if(this.resize_dir.bottom){size_x=this.resize_initial_sizex}if(autogrow){var last_widget_col=this.resize_initial_col+size_x-1;if(autogrow&&this.resize_initial_last_col<=last_widget_col){this.set_dom_grid_width(Math.max(last_widget_col+1,this.cols));if(this.cols<last_widget_col){this.add_faux_cols(last_widget_col-this.cols)}}}var css_props={};!this.resize_dir.bottom&&(css_props.width=Math.max(Math.min(this.resize_initial_width+rel_x,max_width),min_width));!this.resize_dir.right&&(css_props.height=Math.max(Math.min(this.resize_initial_height+rel_y,max_height),min_height));this.$resized_widget.css(css_props);if(size_x!==this.resize_last_sizex||size_y!==this.resize_last_sizey){this.resize_widget(this.$resized_widget,size_x,size_y);this.set_dom_grid_width(this.cols);this.$resize_preview_holder.css({'width':'','height':''}).attr({'data-row':this.$resized_widget.attr('data-row'),'data-sizex':size_x,'data-sizey':size_y})}if(this.options.resize.resize){this.options.resize.resize.call(this,event,ui,this.$resized_widget)}this.$el.trigger('gridster:resize');this.resize_last_sizex=size_x;this.resize_last_sizey=size_y}; /**
-	    * Executes the callbacks passed as arguments when a column begins to be
-	    * overlapped or stops being overlapped.
-	    *
-	    * @param {Function} start_callback Function executed when a new column
-	    *  begins to be overlapped. The column is passed as first argument.
-	    * @param {Function} stop_callback Function executed when a column stops
-	    *  being overlapped. The column is passed as first argument.
-	    * @method on_overlapped_column_change
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.on_overlapped_column_change=function(start_callback,stop_callback){if(!this.colliders_data.length){return this}var cols=this.get_targeted_columns(this.colliders_data[0].el.data.col);var last_n_cols=this.last_cols.length;var n_cols=cols.length;var i;for(i=0;i<n_cols;i++){if($.inArray(cols[i],this.last_cols)===-1){(start_callback||$.noop).call(this,cols[i])}}for(i=0;i<last_n_cols;i++){if($.inArray(this.last_cols[i],cols)===-1){(stop_callback||$.noop).call(this,this.last_cols[i])}}this.last_cols=cols;return this}; /**
-	    * Executes the callbacks passed as arguments when a row starts to be
-	    * overlapped or stops being overlapped.
-	    *
-	    * @param {Function} start_callback Function executed when a new row begins
-	    *  to be overlapped. The row is passed as first argument.
-	    * @param {Function} end_callback Function executed when a row stops being
-	    *  overlapped. The row is passed as first argument.
-	    * @method on_overlapped_row_change
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.on_overlapped_row_change=function(start_callback,end_callback){if(!this.colliders_data.length){return this}var rows=this.get_targeted_rows(this.colliders_data[0].el.data.row);var last_n_rows=this.last_rows.length;var n_rows=rows.length;var i;for(i=0;i<n_rows;i++){if($.inArray(rows[i],this.last_rows)===-1){(start_callback||$.noop).call(this,rows[i])}}for(i=0;i<last_n_rows;i++){if($.inArray(this.last_rows[i],rows)===-1){(end_callback||$.noop).call(this,this.last_rows[i])}}this.last_rows=rows}; /**
-	    * Sets the current position of the player
-	    *
-	    * @param {Number} col
-	    * @param {Number} row
-	    * @param {Boolean} no_player
-	    * @method set_player
-	    * @return {object}
-	    */fn.set_player=function(col,row,no_player){var self=this;if(!no_player){this.empty_cells_player_occupies()}var cell=!no_player?self.colliders_data[0].el.data:{col:col};var to_col=cell.col;var to_row=row||cell.row;this.player_grid_data={col:to_col,row:to_row,size_y:this.player_grid_data.size_y,size_x:this.player_grid_data.size_x};this.cells_occupied_by_player=this.get_cells_occupied(this.player_grid_data);var $overlapped_widgets=this.get_widgets_overlapped(this.player_grid_data);var constraints=this.widgets_constraints($overlapped_widgets);this.manage_movements(constraints.can_go_up,to_col,to_row);this.manage_movements(constraints.can_not_go_up,to_col,to_row); /* if there is not widgets overlapping in the new player position,
-	         * update the new placeholder position. */if(!$overlapped_widgets.length){var pp=this.can_go_player_up(this.player_grid_data);if(pp!==false){to_row=pp}this.set_placeholder(to_col,to_row)}return {col:to_col,row:to_row}}; /**
-	    * See which of the widgets in the $widgets param collection can go to
-	    * a upper row and which not.
-	    *
-	    * @method widgets_contraints
-	    * @param {jQuery} $widgets A jQuery wrapped collection of
-	    * HTMLElements.
-	    * @return {object} Returns a literal Object with two keys: `can_go_up` &
-	    * `can_not_go_up`. Each contains a set of HTMLElements.
-	    */fn.widgets_constraints=function($widgets){var $widgets_can_go_up=$([]);var $widgets_can_not_go_up;var wgd_can_go_up=[];var wgd_can_not_go_up=[];$widgets.each($.proxy(function(i,w){var $w=$(w);var wgd=$w.coords().grid;if(this.can_go_widget_up(wgd)){$widgets_can_go_up=$widgets_can_go_up.add($w);wgd_can_go_up.push(wgd)}else {wgd_can_not_go_up.push(wgd)}},this));$widgets_can_not_go_up=$widgets.not($widgets_can_go_up);return {can_go_up:Gridster.sort_by_row_asc(wgd_can_go_up),can_not_go_up:Gridster.sort_by_row_desc(wgd_can_not_go_up)}}; /**
-	    * Sorts an Array of grid coords objects (representing the grid coords of
-	    * each widget) in descending way.
-	    *
-	    * @method manage_movements
-	    * @param {jQuery} $widgets A jQuery collection of HTMLElements
-	    *  representing the widgets you want to move.
-	    * @param {Number} to_col The column to which we want to move the widgets.
-	    * @param {Number} to_row The row to which we want to move the widgets.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.manage_movements=function($widgets,to_col,to_row){$.each($widgets,$.proxy(function(i,w){var wgd=w;var $w=wgd.el;var can_go_widget_up=this.can_go_widget_up(wgd);if(can_go_widget_up){ //target CAN go up
-	//so move widget up
-	this.move_widget_to($w,can_go_widget_up);this.set_placeholder(to_col,can_go_widget_up+wgd.size_y)}else { //target can't go up
-	var can_go_player_up=this.can_go_player_up(this.player_grid_data);if(!can_go_player_up){ // target can't go up
-	// player cant't go up
-	// so we need to move widget down to a position that dont
-	// overlaps player
-	var y=to_row+this.player_grid_data.size_y-wgd.row;this.move_widget_down($w,y);this.set_placeholder(to_col,to_row)}}},this));return this}; /**
-	    * Determines if there is a widget in the row and col given. Or if the
-	    * HTMLElement passed as first argument is the player.
-	    *
-	    * @method is_player
-	    * @param {Number|HTMLElement} col_or_el A jQuery wrapped collection of
-	    * HTMLElements.
-	    * @param {Number} [row] The column to which we want to move the widgets.
-	    * @return {Boolean} Returns true or false.
-	    */fn.is_player=function(col_or_el,row){if(row&&!this.gridmap[col_or_el]){return false}var $w=row?this.gridmap[col_or_el][row]:col_or_el;return $w&&($w.is(this.$player)||$w.is(this.$helper))}; /**
-	    * Determines if the widget that is being dragged is currently over the row
-	    * and col given.
-	    *
-	    * @method is_player_in
-	    * @param {Number} col The column to check.
-	    * @param {Number} row The row to check.
-	    * @return {Boolean} Returns true or false.
-	    */fn.is_player_in=function(col,row){var c=this.cells_occupied_by_player||{};return $.inArray(col,c.cols)>=0&&$.inArray(row,c.rows)>=0}; /**
-	    * Determines if the placeholder is currently over the row and col given.
-	    *
-	    * @method is_placeholder_in
-	    * @param {Number} col The column to check.
-	    * @param {Number} row The row to check.
-	    * @return {Boolean} Returns true or false.
-	    */fn.is_placeholder_in=function(col,row){var c=this.cells_occupied_by_placeholder||{};return this.is_placeholder_in_col(col)&&$.inArray(row,c.rows)>=0}; /**
-	    * Determines if the placeholder is currently over the column given.
-	    *
-	    * @method is_placeholder_in_col
-	    * @param {Number} col The column to check.
-	    * @return {Boolean} Returns true or false.
-	    */fn.is_placeholder_in_col=function(col){var c=this.cells_occupied_by_placeholder||[];return $.inArray(col,c.cols)>=0}; /**
-	    * Determines if the cell represented by col and row params is empty.
-	    *
-	    * @method is_empty
-	    * @param {Number} col The column to check.
-	    * @param {Number} row The row to check.
-	    * @return {Boolean} Returns true or false.
-	    */fn.is_empty=function(col,row){if(typeof this.gridmap[col]!=='undefined'){if(typeof this.gridmap[col][row]!=='undefined'&&this.gridmap[col][row]===false){return true}return false}return true}; /**
-	    * Determines if the cell represented by col and row params is occupied.
-	    *
-	    * @method is_occupied
-	    * @param {Number} col The column to check.
-	    * @param {Number} row The row to check.
-	    * @return {Boolean} Returns true or false.
-	    */fn.is_occupied=function(col,row){if(!this.gridmap[col]){return false}if(this.gridmap[col][row]){return true}return false}; /**
-	    * Determines if there is a widget in the cell represented by col/row params.
-	    *
-	    * @method is_widget
-	    * @param {Number} col The column to check.
-	    * @param {Number} row The row to check.
-	    * @return {Boolean|HTMLElement} Returns false if there is no widget,
-	    * else returns the jQuery HTMLElement
-	    */fn.is_widget=function(col,row){var cell=this.gridmap[col];if(!cell){return false}cell=cell[row];if(cell){return cell}return false}; /**
-	    * Determines if there is a widget in the cell represented by col/row
-	    * params and if this is under the widget that is being dragged.
-	    *
-	    * @method is_widget_under_player
-	    * @param {Number} col The column to check.
-	    * @param {Number} row The row to check.
-	    * @return {Boolean} Returns true or false.
-	    */fn.is_widget_under_player=function(col,row){if(this.is_widget(col,row)){return this.is_player_in(col,row)}return false}; /**
-	    * Get widgets overlapping with the player or with the object passed
-	    * representing the grid cells.
-	    *
-	    * @method get_widgets_under_player
-	    * @return {HTMLElement} Returns a jQuery collection of HTMLElements
-	    */fn.get_widgets_under_player=function(cells){cells||(cells=this.cells_occupied_by_player||{cols:[],rows:[]});var $widgets=$([]);$.each(cells.cols,$.proxy(function(i,col){$.each(cells.rows,$.proxy(function(i,row){if(this.is_widget(col,row)){$widgets=$widgets.add(this.gridmap[col][row])}},this))},this));return $widgets}; /**
-	    * Put placeholder at the row and column specified.
-	    *
-	    * @method set_placeholder
-	    * @param {Number} col The column to which we want to move the
-	    *  placeholder.
-	    * @param {Number} row The row to which we want to move the
-	    *  placeholder.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.set_placeholder=function(col,row){var phgd=$.extend({},this.placeholder_grid_data);var $nexts=this.widgets_below({col:phgd.col,row:phgd.row,size_y:phgd.size_y,size_x:phgd.size_x}); // Prevents widgets go out of the grid
-	var right_col=col+phgd.size_x-1;if(right_col>this.cols){col=col-(right_col-col)}var moved_down=this.placeholder_grid_data.row<row;var changed_column=this.placeholder_grid_data.col!==col;this.placeholder_grid_data.col=col;this.placeholder_grid_data.row=row;this.cells_occupied_by_placeholder=this.get_cells_occupied(this.placeholder_grid_data);this.$preview_holder.attr({'data-row':row,'data-col':col});if(moved_down||changed_column){$nexts.each($.proxy(function(i,widget){this.move_widget_up($(widget),this.placeholder_grid_data.col-col+phgd.size_y)},this))}var $widgets_under_ph=this.get_widgets_under_player(this.cells_occupied_by_placeholder);if($widgets_under_ph.length){$widgets_under_ph.each($.proxy(function(i,widget){var $w=$(widget);this.move_widget_down($w,row+phgd.size_y-$w.data('coords').grid.row)},this))}}; /**
-	    * Determines whether the player can move to a position above.
-	    *
-	    * @method can_go_player_up
-	    * @param {Object} widget_grid_data The actual grid coords object of the
-	    *  player.
-	    * @return {Number|Boolean} If the player can be moved to an upper row
-	    *  returns the row number, else returns false.
-	    */fn.can_go_player_up=function(widget_grid_data){var p_bottom_row=widget_grid_data.row+widget_grid_data.size_y-1;var result=true;var upper_rows=[];var min_row=10000;var $widgets_under_player=this.get_widgets_under_player(); /* generate an array with columns as index and array with upper rows
-	         * empty as value */this.for_each_column_occupied(widget_grid_data,function(tcol){var grid_col=this.gridmap[tcol];var r=p_bottom_row+1;upper_rows[tcol]=[];while(--r>0){if(this.is_empty(tcol,r)||this.is_player(tcol,r)||this.is_widget(tcol,r)&&grid_col[r].is($widgets_under_player)){upper_rows[tcol].push(r);min_row=r<min_row?r:min_row}else {break}}if(upper_rows[tcol].length===0){result=false;return true; //break
-	}upper_rows[tcol].sort(function(a,b){return a-b})});if(!result){return false}return this.get_valid_rows(widget_grid_data,upper_rows,min_row)}; /**
-	    * Determines whether a widget can move to a position above.
-	    *
-	    * @method can_go_widget_up
-	    * @param {Object} widget_grid_data The actual grid coords object of the
-	    *  widget we want to check.
-	    * @return {Number|Boolean} If the widget can be moved to an upper row
-	    *  returns the row number, else returns false.
-	    */fn.can_go_widget_up=function(widget_grid_data){var p_bottom_row=widget_grid_data.row+widget_grid_data.size_y-1;var result=true;var upper_rows=[];var min_row=10000; /* generate an array with columns as index and array with topmost rows
-	         * empty as value */this.for_each_column_occupied(widget_grid_data,function(tcol){var grid_col=this.gridmap[tcol];upper_rows[tcol]=[];var r=p_bottom_row+1; // iterate over each row
-	while(--r>0){if(this.is_widget(tcol,r)&&!this.is_player_in(tcol,r)){if(!grid_col[r].is(widget_grid_data.el)){break}}if(!this.is_player(tcol,r)&&!this.is_placeholder_in(tcol,r)&&!this.is_player_in(tcol,r)){upper_rows[tcol].push(r)}if(r<min_row){min_row=r}}if(upper_rows[tcol].length===0){result=false;return true; //break
-	}upper_rows[tcol].sort(function(a,b){return a-b})});if(!result){return false}return this.get_valid_rows(widget_grid_data,upper_rows,min_row)}; /**
-	    * Search a valid row for the widget represented by `widget_grid_data' in
-	    * the `upper_rows` array. Iteration starts from row specified in `min_row`.
-	    *
-	    * @method get_valid_rows
-	    * @param {Object} widget_grid_data The actual grid coords object of the
-	    *  player.
-	    * @param {Array} upper_rows An array with columns as index and arrays
-	    *  of valid rows as values.
-	    * @param {Number} min_row The upper row from which the iteration will start.
-	    * @return {Number|Boolean} Returns the upper row valid from the `upper_rows`
-	    *  for the widget in question.
-	    */fn.get_valid_rows=function(widget_grid_data,upper_rows,min_row){var p_top_row=widget_grid_data.row;var p_bottom_row=widget_grid_data.row+widget_grid_data.size_y-1;var size_y=widget_grid_data.size_y;var r=min_row-1;var valid_rows=[];while(++r<=p_bottom_row){var common=true;$.each(upper_rows,function(col,rows){if($.isArray(rows)&&$.inArray(r,rows)===-1){common=false}});if(common===true){valid_rows.push(r);if(valid_rows.length===size_y){break}}}var new_row=false;if(size_y===1){if(valid_rows[0]!==p_top_row){new_row=valid_rows[0]||false}}else {if(valid_rows[0]!==p_top_row){new_row=this.get_consecutive_numbers_index(valid_rows,size_y)}}return new_row};fn.get_consecutive_numbers_index=function(arr,size_y){var max=arr.length;var result=[];var first=true;var prev=-1; // or null?
-	for(var i=0;i<max;i++){if(first||arr[i]===prev+1){result.push(i);if(result.length===size_y){break}first=false}else {result=[];first=true}prev=arr[i]}return result.length>=size_y?arr[result[0]]:false}; /**
-	    * Get widgets overlapping with the player.
-	    *
-	    * @method get_widgets_overlapped
-	    * @return {jQuery} Returns a jQuery collection of HTMLElements.
-	    */fn.get_widgets_overlapped=function(){var $w;var $widgets=$([]);var used=[];var rows_from_bottom=this.cells_occupied_by_player.rows.slice(0);rows_from_bottom.reverse();$.each(this.cells_occupied_by_player.cols,$.proxy(function(i,col){$.each(rows_from_bottom,$.proxy(function(i,row){ // if there is a widget in the player position
-	if(!this.gridmap[col]){return true} //next iteration
-	var $w=this.gridmap[col][row];if(this.is_occupied(col,row)&&!this.is_player($w)&&$.inArray($w,used)===-1){$widgets=$widgets.add($w);used.push($w)}},this))},this));return $widgets}; /**
-	    * This callback is executed when the player begins to collide with a column.
-	    *
-	    * @method on_start_overlapping_column
-	    * @param {Number} col The collided column.
-	    * @return {jQuery} Returns a jQuery collection of HTMLElements.
-	    */fn.on_start_overlapping_column=function(col){this.set_player(col,false)}; /**
-	    * A callback executed when the player begins to collide with a row.
-	    *
-	    * @method on_start_overlapping_row
-	    * @param {Number} row The collided row.
-	    * @return {jQuery} Returns a jQuery collection of HTMLElements.
-	    */fn.on_start_overlapping_row=function(row){this.set_player(false,row)}; /**
-	    * A callback executed when the the player ends to collide with a column.
-	    *
-	    * @method on_stop_overlapping_column
-	    * @param {Number} col The collided row.
-	    * @return {jQuery} Returns a jQuery collection of HTMLElements.
-	    */fn.on_stop_overlapping_column=function(col){this.set_player(col,false);var self=this;this.for_each_widget_below(col,this.cells_occupied_by_player.rows[0],function(tcol,trow){self.move_widget_up(this,self.player_grid_data.size_y)})}; /**
-	    * This callback is executed when the player ends to collide with a row.
-	    *
-	    * @method on_stop_overlapping_row
-	    * @param {Number} row The collided row.
-	    * @return {jQuery} Returns a jQuery collection of HTMLElements.
-	    */fn.on_stop_overlapping_row=function(row){this.set_player(false,row);var self=this;var cols=this.cells_occupied_by_player.cols;for(var c=0,cl=cols.length;c<cl;c++){this.for_each_widget_below(cols[c],row,function(tcol,trow){self.move_widget_up(this,self.player_grid_data.size_y)})}}; /**
-	    * Move a widget to a specific row. The cell or cells must be empty.
-	    * If the widget has widgets below, all of these widgets will be moved also
-	    * if they can.
-	    *
-	    * @method move_widget_to
-	    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement of the
-	    * widget is going to be moved.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.move_widget_to=function($widget,row){var self=this;var widget_grid_data=$widget.coords().grid;var diff=row-widget_grid_data.row;var $next_widgets=this.widgets_below($widget);var can_move_to_new_cell=this.can_move_to(widget_grid_data,widget_grid_data.col,row,$widget);if(can_move_to_new_cell===false){return false}this.remove_from_gridmap(widget_grid_data);widget_grid_data.row=row;this.add_to_gridmap(widget_grid_data);$widget.attr('data-row',row);this.$changed=this.$changed.add($widget);$next_widgets.each(function(i,widget){var $w=$(widget);var wgd=$w.coords().grid;var can_go_up=self.can_go_widget_up(wgd);if(can_go_up&&can_go_up!==wgd.row){self.move_widget_to($w,can_go_up)}});return this}; /**
-	    * Move up the specified widget and all below it.
-	    *
-	    * @method move_widget_up
-	    * @param {HTMLElement} $widget The widget you want to move.
-	    * @param {Number} [y_units] The number of cells that the widget has to move.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.move_widget_up=function($widget,y_units){var el_grid_data=$widget.coords().grid;var actual_row=el_grid_data.row;var moved=[];var can_go_up=true;y_units||(y_units=1);if(!this.can_go_up($widget)){return false} //break;
-	this.for_each_column_occupied(el_grid_data,function(col){ // can_go_up
-	if($.inArray($widget,moved)===-1){var widget_grid_data=$widget.coords().grid;var next_row=actual_row-y_units;next_row=this.can_go_up_to_row(widget_grid_data,col,next_row);if(!next_row){return true}var $next_widgets=this.widgets_below($widget);this.remove_from_gridmap(widget_grid_data);widget_grid_data.row=next_row;this.add_to_gridmap(widget_grid_data);$widget.attr('data-row',widget_grid_data.row);this.$changed=this.$changed.add($widget);moved.push($widget);$next_widgets.each($.proxy(function(i,widget){this.move_widget_up($(widget),y_units)},this))}})}; /**
-	    * Move down the specified widget and all below it.
-	    *
-	    * @method move_widget_down
-	    * @param {jQuery} $widget The jQuery object representing the widget
-	    *  you want to move.
-	    * @param {Number} y_units The number of cells that the widget has to move.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.move_widget_down=function($widget,y_units){var el_grid_data,actual_row,moved,y_diff;if(y_units<=0){return false}el_grid_data=$widget.coords().grid;actual_row=el_grid_data.row;moved=[];y_diff=y_units;if(!$widget){return false}if($.inArray($widget,moved)===-1){var widget_grid_data=$widget.coords().grid;var next_row=actual_row+y_units;var $next_widgets=this.widgets_below($widget);this.remove_from_gridmap(widget_grid_data);$next_widgets.each($.proxy(function(i,widget){var $w=$(widget);var wd=$w.coords().grid;var tmp_y=this.displacement_diff(wd,widget_grid_data,y_diff);if(tmp_y>0){this.move_widget_down($w,tmp_y)}},this));widget_grid_data.row=next_row;this.update_widget_position(widget_grid_data,$widget);$widget.attr('data-row',widget_grid_data.row);this.$changed=this.$changed.add($widget);moved.push($widget)}}; /**
-	    * Check if the widget can move to the specified row, else returns the
-	    * upper row possible.
-	    *
-	    * @method can_go_up_to_row
-	    * @param {Number} widget_grid_data The current grid coords object of the
-	    *  widget.
-	    * @param {Number} col The target column.
-	    * @param {Number} row The target row.
-	    * @return {Boolean|Number} Returns the row number if the widget can move
-	    *  to the target position, else returns false.
-	    */fn.can_go_up_to_row=function(widget_grid_data,col,row){var ga=this.gridmap;var result=true;var urc=[]; // upper_rows_in_columns
-	var actual_row=widget_grid_data.row;var r; /* generate an array with columns as index and array with
-	         * upper rows empty in the column */this.for_each_column_occupied(widget_grid_data,function(tcol){var grid_col=ga[tcol];urc[tcol]=[];r=actual_row;while(r--){if(this.is_empty(tcol,r)&&!this.is_placeholder_in(tcol,r)){urc[tcol].push(r)}else {break}}if(!urc[tcol].length){result=false;return true}});if(!result){return false} /* get common rows starting from upper position in all the columns
-	         * that widget occupies */r=row;for(r=1;r<actual_row;r++){var common=true;for(var uc=0,ucl=urc.length;uc<ucl;uc++){if(urc[uc]&&$.inArray(r,urc[uc])===-1){common=false}}if(common===true){result=r;break}}return result};fn.displacement_diff=function(widget_grid_data,parent_bgd,y_units){var actual_row=widget_grid_data.row;var diffs=[];var parent_max_y=parent_bgd.row+parent_bgd.size_y;this.for_each_column_occupied(widget_grid_data,function(col){var temp_y_units=0;for(var r=parent_max_y;r<actual_row;r++){if(this.is_empty(col,r)){temp_y_units=temp_y_units+1}}diffs.push(temp_y_units)});var max_diff=Math.max.apply(Math,diffs);y_units=y_units-max_diff;return y_units>0?y_units:0}; /**
-	    * Get widgets below a widget.
-	    *
-	    * @method widgets_below
-	    * @param {HTMLElement} $el The jQuery wrapped HTMLElement.
-	    * @return {jQuery} A jQuery collection of HTMLElements.
-	    */fn.widgets_below=function($el){var el_grid_data=$.isPlainObject($el)?$el:$el.coords().grid;var self=this;var ga=this.gridmap;var next_row=el_grid_data.row+el_grid_data.size_y-1;var $nexts=$([]);this.for_each_column_occupied(el_grid_data,function(col){self.for_each_widget_below(col,next_row,function(tcol,trow){if(!self.is_player(this)&&$.inArray(this,$nexts)===-1){$nexts=$nexts.add(this);return true; // break
-	}})});return Gridster.sort_by_row_asc($nexts)}; /**
-	    * Update the array of mapped positions with the new player position.
-	    *
-	    * @method set_cells_player_occupies
-	    * @param {Number} col The new player col.
-	    * @param {Number} col The new player row.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.set_cells_player_occupies=function(col,row){this.remove_from_gridmap(this.placeholder_grid_data);this.placeholder_grid_data.col=col;this.placeholder_grid_data.row=row;this.add_to_gridmap(this.placeholder_grid_data,this.$player);return this}; /**
-	    * Remove from the array of mapped positions the reference to the player.
-	    *
-	    * @method empty_cells_player_occupies
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.empty_cells_player_occupies=function(){this.remove_from_gridmap(this.placeholder_grid_data);return this};fn.can_go_up=function($el){var el_grid_data=$el.coords().grid;var initial_row=el_grid_data.row;var prev_row=initial_row-1;var ga=this.gridmap;var upper_rows_by_column=[];var result=true;if(initial_row===1){return false}this.for_each_column_occupied(el_grid_data,function(col){var $w=this.is_widget(col,prev_row);if(this.is_occupied(col,prev_row)||this.is_player(col,prev_row)||this.is_placeholder_in(col,prev_row)||this.is_player_in(col,prev_row)){result=false;return true; //break
-	}});return result}; /**
-	    * Check if it's possible to move a widget to a specific col/row. It takes
-	    * into account the dimensions (`size_y` and `size_x` attrs. of the grid
-	    *  coords object) the widget occupies.
-	    *
-	    * @method can_move_to
-	    * @param {Object} widget_grid_data The grid coords object that represents
-	    *  the widget.
-	    * @param {Object} col The col to check.
-	    * @param {Object} row The row to check.
-	    * @param {Number} [max_row] The max row allowed.
-	    * @return {Boolean} Returns true if all cells are empty, else return false.
-	    */fn.can_move_to=function(widget_grid_data,col,row,max_row){var ga=this.gridmap;var $w=widget_grid_data.el;var future_wd={size_y:widget_grid_data.size_y,size_x:widget_grid_data.size_x,col:col,row:row};var result=true; //Prevents widgets go out of the grid
-	var right_col=col+widget_grid_data.size_x-1;if(right_col>this.cols){return false}if(max_row&&max_row<row+widget_grid_data.size_y-1){return false}this.for_each_cell_occupied(future_wd,function(tcol,trow){var $tw=this.is_widget(tcol,trow);if($tw&&(!widget_grid_data.el||$tw.is($w))){result=false}});return result}; /**
-	    * Given the leftmost column returns all columns that are overlapping
-	    *  with the player.
-	    *
-	    * @method get_targeted_columns
-	    * @param {Number} [from_col] The leftmost column.
-	    * @return {Array} Returns an array with column numbers.
-	    */fn.get_targeted_columns=function(from_col){var max=(from_col||this.player_grid_data.col)+(this.player_grid_data.size_x-1);var cols=[];for(var col=from_col;col<=max;col++){cols.push(col)}return cols}; /**
-	    * Given the upper row returns all rows that are overlapping with the player.
-	    *
-	    * @method get_targeted_rows
-	    * @param {Number} [from_row] The upper row.
-	    * @return {Array} Returns an array with row numbers.
-	    */fn.get_targeted_rows=function(from_row){var max=(from_row||this.player_grid_data.row)+(this.player_grid_data.size_y-1);var rows=[];for(var row=from_row;row<=max;row++){rows.push(row)}return rows}; /**
-	    * Get all columns and rows that a widget occupies.
-	    *
-	    * @method get_cells_occupied
-	    * @param {Object} el_grid_data The grid coords object of the widget.
-	    * @return {Object} Returns an object like `{ cols: [], rows: []}`.
-	    */fn.get_cells_occupied=function(el_grid_data){var cells={cols:[],rows:[]};var i;if(arguments[1] instanceof $){el_grid_data=arguments[1].coords().grid}for(i=0;i<el_grid_data.size_x;i++){var col=el_grid_data.col+i;cells.cols.push(col)}for(i=0;i<el_grid_data.size_y;i++){var row=el_grid_data.row+i;cells.rows.push(row)}return cells}; /**
-	    * Iterate over the cells occupied by a widget executing a function for
-	    * each one.
-	    *
-	    * @method for_each_cell_occupied
-	    * @param {Object} el_grid_data The grid coords object that represents the
-	    *  widget.
-	    * @param {Function} callback The function to execute on each column
-	    *  iteration. Column and row are passed as arguments.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.for_each_cell_occupied=function(grid_data,callback){this.for_each_column_occupied(grid_data,function(col){this.for_each_row_occupied(grid_data,function(row){callback.call(this,col,row)})});return this}; /**
-	    * Iterate over the columns occupied by a widget executing a function for
-	    * each one.
-	    *
-	    * @method for_each_column_occupied
-	    * @param {Object} el_grid_data The grid coords object that represents
-	    *  the widget.
-	    * @param {Function} callback The function to execute on each column
-	    *  iteration. The column number is passed as first argument.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.for_each_column_occupied=function(el_grid_data,callback){for(var i=0;i<el_grid_data.size_x;i++){var col=el_grid_data.col+i;callback.call(this,col,el_grid_data)}}; /**
-	    * Iterate over the rows occupied by a widget executing a function for
-	    * each one.
-	    *
-	    * @method for_each_row_occupied
-	    * @param {Object} el_grid_data The grid coords object that represents
-	    *  the widget.
-	    * @param {Function} callback The function to execute on each column
-	    *  iteration. The row number is passed as first argument.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.for_each_row_occupied=function(el_grid_data,callback){for(var i=0;i<el_grid_data.size_y;i++){var row=el_grid_data.row+i;callback.call(this,row,el_grid_data)}};fn._traversing_widgets=function(type,direction,col,row,callback){var ga=this.gridmap;if(!ga[col]){return}var cr,max;var action=type+'/'+direction;if(arguments[2] instanceof $){var el_grid_data=arguments[2].coords().grid;col=el_grid_data.col;row=el_grid_data.row;callback=arguments[3]}var matched=[];var trow=row;var methods={'for_each/above':function for_eachAbove(){while(trow--){if(trow>0&&this.is_widget(col,trow)&&$.inArray(ga[col][trow],matched)===-1){cr=callback.call(ga[col][trow],col,trow);matched.push(ga[col][trow]);if(cr){break}}}},'for_each/below':function for_eachBelow(){for(trow=row+1,max=ga[col].length;trow<max;trow++){if(this.is_widget(col,trow)&&$.inArray(ga[col][trow],matched)===-1){cr=callback.call(ga[col][trow],col,trow);matched.push(ga[col][trow]);if(cr){break}}}}};if(methods[action]){methods[action].call(this)}}; /**
-	    * Iterate over each widget above the column and row specified.
-	    *
-	    * @method for_each_widget_above
-	    * @param {Number} col The column to start iterating.
-	    * @param {Number} row The row to start iterating.
-	    * @param {Function} callback The function to execute on each widget
-	    *  iteration. The value of `this` inside the function is the jQuery
-	    *  wrapped HTMLElement.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.for_each_widget_above=function(col,row,callback){this._traversing_widgets('for_each','above',col,row,callback);return this}; /**
-	    * Iterate over each widget below the column and row specified.
-	    *
-	    * @method for_each_widget_below
-	    * @param {Number} col The column to start iterating.
-	    * @param {Number} row The row to start iterating.
-	    * @param {Function} callback The function to execute on each widget
-	    *  iteration. The value of `this` inside the function is the jQuery wrapped
-	    *  HTMLElement.
-	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.for_each_widget_below=function(col,row,callback){this._traversing_widgets('for_each','below',col,row,callback);return this}; /**
-	    * Returns the highest occupied cell in the grid.
-	    *
-	    * @method get_highest_occupied_cell
-	    * @return {Object} Returns an object with `col` and `row` numbers.
-	    */fn.get_highest_occupied_cell=function(){var r;var gm=this.gridmap;var rl=gm[1].length;var rows=[],cols=[];var row_in_col=[];for(var c=gm.length-1;c>=1;c--){for(r=rl-1;r>=1;r--){if(this.is_widget(c,r)){rows.push(r);cols.push(c);break}}}return {col:Math.max.apply(Math,cols),row:Math.max.apply(Math,rows)}};fn.get_widgets_from=function(col,row){var ga=this.gridmap;var $widgets=$();if(col){$widgets=$widgets.add(this.$widgets.filter(function(){var tcol=$(this).attr('data-col');return tcol===col||tcol>col}))}if(row){$widgets=$widgets.add(this.$widgets.filter(function(){var trow=$(this).attr('data-row');return trow===row||trow>row}))}return $widgets}; /**
-	    * Set the current height of the parent grid.
-	    *
-	    * @method set_dom_grid_height
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.set_dom_grid_height=function(height){if(typeof height==='undefined'){var r=this.get_highest_occupied_cell().row;height=r*this.min_widget_height}this.container_height=height;this.$el.css('height',this.container_height);return this}; /**
-	    * Set the current width of the parent grid.
-	    *
-	    * @method set_dom_grid_width
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.set_dom_grid_width=function(cols){if(typeof cols==='undefined'){cols=this.get_highest_occupied_cell().col}var max_cols=this.options.autogrow_cols?this.options.max_cols:this.cols;cols=Math.min(max_cols,Math.max(cols,this.options.min_cols));this.container_width=cols*this.min_widget_width;console.log(this.min_widget_width);this.$el.css('width',this.container_width);return this}; /**
-	    * It generates the neccessary styles to position the widgets.
-	    *
-	    * @method generate_stylesheet
-	    * @param {Number} rows Number of columns.
-	    * @param {Number} cols Number of rows.
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.generate_stylesheet=function(opts){var styles='';var max_size_x=this.options.max_size_x||this.cols;var max_rows=0;var max_cols=0;var i;var rules;opts||(opts={});opts.cols||(opts.cols=this.cols);opts.rows||(opts.rows=this.rows);opts.namespace||(opts.namespace=this.options.namespace);opts.widget_base_dimensions||(opts.widget_base_dimensions=this.options.widget_base_dimensions);opts.widget_margins||(opts.widget_margins=this.options.widget_margins);opts.min_widget_width=opts.widget_margins[0]*2+opts.widget_base_dimensions[0];opts.min_widget_height=opts.widget_margins[1]*2+opts.widget_base_dimensions[1]; // don't duplicate stylesheets for the same configuration
-	var serialized_opts=$.param(opts);if($.inArray(serialized_opts,Gridster.generated_stylesheets)>=0){return false}this.generated_stylesheets.push(serialized_opts);Gridster.generated_stylesheets.push(serialized_opts); /* generate CSS styles for cols */for(i=opts.cols;i>=0;i--){styles+=opts.namespace+' [data-col="'+(i+1)+'"] { left:'+(i*opts.widget_base_dimensions[0]+i*opts.widget_margins[0]+(i+1)*opts.widget_margins[0])+'px; }\n'} /* generate CSS styles for rows */for(i=opts.rows;i>=0;i--){styles+=opts.namespace+' [data-row="'+(i+1)+'"] { top:'+(i*opts.widget_base_dimensions[1]+i*opts.widget_margins[1]+(i+1)*opts.widget_margins[1])+'px; }\n'}for(var y=1;y<=opts.rows;y++){styles+=opts.namespace+' [data-sizey="'+y+'"] { height:'+(y*opts.widget_base_dimensions[1]+(y-1)*(opts.widget_margins[1]*2))+'px; }\n'}for(var x=1;x<=max_size_x;x++){styles+=opts.namespace+' [data-sizex="'+x+'"] { width:'+(x*opts.widget_base_dimensions[0]+(x-1)*(opts.widget_margins[0]*2))+'px; }\n'}this.remove_style_tags();return this.add_style_tag(styles)}; /**
-	    * Injects the given CSS as string to the head of the document.
-	    *
-	    * @method add_style_tag
-	    * @param {String} css The styles to apply.
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.add_style_tag=function(css){var d=document;var tag=d.createElement('style');d.getElementsByTagName('head')[0].appendChild(tag);tag.setAttribute('type','text/css');if(tag.styleSheet){tag.styleSheet.cssText=css}else {tag.appendChild(document.createTextNode(css))}this.$style_tags=this.$style_tags.add(tag);return this}; /**
-	    * Remove the style tag with the associated id from the head of the document
-	    *
-	    * @method  remove_style_tag
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.remove_style_tags=function(){var all_styles=Gridster.generated_stylesheets;var ins_styles=this.generated_stylesheets;this.$style_tags.remove();Gridster.generated_stylesheets=$.map(all_styles,function(s){if($.inArray(s,ins_styles)===-1){return s}})}; /**
-	    * Generates a faux grid to collide with it when a widget is dragged and
-	    * detect row or column that we want to go.
-	    *
-	    * @method generate_faux_grid
-	    * @param {Number} rows Number of columns.
-	    * @param {Number} cols Number of rows.
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.generate_faux_grid=function(rows,cols){this.faux_grid=[];this.gridmap=[];var col;var row;for(col=cols;col>0;col--){this.gridmap[col]=[];for(row=rows;row>0;row--){this.add_faux_cell(row,col)}}return this}; /**
-	    * Add cell to the faux grid.
-	    *
-	    * @method add_faux_cell
-	    * @param {Number} row The row for the new faux cell.
-	    * @param {Number} col The col for the new faux cell.
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.add_faux_cell=function(row,col){var coords=$({left:this.baseX+(col-1)*this.min_widget_width,top:this.baseY+(row-1)*this.min_widget_height,width:this.min_widget_width,height:this.min_widget_height,col:col,row:row,original_col:col,original_row:row}).coords();if(!$.isArray(this.gridmap[col])){this.gridmap[col]=[]}this.gridmap[col][row]=false;this.faux_grid.push(coords);return this}; /**
-	    * Add rows to the faux grid.
-	    *
-	    * @method add_faux_rows
-	    * @param {Number} rows The number of rows you want to add to the faux grid.
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.add_faux_rows=function(rows){var actual_rows=this.rows;var max_rows=actual_rows+(rows||1);for(var r=max_rows;r>actual_rows;r--){for(var c=this.cols;c>=1;c--){this.add_faux_cell(r,c)}}this.rows=max_rows;if(this.options.autogenerate_stylesheet){this.generate_stylesheet()}return this}; /**
-	    * Add cols to the faux grid.
-	    *
-	    * @method add_faux_cols
-	    * @param {Number} cols The number of cols you want to add to the faux grid.
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.add_faux_cols=function(cols){var actual_cols=this.cols;var max_cols=actual_cols+(cols||1);max_cols=Math.min(max_cols,this.options.max_cols);for(var c=actual_cols+1;c<=max_cols;c++){for(var r=this.rows;r>=1;r--){this.add_faux_cell(r,c)}}this.cols=max_cols;if(this.options.autogenerate_stylesheet){this.generate_stylesheet()}return this}; /**
-	    * Recalculates the offsets for the faux grid. You need to use it when
-	    * the browser is resized.
-	    *
-	    * @method recalculate_faux_grid
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.recalculate_faux_grid=function(){var aw=this.$wrapper.width();this.baseX=($(window).width()-aw)/2;this.baseY=this.$wrapper.offset().top;$.each(this.faux_grid,$.proxy(function(i,coords){this.faux_grid[i]=coords.update({left:this.baseX+(coords.data.col-1)*this.min_widget_width,top:this.baseY+(coords.data.row-1)*this.min_widget_height})},this));return this}; /**
-	    * Get all widgets in the DOM and register them.
-	    *
-	    * @method get_widgets_from_DOM
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.get_widgets_from_DOM=function(){var widgets_coords=this.$widgets.map($.proxy(function(i,widget){var $w=$(widget);return this.dom_to_coords($w)},this));widgets_coords=Gridster.sort_by_row_and_col_asc(widgets_coords);var changes=$(widgets_coords).map($.proxy(function(i,wgd){return this.register_widget(wgd)||null},this));if(changes.length){this.$el.trigger('gridster:positionschanged')}return this}; /**
-	    * Calculate columns and rows to be set based on the configuration
-	    *  parameters, grid dimensions, etc ...
-	    *
-	    * @method generate_grid_and_stylesheet
-	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.generate_grid_and_stylesheet=function(){var aw=this.$wrapper.width();var max_cols=this.options.max_cols;var cols=Math.floor(aw/this.min_widget_width)+this.options.extra_cols;var actual_cols=this.$widgets.map(function(){return $(this).attr('data-col')}).get(); //needed to pass tests with phantomjs
-	actual_cols.length||(actual_cols=[0]);var min_cols=Math.max.apply(Math,actual_cols);this.cols=Math.max(min_cols,cols,this.options.min_cols);if(max_cols!==Infinity&&max_cols>=min_cols&&max_cols<this.cols){this.cols=max_cols} // get all rows that could be occupied by the current widgets
-	var max_rows=this.options.extra_rows;this.$widgets.each(function(i,w){max_rows+=+$(w).attr('data-sizey')});this.rows=Math.max(max_rows,this.options.min_rows);this.baseX=($(window).width()-aw)/2;this.baseY=this.$wrapper.offset().top;if(this.options.autogenerate_stylesheet){this.generate_stylesheet()}return this.generate_faux_grid(this.rows,this.cols)}; /**
-	     * Destroy this gridster by removing any sign of its presence, making it easy to avoid memory leaks
-	     *
-	     * @method destroy
-	     * @param {Boolean} remove If true, remove gridster from DOM.
-	     * @return {Object} Returns the instance of the Gridster class.
-	     */fn.destroy=function(remove){this.$el.removeData('gridster'); // remove bound callback on window resize
-	$(window).unbind('.gridster');if(this.drag_api){this.drag_api.destroy()}this.remove_style_tags();remove&&this.$el.remove();return this}; //jQuery adapter
-	$.fn.gridster=function(options){return this.each(function(){if(!$(this).data('gridster')){$(this).data('gridster',new Gridster(this,options))}})};return Gridster});
-
-/***/ },
-/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10710,13 +11837,1070 @@
 
 
 /***/ },
-/* 14 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(15);
+	var content = __webpack_require__(13);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(9)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./jquery.gridster.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./jquery.gridster.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".gridster {\n    position:relative;\n}\n\n.gridster > * {\n    -webkit-transition: height .4s, width .4s;\n    -moz-transition: height .4s, width .4s;\n    -o-transition: height .4s, width .4s;\n    -ms-transition: height .4s, width .4s;\n    transition: height .4s, width .4s;\n    margin: 0;\n}\n\n.gridster .gs-w {\n    z-index: 2;\n    position: absolute;\n}\n\n.ready .gs-w:not(.preview-holder) {\n    -webkit-transition: opacity .3s, left .3s, top .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s;\n    -o-transition: opacity .3s, left .3s, top .3s;\n    transition: opacity .3s, left .3s, top .3s;\n}\n\n.ready .gs-w:not(.preview-holder),\n.ready .resize-preview-holder {\n    -webkit-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -o-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n}\n\n.gridster .preview-holder {\n    z-index: 1;\n    position: absolute;\n    background-color: #fff;\n    border-color: #fff;\n    opacity: 0.3;\n}\n\n.gridster .player-revert {\n    z-index: 10!important;\n    -webkit-transition: left .3s, top .3s!important;\n    -moz-transition: left .3s, top .3s!important;\n    -o-transition: left .3s, top .3s!important;\n    transition:  left .3s, top .3s!important;\n}\n\n.gridster .dragging,\n.gridster .resizing {\n    z-index: 10!important;\n    -webkit-transition: all 0s !important;\n    -moz-transition: all 0s !important;\n    -o-transition: all 0s !important;\n    transition: all 0s !important;\n}\n\n\n.gs-resize-handle {\n    position: absolute;\n    z-index: 1;\n}\n\n.gs-resize-handle-both {\n    width: 20px;\n    height: 20px;\n    bottom: -8px;\n    right: -8px;\n    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=');\n    background-position: top left;\n    background-repeat: no-repeat;\n    cursor: se-resize;\n    z-index: 20;\n}\n\n.gs-resize-handle-x {\n    top: 0;\n    bottom: 13px;\n    right: -5px;\n    width: 10px;\n    cursor: e-resize;\n}\n\n.gs-resize-handle-y {\n    left: 0;\n    right: 13px;\n    bottom: -5px;\n    height: 10px;\n    cursor: s-resize;\n}\n\n.gs-w:hover .gs-resize-handle,\n.resizing .gs-resize-handle {\n    opacity: 1;\n}\n\n.gs-resize-handle,\n.gs-w.dragging .gs-resize-handle {\n    opacity: 0;\n}\n\n.gs-resize-disabled .gs-resize-handle {\n    display: none!important;\n}\n\n[data-max-sizex=\"1\"] .gs-resize-handle-x,\n[data-max-sizey=\"1\"] .gs-resize-handle-y,\n[data-max-sizey=\"1\"][data-max-sizex=\"1\"] .gs-resize-handle {\n    display: none !important;\n}\n\n.gridster li {\n    list-style: none;\n}\n\n.gridster .gs-w {\n    background: #FFF;\n    cursor: pointer;\n    border: 1px solid #bbb;\n}\n\n.gridster .player {\n    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n}\n\n.gridster .gs-w.try {\n    background-repeat: no-repeat;\n    background-position: 37px -169px;\n\n}\n\n.gridster .preview-holder {\n    border: none!important;\n    border-radius: 0!important;\n    background: rgba(255,255,255,.2)!important;\n}\n\n\n\n/* Uncomment this if you set helper : \"clone\" in draggable options */\n/*.gridster .player {\n  opacity:0;\n}\n*/", ""]);
+
+	// exports
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;"use strict"; /*! gridster.js - v0.5.6 - 2014-09-25
+	* http://gridster.net/
+		 * Copyright (c) 2014 ducksboard; Licensed MIT */
+		var $ = __webpack_require__(11);
+		var jQuery = __webpack_require__(11);
+		(function (root, factory) {
+			if (true) {
+				!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(11)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_0__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))
+			} else {
+				root.GridsterCoords = factory(root.$ || root.jQuery)
+			}
+		})(undefined, function ($) {
+			/**
+			 * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
+	    * to simulate DOM elements on the screen.
+	    * Coords is used by Gridster to create a faux grid with any DOM element can
+	    * collide.
+	    *
+	    * @class Coords
+	    * @param {HTMLElement|Object} obj The jQuery HTMLElement or a object with: left,
+	    * top, width and height properties.
+	    * @return {Object} Coords instance.
+	    * @constructor
+	    */function Coords(obj){if(obj[0]&&$.isPlainObject(obj[0])){this.data=obj[0]}else {this.el=obj}this.isCoords=true;this.coords={};this.init();return this}var fn=Coords.prototype;fn.init=function(){this.set();this.original_coords=this.get()};fn.set=function(update,not_update_offsets){var el=this.el;if(el&&!update){this.data=el.offset();this.data.width=el.width();this.data.height=el.height()}if(el&&update&&!not_update_offsets){var offset=el.offset();this.data.top=offset.top;this.data.left=offset.left}var d=this.data;typeof d.left==='undefined'&&(d.left=d.x1);typeof d.top==='undefined'&&(d.top=d.y1);this.coords.x1=d.left;this.coords.y1=d.top;this.coords.x2=d.left+d.width;this.coords.y2=d.top+d.height;this.coords.cx=d.left+d.width/2;this.coords.cy=d.top+d.height/2;this.coords.width=d.width;this.coords.height=d.height;this.coords.el=el||false;return this};fn.update=function(data){if(!data&&!this.el){return this}if(data){var new_data=$.extend({},this.data,data);this.data=new_data;return this.set(true,true)}this.set(true);return this};fn.get=function(){return this.coords};fn.destroy=function(){this.el.removeData('coords');delete this.el}; //jQuery adapter
+			$.fn.coords = function () {
+				if (this.data('coords')) {
+					return this.data('coords')
+				}
+				var ins = new Coords(this, arguments[0]);
+				this.data('coords', ins);
+				return ins
+			};
+			return Coords
+		});
+		(function (root, factory) {
+			if (true) {
+				!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(11), __WEBPACK_LOCAL_MODULE_0__], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_1__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))
+			} else {
+				root.GridsterCollision = factory(root.$ || root.jQuery, root.GridsterCoords)
+			}
+		})(undefined, function ($, Coords) {
+			var defaults = {
+				colliders_context: document.body, overlapping_region: 'C' // ,on_overlap: function(collider_data){},
+				// on_overlap_start : function(collider_data){},
+	// on_overlap_stop : function(collider_data){}
+	}; /**
+	    * Detects collisions between a DOM element against other DOM elements or
+	    * Coords objects.
+	    *
+	    * @class Collision
+	    * @uses Coords
+	    * @param {HTMLElement} el The jQuery wrapped HTMLElement.
+	    * @param {HTMLElement|Array} colliders Can be a jQuery collection
+	    *  of HTMLElements or an Array of Coords instances.
+	    * @param {Object} [options] An Object with all options you want to
+	    *        overwrite:
+	    *   @param {String} [options.overlapping_region] Determines when collision
+	    *    is valid, depending on the overlapped area. Values can be: 'N', 'S',
+	    *    'W', 'E', 'C' or 'all'. Default is 'C'.
+	    *   @param {Function} [options.on_overlap_start] Executes a function the first
+	    *    time each `collider ` is overlapped.
+	    *   @param {Function} [options.on_overlap_stop] Executes a function when a
+	    *    `collider` is no longer collided.
+	    *   @param {Function} [options.on_overlap] Executes a function when the
+	    * mouse is moved during the collision.
+	    * @return {Object} Collision instance.
+	    * @constructor
+	    */function Collision(el,colliders,options){this.options=$.extend(defaults,options);this.$element=el;this.last_colliders=[];this.last_colliders_coords=[];this.set_colliders(colliders);this.init()}Collision.defaults=defaults;var fn=Collision.prototype;fn.init=function(){this.find_collisions()};fn.overlaps=function(a,b){var x=false;var y=false;if(b.x1>=a.x1&&b.x1<=a.x2||b.x2>=a.x1&&b.x2<=a.x2||a.x1>=b.x1&&a.x2<=b.x2){x=true}if(b.y1>=a.y1&&b.y1<=a.y2||b.y2>=a.y1&&b.y2<=a.y2||a.y1>=b.y1&&a.y2<=b.y2){y=true}return x&&y};fn.detect_overlapping_region=function(a,b){var regionX='';var regionY='';if(a.y1>b.cy&&a.y1<b.y2){regionX='N'}if(a.y2>b.y1&&a.y2<b.cy){regionX='S'}if(a.x1>b.cx&&a.x1<b.x2){regionY='W'}if(a.x2>b.x1&&a.x2<b.cx){regionY='E'}return regionX+regionY||'C'};fn.calculate_overlapped_area_coords=function(a,b){var x1=Math.max(a.x1,b.x1);var y1=Math.max(a.y1,b.y1);var x2=Math.min(a.x2,b.x2);var y2=Math.min(a.y2,b.y2);return $({left:x1,top:y1,width:x2-x1,height:y2-y1}).coords().get()};fn.calculate_overlapped_area=function(coords){return coords.width*coords.height};fn.manage_colliders_start_stop=function(new_colliders_coords,start_callback,stop_callback){var last=this.last_colliders_coords;for(var i=0,il=last.length;i<il;i++){if($.inArray(last[i],new_colliders_coords)===-1){start_callback.call(this,last[i])}}for(var j=0,jl=new_colliders_coords.length;j<jl;j++){if($.inArray(new_colliders_coords[j],last)===-1){stop_callback.call(this,new_colliders_coords[j])}}};fn.find_collisions=function(player_data_coords){var self=this;var overlapping_region=this.options.overlapping_region;var colliders_coords=[];var colliders_data=[];var $colliders=this.colliders||this.$colliders;var count=$colliders.length;var player_coords=self.$element.coords().update(player_data_coords||false).get();while(count--){var $collider=self.$colliders?$($colliders[count]):$colliders[count];var $collider_coords_ins=$collider.isCoords?$collider:$collider.coords();var collider_coords=$collider_coords_ins.get();var overlaps=self.overlaps(player_coords,collider_coords);if(!overlaps){continue}var region=self.detect_overlapping_region(player_coords,collider_coords); //todo: make this an option
+	if(region===overlapping_region||overlapping_region==='all'){var area_coords=self.calculate_overlapped_area_coords(player_coords,collider_coords);var area=self.calculate_overlapped_area(area_coords);var collider_data={area:area,area_coords:area_coords,region:region,coords:collider_coords,player_coords:player_coords,el:$collider};if(self.options.on_overlap){self.options.on_overlap.call(this,collider_data)}colliders_coords.push($collider_coords_ins);colliders_data.push(collider_data)}}if(self.options.on_overlap_stop||self.options.on_overlap_start){this.manage_colliders_start_stop(colliders_coords,self.options.on_overlap_start,self.options.on_overlap_stop)}this.last_colliders_coords=colliders_coords;return colliders_data};fn.get_closest_colliders=function(player_data_coords){var colliders=this.find_collisions(player_data_coords);colliders.sort(function(a,b){ /* if colliders are being overlapped by the "C" (center) region,
+	             * we have to set a lower index in the array to which they are placed
+	             * above in the grid. */if(a.region==='C'&&b.region==='C'){if(a.coords.y1<b.coords.y1||a.coords.x1<b.coords.x1){return -1}else {return 1}}if(a.area<b.area){return 1}return 1});return colliders};fn.set_colliders=function(colliders){if(typeof colliders==='string'||colliders instanceof $){this.$colliders=$(colliders,this.options.colliders_context).not(this.$element)}else {this.colliders=$(colliders)}}; //jQuery adapter
+			$.fn.collision = function (collider, options) {
+				return new Collision(this, collider, options)
+			};
+			return Collision
+		});
+		(function (window, undefined) { /* Delay, debounce and throttle functions taken from underscore.js
+		 *
+	     * Copyright (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and
+	     * Investigative Reporters & Editors
+	     *
+	     * Permission is hereby granted, free of charge, to any person
+	     * obtaining a copy of this software and associated documentation
+	     * files (the "Software"), to deal in the Software without
+	     * restriction, including without limitation the rights to use,
+	     * copy, modify, merge, publish, distribute, sublicense, and/or sell
+	     * copies of the Software, and to permit persons to whom the
+	     * Software is furnished to do so, subject to the following
+	     * conditions:
+	     *
+	     * The above copyright notice and this permission notice shall be
+	     * included in all copies or substantial portions of the Software.
+	     *
+	     * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+	     * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+	     * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+	     * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+	     * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+	     * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+	     * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+	     * OTHER DEALINGS IN THE SOFTWARE.
+		 */
+			window.delay = function (func, wait) {
+				var args = Array.prototype.slice.call(arguments, 2);
+				return setTimeout(function () {
+					return func.apply(null, args)
+				}, wait)
+			};
+			window.debounce = function (func, wait, immediate) {
+				var timeout;
+				return function () {
+					var context = this, args = arguments;
+					var later = function later() {
+						timeout = null;
+						if (!immediate)func.apply(context, args)
+					};
+					if (immediate && !timeout)func.apply(context, args);
+					clearTimeout(timeout);
+					timeout = setTimeout(later, wait)
+				}
+			};
+			window.throttle = function (func, wait) {
+				var context, args, timeout, throttling, more, result;
+				var whenDone = debounce(function () {
+					more = throttling = false
+				}, wait);
+				return function () {
+					context = this;
+					args = arguments;
+					var later = function later() {
+						timeout = null;
+						if (more)func.apply(context, args);
+						whenDone()
+					};
+					if (!timeout)timeout = setTimeout(later, wait);
+					if (throttling) {
+						more = true
+					} else {
+						result = func.apply(context, args)
+					}
+					whenDone();
+					throttling = true;
+					return result
+				}
+			}
+		})(window);
+		(function (root, factory) {
+			if (true) {
+				!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(11)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_2__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))
+			} else {
+				root.GridsterDraggable = factory(root.$ || root.jQuery)
+			}
+		})(undefined, function ($) {
+			var defaults = {
+				items: 'li',
+				distance: 1,
+				limit: true,
+				offset_left: 0,
+				autoscroll: true,
+				ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'], // or function
+				handle:null,container_width:0, // 0 == auto
+	move_element:true,helper:false, // or 'clone'
+	remove_helper:true // drag: function(e) {},
+	// start : function(e, ui) {},
+	// stop : function(e) {}
+	};var $window=$(window);var dir_map={x:'left',y:'top'};var isTouch=!!('ontouchstart' in window);var capitalize=function capitalize(str){return str.charAt(0).toUpperCase()+str.slice(1)};var idCounter=0;var uniqId=function uniqId(){return ++idCounter+''}; /**
+	    * Basic drag implementation for DOM elements inside a container.
+	    * Provide start/stop/drag callbacks.
+	    *
+	    * @class Draggable
+	    * @param {HTMLElement} el The HTMLelement that contains all the widgets
+	    *  to be dragged.
+	    * @param {Object} [options] An Object with all options you want to
+	    *        overwrite:
+	    *    @param {HTMLElement|String} [options.items] Define who will
+	    *     be the draggable items. Can be a CSS Selector String or a
+	    *     collection of HTMLElements.
+	    *    @param {Number} [options.distance] Distance in pixels after mousedown
+	    *     the mouse must move before dragging should start.
+	    *    @param {Boolean} [options.limit] Constrains dragging to the width of
+	    *     the container
+	    *    @param {Object|Function} [options.ignore_dragging] Array of node names
+	    *      that sould not trigger dragging, by default is `['INPUT', 'TEXTAREA',
+	    *      'SELECT', 'BUTTON']`. If a function is used return true to ignore dragging.
+	    *    @param {offset_left} [options.offset_left] Offset added to the item
+	    *     that is being dragged.
+	    *    @param {Number} [options.drag] Executes a callback when the mouse is
+	    *     moved during the dragging.
+	    *    @param {Number} [options.start] Executes a callback when the drag
+	    *     starts.
+	    *    @param {Number} [options.stop] Executes a callback when the drag stops.
+	    * @return {Object} Returns `el`.
+	    * @constructor
+	    */function Draggable(el,options){this.options=$.extend({},defaults,options);this.$document=$(document);this.$container=$(el);this.$dragitems=$(this.options.items,this.$container);this.is_dragging=false;this.player_min_left=0+this.options.offset_left;this.id=uniqId();this.ns='.gridster-draggable-'+this.id;this.init()}Draggable.defaults=defaults;var fn=Draggable.prototype;fn.init=function(){var pos=this.$container.css('position');this.calculate_dimensions();this.$container.css('position',pos==='static'?'relative':pos);this.disabled=false;this.events();$(window).bind(this.nsEvent('resize'),throttle($.proxy(this.calculate_dimensions,this),200))};fn.nsEvent=function(ev){return (ev||'')+this.ns};fn.events=function(){this.pointer_events={start:this.nsEvent('touchstart')+' '+this.nsEvent('mousedown'),move:this.nsEvent('touchmove')+' '+this.nsEvent('mousemove'),end:this.nsEvent('touchend')+' '+this.nsEvent('mouseup')};this.$container.on(this.nsEvent('selectstart'),$.proxy(this.on_select_start,this));this.$container.on(this.pointer_events.start,this.options.items,$.proxy(this.drag_handler,this));this.$document.on(this.pointer_events.end,$.proxy(function(e){this.is_dragging=false;if(this.disabled){return}this.$document.off(this.pointer_events.move);if(this.drag_start){this.on_dragstop(e)}},this))};fn.get_actual_pos=function($el){var pos=$el.position();return pos};fn.get_mouse_pos=function(e){if(e.originalEvent&&e.originalEvent.touches){var oe=e.originalEvent;e=oe.touches.length?oe.touches[0]:oe.changedTouches[0]}return {left:e.clientX,top:e.clientY}};fn.get_offset=function(e){e.preventDefault();var mouse_actual_pos=this.get_mouse_pos(e);var diff_x=Math.round(mouse_actual_pos.left-this.mouse_init_pos.left);var diff_y=Math.round(mouse_actual_pos.top-this.mouse_init_pos.top);var left=Math.round(this.el_init_offset.left+diff_x-this.baseX+$(window).scrollLeft()-this.win_offset_x);var top=Math.round(this.el_init_offset.top+diff_y-this.baseY+$(window).scrollTop()-this.win_offset_y);if(this.options.limit){if(left>this.player_max_left){left=this.player_max_left}else if(left<this.player_min_left){left=this.player_min_left}}return {position:{left:left,top:top},pointer:{left:mouse_actual_pos.left,top:mouse_actual_pos.top,diff_left:diff_x+($(window).scrollLeft()-this.win_offset_x),diff_top:diff_y+($(window).scrollTop()-this.win_offset_y)}}};fn.get_drag_data=function(e){var offset=this.get_offset(e);offset.$player=this.$player;offset.$helper=this.helper?this.$helper:this.$player;return offset};fn.set_limits=function(container_width){container_width||(container_width=this.$container.width());this.player_max_left=container_width-this.player_width+-this.options.offset_left;this.options.container_width=container_width;return this};fn.scroll_in=function(axis,data){var dir_prop=dir_map[axis];var area_size=50;var scroll_inc=30;var is_x=axis==='x';var window_size=is_x?this.window_width:this.window_height;var doc_size=is_x?$(document).width():$(document).height();var player_size=is_x?this.$player.width():this.$player.height();var next_scroll;var scroll_offset=$window['scroll'+capitalize(dir_prop)]();var min_window_pos=scroll_offset;var max_window_pos=min_window_pos+window_size;var mouse_next_zone=max_window_pos-area_size; // down/right
+	var mouse_prev_zone=min_window_pos+area_size; // up/left
+	var abs_mouse_pos=min_window_pos+data.pointer[dir_prop];var max_player_pos=doc_size-window_size+player_size;if(abs_mouse_pos>=mouse_next_zone){next_scroll=scroll_offset+scroll_inc;if(next_scroll<max_player_pos){$window['scroll'+capitalize(dir_prop)](next_scroll);this['scroll_offset_'+axis]+=scroll_inc}}if(abs_mouse_pos<=mouse_prev_zone){next_scroll=scroll_offset-scroll_inc;if(next_scroll>0){$window['scroll'+capitalize(dir_prop)](next_scroll);this['scroll_offset_'+axis]-=scroll_inc}}return this};fn.manage_scroll=function(data){this.scroll_in('x',data);this.scroll_in('y',data)};fn.calculate_dimensions=function(e){this.window_height=$window.height();this.window_width=$window.width()};fn.drag_handler=function(e){var node=e.target.nodeName; // skip if drag is disabled, or click was not done with the mouse primary button
+	if(this.disabled||e.which!==1&&!isTouch){return}if(this.ignore_drag(e)){return}var self=this;var first=true;this.$player=$(e.currentTarget);this.el_init_pos=this.get_actual_pos(this.$player);this.mouse_init_pos=this.get_mouse_pos(e);this.offsetY=this.mouse_init_pos.top-this.el_init_pos.top;this.$document.on(this.pointer_events.move,function(mme){var mouse_actual_pos=self.get_mouse_pos(mme);var diff_x=Math.abs(mouse_actual_pos.left-self.mouse_init_pos.left);var diff_y=Math.abs(mouse_actual_pos.top-self.mouse_init_pos.top);if(!(diff_x>self.options.distance||diff_y>self.options.distance)){return false}if(first){first=false;self.on_dragstart.call(self,mme);return false}if(self.is_dragging===true){self.on_dragmove.call(self,mme)}return false});if(!isTouch){return false}};fn.on_dragstart=function(e){e.preventDefault();if(this.is_dragging){return this}this.drag_start=this.is_dragging=true;var offset=this.$container.offset();this.baseX=Math.round(offset.left);this.baseY=Math.round(offset.top);this.initial_container_width=this.options.container_width||this.$container.width();if(this.options.helper==='clone'){this.$helper=this.$player.clone().appendTo(this.$container).addClass('helper');this.helper=true}else {this.helper=false}this.win_offset_y=$(window).scrollTop();this.win_offset_x=$(window).scrollLeft();this.scroll_offset_y=0;this.scroll_offset_x=0;this.el_init_offset=this.$player.offset();this.player_width=this.$player.width();this.player_height=this.$player.height();this.set_limits(this.options.container_width);if(this.options.start){this.options.start.call(this.$player,e,this.get_drag_data(e))}return false};fn.on_dragmove=function(e){var data=this.get_drag_data(e);this.options.autoscroll&&this.manage_scroll(data);if(this.options.move_element){(this.helper?this.$helper:this.$player).css({'position':'absolute','left':data.position.left,'top':data.position.top})}var last_position=this.last_position||data.position;data.prev_position=last_position;if(this.options.drag){this.options.drag.call(this.$player,e,data)}this.last_position=data.position;return false};fn.on_dragstop=function(e){var data=this.get_drag_data(e);this.drag_start=false;if(this.options.stop){this.options.stop.call(this.$player,e,data)}if(this.helper&&this.options.remove_helper){this.$helper.remove()}return false};fn.on_select_start=function(e){if(this.disabled){return}if(this.ignore_drag(e)){return}return false};fn.enable=function(){this.disabled=false};fn.disable=function(){this.disabled=true};fn.destroy=function(){this.disable();this.$container.off(this.ns);this.$document.off(this.ns);$(window).off(this.ns);$.removeData(this.$container,'drag')};fn.ignore_drag=function(event){if(this.options.handle){return !$(event.target).is(this.options.handle)}if($.isFunction(this.options.ignore_dragging)){return this.options.ignore_dragging(event)}return $(event.target).is(this.options.ignore_dragging.join(', '))}; //jQuery adapter
+			$.fn.drag = function (options) {
+				return new Draggable(this, options)
+			};
+			return Draggable
+		});
+		(function (root, factory) {
+			if (true) {
+				!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(11), __WEBPACK_LOCAL_MODULE_2__, __WEBPACK_LOCAL_MODULE_1__], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
+			} else {
+				root.Gridster = factory(root.$ || root.jQuery, root.GridsterDraggable, root.GridsterCollision)
+			}
+		})(undefined, function ($, Draggable, Collision) {
+			var defaults = {
+				namespace: '',
+				widget_selector: 'li',
+				widget_margins: [10, 10],
+				widget_base_dimensions: [400, 225],
+				extra_rows: 0,
+				extra_cols: 0,
+				min_cols: 1,
+				max_cols: Infinity,
+				min_rows: 15,
+				max_size_x: false,
+				autogrow_cols: false,
+				autogenerate_stylesheet: true,
+				avoid_overlapped_widgets: true,
+				auto_init: true,
+				serialize_params: function serialize_params($w, wgd) {
+					return {col: wgd.col, row: wgd.row, size_x: wgd.size_x, size_y: wgd.size_y}
+				},
+				collision: {},
+				draggable: {items: '.gs-w', distance: 4, ignore_dragging: Draggable.defaults.ignore_dragging.slice(0)},
+				resize: {
+					enabled: false,
+					axes: ['both'],
+					handle_append_to: '',
+					handle_class: 'gs-resize-handle',
+					max_size: [Infinity, Infinity],
+					min_size: [1, 1]
+				}
+			};
+			/**
+			 * @class Gridster
+	    * @uses Draggable
+	    * @uses Collision
+	    * @param {HTMLElement} el The HTMLelement that contains all the widgets.
+	    * @param {Object} [options] An Object with all options you want to
+	    *        overwrite:
+	    *    @param {HTMLElement|String} [options.widget_selector] Define who will
+	    *     be the draggable widgets. Can be a CSS Selector String or a
+	    *     collection of HTMLElements
+	    *    @param {Array} [options.widget_margins] Margin between widgets.
+	    *     The first index for the horizontal margin (left, right) and
+	    *     the second for the vertical margin (top, bottom).
+	    *    @param {Array} [options.widget_base_dimensions] Base widget dimensions
+	    *     in pixels. The first index for the width and the second for the
+	    *     height.
+	    *    @param {Number} [options.extra_cols] Add more columns in addition to
+	    *     those that have been calculated.
+	    *    @param {Number} [options.extra_rows] Add more rows in addition to
+	    *     those that have been calculated.
+	    *    @param {Number} [options.min_cols] The minimum required columns.
+	    *    @param {Number} [options.max_cols] The maximum columns possible (set to null
+	    *     for no maximum).
+	    *    @param {Number} [options.min_rows] The minimum required rows.
+	    *    @param {Number} [options.max_size_x] The maximum number of columns
+	    *     that a widget can span.
+	    *    @param {Boolean} [options.autogenerate_stylesheet] If true, all the
+	    *     CSS required to position all widgets in their respective columns
+	    *     and rows will be generated automatically and injected to the
+	    *     `<head>` of the document. You can set this to false, and write
+	    *     your own CSS targeting rows and cols via data-attributes like so:
+	    *     `[data-col="1"] { left: 10px; }`
+	    *    @param {Boolean} [options.avoid_overlapped_widgets] Avoid that widgets loaded
+	    *     from the DOM can be overlapped. It is helpful if the positions were
+	    *     bad stored in the database or if there was any conflict.
+	    *    @param {Boolean} [options.auto_init] Automatically call gridster init
+	    *     method or not when the plugin is instantiated.
+	    *    @param {Function} [options.serialize_params] Return the data you want
+	    *     for each widget in the serialization. Two arguments are passed:
+	    *     `$w`: the jQuery wrapped HTMLElement, and `wgd`: the grid
+	    *     coords object (`col`, `row`, `size_x`, `size_y`).
+	    *    @param {Object} [options.collision] An Object with all options for
+	    *     Collision class you want to overwrite. See Collision docs for
+	    *     more info.
+	    *    @param {Object} [options.draggable] An Object with all options for
+	    *     Draggable class you want to overwrite. See Draggable docs for more
+	    *     info.
+	    *       @param {Object|Function} [options.draggable.ignore_dragging] Note that
+	    *        if you use a Function, and resize is enabled, you should ignore the
+	    *        resize handlers manually (options.resize.handle_class).
+	    *    @param {Object} [options.resize] An Object with resize config options.
+	    *       @param {Boolean} [options.resize.enabled] Set to true to enable
+	    *        resizing.
+	    *       @param {Array} [options.resize.axes] Axes in which widgets can be
+	    *        resized. Possible values: ['x', 'y', 'both'].
+	    *       @param {String} [options.resize.handle_append_to] Set a valid CSS
+	    *        selector to append resize handles to.
+	    *       @param {String} [options.resize.handle_class] CSS class name used
+	    *        by resize handles.
+	    *       @param {Array} [options.resize.max_size] Limit widget dimensions
+	    *        when resizing. Array values should be integers:
+	    *        `[max_cols_occupied, max_rows_occupied]`
+	    *       @param {Array} [options.resize.min_size] Limit widget dimensions
+	    *        when resizing. Array values should be integers:
+	    *        `[min_cols_occupied, min_rows_occupied]`
+	    *       @param {Function} [options.resize.start] Function executed
+	    *        when resizing starts.
+	    *       @param {Function} [otions.resize.resize] Function executed
+	    *        during the resizing.
+	    *       @param {Function} [options.resize.stop] Function executed
+	    *        when resizing stops.
+	    *
+	    * @constructor
+	    */function Gridster(el,options){this.options=$.extend(true,{},defaults,options);this.$el=$(el);this.$wrapper=this.$el.parent();this.$widgets=this.$el.children(this.options.widget_selector).addClass('gs-w');this.widgets=[];this.$changed=$([]);this.wrapper_width=this.$wrapper.width();this.min_widget_width=this.options.widget_margins[0]*2+this.options.widget_base_dimensions[0];this.min_widget_height=this.options.widget_margins[1]*2+this.options.widget_base_dimensions[1];this.generated_stylesheets=[];this.$style_tags=$([]);this.options.auto_init&&this.init()}Gridster.defaults=defaults;Gridster.generated_stylesheets=[]; /**
+	    * Sorts an Array of grid coords objects (representing the grid coords of
+	    * each widget) in ascending way.
+	    *
+	    * @method sort_by_row_asc
+	    * @param {Array} widgets Array of grid coords objects
+	    * @return {Array} Returns the array sorted.
+	    */Gridster.sort_by_row_asc=function(widgets){widgets=widgets.sort(function(a,b){if(!a.row){a=$(a).coords().grid;b=$(b).coords().grid}if(a.row>b.row){return 1}return -1});return widgets}; /**
+	    * Sorts an Array of grid coords objects (representing the grid coords of
+	    * each widget) placing first the empty cells upper left.
+	    *
+	    * @method sort_by_row_and_col_asc
+	    * @param {Array} widgets Array of grid coords objects
+	    * @return {Array} Returns the array sorted.
+	    */Gridster.sort_by_row_and_col_asc=function(widgets){widgets=widgets.sort(function(a,b){if(a.row>b.row||a.row===b.row&&a.col>b.col){return 1}return -1});return widgets}; /**
+	    * Sorts an Array of grid coords objects by column (representing the grid
+	    * coords of each widget) in ascending way.
+	    *
+	    * @method sort_by_col_asc
+	    * @param {Array} widgets Array of grid coords objects
+	    * @return {Array} Returns the array sorted.
+	    */Gridster.sort_by_col_asc=function(widgets){widgets=widgets.sort(function(a,b){if(a.col>b.col){return 1}return -1});return widgets}; /**
+	    * Sorts an Array of grid coords objects (representing the grid coords of
+	    * each widget) in descending way.
+	    *
+	    * @method sort_by_row_desc
+	    * @param {Array} widgets Array of grid coords objects
+	    * @return {Array} Returns the array sorted.
+	    */Gridster.sort_by_row_desc=function(widgets){widgets=widgets.sort(function(a,b){if(a.row+a.size_y<b.row+b.size_y){return 1}return -1});return widgets}; /** Instance Methods **/var fn=Gridster.prototype;fn.init=function(){this.options.resize.enabled&&this.setup_resize();this.generate_grid_and_stylesheet();this.get_widgets_from_DOM();this.set_dom_grid_height();this.set_dom_grid_width();this.$wrapper.addClass('ready');this.draggable();this.options.resize.enabled&&this.resizable();$(window).bind('resize.gridster',throttle($.proxy(this.recalculate_faux_grid,this),200))}; /**
+	    * Disables dragging.
+	    *
+	    * @method disable
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.disable=function(){this.$wrapper.find('.player-revert').removeClass('player-revert');this.drag_api.disable();return this}; /**
+	    * Enables dragging.
+	    *
+	    * @method enable
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.enable=function(){this.drag_api.enable();return this}; /**
+	    * Disables drag-and-drop widget resizing.
+	    *
+	    * @method disable
+	    * @return {Class} Returns instance of gridster Class.
+	    */fn.disable_resize=function(){this.$el.addClass('gs-resize-disabled');this.resize_api.disable();return this}; /**
+	    * Enables drag-and-drop widget resizing.
+	    *
+	    * @method enable
+	    * @return {Class} Returns instance of gridster Class.
+	    */fn.enable_resize=function(){this.$el.removeClass('gs-resize-disabled');this.resize_api.enable();return this}; /**
+	    * Add a new widget to the grid.
+	    *
+	    * @method add_widget
+	    * @param {String|HTMLElement} html The string representing the HTML of the widget
+	    *  or the HTMLElement.
+	    * @param {Number} [size_x] The nº of rows the widget occupies horizontally.
+	    * @param {Number} [size_y] The nº of columns the widget occupies vertically.
+	    * @param {Number} [col] The column the widget should start in.
+	    * @param {Number} [row] The row the widget should start in.
+	    * @param {Array} [max_size] max_size Maximun size (in units) for width and height.
+	    * @param {Array} [min_size] min_size Minimum size (in units) for width and height.
+	    * @return {HTMLElement} Returns the jQuery wrapped HTMLElement representing.
+	    *  the widget that was just created.
+	    */fn.add_widget=function(html,size_x,size_y,col,row,max_size,min_size){var pos;size_x||(size_x=1);size_y||(size_y=1);if(!col&!row){pos=this.next_position(size_x,size_y)}else {pos={col:col,row:row,size_x:size_x,size_y:size_y};this.empty_cells(col,row,size_x,size_y)}var $w=$(html).attr({'data-col':pos.col,'data-row':pos.row,'data-sizex':size_x,'data-sizey':size_y}).addClass('gs-w').appendTo(this.$el).hide();this.$widgets=this.$widgets.add($w);this.register_widget($w);this.add_faux_rows(pos.size_y); //this.add_faux_cols(pos.size_x);
+	if(max_size){this.set_widget_max_size($w,max_size)}if(min_size){this.set_widget_min_size($w,min_size)}this.set_dom_grid_width();this.set_dom_grid_height();this.drag_api.set_limits(this.cols*this.min_widget_width);return $w.fadeIn()}; /**
+	    * Change widget size limits.
+	    *
+	    * @method set_widget_min_size
+	    * @param {HTMLElement|Number} $widget The jQuery wrapped HTMLElement
+	    *  representing the widget or an index representing the desired widget.
+	    * @param {Array} min_size Minimum size (in units) for width and height.
+	    * @return {HTMLElement} Returns instance of gridster Class.
+	    */fn.set_widget_min_size=function($widget,min_size){$widget=typeof $widget==='number'?this.$widgets.eq($widget):$widget;if(!$widget.length){return this}var wgd=$widget.data('coords').grid;wgd.min_size_x=min_size[0];wgd.min_size_y=min_size[1];return this}; /**
+	    * Change widget size limits.
+	    *
+	    * @method set_widget_max_size
+	    * @param {HTMLElement|Number} $widget The jQuery wrapped HTMLElement
+	    *  representing the widget or an index representing the desired widget.
+	    * @param {Array} max_size Maximun size (in units) for width and height.
+	    * @return {HTMLElement} Returns instance of gridster Class.
+	    */fn.set_widget_max_size=function($widget,max_size){$widget=typeof $widget==='number'?this.$widgets.eq($widget):$widget;if(!$widget.length){return this}var wgd=$widget.data('coords').grid;wgd.max_size_x=max_size[0];wgd.max_size_y=max_size[1];return this}; /**
+	    * Append the resize handle into a widget.
+	    *
+	    * @method add_resize_handle
+	    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
+	    *  representing the widget.
+	    * @return {HTMLElement} Returns instance of gridster Class.
+	    */fn.add_resize_handle=function($w){var append_to=this.options.resize.handle_append_to;$(this.resize_handle_tpl).appendTo(append_to?$(append_to,$w):$w);return this}; /**
+	    * Change the size of a widget. Width is limited to the current grid width.
+	    *
+	    * @method resize_widget
+	    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
+	    *  representing the widget.
+	    * @param {Number} size_x The number of columns that will occupy the widget.
+	    *  By default <code>size_x</code> is limited to the space available from
+	    *  the column where the widget begins, until the last column to the right.
+	    * @param {Number} size_y The number of rows that will occupy the widget.
+	    * @param {Function} [callback] Function executed when the widget is removed.
+	    * @return {HTMLElement} Returns $widget.
+	    */fn.resize_widget=function($widget,size_x,size_y,callback){var wgd=$widget.coords().grid;var col=wgd.col;var max_cols=this.options.max_cols;var old_size_y=wgd.size_y;var old_col=wgd.col;var new_col=old_col;size_x||(size_x=wgd.size_x);size_y||(size_y=wgd.size_y);if(max_cols!==Infinity){size_x=Math.min(size_x,max_cols-col+1)}if(size_y>old_size_y){this.add_faux_rows(Math.max(size_y-old_size_y,0))}var player_rcol=col+size_x-1;if(player_rcol>this.cols){this.add_faux_cols(player_rcol-this.cols)}var new_grid_data={col:new_col,row:wgd.row,size_x:size_x,size_y:size_y};this.mutate_widget_in_gridmap($widget,wgd,new_grid_data);this.set_dom_grid_height();this.set_dom_grid_width();if(callback){callback.call(this,new_grid_data.size_x,new_grid_data.size_y)}return $widget}; /**
+	    * Mutate widget dimensions and position in the grid map.
+	    *
+	    * @method mutate_widget_in_gridmap
+	    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement
+	    *  representing the widget to mutate.
+	    * @param {Object} wgd Current widget grid data (col, row, size_x, size_y).
+	    * @param {Object} new_wgd New widget grid data.
+	    * @return {HTMLElement} Returns instance of gridster Class.
+	    */fn.mutate_widget_in_gridmap=function($widget,wgd,new_wgd){var old_size_x=wgd.size_x;var old_size_y=wgd.size_y;var old_cells_occupied=this.get_cells_occupied(wgd);var new_cells_occupied=this.get_cells_occupied(new_wgd);var empty_cols=[];$.each(old_cells_occupied.cols,function(i,col){if($.inArray(col,new_cells_occupied.cols)===-1){empty_cols.push(col)}});var occupied_cols=[];$.each(new_cells_occupied.cols,function(i,col){if($.inArray(col,old_cells_occupied.cols)===-1){occupied_cols.push(col)}});var empty_rows=[];$.each(old_cells_occupied.rows,function(i,row){if($.inArray(row,new_cells_occupied.rows)===-1){empty_rows.push(row)}});var occupied_rows=[];$.each(new_cells_occupied.rows,function(i,row){if($.inArray(row,old_cells_occupied.rows)===-1){occupied_rows.push(row)}});this.remove_from_gridmap(wgd);if(occupied_cols.length){var cols_to_empty=[new_wgd.col,new_wgd.row,new_wgd.size_x,Math.min(old_size_y,new_wgd.size_y),$widget];this.empty_cells.apply(this,cols_to_empty)}if(occupied_rows.length){var rows_to_empty=[new_wgd.col,new_wgd.row,new_wgd.size_x,new_wgd.size_y,$widget];this.empty_cells.apply(this,rows_to_empty)} // not the same that wgd = new_wgd;
+	wgd.col=new_wgd.col;wgd.row=new_wgd.row;wgd.size_x=new_wgd.size_x;wgd.size_y=new_wgd.size_y;this.add_to_gridmap(new_wgd,$widget);$widget.removeClass('player-revert'); //update coords instance attributes
+	$widget.data('coords').update({width:new_wgd.size_x*this.options.widget_base_dimensions[0]+(new_wgd.size_x-1)*this.options.widget_margins[0]*2,height:new_wgd.size_y*this.options.widget_base_dimensions[1]+(new_wgd.size_y-1)*this.options.widget_margins[1]*2});$widget.attr({'data-col':new_wgd.col,'data-row':new_wgd.row,'data-sizex':new_wgd.size_x,'data-sizey':new_wgd.size_y});if(empty_cols.length){var cols_to_remove_holes=[empty_cols[0],new_wgd.row,empty_cols.length,Math.min(old_size_y,new_wgd.size_y),$widget];this.remove_empty_cells.apply(this,cols_to_remove_holes)}if(empty_rows.length){var rows_to_remove_holes=[new_wgd.col,new_wgd.row,new_wgd.size_x,new_wgd.size_y,$widget];this.remove_empty_cells.apply(this,rows_to_remove_holes)}this.move_widget_up($widget);return this}; /**
+	    * Move down widgets in cells represented by the arguments col, row, size_x,
+	    * size_y
+	    *
+	    * @method empty_cells
+	    * @param {Number} col The column where the group of cells begin.
+	    * @param {Number} row The row where the group of cells begin.
+	    * @param {Number} size_x The number of columns that the group of cells
+	    * occupy.
+	    * @param {Number} size_y The number of rows that the group of cells
+	    * occupy.
+	    * @param {HTMLElement} $exclude Exclude widgets from being moved.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.empty_cells=function(col,row,size_x,size_y,$exclude){var $nexts=this.widgets_below({col:col,row:row-size_y,size_x:size_x,size_y:size_y});$nexts.not($exclude).each($.proxy(function(i,w){var wgd=$(w).coords().grid;if(!(wgd.row<=row+size_y-1)){return}var diff=row+size_y-wgd.row;this.move_widget_down($(w),diff)},this));this.set_dom_grid_height();return this}; /**
+	    * Move up widgets below cells represented by the arguments col, row, size_x,
+	    * size_y.
+	    *
+	    * @method remove_empty_cells
+	    * @param {Number} col The column where the group of cells begin.
+	    * @param {Number} row The row where the group of cells begin.
+	    * @param {Number} size_x The number of columns that the group of cells
+	    * occupy.
+	    * @param {Number} size_y The number of rows that the group of cells
+	    * occupy.
+	    * @param {HTMLElement} exclude Exclude widgets from being moved.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.remove_empty_cells=function(col,row,size_x,size_y,exclude){var $nexts=this.widgets_below({col:col,row:row,size_x:size_x,size_y:size_y});$nexts.not(exclude).each($.proxy(function(i,widget){this.move_widget_up($(widget),size_y)},this));this.set_dom_grid_height();return this}; /**
+	    * Get the most left column below to add a new widget.
+	    *
+	    * @method next_position
+	    * @param {Number} size_x The nº of rows the widget occupies horizontally.
+	    * @param {Number} size_y The nº of columns the widget occupies vertically.
+	    * @return {Object} Returns a grid coords object representing the future
+	    *  widget coords.
+	    */fn.next_position=function(size_x,size_y){size_x||(size_x=1);size_y||(size_y=1);var ga=this.gridmap;var cols_l=ga.length;var valid_pos=[];var rows_l;for(var c=1;c<cols_l;c++){rows_l=ga[c].length;for(var r=1;r<=rows_l;r++){var can_move_to=this.can_move_to({size_x:size_x,size_y:size_y},c,r);if(can_move_to){valid_pos.push({col:c,row:r,size_y:size_y,size_x:size_x})}}}if(valid_pos.length){return Gridster.sort_by_row_and_col_asc(valid_pos)[0]}return false}; /**
+	    * Remove a widget from the grid.
+	    *
+	    * @method remove_widget
+	    * @param {HTMLElement} el The jQuery wrapped HTMLElement you want to remove.
+	    * @param {Boolean|Function} silent If true, widgets below the removed one
+	    * will not move up. If a Function is passed it will be used as callback.
+	    * @param {Function} callback Function executed when the widget is removed.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.remove_widget=function(el,silent,callback){var $el=el instanceof $?el:$(el);var wgd=$el.coords().grid; // if silent is a function assume it's a callback
+	if($.isFunction(silent)){callback=silent;silent=false}this.cells_occupied_by_placeholder={};this.$widgets=this.$widgets.not($el);var $nexts=this.widgets_below($el);this.remove_from_gridmap(wgd);$el.fadeOut($.proxy(function(){$el.remove();if(!silent){$nexts.each($.proxy(function(i,widget){this.move_widget_up($(widget),wgd.size_y)},this))}this.set_dom_grid_height();if(callback){callback.call(this,el)}},this));return this}; /**
+	    * Remove all widgets from the grid.
+	    *
+	    * @method remove_all_widgets
+	    * @param {Function} callback Function executed for each widget removed.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.remove_all_widgets=function(callback){this.$widgets.each($.proxy(function(i,el){this.remove_widget(el,true,callback)},this));return this}; /**
+	    * Returns a serialized array of the widgets in the grid.
+	    *
+	    * @method serialize
+	    * @param {HTMLElement} [$widgets] The collection of jQuery wrapped
+	    *  HTMLElements you want to serialize. If no argument is passed all widgets
+	    *  will be serialized.
+	    * @return {Array} Returns an Array of Objects with the data specified in
+	    *  the serialize_params option.
+	    */fn.serialize=function($widgets){$widgets||($widgets=this.$widgets);return $widgets.map($.proxy(function(i,widget){var $w=$(widget);return this.options.serialize_params($w,$w.coords().grid)},this)).get()}; /**
+	    * Returns a serialized array of the widgets that have changed their
+	    *  position.
+	    *
+	    * @method serialize_changed
+	    * @return {Array} Returns an Array of Objects with the data specified in
+	    *  the serialize_params option.
+	    */fn.serialize_changed=function(){return this.serialize(this.$changed)}; /**
+	    * Convert widgets from DOM elements to "widget grid data" Objects.
+	    *
+	    * @method dom_to_coords
+	    * @param {HTMLElement} $widget The widget to be converted.
+	    */fn.dom_to_coords=function($widget){return {'col':parseInt($widget.attr('data-col'),10),'row':parseInt($widget.attr('data-row'),10),'size_x':parseInt($widget.attr('data-sizex'),10)||1,'size_y':parseInt($widget.attr('data-sizey'),10)||1,'max_size_x':parseInt($widget.attr('data-max-sizex'),10)||false,'max_size_y':parseInt($widget.attr('data-max-sizey'),10)||false,'min_size_x':parseInt($widget.attr('data-min-sizex'),10)||false,'min_size_y':parseInt($widget.attr('data-min-sizey'),10)||false,'el':$widget}}; /**
+	    * Creates the grid coords object representing the widget an add it to the
+	    * mapped array of positions.
+	    *
+	    * @method register_widget
+	    * @param {HTMLElement|Object} $el jQuery wrapped HTMLElement representing
+	    *  the widget, or an "widget grid data" Object with (col, row, el ...).
+	    * @return {Boolean} Returns true if the widget final position is different
+	    *  than the original.
+	    */fn.register_widget=function($el){var isDOM=$el instanceof jQuery;var wgd=isDOM?this.dom_to_coords($el):$el;var posChanged=false;isDOM||($el=wgd.el);var empty_upper_row=this.can_go_widget_up(wgd);if(empty_upper_row){wgd.row=empty_upper_row;$el.attr('data-row',empty_upper_row);this.$el.trigger('gridster:positionchanged',[wgd]);posChanged=true}if(this.options.avoid_overlapped_widgets&&!this.can_move_to({size_x:wgd.size_x,size_y:wgd.size_y},wgd.col,wgd.row)){$.extend(wgd,this.next_position(wgd.size_x,wgd.size_y));$el.attr({'data-col':wgd.col,'data-row':wgd.row,'data-sizex':wgd.size_x,'data-sizey':wgd.size_y});posChanged=true} // attach Coord object to player data-coord attribute
+	$el.data('coords',$el.coords()); // Extend Coord object with grid position info
+	$el.data('coords').grid=wgd;this.add_to_gridmap(wgd,$el);this.options.resize.enabled&&this.add_resize_handle($el);return posChanged}; /**
+	    * Update in the mapped array of positions the value of cells represented by
+	    * the grid coords object passed in the `grid_data` param.
+	    *
+	    * @param {Object} grid_data The grid coords object representing the cells
+	    *  to update in the mapped array.
+	    * @param {HTMLElement|Boolean} value Pass `false` or the jQuery wrapped
+	    *  HTMLElement, depends if you want to delete an existing position or add
+	    *  a new one.
+	    * @method update_widget_position
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.update_widget_position=function(grid_data,value){this.for_each_cell_occupied(grid_data,function(col,row){if(!this.gridmap[col]){return this}this.gridmap[col][row]=value});return this}; /**
+	    * Remove a widget from the mapped array of positions.
+	    *
+	    * @method remove_from_gridmap
+	    * @param {Object} grid_data The grid coords object representing the cells
+	    *  to update in the mapped array.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.remove_from_gridmap=function(grid_data){return this.update_widget_position(grid_data,false)}; /**
+	    * Add a widget to the mapped array of positions.
+	    *
+	    * @method add_to_gridmap
+	    * @param {Object} grid_data The grid coords object representing the cells
+	    *  to update in the mapped array.
+	    * @param {HTMLElement|Boolean} value The value to set in the specified
+	    *  position .
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.add_to_gridmap=function(grid_data,value){this.update_widget_position(grid_data,value||grid_data.el);if(grid_data.el){var $widgets=this.widgets_below(grid_data.el);$widgets.each($.proxy(function(i,widget){this.move_widget_up($(widget))},this))}}; /**
+	    * Make widgets draggable.
+	    *
+	    * @uses Draggable
+	    * @method draggable
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.draggable=function(){var self=this;var draggable_options=$.extend(true,{},this.options.draggable,{offset_left:this.options.widget_margins[0],offset_top:this.options.widget_margins[1],container_width:this.cols*this.min_widget_width,limit:true,start:function start(event,ui){self.$widgets.filter('.player-revert').removeClass('player-revert');self.$player=$(this);self.$helper=$(ui.$helper);self.helper=!self.$helper.is(self.$player);self.on_start_drag.call(self,event,ui);self.$el.trigger('gridster:dragstart')},stop:function stop(event,ui){self.on_stop_drag.call(self,event,ui);self.$el.trigger('gridster:dragstop')},drag:throttle(function(event,ui){self.on_drag.call(self,event,ui);self.$el.trigger('gridster:drag')},60)});this.drag_api=this.$el.drag(draggable_options);return this}; /**
+	    * Bind resize events to get resize working.
+	    *
+	    * @method resizable
+	    * @return {Class} Returns instance of gridster Class.
+	    */fn.resizable=function(){this.resize_api=this.$el.drag({items:'.'+this.options.resize.handle_class,offset_left:this.options.widget_margins[0],container_width:this.container_width,move_element:false,resize:true,limit:this.options.autogrow_cols?false:true,start:$.proxy(this.on_start_resize,this),stop:$.proxy(function(event,ui){delay($.proxy(function(){this.on_stop_resize(event,ui)},this),120)},this),drag:throttle($.proxy(this.on_resize,this),60)});return this}; /**
+	    * Setup things required for resizing. Like build templates for drag handles.
+	    *
+	    * @method setup_resize
+	    * @return {Class} Returns instance of gridster Class.
+	    */fn.setup_resize=function(){this.resize_handle_class=this.options.resize.handle_class;var axes=this.options.resize.axes;var handle_tpl='<span class="'+this.resize_handle_class+' '+this.resize_handle_class+'-{type}" />';this.resize_handle_tpl=$.map(axes,function(type){return handle_tpl.replace('{type}',type)}).join('');if($.isArray(this.options.draggable.ignore_dragging)){this.options.draggable.ignore_dragging.push('.'+this.resize_handle_class)}return this}; /**
+	    * This function is executed when the player begins to be dragged.
+	    *
+	    * @method on_start_drag
+	    * @param {Event} event The original browser event
+	    * @param {Object} ui A prepared ui object with useful drag-related data
+	    */fn.on_start_drag=function(event,ui){this.$helper.add(this.$player).add(this.$wrapper).addClass('dragging');this.highest_col=this.get_highest_occupied_cell().col;this.$player.addClass('player');this.player_grid_data=this.$player.coords().grid;this.placeholder_grid_data=$.extend({},this.player_grid_data);this.set_dom_grid_height(this.$el.height()+this.player_grid_data.size_y*this.min_widget_height);this.set_dom_grid_width(this.cols);var pgd_sizex=this.player_grid_data.size_x;var cols_diff=this.cols-this.highest_col;if(this.options.autogrow_cols&&cols_diff<=pgd_sizex){this.add_faux_cols(Math.min(pgd_sizex-cols_diff,1))}var colliders=this.faux_grid;var coords=this.$player.data('coords').coords;this.cells_occupied_by_player=this.get_cells_occupied(this.player_grid_data);this.cells_occupied_by_placeholder=this.get_cells_occupied(this.placeholder_grid_data);this.last_cols=[];this.last_rows=[]; // see jquery.collision.js
+	this.collision_api=this.$helper.collision(colliders,this.options.collision);this.$preview_holder=$('<'+this.$player.get(0).tagName+' />',{'class':'preview-holder','data-row':this.$player.attr('data-row'),'data-col':this.$player.attr('data-col'),css:{width:coords.width,height:coords.height}}).appendTo(this.$el);if(this.options.draggable.start){this.options.draggable.start.call(this,event,ui)}}; /**
+	    * This function is executed when the player is being dragged.
+	    *
+	    * @method on_drag
+	    * @param {Event} event The original browser event
+	    * @param {Object} ui A prepared ui object with useful drag-related data
+	    */fn.on_drag=function(event,ui){ //break if dragstop has been fired
+	if(this.$player===null){return false}var abs_offset={left:ui.position.left+this.baseX,top:ui.position.top+this.baseY}; // auto grow cols
+	if(this.options.autogrow_cols){var prcol=this.placeholder_grid_data.col+this.placeholder_grid_data.size_x-1; // "- 1" due to adding at least 1 column in on_start_drag
+	if(prcol>=this.cols-1&&this.options.max_cols>=this.cols+1){this.add_faux_cols(1);this.set_dom_grid_width(this.cols+1);this.drag_api.set_limits(this.container_width)}this.collision_api.set_colliders(this.faux_grid)}this.colliders_data=this.collision_api.get_closest_colliders(abs_offset);this.on_overlapped_column_change(this.on_start_overlapping_column,this.on_stop_overlapping_column);this.on_overlapped_row_change(this.on_start_overlapping_row,this.on_stop_overlapping_row);if(this.helper&&this.$player){this.$player.css({'left':ui.position.left,'top':ui.position.top})}if(this.options.draggable.drag){this.options.draggable.drag.call(this,event,ui)}}; /**
+	    * This function is executed when the player stops being dragged.
+	    *
+	    * @method on_stop_drag
+	    * @param {Event} event The original browser event
+	    * @param {Object} ui A prepared ui object with useful drag-related data
+	    */fn.on_stop_drag=function(event,ui){this.$helper.add(this.$player).add(this.$wrapper).removeClass('dragging');ui.position.left=ui.position.left+this.baseX;ui.position.top=ui.position.top+this.baseY;this.colliders_data=this.collision_api.get_closest_colliders(ui.position);this.on_overlapped_column_change(this.on_start_overlapping_column,this.on_stop_overlapping_column);this.on_overlapped_row_change(this.on_start_overlapping_row,this.on_stop_overlapping_row);this.$player.addClass('player-revert').removeClass('player').attr({'data-col':this.placeholder_grid_data.col,'data-row':this.placeholder_grid_data.row}).css({'left':'','top':''});this.$changed=this.$changed.add(this.$player);this.cells_occupied_by_player=this.get_cells_occupied(this.placeholder_grid_data);this.set_cells_player_occupies(this.placeholder_grid_data.col,this.placeholder_grid_data.row);this.$player.coords().grid.row=this.placeholder_grid_data.row;this.$player.coords().grid.col=this.placeholder_grid_data.col;if(this.options.draggable.stop){this.options.draggable.stop.call(this,event,ui)}this.$preview_holder.remove();this.$player=null;this.$helper=null;this.placeholder_grid_data={};this.player_grid_data={};this.cells_occupied_by_placeholder={};this.cells_occupied_by_player={};this.set_dom_grid_height();this.set_dom_grid_width();if(this.options.autogrow_cols){this.drag_api.set_limits(this.cols*this.min_widget_width)}}; /**
+	    * This function is executed every time a widget starts to be resized.
+	    *
+	    * @method on_start_resize
+	    * @param {Event} event The original browser event
+	    * @param {Object} ui A prepared ui object with useful drag-related data
+	    */fn.on_start_resize=function(event,ui){this.$resized_widget=ui.$player.closest('.gs-w');this.resize_coords=this.$resized_widget.coords();this.resize_wgd=this.resize_coords.grid;this.resize_initial_width=this.resize_coords.coords.width;this.resize_initial_height=this.resize_coords.coords.height;this.resize_initial_sizex=this.resize_coords.grid.size_x;this.resize_initial_sizey=this.resize_coords.grid.size_y;this.resize_initial_col=this.resize_coords.grid.col;this.resize_last_sizex=this.resize_initial_sizex;this.resize_last_sizey=this.resize_initial_sizey;this.resize_max_size_x=Math.min(this.resize_wgd.max_size_x||this.options.resize.max_size[0],this.options.max_cols-this.resize_initial_col+1);this.resize_max_size_y=this.resize_wgd.max_size_y||this.options.resize.max_size[1];this.resize_min_size_x=this.resize_wgd.min_size_x||this.options.resize.min_size[0]||1;this.resize_min_size_y=this.resize_wgd.min_size_y||this.options.resize.min_size[1]||1;this.resize_initial_last_col=this.get_highest_occupied_cell().col;this.set_dom_grid_width(this.cols);this.resize_dir={right:ui.$player.is('.'+this.resize_handle_class+'-x'),bottom:ui.$player.is('.'+this.resize_handle_class+'-y')};this.$resized_widget.css({'min-width':this.options.widget_base_dimensions[0],'min-height':this.options.widget_base_dimensions[1]});var nodeName=this.$resized_widget.get(0).tagName;this.$resize_preview_holder=$('<'+nodeName+' />',{'class':'preview-holder resize-preview-holder','data-row':this.$resized_widget.attr('data-row'),'data-col':this.$resized_widget.attr('data-col'),'css':{'width':this.resize_initial_width,'height':this.resize_initial_height}}).appendTo(this.$el);this.$resized_widget.addClass('resizing');if(this.options.resize.start){this.options.resize.start.call(this,event,ui,this.$resized_widget)}this.$el.trigger('gridster:resizestart')}; /**
+	    * This function is executed every time a widget stops being resized.
+	    *
+	    * @method on_stop_resize
+	    * @param {Event} event The original browser event
+	    * @param {Object} ui A prepared ui object with useful drag-related data
+	    */fn.on_stop_resize=function(event,ui){this.$resized_widget.removeClass('resizing').css({'width':'','height':''});delay($.proxy(function(){this.$resize_preview_holder.remove().css({'min-width':'','min-height':''});if(this.options.resize.stop){this.options.resize.stop.call(this,event,ui,this.$resized_widget)}this.$el.trigger('gridster:resizestop')},this),300);this.set_dom_grid_width();if(this.options.autogrow_cols){this.drag_api.set_limits(this.cols*this.min_widget_width)}}; /**
+	    * This function is executed when a widget is being resized.
+	    *
+	    * @method on_resize
+	    * @param {Event} event The original browser event
+	    * @param {Object} ui A prepared ui object with useful drag-related data
+	    */fn.on_resize=function(event,ui){var rel_x=ui.pointer.diff_left;var rel_y=ui.pointer.diff_top;var wbd_x=this.options.widget_base_dimensions[0];var wbd_y=this.options.widget_base_dimensions[1];var margin_x=this.options.widget_margins[0];var margin_y=this.options.widget_margins[1];var max_size_x=this.resize_max_size_x;var min_size_x=this.resize_min_size_x;var max_size_y=this.resize_max_size_y;var min_size_y=this.resize_min_size_y;var autogrow=this.options.autogrow_cols;var width;var max_width=Infinity;var max_height=Infinity;var inc_units_x=Math.ceil(rel_x/(wbd_x+margin_x*2)-0.2);var inc_units_y=Math.ceil(rel_y/(wbd_y+margin_y*2)-0.2);var size_x=Math.max(1,this.resize_initial_sizex+inc_units_x);var size_y=Math.max(1,this.resize_initial_sizey+inc_units_y);var max_cols=this.container_width/this.min_widget_width-this.resize_initial_col+1;var limit_width=max_cols*this.min_widget_width-margin_x*2;size_x=Math.max(Math.min(size_x,max_size_x),min_size_x);size_x=Math.min(max_cols,size_x);width=max_size_x*wbd_x+(size_x-1)*margin_x*2;max_width=Math.min(width,limit_width);min_width=min_size_x*wbd_x+(size_x-1)*margin_x*2;size_y=Math.max(Math.min(size_y,max_size_y),min_size_y);max_height=max_size_y*wbd_y+(size_y-1)*margin_y*2;min_height=min_size_y*wbd_y+(size_y-1)*margin_y*2;if(this.resize_dir.right){size_y=this.resize_initial_sizey}else if(this.resize_dir.bottom){size_x=this.resize_initial_sizex}if(autogrow){var last_widget_col=this.resize_initial_col+size_x-1;if(autogrow&&this.resize_initial_last_col<=last_widget_col){this.set_dom_grid_width(Math.max(last_widget_col+1,this.cols));if(this.cols<last_widget_col){this.add_faux_cols(last_widget_col-this.cols)}}}var css_props={};!this.resize_dir.bottom&&(css_props.width=Math.max(Math.min(this.resize_initial_width+rel_x,max_width),min_width));!this.resize_dir.right&&(css_props.height=Math.max(Math.min(this.resize_initial_height+rel_y,max_height),min_height));this.$resized_widget.css(css_props);if(size_x!==this.resize_last_sizex||size_y!==this.resize_last_sizey){this.resize_widget(this.$resized_widget,size_x,size_y);this.set_dom_grid_width(this.cols);this.$resize_preview_holder.css({'width':'','height':''}).attr({'data-row':this.$resized_widget.attr('data-row'),'data-sizex':size_x,'data-sizey':size_y})}if(this.options.resize.resize){this.options.resize.resize.call(this,event,ui,this.$resized_widget)}this.$el.trigger('gridster:resize');this.resize_last_sizex=size_x;this.resize_last_sizey=size_y}; /**
+	    * Executes the callbacks passed as arguments when a column begins to be
+	    * overlapped or stops being overlapped.
+	    *
+	    * @param {Function} start_callback Function executed when a new column
+	    *  begins to be overlapped. The column is passed as first argument.
+	    * @param {Function} stop_callback Function executed when a column stops
+	    *  being overlapped. The column is passed as first argument.
+	    * @method on_overlapped_column_change
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.on_overlapped_column_change=function(start_callback,stop_callback){if(!this.colliders_data.length){return this}var cols=this.get_targeted_columns(this.colliders_data[0].el.data.col);var last_n_cols=this.last_cols.length;var n_cols=cols.length;var i;for(i=0;i<n_cols;i++){if($.inArray(cols[i],this.last_cols)===-1){(start_callback||$.noop).call(this,cols[i])}}for(i=0;i<last_n_cols;i++){if($.inArray(this.last_cols[i],cols)===-1){(stop_callback||$.noop).call(this,this.last_cols[i])}}this.last_cols=cols;return this}; /**
+	    * Executes the callbacks passed as arguments when a row starts to be
+	    * overlapped or stops being overlapped.
+	    *
+	    * @param {Function} start_callback Function executed when a new row begins
+	    *  to be overlapped. The row is passed as first argument.
+	    * @param {Function} end_callback Function executed when a row stops being
+	    *  overlapped. The row is passed as first argument.
+	    * @method on_overlapped_row_change
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.on_overlapped_row_change=function(start_callback,end_callback){if(!this.colliders_data.length){return this}var rows=this.get_targeted_rows(this.colliders_data[0].el.data.row);var last_n_rows=this.last_rows.length;var n_rows=rows.length;var i;for(i=0;i<n_rows;i++){if($.inArray(rows[i],this.last_rows)===-1){(start_callback||$.noop).call(this,rows[i])}}for(i=0;i<last_n_rows;i++){if($.inArray(this.last_rows[i],rows)===-1){(end_callback||$.noop).call(this,this.last_rows[i])}}this.last_rows=rows}; /**
+	    * Sets the current position of the player
+	    *
+	    * @param {Number} col
+	    * @param {Number} row
+	    * @param {Boolean} no_player
+	    * @method set_player
+	    * @return {object}
+	    */fn.set_player=function(col,row,no_player){var self=this;if(!no_player){this.empty_cells_player_occupies()}var cell=!no_player?self.colliders_data[0].el.data:{col:col};var to_col=cell.col;var to_row=row||cell.row;this.player_grid_data={col:to_col,row:to_row,size_y:this.player_grid_data.size_y,size_x:this.player_grid_data.size_x};this.cells_occupied_by_player=this.get_cells_occupied(this.player_grid_data);var $overlapped_widgets=this.get_widgets_overlapped(this.player_grid_data);var constraints=this.widgets_constraints($overlapped_widgets);this.manage_movements(constraints.can_go_up,to_col,to_row);this.manage_movements(constraints.can_not_go_up,to_col,to_row); /* if there is not widgets overlapping in the new player position,
+	         * update the new placeholder position. */if(!$overlapped_widgets.length){var pp=this.can_go_player_up(this.player_grid_data);if(pp!==false){to_row=pp}this.set_placeholder(to_col,to_row)}return {col:to_col,row:to_row}}; /**
+	    * See which of the widgets in the $widgets param collection can go to
+	    * a upper row and which not.
+	    *
+	    * @method widgets_contraints
+	    * @param {jQuery} $widgets A jQuery wrapped collection of
+	    * HTMLElements.
+	    * @return {object} Returns a literal Object with two keys: `can_go_up` &
+	    * `can_not_go_up`. Each contains a set of HTMLElements.
+	    */fn.widgets_constraints=function($widgets){var $widgets_can_go_up=$([]);var $widgets_can_not_go_up;var wgd_can_go_up=[];var wgd_can_not_go_up=[];$widgets.each($.proxy(function(i,w){var $w=$(w);var wgd=$w.coords().grid;if(this.can_go_widget_up(wgd)){$widgets_can_go_up=$widgets_can_go_up.add($w);wgd_can_go_up.push(wgd)}else {wgd_can_not_go_up.push(wgd)}},this));$widgets_can_not_go_up=$widgets.not($widgets_can_go_up);return {can_go_up:Gridster.sort_by_row_asc(wgd_can_go_up),can_not_go_up:Gridster.sort_by_row_desc(wgd_can_not_go_up)}}; /**
+	    * Sorts an Array of grid coords objects (representing the grid coords of
+	    * each widget) in descending way.
+	    *
+	    * @method manage_movements
+	    * @param {jQuery} $widgets A jQuery collection of HTMLElements
+	    *  representing the widgets you want to move.
+	    * @param {Number} to_col The column to which we want to move the widgets.
+	    * @param {Number} to_row The row to which we want to move the widgets.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.manage_movements=function($widgets,to_col,to_row){$.each($widgets,$.proxy(function(i,w){var wgd=w;var $w=wgd.el;var can_go_widget_up=this.can_go_widget_up(wgd);if(can_go_widget_up){ //target CAN go up
+	//so move widget up
+	this.move_widget_to($w,can_go_widget_up);this.set_placeholder(to_col,can_go_widget_up+wgd.size_y)}else { //target can't go up
+	var can_go_player_up=this.can_go_player_up(this.player_grid_data);if(!can_go_player_up){ // target can't go up
+	// player cant't go up
+	// so we need to move widget down to a position that dont
+	// overlaps player
+	var y=to_row+this.player_grid_data.size_y-wgd.row;this.move_widget_down($w,y);this.set_placeholder(to_col,to_row)}}},this));return this}; /**
+	    * Determines if there is a widget in the row and col given. Or if the
+	    * HTMLElement passed as first argument is the player.
+	    *
+	    * @method is_player
+	    * @param {Number|HTMLElement} col_or_el A jQuery wrapped collection of
+	    * HTMLElements.
+	    * @param {Number} [row] The column to which we want to move the widgets.
+	    * @return {Boolean} Returns true or false.
+	    */fn.is_player=function(col_or_el,row){if(row&&!this.gridmap[col_or_el]){return false}var $w=row?this.gridmap[col_or_el][row]:col_or_el;return $w&&($w.is(this.$player)||$w.is(this.$helper))}; /**
+	    * Determines if the widget that is being dragged is currently over the row
+	    * and col given.
+	    *
+	    * @method is_player_in
+	    * @param {Number} col The column to check.
+	    * @param {Number} row The row to check.
+	    * @return {Boolean} Returns true or false.
+	    */fn.is_player_in=function(col,row){var c=this.cells_occupied_by_player||{};return $.inArray(col,c.cols)>=0&&$.inArray(row,c.rows)>=0}; /**
+	    * Determines if the placeholder is currently over the row and col given.
+	    *
+	    * @method is_placeholder_in
+	    * @param {Number} col The column to check.
+	    * @param {Number} row The row to check.
+	    * @return {Boolean} Returns true or false.
+	    */fn.is_placeholder_in=function(col,row){var c=this.cells_occupied_by_placeholder||{};return this.is_placeholder_in_col(col)&&$.inArray(row,c.rows)>=0}; /**
+	    * Determines if the placeholder is currently over the column given.
+	    *
+	    * @method is_placeholder_in_col
+	    * @param {Number} col The column to check.
+	    * @return {Boolean} Returns true or false.
+	    */fn.is_placeholder_in_col=function(col){var c=this.cells_occupied_by_placeholder||[];return $.inArray(col,c.cols)>=0}; /**
+	    * Determines if the cell represented by col and row params is empty.
+	    *
+	    * @method is_empty
+	    * @param {Number} col The column to check.
+	    * @param {Number} row The row to check.
+	    * @return {Boolean} Returns true or false.
+	    */fn.is_empty=function(col,row){if(typeof this.gridmap[col]!=='undefined'){if(typeof this.gridmap[col][row]!=='undefined'&&this.gridmap[col][row]===false){return true}return false}return true}; /**
+	    * Determines if the cell represented by col and row params is occupied.
+	    *
+	    * @method is_occupied
+	    * @param {Number} col The column to check.
+	    * @param {Number} row The row to check.
+	    * @return {Boolean} Returns true or false.
+	    */fn.is_occupied=function(col,row){if(!this.gridmap[col]){return false}if(this.gridmap[col][row]){return true}return false}; /**
+	    * Determines if there is a widget in the cell represented by col/row params.
+	    *
+	    * @method is_widget
+	    * @param {Number} col The column to check.
+	    * @param {Number} row The row to check.
+	    * @return {Boolean|HTMLElement} Returns false if there is no widget,
+	    * else returns the jQuery HTMLElement
+	    */fn.is_widget=function(col,row){var cell=this.gridmap[col];if(!cell){return false}cell=cell[row];if(cell){return cell}return false}; /**
+	    * Determines if there is a widget in the cell represented by col/row
+	    * params and if this is under the widget that is being dragged.
+	    *
+	    * @method is_widget_under_player
+	    * @param {Number} col The column to check.
+	    * @param {Number} row The row to check.
+	    * @return {Boolean} Returns true or false.
+	    */fn.is_widget_under_player=function(col,row){if(this.is_widget(col,row)){return this.is_player_in(col,row)}return false}; /**
+	    * Get widgets overlapping with the player or with the object passed
+	    * representing the grid cells.
+	    *
+	    * @method get_widgets_under_player
+	    * @return {HTMLElement} Returns a jQuery collection of HTMLElements
+	    */fn.get_widgets_under_player=function(cells){cells||(cells=this.cells_occupied_by_player||{cols:[],rows:[]});var $widgets=$([]);$.each(cells.cols,$.proxy(function(i,col){$.each(cells.rows,$.proxy(function(i,row){if(this.is_widget(col,row)){$widgets=$widgets.add(this.gridmap[col][row])}},this))},this));return $widgets}; /**
+	    * Put placeholder at the row and column specified.
+	    *
+	    * @method set_placeholder
+	    * @param {Number} col The column to which we want to move the
+	    *  placeholder.
+	    * @param {Number} row The row to which we want to move the
+	    *  placeholder.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.set_placeholder=function(col,row){var phgd=$.extend({},this.placeholder_grid_data);var $nexts=this.widgets_below({col:phgd.col,row:phgd.row,size_y:phgd.size_y,size_x:phgd.size_x}); // Prevents widgets go out of the grid
+	var right_col=col+phgd.size_x-1;if(right_col>this.cols){col=col-(right_col-col)}var moved_down=this.placeholder_grid_data.row<row;var changed_column=this.placeholder_grid_data.col!==col;this.placeholder_grid_data.col=col;this.placeholder_grid_data.row=row;this.cells_occupied_by_placeholder=this.get_cells_occupied(this.placeholder_grid_data);this.$preview_holder.attr({'data-row':row,'data-col':col});if(moved_down||changed_column){$nexts.each($.proxy(function(i,widget){this.move_widget_up($(widget),this.placeholder_grid_data.col-col+phgd.size_y)},this))}var $widgets_under_ph=this.get_widgets_under_player(this.cells_occupied_by_placeholder);if($widgets_under_ph.length){$widgets_under_ph.each($.proxy(function(i,widget){var $w=$(widget);this.move_widget_down($w,row+phgd.size_y-$w.data('coords').grid.row)},this))}}; /**
+	    * Determines whether the player can move to a position above.
+	    *
+	    * @method can_go_player_up
+	    * @param {Object} widget_grid_data The actual grid coords object of the
+	    *  player.
+	    * @return {Number|Boolean} If the player can be moved to an upper row
+	    *  returns the row number, else returns false.
+	    */fn.can_go_player_up=function(widget_grid_data){var p_bottom_row=widget_grid_data.row+widget_grid_data.size_y-1;var result=true;var upper_rows=[];var min_row=10000;var $widgets_under_player=this.get_widgets_under_player(); /* generate an array with columns as index and array with upper rows
+	         * empty as value */this.for_each_column_occupied(widget_grid_data,function(tcol){var grid_col=this.gridmap[tcol];var r=p_bottom_row+1;upper_rows[tcol]=[];while(--r>0){if(this.is_empty(tcol,r)||this.is_player(tcol,r)||this.is_widget(tcol,r)&&grid_col[r].is($widgets_under_player)){upper_rows[tcol].push(r);min_row=r<min_row?r:min_row}else {break}}if(upper_rows[tcol].length===0){result=false;return true; //break
+	}upper_rows[tcol].sort(function(a,b){return a-b})});if(!result){return false}return this.get_valid_rows(widget_grid_data,upper_rows,min_row)}; /**
+	    * Determines whether a widget can move to a position above.
+	    *
+	    * @method can_go_widget_up
+	    * @param {Object} widget_grid_data The actual grid coords object of the
+	    *  widget we want to check.
+	    * @return {Number|Boolean} If the widget can be moved to an upper row
+	    *  returns the row number, else returns false.
+	    */fn.can_go_widget_up=function(widget_grid_data){var p_bottom_row=widget_grid_data.row+widget_grid_data.size_y-1;var result=true;var upper_rows=[];var min_row=10000; /* generate an array with columns as index and array with topmost rows
+	         * empty as value */this.for_each_column_occupied(widget_grid_data,function(tcol){var grid_col=this.gridmap[tcol];upper_rows[tcol]=[];var r=p_bottom_row+1; // iterate over each row
+	while(--r>0){if(this.is_widget(tcol,r)&&!this.is_player_in(tcol,r)){if(!grid_col[r].is(widget_grid_data.el)){break}}if(!this.is_player(tcol,r)&&!this.is_placeholder_in(tcol,r)&&!this.is_player_in(tcol,r)){upper_rows[tcol].push(r)}if(r<min_row){min_row=r}}if(upper_rows[tcol].length===0){result=false;return true; //break
+	}upper_rows[tcol].sort(function(a,b){return a-b})});if(!result){return false}return this.get_valid_rows(widget_grid_data,upper_rows,min_row)}; /**
+	    * Search a valid row for the widget represented by `widget_grid_data' in
+	    * the `upper_rows` array. Iteration starts from row specified in `min_row`.
+	    *
+	    * @method get_valid_rows
+	    * @param {Object} widget_grid_data The actual grid coords object of the
+	    *  player.
+	    * @param {Array} upper_rows An array with columns as index and arrays
+	    *  of valid rows as values.
+	    * @param {Number} min_row The upper row from which the iteration will start.
+	    * @return {Number|Boolean} Returns the upper row valid from the `upper_rows`
+	    *  for the widget in question.
+	    */fn.get_valid_rows=function(widget_grid_data,upper_rows,min_row){var p_top_row=widget_grid_data.row;var p_bottom_row=widget_grid_data.row+widget_grid_data.size_y-1;var size_y=widget_grid_data.size_y;var r=min_row-1;var valid_rows=[];while(++r<=p_bottom_row){var common=true;$.each(upper_rows,function(col,rows){if($.isArray(rows)&&$.inArray(r,rows)===-1){common=false}});if(common===true){valid_rows.push(r);if(valid_rows.length===size_y){break}}}var new_row=false;if(size_y===1){if(valid_rows[0]!==p_top_row){new_row=valid_rows[0]||false}}else {if(valid_rows[0]!==p_top_row){new_row=this.get_consecutive_numbers_index(valid_rows,size_y)}}return new_row};fn.get_consecutive_numbers_index=function(arr,size_y){var max=arr.length;var result=[];var first=true;var prev=-1; // or null?
+	for(var i=0;i<max;i++){if(first||arr[i]===prev+1){result.push(i);if(result.length===size_y){break}first=false}else {result=[];first=true}prev=arr[i]}return result.length>=size_y?arr[result[0]]:false}; /**
+	    * Get widgets overlapping with the player.
+	    *
+	    * @method get_widgets_overlapped
+	    * @return {jQuery} Returns a jQuery collection of HTMLElements.
+	    */fn.get_widgets_overlapped=function(){var $w;var $widgets=$([]);var used=[];var rows_from_bottom=this.cells_occupied_by_player.rows.slice(0);rows_from_bottom.reverse();$.each(this.cells_occupied_by_player.cols,$.proxy(function(i,col){$.each(rows_from_bottom,$.proxy(function(i,row){ // if there is a widget in the player position
+	if(!this.gridmap[col]){return true} //next iteration
+	var $w=this.gridmap[col][row];if(this.is_occupied(col,row)&&!this.is_player($w)&&$.inArray($w,used)===-1){$widgets=$widgets.add($w);used.push($w)}},this))},this));return $widgets}; /**
+	    * This callback is executed when the player begins to collide with a column.
+	    *
+	    * @method on_start_overlapping_column
+	    * @param {Number} col The collided column.
+	    * @return {jQuery} Returns a jQuery collection of HTMLElements.
+	    */fn.on_start_overlapping_column=function(col){this.set_player(col,false)}; /**
+	    * A callback executed when the player begins to collide with a row.
+	    *
+	    * @method on_start_overlapping_row
+	    * @param {Number} row The collided row.
+	    * @return {jQuery} Returns a jQuery collection of HTMLElements.
+	    */fn.on_start_overlapping_row=function(row){this.set_player(false,row)}; /**
+	    * A callback executed when the the player ends to collide with a column.
+	    *
+	    * @method on_stop_overlapping_column
+	    * @param {Number} col The collided row.
+	    * @return {jQuery} Returns a jQuery collection of HTMLElements.
+	    */fn.on_stop_overlapping_column=function(col){this.set_player(col,false);var self=this;this.for_each_widget_below(col,this.cells_occupied_by_player.rows[0],function(tcol,trow){self.move_widget_up(this,self.player_grid_data.size_y)})}; /**
+	    * This callback is executed when the player ends to collide with a row.
+	    *
+	    * @method on_stop_overlapping_row
+	    * @param {Number} row The collided row.
+	    * @return {jQuery} Returns a jQuery collection of HTMLElements.
+	    */fn.on_stop_overlapping_row=function(row){this.set_player(false,row);var self=this;var cols=this.cells_occupied_by_player.cols;for(var c=0,cl=cols.length;c<cl;c++){this.for_each_widget_below(cols[c],row,function(tcol,trow){self.move_widget_up(this,self.player_grid_data.size_y)})}}; /**
+	    * Move a widget to a specific row. The cell or cells must be empty.
+	    * If the widget has widgets below, all of these widgets will be moved also
+	    * if they can.
+	    *
+	    * @method move_widget_to
+	    * @param {HTMLElement} $widget The jQuery wrapped HTMLElement of the
+	    * widget is going to be moved.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.move_widget_to=function($widget,row){var self=this;var widget_grid_data=$widget.coords().grid;var diff=row-widget_grid_data.row;var $next_widgets=this.widgets_below($widget);var can_move_to_new_cell=this.can_move_to(widget_grid_data,widget_grid_data.col,row,$widget);if(can_move_to_new_cell===false){return false}this.remove_from_gridmap(widget_grid_data);widget_grid_data.row=row;this.add_to_gridmap(widget_grid_data);$widget.attr('data-row',row);this.$changed=this.$changed.add($widget);$next_widgets.each(function(i,widget){var $w=$(widget);var wgd=$w.coords().grid;var can_go_up=self.can_go_widget_up(wgd);if(can_go_up&&can_go_up!==wgd.row){self.move_widget_to($w,can_go_up)}});return this}; /**
+	    * Move up the specified widget and all below it.
+	    *
+	    * @method move_widget_up
+	    * @param {HTMLElement} $widget The widget you want to move.
+	    * @param {Number} [y_units] The number of cells that the widget has to move.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.move_widget_up=function($widget,y_units){var el_grid_data=$widget.coords().grid;var actual_row=el_grid_data.row;var moved=[];var can_go_up=true;y_units||(y_units=1);if(!this.can_go_up($widget)){return false} //break;
+	this.for_each_column_occupied(el_grid_data,function(col){ // can_go_up
+	if($.inArray($widget,moved)===-1){var widget_grid_data=$widget.coords().grid;var next_row=actual_row-y_units;next_row=this.can_go_up_to_row(widget_grid_data,col,next_row);if(!next_row){return true}var $next_widgets=this.widgets_below($widget);this.remove_from_gridmap(widget_grid_data);widget_grid_data.row=next_row;this.add_to_gridmap(widget_grid_data);$widget.attr('data-row',widget_grid_data.row);this.$changed=this.$changed.add($widget);moved.push($widget);$next_widgets.each($.proxy(function(i,widget){this.move_widget_up($(widget),y_units)},this))}})}; /**
+	    * Move down the specified widget and all below it.
+	    *
+	    * @method move_widget_down
+	    * @param {jQuery} $widget The jQuery object representing the widget
+	    *  you want to move.
+	    * @param {Number} y_units The number of cells that the widget has to move.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.move_widget_down=function($widget,y_units){var el_grid_data,actual_row,moved,y_diff;if(y_units<=0){return false}el_grid_data=$widget.coords().grid;actual_row=el_grid_data.row;moved=[];y_diff=y_units;if(!$widget){return false}if($.inArray($widget,moved)===-1){var widget_grid_data=$widget.coords().grid;var next_row=actual_row+y_units;var $next_widgets=this.widgets_below($widget);this.remove_from_gridmap(widget_grid_data);$next_widgets.each($.proxy(function(i,widget){var $w=$(widget);var wd=$w.coords().grid;var tmp_y=this.displacement_diff(wd,widget_grid_data,y_diff);if(tmp_y>0){this.move_widget_down($w,tmp_y)}},this));widget_grid_data.row=next_row;this.update_widget_position(widget_grid_data,$widget);$widget.attr('data-row',widget_grid_data.row);this.$changed=this.$changed.add($widget);moved.push($widget)}}; /**
+	    * Check if the widget can move to the specified row, else returns the
+	    * upper row possible.
+	    *
+	    * @method can_go_up_to_row
+	    * @param {Number} widget_grid_data The current grid coords object of the
+	    *  widget.
+	    * @param {Number} col The target column.
+	    * @param {Number} row The target row.
+	    * @return {Boolean|Number} Returns the row number if the widget can move
+	    *  to the target position, else returns false.
+	    */fn.can_go_up_to_row=function(widget_grid_data,col,row){var ga=this.gridmap;var result=true;var urc=[]; // upper_rows_in_columns
+	var actual_row=widget_grid_data.row;var r; /* generate an array with columns as index and array with
+	         * upper rows empty in the column */this.for_each_column_occupied(widget_grid_data,function(tcol){var grid_col=ga[tcol];urc[tcol]=[];r=actual_row;while(r--){if(this.is_empty(tcol,r)&&!this.is_placeholder_in(tcol,r)){urc[tcol].push(r)}else {break}}if(!urc[tcol].length){result=false;return true}});if(!result){return false} /* get common rows starting from upper position in all the columns
+	         * that widget occupies */r=row;for(r=1;r<actual_row;r++){var common=true;for(var uc=0,ucl=urc.length;uc<ucl;uc++){if(urc[uc]&&$.inArray(r,urc[uc])===-1){common=false}}if(common===true){result=r;break}}return result};fn.displacement_diff=function(widget_grid_data,parent_bgd,y_units){var actual_row=widget_grid_data.row;var diffs=[];var parent_max_y=parent_bgd.row+parent_bgd.size_y;this.for_each_column_occupied(widget_grid_data,function(col){var temp_y_units=0;for(var r=parent_max_y;r<actual_row;r++){if(this.is_empty(col,r)){temp_y_units=temp_y_units+1}}diffs.push(temp_y_units)});var max_diff=Math.max.apply(Math,diffs);y_units=y_units-max_diff;return y_units>0?y_units:0}; /**
+	    * Get widgets below a widget.
+	    *
+	    * @method widgets_below
+	    * @param {HTMLElement} $el The jQuery wrapped HTMLElement.
+	    * @return {jQuery} A jQuery collection of HTMLElements.
+	    */fn.widgets_below=function($el){var el_grid_data=$.isPlainObject($el)?$el:$el.coords().grid;var self=this;var ga=this.gridmap;var next_row=el_grid_data.row+el_grid_data.size_y-1;var $nexts=$([]);this.for_each_column_occupied(el_grid_data,function(col){self.for_each_widget_below(col,next_row,function(tcol,trow){if(!self.is_player(this)&&$.inArray(this,$nexts)===-1){$nexts=$nexts.add(this);return true; // break
+	}})});return Gridster.sort_by_row_asc($nexts)}; /**
+	    * Update the array of mapped positions with the new player position.
+	    *
+	    * @method set_cells_player_occupies
+	    * @param {Number} col The new player col.
+	    * @param {Number} col The new player row.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.set_cells_player_occupies=function(col,row){this.remove_from_gridmap(this.placeholder_grid_data);this.placeholder_grid_data.col=col;this.placeholder_grid_data.row=row;this.add_to_gridmap(this.placeholder_grid_data,this.$player);return this}; /**
+	    * Remove from the array of mapped positions the reference to the player.
+	    *
+	    * @method empty_cells_player_occupies
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.empty_cells_player_occupies=function(){this.remove_from_gridmap(this.placeholder_grid_data);return this};fn.can_go_up=function($el){var el_grid_data=$el.coords().grid;var initial_row=el_grid_data.row;var prev_row=initial_row-1;var ga=this.gridmap;var upper_rows_by_column=[];var result=true;if(initial_row===1){return false}this.for_each_column_occupied(el_grid_data,function(col){var $w=this.is_widget(col,prev_row);if(this.is_occupied(col,prev_row)||this.is_player(col,prev_row)||this.is_placeholder_in(col,prev_row)||this.is_player_in(col,prev_row)){result=false;return true; //break
+	}});return result}; /**
+	    * Check if it's possible to move a widget to a specific col/row. It takes
+	    * into account the dimensions (`size_y` and `size_x` attrs. of the grid
+	    *  coords object) the widget occupies.
+	    *
+	    * @method can_move_to
+	    * @param {Object} widget_grid_data The grid coords object that represents
+	    *  the widget.
+	    * @param {Object} col The col to check.
+	    * @param {Object} row The row to check.
+	    * @param {Number} [max_row] The max row allowed.
+	    * @return {Boolean} Returns true if all cells are empty, else return false.
+	    */fn.can_move_to=function(widget_grid_data,col,row,max_row){var ga=this.gridmap;var $w=widget_grid_data.el;var future_wd={size_y:widget_grid_data.size_y,size_x:widget_grid_data.size_x,col:col,row:row};var result=true; //Prevents widgets go out of the grid
+	var right_col=col+widget_grid_data.size_x-1;if(right_col>this.cols){return false}if(max_row&&max_row<row+widget_grid_data.size_y-1){return false}this.for_each_cell_occupied(future_wd,function(tcol,trow){var $tw=this.is_widget(tcol,trow);if($tw&&(!widget_grid_data.el||$tw.is($w))){result=false}});return result}; /**
+	    * Given the leftmost column returns all columns that are overlapping
+	    *  with the player.
+	    *
+	    * @method get_targeted_columns
+	    * @param {Number} [from_col] The leftmost column.
+	    * @return {Array} Returns an array with column numbers.
+	    */fn.get_targeted_columns=function(from_col){var max=(from_col||this.player_grid_data.col)+(this.player_grid_data.size_x-1);var cols=[];for(var col=from_col;col<=max;col++){cols.push(col)}return cols}; /**
+	    * Given the upper row returns all rows that are overlapping with the player.
+	    *
+	    * @method get_targeted_rows
+	    * @param {Number} [from_row] The upper row.
+	    * @return {Array} Returns an array with row numbers.
+	    */fn.get_targeted_rows=function(from_row){var max=(from_row||this.player_grid_data.row)+(this.player_grid_data.size_y-1);var rows=[];for(var row=from_row;row<=max;row++){rows.push(row)}return rows}; /**
+	    * Get all columns and rows that a widget occupies.
+	    *
+	    * @method get_cells_occupied
+	    * @param {Object} el_grid_data The grid coords object of the widget.
+	    * @return {Object} Returns an object like `{ cols: [], rows: []}`.
+	    */fn.get_cells_occupied=function(el_grid_data){var cells={cols:[],rows:[]};var i;if(arguments[1] instanceof $){el_grid_data=arguments[1].coords().grid}for(i=0;i<el_grid_data.size_x;i++){var col=el_grid_data.col+i;cells.cols.push(col)}for(i=0;i<el_grid_data.size_y;i++){var row=el_grid_data.row+i;cells.rows.push(row)}return cells}; /**
+	    * Iterate over the cells occupied by a widget executing a function for
+	    * each one.
+	    *
+	    * @method for_each_cell_occupied
+	    * @param {Object} el_grid_data The grid coords object that represents the
+	    *  widget.
+	    * @param {Function} callback The function to execute on each column
+	    *  iteration. Column and row are passed as arguments.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.for_each_cell_occupied=function(grid_data,callback){this.for_each_column_occupied(grid_data,function(col){this.for_each_row_occupied(grid_data,function(row){callback.call(this,col,row)})});return this}; /**
+	    * Iterate over the columns occupied by a widget executing a function for
+	    * each one.
+	    *
+	    * @method for_each_column_occupied
+	    * @param {Object} el_grid_data The grid coords object that represents
+	    *  the widget.
+	    * @param {Function} callback The function to execute on each column
+	    *  iteration. The column number is passed as first argument.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.for_each_column_occupied=function(el_grid_data,callback){for(var i=0;i<el_grid_data.size_x;i++){var col=el_grid_data.col+i;callback.call(this,col,el_grid_data)}}; /**
+	    * Iterate over the rows occupied by a widget executing a function for
+	    * each one.
+	    *
+	    * @method for_each_row_occupied
+	    * @param {Object} el_grid_data The grid coords object that represents
+	    *  the widget.
+	    * @param {Function} callback The function to execute on each column
+	    *  iteration. The row number is passed as first argument.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.for_each_row_occupied=function(el_grid_data,callback){for(var i=0;i<el_grid_data.size_y;i++){var row=el_grid_data.row+i;callback.call(this,row,el_grid_data)}};fn._traversing_widgets=function(type,direction,col,row,callback){var ga=this.gridmap;if(!ga[col]){return}var cr,max;var action=type+'/'+direction;if(arguments[2] instanceof $){var el_grid_data=arguments[2].coords().grid;col=el_grid_data.col;row=el_grid_data.row;callback=arguments[3]}var matched=[];var trow=row;var methods={'for_each/above':function for_eachAbove(){while(trow--){if(trow>0&&this.is_widget(col,trow)&&$.inArray(ga[col][trow],matched)===-1){cr=callback.call(ga[col][trow],col,trow);matched.push(ga[col][trow]);if(cr){break}}}},'for_each/below':function for_eachBelow(){for(trow=row+1,max=ga[col].length;trow<max;trow++){if(this.is_widget(col,trow)&&$.inArray(ga[col][trow],matched)===-1){cr=callback.call(ga[col][trow],col,trow);matched.push(ga[col][trow]);if(cr){break}}}}};if(methods[action]){methods[action].call(this)}}; /**
+	    * Iterate over each widget above the column and row specified.
+	    *
+	    * @method for_each_widget_above
+	    * @param {Number} col The column to start iterating.
+	    * @param {Number} row The row to start iterating.
+	    * @param {Function} callback The function to execute on each widget
+	    *  iteration. The value of `this` inside the function is the jQuery
+	    *  wrapped HTMLElement.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.for_each_widget_above=function(col,row,callback){this._traversing_widgets('for_each','above',col,row,callback);return this}; /**
+	    * Iterate over each widget below the column and row specified.
+	    *
+	    * @method for_each_widget_below
+	    * @param {Number} col The column to start iterating.
+	    * @param {Number} row The row to start iterating.
+	    * @param {Function} callback The function to execute on each widget
+	    *  iteration. The value of `this` inside the function is the jQuery wrapped
+	    *  HTMLElement.
+	    * @return {Class} Returns the instance of the Gridster Class.
+	    */fn.for_each_widget_below=function(col,row,callback){this._traversing_widgets('for_each','below',col,row,callback);return this}; /**
+	    * Returns the highest occupied cell in the grid.
+	    *
+	    * @method get_highest_occupied_cell
+	    * @return {Object} Returns an object with `col` and `row` numbers.
+	    */fn.get_highest_occupied_cell=function(){var r;var gm=this.gridmap;var rl=gm[1].length;var rows=[],cols=[];var row_in_col=[];for(var c=gm.length-1;c>=1;c--){for(r=rl-1;r>=1;r--){if(this.is_widget(c,r)){rows.push(r);cols.push(c);break}}}return {col:Math.max.apply(Math,cols),row:Math.max.apply(Math,rows)}};fn.get_widgets_from=function(col,row){var ga=this.gridmap;var $widgets=$();if(col){$widgets=$widgets.add(this.$widgets.filter(function(){var tcol=$(this).attr('data-col');return tcol===col||tcol>col}))}if(row){$widgets=$widgets.add(this.$widgets.filter(function(){var trow=$(this).attr('data-row');return trow===row||trow>row}))}return $widgets}; /**
+	    * Set the current height of the parent grid.
+	    *
+	    * @method set_dom_grid_height
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.set_dom_grid_height=function(height){if(typeof height==='undefined'){var r=this.get_highest_occupied_cell().row;height=r*this.min_widget_height}this.container_height=height;this.$el.css('height',this.container_height);return this}; /**
+	    * Set the current width of the parent grid.
+	    *
+	    * @method set_dom_grid_width
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.set_dom_grid_width=function(cols){if(typeof cols==='undefined'){cols=this.get_highest_occupied_cell().col}var max_cols=this.options.autogrow_cols?this.options.max_cols:this.cols;cols=Math.min(max_cols,Math.max(cols,this.options.min_cols));this.container_width=cols*this.min_widget_width;console.log(this.min_widget_width);this.$el.css('width',this.container_width);return this}; /**
+	    * It generates the neccessary styles to position the widgets.
+	    *
+	    * @method generate_stylesheet
+	    * @param {Number} rows Number of columns.
+	    * @param {Number} cols Number of rows.
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.generate_stylesheet=function(opts){var styles='';var max_size_x=this.options.max_size_x||this.cols;var max_rows=0;var max_cols=0;var i;var rules;opts||(opts={});opts.cols||(opts.cols=this.cols);opts.rows||(opts.rows=this.rows);opts.namespace||(opts.namespace=this.options.namespace);opts.widget_base_dimensions||(opts.widget_base_dimensions=this.options.widget_base_dimensions);opts.widget_margins||(opts.widget_margins=this.options.widget_margins);opts.min_widget_width=opts.widget_margins[0]*2+opts.widget_base_dimensions[0];opts.min_widget_height=opts.widget_margins[1]*2+opts.widget_base_dimensions[1]; // don't duplicate stylesheets for the same configuration
+	var serialized_opts=$.param(opts);if($.inArray(serialized_opts,Gridster.generated_stylesheets)>=0){return false}this.generated_stylesheets.push(serialized_opts);Gridster.generated_stylesheets.push(serialized_opts); /* generate CSS styles for cols */for(i=opts.cols;i>=0;i--){styles+=opts.namespace+' [data-col="'+(i+1)+'"] { left:'+(i*opts.widget_base_dimensions[0]+i*opts.widget_margins[0]+(i+1)*opts.widget_margins[0])+'px; }\n'} /* generate CSS styles for rows */for(i=opts.rows;i>=0;i--){styles+=opts.namespace+' [data-row="'+(i+1)+'"] { top:'+(i*opts.widget_base_dimensions[1]+i*opts.widget_margins[1]+(i+1)*opts.widget_margins[1])+'px; }\n'}for(var y=1;y<=opts.rows;y++){styles+=opts.namespace+' [data-sizey="'+y+'"] { height:'+(y*opts.widget_base_dimensions[1]+(y-1)*(opts.widget_margins[1]*2))+'px; }\n'}for(var x=1;x<=max_size_x;x++){styles+=opts.namespace+' [data-sizex="'+x+'"] { width:'+(x*opts.widget_base_dimensions[0]+(x-1)*(opts.widget_margins[0]*2))+'px; }\n'}this.remove_style_tags();return this.add_style_tag(styles)}; /**
+	    * Injects the given CSS as string to the head of the document.
+	    *
+	    * @method add_style_tag
+	    * @param {String} css The styles to apply.
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.add_style_tag=function(css){var d=document;var tag=d.createElement('style');d.getElementsByTagName('head')[0].appendChild(tag);tag.setAttribute('type','text/css');if(tag.styleSheet){tag.styleSheet.cssText=css}else {tag.appendChild(document.createTextNode(css))}this.$style_tags=this.$style_tags.add(tag);return this}; /**
+	    * Remove the style tag with the associated id from the head of the document
+	    *
+	    * @method  remove_style_tag
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.remove_style_tags=function(){var all_styles=Gridster.generated_stylesheets;var ins_styles=this.generated_stylesheets;this.$style_tags.remove();Gridster.generated_stylesheets=$.map(all_styles,function(s){if($.inArray(s,ins_styles)===-1){return s}})}; /**
+	    * Generates a faux grid to collide with it when a widget is dragged and
+	    * detect row or column that we want to go.
+	    *
+	    * @method generate_faux_grid
+	    * @param {Number} rows Number of columns.
+	    * @param {Number} cols Number of rows.
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.generate_faux_grid=function(rows,cols){this.faux_grid=[];this.gridmap=[];var col;var row;for(col=cols;col>0;col--){this.gridmap[col]=[];for(row=rows;row>0;row--){this.add_faux_cell(row,col)}}return this}; /**
+	    * Add cell to the faux grid.
+	    *
+	    * @method add_faux_cell
+	    * @param {Number} row The row for the new faux cell.
+	    * @param {Number} col The col for the new faux cell.
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.add_faux_cell=function(row,col){var coords=$({left:this.baseX+(col-1)*this.min_widget_width,top:this.baseY+(row-1)*this.min_widget_height,width:this.min_widget_width,height:this.min_widget_height,col:col,row:row,original_col:col,original_row:row}).coords();if(!$.isArray(this.gridmap[col])){this.gridmap[col]=[]}this.gridmap[col][row]=false;this.faux_grid.push(coords);return this}; /**
+	    * Add rows to the faux grid.
+	    *
+	    * @method add_faux_rows
+	    * @param {Number} rows The number of rows you want to add to the faux grid.
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.add_faux_rows=function(rows){var actual_rows=this.rows;var max_rows=actual_rows+(rows||1);for(var r=max_rows;r>actual_rows;r--){for(var c=this.cols;c>=1;c--){this.add_faux_cell(r,c)}}this.rows=max_rows;if(this.options.autogenerate_stylesheet){this.generate_stylesheet()}return this}; /**
+	    * Add cols to the faux grid.
+	    *
+	    * @method add_faux_cols
+	    * @param {Number} cols The number of cols you want to add to the faux grid.
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.add_faux_cols=function(cols){var actual_cols=this.cols;var max_cols=actual_cols+(cols||1);max_cols=Math.min(max_cols,this.options.max_cols);for(var c=actual_cols+1;c<=max_cols;c++){for(var r=this.rows;r>=1;r--){this.add_faux_cell(r,c)}}this.cols=max_cols;if(this.options.autogenerate_stylesheet){this.generate_stylesheet()}return this}; /**
+	    * Recalculates the offsets for the faux grid. You need to use it when
+	    * the browser is resized.
+	    *
+	    * @method recalculate_faux_grid
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.recalculate_faux_grid=function(){var aw=this.$wrapper.width();this.baseX=($(window).width()-aw)/2;this.baseY=this.$wrapper.offset().top;$.each(this.faux_grid,$.proxy(function(i,coords){this.faux_grid[i]=coords.update({left:this.baseX+(coords.data.col-1)*this.min_widget_width,top:this.baseY+(coords.data.row-1)*this.min_widget_height})},this));return this}; /**
+	    * Get all widgets in the DOM and register them.
+	    *
+	    * @method get_widgets_from_DOM
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.get_widgets_from_DOM=function(){var widgets_coords=this.$widgets.map($.proxy(function(i,widget){var $w=$(widget);return this.dom_to_coords($w)},this));widgets_coords=Gridster.sort_by_row_and_col_asc(widgets_coords);var changes=$(widgets_coords).map($.proxy(function(i,wgd){return this.register_widget(wgd)||null},this));if(changes.length){this.$el.trigger('gridster:positionschanged')}return this}; /**
+	    * Calculate columns and rows to be set based on the configuration
+	    *  parameters, grid dimensions, etc ...
+	    *
+	    * @method generate_grid_and_stylesheet
+	    * @return {Object} Returns the instance of the Gridster class.
+	    */fn.generate_grid_and_stylesheet=function(){var aw=this.$wrapper.width();var max_cols=this.options.max_cols;var cols=Math.floor(aw/this.min_widget_width)+this.options.extra_cols;var actual_cols=this.$widgets.map(function(){return $(this).attr('data-col')}).get(); //needed to pass tests with phantomjs
+	actual_cols.length||(actual_cols=[0]);var min_cols=Math.max.apply(Math,actual_cols);this.cols=Math.max(min_cols,cols,this.options.min_cols);if(max_cols!==Infinity&&max_cols>=min_cols&&max_cols<this.cols){this.cols=max_cols} // get all rows that could be occupied by the current widgets
+	var max_rows=this.options.extra_rows;this.$widgets.each(function(i,w){max_rows+=+$(w).attr('data-sizey')});this.rows=Math.max(max_rows,this.options.min_rows);this.baseX=($(window).width()-aw)/2;this.baseY=this.$wrapper.offset().top;if(this.options.autogenerate_stylesheet){this.generate_stylesheet()}return this.generate_faux_grid(this.rows,this.cols)}; /**
+	     * Destroy this gridster by removing any sign of its presence, making it easy to avoid memory leaks
+	     *
+	     * @method destroy
+	     * @param {Boolean} remove If true, remove gridster from DOM.
+	     * @return {Object} Returns the instance of the Gridster class.
+	     */fn.destroy=function(remove){this.$el.removeData('gridster'); // remove bound callback on window resize
+	$(window).unbind('.gridster');if(this.drag_api){this.drag_api.destroy()}this.remove_style_tags();remove&&this.$el.remove();return this}; //jQuery adapter
+	$.fn.gridster=function(options){return this.each(function(){if(!$(this).data('gridster')){$(this).data('gridster',new Gridster(this,options))}})};return Gridster});
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(16);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(9)(content, {});
@@ -10736,7 +12920,7 @@
 	}
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -10744,13 +12928,13 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px;\n  background-color: #fff; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #000000;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px;\n  background-color: #fff; }\n  .screen .display {\n    position: relative; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #000000;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10759,17 +12943,18 @@
 	 * Created by liuhan on 2015/11/27.
 	 */
 
-	var React = __webpack_require__(17);
-	var ReactDOM = __webpack_require__(174);
+	var React = __webpack_require__(18);
+	var ReactDOM = __webpack_require__(175);
 
-	var $ = __webpack_require__(13);
+	var $ = __webpack_require__(11);
 
-	var NavBar = __webpack_require__(175);
-	var ThemeScreen = __webpack_require__(176);
+	var NavBar = __webpack_require__(176);
+	var ThemeScreen = __webpack_require__(177);
 
-	var EditPanel = __webpack_require__(180);
-	var EditBar = __webpack_require__(191);
-
+	/*
+	var EditPanel = require("../panel/EditorPanel.jsx");
+	var EditBar = require("../editorbar/EditorBar.jsx");
+	*/
 	var PageEditor = React.createClass({
 	    displayName: 'PageEditor',
 
@@ -10782,6 +12967,7 @@
 	            showHeader: true,
 	            showFooter: true,
 	            theme: "default",
+	            expandMode: 1,
 	            showGrid: true
 	        };
 	    },
@@ -10804,88 +12990,10 @@
 	            null,
 	            React.createElement(NavBar, { onChange: this.updateState, onAddGrid: this.addGrid }),
 	            React.createElement(ThemeScreen, { theme: this.state.theme, resize: this.themeInitialize, doubleScreen: this.state.doubleScreen,
+	                expandMode: this.state.expandMode,
 	                width: this.state.width, height: this.state.minHeight,
 	                showHeader: this.state.showHeader, showFooter: this.state.showFooter, showGrid: this.state.showGrid,
-	                ref: 'themescreen' }),
-	            React.createElement(EditBar, null),
-	            React.createElement(EditPanel, null)
-	        );
-	    }
-	});
-
-	var Screen = React.createClass({
-	    displayName: 'Screen',
-
-	    componentDidMount: function componentDidMount() {
-	        this.loadTheme();
-
-	        $(".gridster ul").gridster({
-	            widget_margins: [1, 1],
-	            widget_base_dimensions: [Math.floor(this.props.width / 12 - 2), this.props.minHeight / 30 - 2],
-	            min_cols: 12,
-	            resize: {
-	                enabled: true
-	            }
-	        });
-	        EditPanel.init();
-	    },
-
-	    componentDidUpdate: function componentDidUpdate() {
-	        var rhtml = $(".gridster").html();
-	        $(".gridster ul").remove();
-	        $(".gridster").append(rhtml);
-	        var col = 12;
-
-	        if (this.props.doubleScreen) {
-	            col = col * 2;
-	        }
-
-	        $(".gridster ul").gridster({
-	            widget_margins: [1, 1],
-	            widget_base_dimensions: [this.props.width / 12 - 2, this.props.minHeight / 12 - 2],
-	            min_cols: col,
-	            resize: {
-	                enabled: true
-	            }
-	        });
-	        EditPanel.init();
-	    },
-
-	    addGrid: function addGrid() {
-	        var gridster = $(".gridster ul").gridster().data('gridster');
-	        gridster.add_widget("<li class='j-grid-block player-revert'></li>", 12, 2, 1, 1);
-	        EditPanel.init();
-	    },
-
-	    saveGridInfo: function saveGridInfo() {},
-
-	    render: function render() {
-	        var swidth = this.props.width;
-
-	        if (this.props.doubleScreen) {
-	            swidth = swidth * 2;
-	        }
-	        return React.createElement(
-	            'div',
-	            { className: 'screen', style: {
-	                    width: this.props.width,
-	                    minHeight: this.props.minHeight,
-	                    WebkitTransform: 'scale(' + this.props.zoom + ')' } },
-	            React.createElement('div', { className: 'styles' }),
-	            React.createElement('div', { className: 'header' }),
-	            React.createElement(
-	                'div',
-	                { className: 'gridster' },
-	                React.createElement(
-	                    'ul',
-	                    null,
-	                    React.createElement('li', { 'data-row': '1', 'data-col': '1', 'data-sizex': '12', 'data-sizey': '2',
-	                        className: 'j-grid-block player-revert' }),
-	                    React.createElement('li', { 'data-row': '3', 'data-col': '1', 'data-sizex': '8', 'data-sizey': '2',
-	                        className: 'j-grid-block player-revert' })
-	                )
-	            ),
-	            React.createElement('div', { className: 'footer' })
+	                ref: 'themescreen' })
 	        );
 	    }
 	});
@@ -10893,16 +13001,16 @@
 	ReactDOM.render(React.createElement(PageEditor, null), document.getElementById('AuthoringTool'));
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(18);
+	module.exports = __webpack_require__(19);
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10918,12 +13026,12 @@
 
 	'use strict';
 
-	var ReactDOM = __webpack_require__(19);
-	var ReactDOMServer = __webpack_require__(164);
-	var ReactIsomorphic = __webpack_require__(168);
+	var ReactDOM = __webpack_require__(20);
+	var ReactDOMServer = __webpack_require__(165);
+	var ReactIsomorphic = __webpack_require__(169);
 
-	var assign = __webpack_require__(55);
-	var deprecated = __webpack_require__(173);
+	var assign = __webpack_require__(56);
+	var deprecated = __webpack_require__(174);
 
 	// `version` will be added here by ReactIsomorphic.
 	var React = {};
@@ -10947,7 +13055,7 @@
 	module.exports = React;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -10965,19 +13073,19 @@
 
 	'use strict';
 
-	var ReactCurrentOwner = __webpack_require__(21);
-	var ReactDOMTextComponent = __webpack_require__(22);
-	var ReactDefaultInjection = __webpack_require__(87);
-	var ReactInstanceHandles = __webpack_require__(61);
-	var ReactMount = __webpack_require__(44);
-	var ReactPerf = __webpack_require__(34);
-	var ReactReconciler = __webpack_require__(66);
-	var ReactUpdates = __webpack_require__(70);
-	var ReactVersion = __webpack_require__(162);
+	var ReactCurrentOwner = __webpack_require__(22);
+	var ReactDOMTextComponent = __webpack_require__(23);
+	var ReactDefaultInjection = __webpack_require__(88);
+	var ReactInstanceHandles = __webpack_require__(62);
+	var ReactMount = __webpack_require__(45);
+	var ReactPerf = __webpack_require__(35);
+	var ReactReconciler = __webpack_require__(67);
+	var ReactUpdates = __webpack_require__(71);
+	var ReactVersion = __webpack_require__(163);
 
-	var findDOMNode = __webpack_require__(107);
-	var renderSubtreeIntoContainer = __webpack_require__(163);
-	var warning = __webpack_require__(41);
+	var findDOMNode = __webpack_require__(108);
+	var renderSubtreeIntoContainer = __webpack_require__(164);
+	var warning = __webpack_require__(42);
 
 	ReactDefaultInjection.inject();
 
@@ -11008,7 +13116,7 @@
 	}
 
 	if (process.env.NODE_ENV !== 'production') {
-	  var ExecutionEnvironment = __webpack_require__(25);
+	  var ExecutionEnvironment = __webpack_require__(26);
 	  if (ExecutionEnvironment.canUseDOM && window.top === window.self) {
 
 	    // First check if devtools is not installed
@@ -11042,10 +13150,10 @@
 	}
 
 	module.exports = React;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -11142,7 +13250,7 @@
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	/**
@@ -11177,7 +13285,7 @@
 	module.exports = ReactCurrentOwner;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -11194,15 +13302,15 @@
 
 	'use strict';
 
-	var DOMChildrenOperations = __webpack_require__(23);
-	var DOMPropertyOperations = __webpack_require__(38);
-	var ReactComponentBrowserEnvironment = __webpack_require__(42);
-	var ReactMount = __webpack_require__(44);
+	var DOMChildrenOperations = __webpack_require__(24);
+	var DOMPropertyOperations = __webpack_require__(39);
+	var ReactComponentBrowserEnvironment = __webpack_require__(43);
+	var ReactMount = __webpack_require__(45);
 
-	var assign = __webpack_require__(55);
-	var escapeTextContentForBrowser = __webpack_require__(37);
-	var setTextContent = __webpack_require__(36);
-	var validateDOMNesting = __webpack_require__(86);
+	var assign = __webpack_require__(56);
+	var escapeTextContentForBrowser = __webpack_require__(38);
+	var setTextContent = __webpack_require__(37);
+	var validateDOMNesting = __webpack_require__(87);
 
 	/**
 	 * Text nodes violate a couple assumptions that React makes about components:
@@ -11307,10 +13415,10 @@
 	});
 
 	module.exports = ReactDOMTextComponent;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -11327,13 +13435,13 @@
 
 	'use strict';
 
-	var Danger = __webpack_require__(24);
-	var ReactMultiChildUpdateTypes = __webpack_require__(32);
-	var ReactPerf = __webpack_require__(34);
+	var Danger = __webpack_require__(25);
+	var ReactMultiChildUpdateTypes = __webpack_require__(33);
+	var ReactPerf = __webpack_require__(35);
 
-	var setInnerHTML = __webpack_require__(35);
-	var setTextContent = __webpack_require__(36);
-	var invariant = __webpack_require__(29);
+	var setInnerHTML = __webpack_require__(36);
+	var setTextContent = __webpack_require__(37);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * Inserts `childNode` as a child of `parentNode` at the `index`.
@@ -11442,10 +13550,10 @@
 	});
 
 	module.exports = DOMChildrenOperations;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -11462,12 +13570,12 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(25);
+	var ExecutionEnvironment = __webpack_require__(26);
 
-	var createNodesFromMarkup = __webpack_require__(26);
-	var emptyFunction = __webpack_require__(31);
-	var getMarkupWrap = __webpack_require__(30);
-	var invariant = __webpack_require__(29);
+	var createNodesFromMarkup = __webpack_require__(27);
+	var emptyFunction = __webpack_require__(32);
+	var getMarkupWrap = __webpack_require__(31);
+	var invariant = __webpack_require__(30);
 
 	var OPEN_TAG_NAME_EXP = /^(<[^ \/>]+)/;
 	var RESULT_INDEX_ATTR = 'data-danger-index';
@@ -11593,10 +13701,10 @@
 	};
 
 	module.exports = Danger;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	/**
@@ -11637,7 +13745,7 @@
 	module.exports = ExecutionEnvironment;
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -11656,11 +13764,11 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(25);
+	var ExecutionEnvironment = __webpack_require__(26);
 
-	var createArrayFromMixed = __webpack_require__(27);
-	var getMarkupWrap = __webpack_require__(30);
-	var invariant = __webpack_require__(29);
+	var createArrayFromMixed = __webpack_require__(28);
+	var getMarkupWrap = __webpack_require__(31);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * Dummy container used to render all markup.
@@ -11724,10 +13832,10 @@
 	}
 
 	module.exports = createNodesFromMarkup;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -11744,7 +13852,7 @@
 
 	'use strict';
 
-	var toArray = __webpack_require__(28);
+	var toArray = __webpack_require__(29);
 
 	/**
 	 * Perform a heuristic test to determine if an object is "array-like".
@@ -11817,7 +13925,7 @@
 	module.exports = createArrayFromMixed;
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -11834,7 +13942,7 @@
 
 	'use strict';
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * Convert array-like objects to arrays.
@@ -11877,10 +13985,10 @@
 	}
 
 	module.exports = toArray;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -11932,10 +14040,10 @@
 	};
 
 	module.exports = invariant;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -11953,9 +14061,9 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(25);
+	var ExecutionEnvironment = __webpack_require__(26);
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * Dummy container used to detect which wraps are necessary.
@@ -12033,10 +14141,10 @@
 	}
 
 	module.exports = getMarkupWrap;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports) {
 
 	/**
@@ -12079,7 +14187,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12095,7 +14203,7 @@
 
 	'use strict';
 
-	var keyMirror = __webpack_require__(33);
+	var keyMirror = __webpack_require__(34);
 
 	/**
 	 * When a component's children are updated, a series of update configuration
@@ -12116,7 +14224,7 @@
 	module.exports = ReactMultiChildUpdateTypes;
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -12133,7 +14241,7 @@
 
 	'use strict';
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * Constructs an enumeration with keys equal to their value.
@@ -12167,10 +14275,10 @@
 	};
 
 	module.exports = keyMirror;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -12269,10 +14377,10 @@
 	}
 
 	module.exports = ReactPerf;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12290,7 +14398,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(25);
+	var ExecutionEnvironment = __webpack_require__(26);
 
 	var WHITESPACE_TEST = /^[ \r\n\t\f]/;
 	var NONVISIBLE_TEST = /<(!--|link|noscript|meta|script|style)[ \r\n\t\f\/>]/;
@@ -12367,7 +14475,7 @@
 	module.exports = setInnerHTML;
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12383,9 +14491,9 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(25);
-	var escapeTextContentForBrowser = __webpack_require__(37);
-	var setInnerHTML = __webpack_require__(35);
+	var ExecutionEnvironment = __webpack_require__(26);
+	var escapeTextContentForBrowser = __webpack_require__(38);
+	var setInnerHTML = __webpack_require__(36);
 
 	/**
 	 * Set the textContent property of a node, ensuring that whitespace is preserved
@@ -12412,7 +14520,7 @@
 	module.exports = setTextContent;
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports) {
 
 	/**
@@ -12455,7 +14563,7 @@
 	module.exports = escapeTextContentForBrowser;
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -12472,11 +14580,11 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(39);
-	var ReactPerf = __webpack_require__(34);
+	var DOMProperty = __webpack_require__(40);
+	var ReactPerf = __webpack_require__(35);
 
-	var quoteAttributeValueForBrowser = __webpack_require__(40);
-	var warning = __webpack_require__(41);
+	var quoteAttributeValueForBrowser = __webpack_require__(41);
+	var warning = __webpack_require__(42);
 
 	// Simplified subset
 	var VALID_ATTRIBUTE_NAME_REGEX = /^[a-zA-Z_][\w\.\-]*$/;
@@ -12683,10 +14791,10 @@
 	});
 
 	module.exports = DOMPropertyOperations;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -12703,7 +14811,7 @@
 
 	'use strict';
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	function checkMask(value, bitmask) {
 	  return (value & bitmask) === bitmask;
@@ -12923,10 +15031,10 @@
 	};
 
 	module.exports = DOMProperty;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12942,7 +15050,7 @@
 
 	'use strict';
 
-	var escapeTextContentForBrowser = __webpack_require__(37);
+	var escapeTextContentForBrowser = __webpack_require__(38);
 
 	/**
 	 * Escapes attribute value to prevent scripting attacks.
@@ -12957,7 +15065,7 @@
 	module.exports = quoteAttributeValueForBrowser;
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -12973,7 +15081,7 @@
 
 	'use strict';
 
-	var emptyFunction = __webpack_require__(31);
+	var emptyFunction = __webpack_require__(32);
 
 	/**
 	 * Similar to invariant but only logs a warning if the condition is not met.
@@ -13017,10 +15125,10 @@
 	}
 
 	module.exports = warning;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13036,8 +15144,8 @@
 
 	'use strict';
 
-	var ReactDOMIDOperations = __webpack_require__(43);
-	var ReactMount = __webpack_require__(44);
+	var ReactDOMIDOperations = __webpack_require__(44);
+	var ReactMount = __webpack_require__(45);
 
 	/**
 	 * Abstracts away all functionality of the reconciler that requires knowledge of
@@ -13066,7 +15174,7 @@
 	module.exports = ReactComponentBrowserEnvironment;
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -13083,12 +15191,12 @@
 
 	'use strict';
 
-	var DOMChildrenOperations = __webpack_require__(23);
-	var DOMPropertyOperations = __webpack_require__(38);
-	var ReactMount = __webpack_require__(44);
-	var ReactPerf = __webpack_require__(34);
+	var DOMChildrenOperations = __webpack_require__(24);
+	var DOMPropertyOperations = __webpack_require__(39);
+	var ReactMount = __webpack_require__(45);
+	var ReactPerf = __webpack_require__(35);
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * Errors for properties that should not be updated with `updatePropertyByID()`.
@@ -13163,10 +15271,10 @@
 	});
 
 	module.exports = ReactDOMIDOperations;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -13182,29 +15290,29 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(39);
-	var ReactBrowserEventEmitter = __webpack_require__(45);
-	var ReactCurrentOwner = __webpack_require__(21);
-	var ReactDOMFeatureFlags = __webpack_require__(57);
-	var ReactElement = __webpack_require__(58);
-	var ReactEmptyComponentRegistry = __webpack_require__(60);
-	var ReactInstanceHandles = __webpack_require__(61);
-	var ReactInstanceMap = __webpack_require__(63);
-	var ReactMarkupChecksum = __webpack_require__(64);
-	var ReactPerf = __webpack_require__(34);
-	var ReactReconciler = __webpack_require__(66);
-	var ReactUpdateQueue = __webpack_require__(69);
-	var ReactUpdates = __webpack_require__(70);
+	var DOMProperty = __webpack_require__(40);
+	var ReactBrowserEventEmitter = __webpack_require__(46);
+	var ReactCurrentOwner = __webpack_require__(22);
+	var ReactDOMFeatureFlags = __webpack_require__(58);
+	var ReactElement = __webpack_require__(59);
+	var ReactEmptyComponentRegistry = __webpack_require__(61);
+	var ReactInstanceHandles = __webpack_require__(62);
+	var ReactInstanceMap = __webpack_require__(64);
+	var ReactMarkupChecksum = __webpack_require__(65);
+	var ReactPerf = __webpack_require__(35);
+	var ReactReconciler = __webpack_require__(67);
+	var ReactUpdateQueue = __webpack_require__(70);
+	var ReactUpdates = __webpack_require__(71);
 
-	var assign = __webpack_require__(55);
-	var emptyObject = __webpack_require__(74);
-	var containsNode = __webpack_require__(75);
-	var instantiateReactComponent = __webpack_require__(78);
-	var invariant = __webpack_require__(29);
-	var setInnerHTML = __webpack_require__(35);
-	var shouldUpdateReactComponent = __webpack_require__(83);
-	var validateDOMNesting = __webpack_require__(86);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var emptyObject = __webpack_require__(75);
+	var containsNode = __webpack_require__(76);
+	var instantiateReactComponent = __webpack_require__(79);
+	var invariant = __webpack_require__(30);
+	var setInnerHTML = __webpack_require__(36);
+	var shouldUpdateReactComponent = __webpack_require__(84);
+	var validateDOMNesting = __webpack_require__(87);
+	var warning = __webpack_require__(42);
 
 	var ATTR_NAME = DOMProperty.ID_ATTRIBUTE_NAME;
 	var nodeCache = {};
@@ -14019,10 +16127,10 @@
 	});
 
 	module.exports = ReactMount;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14039,15 +16147,15 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(46);
-	var EventPluginHub = __webpack_require__(47);
-	var EventPluginRegistry = __webpack_require__(48);
-	var ReactEventEmitterMixin = __webpack_require__(53);
-	var ReactPerf = __webpack_require__(34);
-	var ViewportMetrics = __webpack_require__(54);
+	var EventConstants = __webpack_require__(47);
+	var EventPluginHub = __webpack_require__(48);
+	var EventPluginRegistry = __webpack_require__(49);
+	var ReactEventEmitterMixin = __webpack_require__(54);
+	var ReactPerf = __webpack_require__(35);
+	var ViewportMetrics = __webpack_require__(55);
 
-	var assign = __webpack_require__(55);
-	var isEventSupported = __webpack_require__(56);
+	var assign = __webpack_require__(56);
+	var isEventSupported = __webpack_require__(57);
 
 	/**
 	 * Summary of `ReactBrowserEventEmitter` event handling:
@@ -14351,7 +16459,7 @@
 	module.exports = ReactBrowserEventEmitter;
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14367,7 +16475,7 @@
 
 	'use strict';
 
-	var keyMirror = __webpack_require__(33);
+	var keyMirror = __webpack_require__(34);
 
 	var PropagationPhases = keyMirror({ bubbled: null, captured: null });
 
@@ -14448,7 +16556,7 @@
 	module.exports = EventConstants;
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -14464,14 +16572,14 @@
 
 	'use strict';
 
-	var EventPluginRegistry = __webpack_require__(48);
-	var EventPluginUtils = __webpack_require__(49);
-	var ReactErrorUtils = __webpack_require__(50);
+	var EventPluginRegistry = __webpack_require__(49);
+	var EventPluginUtils = __webpack_require__(50);
+	var ReactErrorUtils = __webpack_require__(51);
 
-	var accumulateInto = __webpack_require__(51);
-	var forEachAccumulated = __webpack_require__(52);
-	var invariant = __webpack_require__(29);
-	var warning = __webpack_require__(41);
+	var accumulateInto = __webpack_require__(52);
+	var forEachAccumulated = __webpack_require__(53);
+	var invariant = __webpack_require__(30);
+	var warning = __webpack_require__(42);
 
 	/**
 	 * Internal store for event listeners
@@ -14730,10 +16838,10 @@
 	};
 
 	module.exports = EventPluginHub;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -14750,7 +16858,7 @@
 
 	'use strict';
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * Injectable ordering of event plugins.
@@ -14956,10 +17064,10 @@
 	};
 
 	module.exports = EventPluginRegistry;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -14975,11 +17083,11 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(46);
-	var ReactErrorUtils = __webpack_require__(50);
+	var EventConstants = __webpack_require__(47);
+	var ReactErrorUtils = __webpack_require__(51);
 
-	var invariant = __webpack_require__(29);
-	var warning = __webpack_require__(41);
+	var invariant = __webpack_require__(30);
+	var warning = __webpack_require__(42);
 
 	/**
 	 * Injected dependencies:
@@ -15164,10 +17272,10 @@
 	};
 
 	module.exports = EventPluginUtils;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15247,10 +17355,10 @@
 	}
 
 	module.exports = ReactErrorUtils;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15266,7 +17374,7 @@
 
 	'use strict';
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 *
@@ -15312,10 +17420,10 @@
 	}
 
 	module.exports = accumulateInto;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports) {
 
 	/**
@@ -15349,7 +17457,7 @@
 	module.exports = forEachAccumulated;
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -15365,7 +17473,7 @@
 
 	'use strict';
 
-	var EventPluginHub = __webpack_require__(47);
+	var EventPluginHub = __webpack_require__(48);
 
 	function runEventQueueInBatch(events) {
 	  EventPluginHub.enqueueEvents(events);
@@ -15392,7 +17500,7 @@
 	module.exports = ReactEventEmitterMixin;
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports) {
 
 	/**
@@ -15424,7 +17532,7 @@
 	module.exports = ViewportMetrics;
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports) {
 
 	/**
@@ -15476,7 +17584,7 @@
 	module.exports = assign;
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -15492,7 +17600,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(25);
+	var ExecutionEnvironment = __webpack_require__(26);
 
 	var useHasFeature;
 	if (ExecutionEnvironment.canUseDOM) {
@@ -15541,7 +17649,7 @@
 	module.exports = isEventSupported;
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports) {
 
 	/**
@@ -15564,7 +17672,7 @@
 	module.exports = ReactDOMFeatureFlags;
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15580,10 +17688,10 @@
 
 	'use strict';
 
-	var ReactCurrentOwner = __webpack_require__(21);
+	var ReactCurrentOwner = __webpack_require__(22);
 
-	var assign = __webpack_require__(55);
-	var canDefineProperty = __webpack_require__(59);
+	var assign = __webpack_require__(56);
+	var canDefineProperty = __webpack_require__(60);
 
 	// The Symbol used to tag the ReactElement type. If there is no native Symbol
 	// nor polyfill, then a plain number is used for performance.
@@ -15814,10 +17922,10 @@
 	};
 
 	module.exports = ReactElement;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15844,10 +17952,10 @@
 	}
 
 	module.exports = canDefineProperty;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports) {
 
 	/**
@@ -15900,7 +18008,7 @@
 	module.exports = ReactEmptyComponentRegistry;
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -15917,9 +18025,9 @@
 
 	'use strict';
 
-	var ReactRootIndex = __webpack_require__(62);
+	var ReactRootIndex = __webpack_require__(63);
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	var SEPARATOR = '.';
 	var SEPARATOR_LENGTH = SEPARATOR.length;
@@ -16205,10 +18313,10 @@
 	};
 
 	module.exports = ReactInstanceHandles;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports) {
 
 	/**
@@ -16242,7 +18350,7 @@
 	module.exports = ReactRootIndex;
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports) {
 
 	/**
@@ -16294,7 +18402,7 @@
 	module.exports = ReactInstanceMap;
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -16310,7 +18418,7 @@
 
 	'use strict';
 
-	var adler32 = __webpack_require__(65);
+	var adler32 = __webpack_require__(66);
 
 	var TAG_END = /\/?>/;
 
@@ -16344,7 +18452,7 @@
 	module.exports = ReactMarkupChecksum;
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports) {
 
 	/**
@@ -16391,7 +18499,7 @@
 	module.exports = adler32;
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -16407,7 +18515,7 @@
 
 	'use strict';
 
-	var ReactRef = __webpack_require__(67);
+	var ReactRef = __webpack_require__(68);
 
 	/**
 	 * Helper to call ReactRef.attachRefs with this composite component, split out
@@ -16503,7 +18611,7 @@
 	module.exports = ReactReconciler;
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -16519,7 +18627,7 @@
 
 	'use strict';
 
-	var ReactOwner = __webpack_require__(68);
+	var ReactOwner = __webpack_require__(69);
 
 	var ReactRef = {};
 
@@ -16586,7 +18694,7 @@
 	module.exports = ReactRef;
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -16602,7 +18710,7 @@
 
 	'use strict';
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * ReactOwners are capable of storing references to owned components.
@@ -16680,10 +18788,10 @@
 	};
 
 	module.exports = ReactOwner;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -16699,14 +18807,14 @@
 
 	'use strict';
 
-	var ReactCurrentOwner = __webpack_require__(21);
-	var ReactElement = __webpack_require__(58);
-	var ReactInstanceMap = __webpack_require__(63);
-	var ReactUpdates = __webpack_require__(70);
+	var ReactCurrentOwner = __webpack_require__(22);
+	var ReactElement = __webpack_require__(59);
+	var ReactInstanceMap = __webpack_require__(64);
+	var ReactUpdates = __webpack_require__(71);
 
-	var assign = __webpack_require__(55);
-	var invariant = __webpack_require__(29);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var invariant = __webpack_require__(30);
+	var warning = __webpack_require__(42);
 
 	function enqueueUpdate(internalInstance) {
 	  ReactUpdates.enqueueUpdate(internalInstance);
@@ -16943,10 +19051,10 @@
 	};
 
 	module.exports = ReactUpdateQueue;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -16962,14 +19070,14 @@
 
 	'use strict';
 
-	var CallbackQueue = __webpack_require__(71);
-	var PooledClass = __webpack_require__(72);
-	var ReactPerf = __webpack_require__(34);
-	var ReactReconciler = __webpack_require__(66);
-	var Transaction = __webpack_require__(73);
+	var CallbackQueue = __webpack_require__(72);
+	var PooledClass = __webpack_require__(73);
+	var ReactPerf = __webpack_require__(35);
+	var ReactReconciler = __webpack_require__(67);
+	var Transaction = __webpack_require__(74);
 
-	var assign = __webpack_require__(55);
-	var invariant = __webpack_require__(29);
+	var assign = __webpack_require__(56);
+	var invariant = __webpack_require__(30);
 
 	var dirtyComponents = [];
 	var asapCallbackQueue = CallbackQueue.getPooled();
@@ -17172,10 +19280,10 @@
 	};
 
 	module.exports = ReactUpdates;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -17191,10 +19299,10 @@
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(72);
+	var PooledClass = __webpack_require__(73);
 
-	var assign = __webpack_require__(55);
-	var invariant = __webpack_require__(29);
+	var assign = __webpack_require__(56);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * A specialized pseudo-event module to help keep track of components waiting to
@@ -17271,10 +19379,10 @@
 	PooledClass.addPoolingTo(CallbackQueue);
 
 	module.exports = CallbackQueue;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -17290,7 +19398,7 @@
 
 	'use strict';
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * Static poolers. Several custom versions for each potential number of
@@ -17396,10 +19504,10 @@
 	};
 
 	module.exports = PooledClass;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -17415,7 +19523,7 @@
 
 	'use strict';
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * `Transaction` creates a black box that is able to wrap any method such that
@@ -17633,10 +19741,10 @@
 	};
 
 	module.exports = Transaction;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -17659,10 +19767,10 @@
 	}
 
 	module.exports = emptyObject;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -17679,7 +19787,7 @@
 
 	'use strict';
 
-	var isTextNode = __webpack_require__(76);
+	var isTextNode = __webpack_require__(77);
 
 	/*eslint-disable no-bitwise */
 
@@ -17722,7 +19830,7 @@
 	module.exports = containsNode;
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -17739,7 +19847,7 @@
 
 	'use strict';
 
-	var isNode = __webpack_require__(77);
+	var isNode = __webpack_require__(78);
 
 	/**
 	 * @param {*} object The object to check.
@@ -17752,7 +19860,7 @@
 	module.exports = isTextNode;
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports) {
 
 	/**
@@ -17780,7 +19888,7 @@
 	module.exports = isNode;
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -17797,13 +19905,13 @@
 
 	'use strict';
 
-	var ReactCompositeComponent = __webpack_require__(79);
-	var ReactEmptyComponent = __webpack_require__(84);
-	var ReactNativeComponent = __webpack_require__(85);
+	var ReactCompositeComponent = __webpack_require__(80);
+	var ReactEmptyComponent = __webpack_require__(85);
+	var ReactNativeComponent = __webpack_require__(86);
 
-	var assign = __webpack_require__(55);
-	var invariant = __webpack_require__(29);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var invariant = __webpack_require__(30);
+	var warning = __webpack_require__(42);
 
 	// To avoid a cyclic dependency, we create the final class in this module
 	var ReactCompositeComponentWrapper = function () {};
@@ -17895,10 +20003,10 @@
 	}
 
 	module.exports = instantiateReactComponent;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -17914,21 +20022,21 @@
 
 	'use strict';
 
-	var ReactComponentEnvironment = __webpack_require__(80);
-	var ReactCurrentOwner = __webpack_require__(21);
-	var ReactElement = __webpack_require__(58);
-	var ReactInstanceMap = __webpack_require__(63);
-	var ReactPerf = __webpack_require__(34);
-	var ReactPropTypeLocations = __webpack_require__(81);
-	var ReactPropTypeLocationNames = __webpack_require__(82);
-	var ReactReconciler = __webpack_require__(66);
-	var ReactUpdateQueue = __webpack_require__(69);
+	var ReactComponentEnvironment = __webpack_require__(81);
+	var ReactCurrentOwner = __webpack_require__(22);
+	var ReactElement = __webpack_require__(59);
+	var ReactInstanceMap = __webpack_require__(64);
+	var ReactPerf = __webpack_require__(35);
+	var ReactPropTypeLocations = __webpack_require__(82);
+	var ReactPropTypeLocationNames = __webpack_require__(83);
+	var ReactReconciler = __webpack_require__(67);
+	var ReactUpdateQueue = __webpack_require__(70);
 
-	var assign = __webpack_require__(55);
-	var emptyObject = __webpack_require__(74);
-	var invariant = __webpack_require__(29);
-	var shouldUpdateReactComponent = __webpack_require__(83);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var emptyObject = __webpack_require__(75);
+	var invariant = __webpack_require__(30);
+	var shouldUpdateReactComponent = __webpack_require__(84);
+	var warning = __webpack_require__(42);
 
 	function getDeclarationErrorAddendum(component) {
 	  var owner = component._currentElement._owner || null;
@@ -18595,10 +20703,10 @@
 	};
 
 	module.exports = ReactCompositeComponent;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18614,7 +20722,7 @@
 
 	'use strict';
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	var injected = false;
 
@@ -18652,10 +20760,10 @@
 	};
 
 	module.exports = ReactComponentEnvironment;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -18671,7 +20779,7 @@
 
 	'use strict';
 
-	var keyMirror = __webpack_require__(33);
+	var keyMirror = __webpack_require__(34);
 
 	var ReactPropTypeLocations = keyMirror({
 	  prop: null,
@@ -18682,7 +20790,7 @@
 	module.exports = ReactPropTypeLocations;
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18709,10 +20817,10 @@
 	}
 
 	module.exports = ReactPropTypeLocationNames;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports) {
 
 	/**
@@ -18760,7 +20868,7 @@
 	module.exports = shouldUpdateReactComponent;
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -18776,11 +20884,11 @@
 
 	'use strict';
 
-	var ReactElement = __webpack_require__(58);
-	var ReactEmptyComponentRegistry = __webpack_require__(60);
-	var ReactReconciler = __webpack_require__(66);
+	var ReactElement = __webpack_require__(59);
+	var ReactEmptyComponentRegistry = __webpack_require__(61);
+	var ReactReconciler = __webpack_require__(67);
 
-	var assign = __webpack_require__(55);
+	var assign = __webpack_require__(56);
 
 	var placeholderElement;
 
@@ -18816,7 +20924,7 @@
 	module.exports = ReactEmptyComponent;
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18832,8 +20940,8 @@
 
 	'use strict';
 
-	var assign = __webpack_require__(55);
-	var invariant = __webpack_require__(29);
+	var assign = __webpack_require__(56);
+	var invariant = __webpack_require__(30);
 
 	var autoGenerateWrapperClass = null;
 	var genericComponentClass = null;
@@ -18913,10 +21021,10 @@
 	};
 
 	module.exports = ReactNativeComponent;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 86 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18932,9 +21040,9 @@
 
 	'use strict';
 
-	var assign = __webpack_require__(55);
-	var emptyFunction = __webpack_require__(31);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var emptyFunction = __webpack_require__(32);
+	var warning = __webpack_require__(42);
 
 	var validateDOMNesting = emptyFunction;
 
@@ -19282,10 +21390,10 @@
 	}
 
 	module.exports = validateDOMNesting;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 87 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -19301,27 +21409,27 @@
 
 	'use strict';
 
-	var BeforeInputEventPlugin = __webpack_require__(88);
-	var ChangeEventPlugin = __webpack_require__(96);
-	var ClientReactRootIndex = __webpack_require__(99);
-	var DefaultEventPluginOrder = __webpack_require__(100);
-	var EnterLeaveEventPlugin = __webpack_require__(101);
-	var ExecutionEnvironment = __webpack_require__(25);
-	var HTMLDOMPropertyConfig = __webpack_require__(105);
-	var ReactBrowserComponentMixin = __webpack_require__(106);
-	var ReactComponentBrowserEnvironment = __webpack_require__(42);
-	var ReactDefaultBatchingStrategy = __webpack_require__(108);
-	var ReactDOMComponent = __webpack_require__(109);
-	var ReactDOMTextComponent = __webpack_require__(22);
-	var ReactEventListener = __webpack_require__(134);
-	var ReactInjection = __webpack_require__(137);
-	var ReactInstanceHandles = __webpack_require__(61);
-	var ReactMount = __webpack_require__(44);
-	var ReactReconcileTransaction = __webpack_require__(141);
-	var SelectEventPlugin = __webpack_require__(146);
-	var ServerReactRootIndex = __webpack_require__(147);
-	var SimpleEventPlugin = __webpack_require__(148);
-	var SVGDOMPropertyConfig = __webpack_require__(157);
+	var BeforeInputEventPlugin = __webpack_require__(89);
+	var ChangeEventPlugin = __webpack_require__(97);
+	var ClientReactRootIndex = __webpack_require__(100);
+	var DefaultEventPluginOrder = __webpack_require__(101);
+	var EnterLeaveEventPlugin = __webpack_require__(102);
+	var ExecutionEnvironment = __webpack_require__(26);
+	var HTMLDOMPropertyConfig = __webpack_require__(106);
+	var ReactBrowserComponentMixin = __webpack_require__(107);
+	var ReactComponentBrowserEnvironment = __webpack_require__(43);
+	var ReactDefaultBatchingStrategy = __webpack_require__(109);
+	var ReactDOMComponent = __webpack_require__(110);
+	var ReactDOMTextComponent = __webpack_require__(23);
+	var ReactEventListener = __webpack_require__(135);
+	var ReactInjection = __webpack_require__(138);
+	var ReactInstanceHandles = __webpack_require__(62);
+	var ReactMount = __webpack_require__(45);
+	var ReactReconcileTransaction = __webpack_require__(142);
+	var SelectEventPlugin = __webpack_require__(147);
+	var ServerReactRootIndex = __webpack_require__(148);
+	var SimpleEventPlugin = __webpack_require__(149);
+	var SVGDOMPropertyConfig = __webpack_require__(158);
 
 	var alreadyInjected = false;
 
@@ -19376,7 +21484,7 @@
 	  if (process.env.NODE_ENV !== 'production') {
 	    var url = ExecutionEnvironment.canUseDOM && window.location.href || '';
 	    if (/[?&]react_perf\b/.test(url)) {
-	      var ReactDefaultPerf = __webpack_require__(158);
+	      var ReactDefaultPerf = __webpack_require__(159);
 	      ReactDefaultPerf.start();
 	    }
 	  }
@@ -19385,10 +21493,10 @@
 	module.exports = {
 	  inject: inject
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 88 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19405,14 +21513,14 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(46);
-	var EventPropagators = __webpack_require__(89);
-	var ExecutionEnvironment = __webpack_require__(25);
-	var FallbackCompositionState = __webpack_require__(90);
-	var SyntheticCompositionEvent = __webpack_require__(92);
-	var SyntheticInputEvent = __webpack_require__(94);
+	var EventConstants = __webpack_require__(47);
+	var EventPropagators = __webpack_require__(90);
+	var ExecutionEnvironment = __webpack_require__(26);
+	var FallbackCompositionState = __webpack_require__(91);
+	var SyntheticCompositionEvent = __webpack_require__(93);
+	var SyntheticInputEvent = __webpack_require__(95);
 
-	var keyOf = __webpack_require__(95);
+	var keyOf = __webpack_require__(96);
 
 	var END_KEYCODES = [9, 13, 27, 32]; // Tab, Return, Esc, Space
 	var START_KEYCODE = 229;
@@ -19798,7 +21906,7 @@
 	module.exports = BeforeInputEventPlugin;
 
 /***/ },
-/* 89 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -19814,13 +21922,13 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(46);
-	var EventPluginHub = __webpack_require__(47);
+	var EventConstants = __webpack_require__(47);
+	var EventPluginHub = __webpack_require__(48);
 
-	var warning = __webpack_require__(41);
+	var warning = __webpack_require__(42);
 
-	var accumulateInto = __webpack_require__(51);
-	var forEachAccumulated = __webpack_require__(52);
+	var accumulateInto = __webpack_require__(52);
+	var forEachAccumulated = __webpack_require__(53);
 
 	var PropagationPhases = EventConstants.PropagationPhases;
 	var getListener = EventPluginHub.getListener;
@@ -19936,10 +22044,10 @@
 	};
 
 	module.exports = EventPropagators;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 90 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19956,10 +22064,10 @@
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(72);
+	var PooledClass = __webpack_require__(73);
 
-	var assign = __webpack_require__(55);
-	var getTextContentAccessor = __webpack_require__(91);
+	var assign = __webpack_require__(56);
+	var getTextContentAccessor = __webpack_require__(92);
 
 	/**
 	 * This helper class stores information about text content of a target node,
@@ -20039,7 +22147,7 @@
 	module.exports = FallbackCompositionState;
 
 /***/ },
-/* 91 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20055,7 +22163,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(25);
+	var ExecutionEnvironment = __webpack_require__(26);
 
 	var contentKey = null;
 
@@ -20077,7 +22185,7 @@
 	module.exports = getTextContentAccessor;
 
 /***/ },
-/* 92 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20094,7 +22202,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(93);
+	var SyntheticEvent = __webpack_require__(94);
 
 	/**
 	 * @interface Event
@@ -20119,7 +22227,7 @@
 	module.exports = SyntheticCompositionEvent;
 
 /***/ },
-/* 93 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -20136,11 +22244,11 @@
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(72);
+	var PooledClass = __webpack_require__(73);
 
-	var assign = __webpack_require__(55);
-	var emptyFunction = __webpack_require__(31);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var emptyFunction = __webpack_require__(32);
+	var warning = __webpack_require__(42);
 
 	/**
 	 * @interface Event
@@ -20299,10 +22407,10 @@
 	PooledClass.addPoolingTo(SyntheticEvent, PooledClass.fourArgumentPooler);
 
 	module.exports = SyntheticEvent;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 94 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20319,7 +22427,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(93);
+	var SyntheticEvent = __webpack_require__(94);
 
 	/**
 	 * @interface Event
@@ -20345,7 +22453,7 @@
 	module.exports = SyntheticInputEvent;
 
 /***/ },
-/* 95 */
+/* 96 */
 /***/ function(module, exports) {
 
 	/**
@@ -20385,7 +22493,7 @@
 	module.exports = keyOf;
 
 /***/ },
-/* 96 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20401,17 +22509,17 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(46);
-	var EventPluginHub = __webpack_require__(47);
-	var EventPropagators = __webpack_require__(89);
-	var ExecutionEnvironment = __webpack_require__(25);
-	var ReactUpdates = __webpack_require__(70);
-	var SyntheticEvent = __webpack_require__(93);
+	var EventConstants = __webpack_require__(47);
+	var EventPluginHub = __webpack_require__(48);
+	var EventPropagators = __webpack_require__(90);
+	var ExecutionEnvironment = __webpack_require__(26);
+	var ReactUpdates = __webpack_require__(71);
+	var SyntheticEvent = __webpack_require__(94);
 
-	var getEventTarget = __webpack_require__(97);
-	var isEventSupported = __webpack_require__(56);
-	var isTextInputElement = __webpack_require__(98);
-	var keyOf = __webpack_require__(95);
+	var getEventTarget = __webpack_require__(98);
+	var isEventSupported = __webpack_require__(57);
+	var isTextInputElement = __webpack_require__(99);
+	var keyOf = __webpack_require__(96);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -20711,7 +22819,7 @@
 	module.exports = ChangeEventPlugin;
 
 /***/ },
-/* 97 */
+/* 98 */
 /***/ function(module, exports) {
 
 	/**
@@ -20745,7 +22853,7 @@
 	module.exports = getEventTarget;
 
 /***/ },
-/* 98 */
+/* 99 */
 /***/ function(module, exports) {
 
 	/**
@@ -20790,7 +22898,7 @@
 	module.exports = isTextInputElement;
 
 /***/ },
-/* 99 */
+/* 100 */
 /***/ function(module, exports) {
 
 	/**
@@ -20818,7 +22926,7 @@
 	module.exports = ClientReactRootIndex;
 
 /***/ },
-/* 100 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20834,7 +22942,7 @@
 
 	'use strict';
 
-	var keyOf = __webpack_require__(95);
+	var keyOf = __webpack_require__(96);
 
 	/**
 	 * Module that is injectable into `EventPluginHub`, that specifies a
@@ -20850,7 +22958,7 @@
 	module.exports = DefaultEventPluginOrder;
 
 /***/ },
-/* 101 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20867,12 +22975,12 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(46);
-	var EventPropagators = __webpack_require__(89);
-	var SyntheticMouseEvent = __webpack_require__(102);
+	var EventConstants = __webpack_require__(47);
+	var EventPropagators = __webpack_require__(90);
+	var SyntheticMouseEvent = __webpack_require__(103);
 
-	var ReactMount = __webpack_require__(44);
-	var keyOf = __webpack_require__(95);
+	var ReactMount = __webpack_require__(45);
+	var keyOf = __webpack_require__(96);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 	var getFirstReactDOM = ReactMount.getFirstReactDOM;
@@ -20979,7 +23087,7 @@
 	module.exports = EnterLeaveEventPlugin;
 
 /***/ },
-/* 102 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20996,10 +23104,10 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(103);
-	var ViewportMetrics = __webpack_require__(54);
+	var SyntheticUIEvent = __webpack_require__(104);
+	var ViewportMetrics = __webpack_require__(55);
 
-	var getEventModifierState = __webpack_require__(104);
+	var getEventModifierState = __webpack_require__(105);
 
 	/**
 	 * @interface MouseEvent
@@ -21057,7 +23165,7 @@
 	module.exports = SyntheticMouseEvent;
 
 /***/ },
-/* 103 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21074,9 +23182,9 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(93);
+	var SyntheticEvent = __webpack_require__(94);
 
-	var getEventTarget = __webpack_require__(97);
+	var getEventTarget = __webpack_require__(98);
 
 	/**
 	 * @interface UIEvent
@@ -21122,7 +23230,7 @@
 	module.exports = SyntheticUIEvent;
 
 /***/ },
-/* 104 */
+/* 105 */
 /***/ function(module, exports) {
 
 	/**
@@ -21171,7 +23279,7 @@
 	module.exports = getEventModifierState;
 
 /***/ },
-/* 105 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21187,8 +23295,8 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(39);
-	var ExecutionEnvironment = __webpack_require__(25);
+	var DOMProperty = __webpack_require__(40);
+	var ExecutionEnvironment = __webpack_require__(26);
 
 	var MUST_USE_ATTRIBUTE = DOMProperty.injection.MUST_USE_ATTRIBUTE;
 	var MUST_USE_PROPERTY = DOMProperty.injection.MUST_USE_PROPERTY;
@@ -21408,7 +23516,7 @@
 	module.exports = HTMLDOMPropertyConfig;
 
 /***/ },
-/* 106 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -21424,10 +23532,10 @@
 
 	'use strict';
 
-	var ReactInstanceMap = __webpack_require__(63);
+	var ReactInstanceMap = __webpack_require__(64);
 
-	var findDOMNode = __webpack_require__(107);
-	var warning = __webpack_require__(41);
+	var findDOMNode = __webpack_require__(108);
+	var warning = __webpack_require__(42);
 
 	var didWarnKey = '_getDOMNodeDidWarn';
 
@@ -21447,10 +23555,10 @@
 	};
 
 	module.exports = ReactBrowserComponentMixin;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 107 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -21467,12 +23575,12 @@
 
 	'use strict';
 
-	var ReactCurrentOwner = __webpack_require__(21);
-	var ReactInstanceMap = __webpack_require__(63);
-	var ReactMount = __webpack_require__(44);
+	var ReactCurrentOwner = __webpack_require__(22);
+	var ReactInstanceMap = __webpack_require__(64);
+	var ReactMount = __webpack_require__(45);
 
-	var invariant = __webpack_require__(29);
-	var warning = __webpack_require__(41);
+	var invariant = __webpack_require__(30);
+	var warning = __webpack_require__(42);
 
 	/**
 	 * Returns the DOM node rendered by this element.
@@ -21502,10 +23610,10 @@
 	}
 
 	module.exports = findDOMNode;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 108 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21521,11 +23629,11 @@
 
 	'use strict';
 
-	var ReactUpdates = __webpack_require__(70);
-	var Transaction = __webpack_require__(73);
+	var ReactUpdates = __webpack_require__(71);
+	var Transaction = __webpack_require__(74);
 
-	var assign = __webpack_require__(55);
-	var emptyFunction = __webpack_require__(31);
+	var assign = __webpack_require__(56);
+	var emptyFunction = __webpack_require__(32);
 
 	var RESET_BATCHED_UPDATES = {
 	  initialize: emptyFunction,
@@ -21577,7 +23685,7 @@
 	module.exports = ReactDefaultBatchingStrategy;
 
 /***/ },
-/* 109 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -21596,34 +23704,34 @@
 
 	'use strict';
 
-	var AutoFocusUtils = __webpack_require__(110);
-	var CSSPropertyOperations = __webpack_require__(112);
-	var DOMProperty = __webpack_require__(39);
-	var DOMPropertyOperations = __webpack_require__(38);
-	var EventConstants = __webpack_require__(46);
-	var ReactBrowserEventEmitter = __webpack_require__(45);
-	var ReactComponentBrowserEnvironment = __webpack_require__(42);
-	var ReactDOMButton = __webpack_require__(120);
-	var ReactDOMInput = __webpack_require__(121);
-	var ReactDOMOption = __webpack_require__(125);
-	var ReactDOMSelect = __webpack_require__(128);
-	var ReactDOMTextarea = __webpack_require__(129);
-	var ReactMount = __webpack_require__(44);
-	var ReactMultiChild = __webpack_require__(130);
-	var ReactPerf = __webpack_require__(34);
-	var ReactUpdateQueue = __webpack_require__(69);
+	var AutoFocusUtils = __webpack_require__(111);
+	var CSSPropertyOperations = __webpack_require__(113);
+	var DOMProperty = __webpack_require__(40);
+	var DOMPropertyOperations = __webpack_require__(39);
+	var EventConstants = __webpack_require__(47);
+	var ReactBrowserEventEmitter = __webpack_require__(46);
+	var ReactComponentBrowserEnvironment = __webpack_require__(43);
+	var ReactDOMButton = __webpack_require__(121);
+	var ReactDOMInput = __webpack_require__(122);
+	var ReactDOMOption = __webpack_require__(126);
+	var ReactDOMSelect = __webpack_require__(129);
+	var ReactDOMTextarea = __webpack_require__(130);
+	var ReactMount = __webpack_require__(45);
+	var ReactMultiChild = __webpack_require__(131);
+	var ReactPerf = __webpack_require__(35);
+	var ReactUpdateQueue = __webpack_require__(70);
 
-	var assign = __webpack_require__(55);
-	var canDefineProperty = __webpack_require__(59);
-	var escapeTextContentForBrowser = __webpack_require__(37);
-	var invariant = __webpack_require__(29);
-	var isEventSupported = __webpack_require__(56);
-	var keyOf = __webpack_require__(95);
-	var setInnerHTML = __webpack_require__(35);
-	var setTextContent = __webpack_require__(36);
-	var shallowEqual = __webpack_require__(133);
-	var validateDOMNesting = __webpack_require__(86);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var canDefineProperty = __webpack_require__(60);
+	var escapeTextContentForBrowser = __webpack_require__(38);
+	var invariant = __webpack_require__(30);
+	var isEventSupported = __webpack_require__(57);
+	var keyOf = __webpack_require__(96);
+	var setInnerHTML = __webpack_require__(36);
+	var setTextContent = __webpack_require__(37);
+	var shallowEqual = __webpack_require__(134);
+	var validateDOMNesting = __webpack_require__(87);
+	var warning = __webpack_require__(42);
 
 	var deleteListener = ReactBrowserEventEmitter.deleteListener;
 	var listenTo = ReactBrowserEventEmitter.listenTo;
@@ -22542,10 +24650,10 @@
 	assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mixin);
 
 	module.exports = ReactDOMComponent;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 110 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22562,10 +24670,10 @@
 
 	'use strict';
 
-	var ReactMount = __webpack_require__(44);
+	var ReactMount = __webpack_require__(45);
 
-	var findDOMNode = __webpack_require__(107);
-	var focusNode = __webpack_require__(111);
+	var findDOMNode = __webpack_require__(108);
+	var focusNode = __webpack_require__(112);
 
 	var Mixin = {
 	  componentDidMount: function () {
@@ -22586,7 +24694,7 @@
 	module.exports = AutoFocusUtils;
 
 /***/ },
-/* 111 */
+/* 112 */
 /***/ function(module, exports) {
 
 	/**
@@ -22617,7 +24725,7 @@
 	module.exports = focusNode;
 
 /***/ },
-/* 112 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -22634,15 +24742,15 @@
 
 	'use strict';
 
-	var CSSProperty = __webpack_require__(113);
-	var ExecutionEnvironment = __webpack_require__(25);
-	var ReactPerf = __webpack_require__(34);
+	var CSSProperty = __webpack_require__(114);
+	var ExecutionEnvironment = __webpack_require__(26);
+	var ReactPerf = __webpack_require__(35);
 
-	var camelizeStyleName = __webpack_require__(114);
-	var dangerousStyleValue = __webpack_require__(116);
-	var hyphenateStyleName = __webpack_require__(117);
-	var memoizeStringOnly = __webpack_require__(119);
-	var warning = __webpack_require__(41);
+	var camelizeStyleName = __webpack_require__(115);
+	var dangerousStyleValue = __webpack_require__(117);
+	var hyphenateStyleName = __webpack_require__(118);
+	var memoizeStringOnly = __webpack_require__(120);
+	var warning = __webpack_require__(42);
 
 	var processStyleName = memoizeStringOnly(function (styleName) {
 	  return hyphenateStyleName(styleName);
@@ -22795,10 +24903,10 @@
 	});
 
 	module.exports = CSSPropertyOperations;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 113 */
+/* 114 */
 /***/ function(module, exports) {
 
 	/**
@@ -22942,7 +25050,7 @@
 	module.exports = CSSProperty;
 
 /***/ },
-/* 114 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22959,7 +25067,7 @@
 
 	'use strict';
 
-	var camelize = __webpack_require__(115);
+	var camelize = __webpack_require__(116);
 
 	var msPattern = /^-ms-/;
 
@@ -22987,7 +25095,7 @@
 	module.exports = camelizeStyleName;
 
 /***/ },
-/* 115 */
+/* 116 */
 /***/ function(module, exports) {
 
 	/**
@@ -23024,7 +25132,7 @@
 	module.exports = camelize;
 
 /***/ },
-/* 116 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23041,7 +25149,7 @@
 
 	'use strict';
 
-	var CSSProperty = __webpack_require__(113);
+	var CSSProperty = __webpack_require__(114);
 
 	var isUnitlessNumber = CSSProperty.isUnitlessNumber;
 
@@ -23084,7 +25192,7 @@
 	module.exports = dangerousStyleValue;
 
 /***/ },
-/* 117 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23101,7 +25209,7 @@
 
 	'use strict';
 
-	var hyphenate = __webpack_require__(118);
+	var hyphenate = __webpack_require__(119);
 
 	var msPattern = /^ms-/;
 
@@ -23128,7 +25236,7 @@
 	module.exports = hyphenateStyleName;
 
 /***/ },
-/* 118 */
+/* 119 */
 /***/ function(module, exports) {
 
 	/**
@@ -23166,7 +25274,7 @@
 	module.exports = hyphenate;
 
 /***/ },
-/* 119 */
+/* 120 */
 /***/ function(module, exports) {
 
 	/**
@@ -23202,7 +25310,7 @@
 	module.exports = memoizeStringOnly;
 
 /***/ },
-/* 120 */
+/* 121 */
 /***/ function(module, exports) {
 
 	/**
@@ -23257,7 +25365,7 @@
 	module.exports = ReactDOMButton;
 
 /***/ },
-/* 121 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23273,13 +25381,13 @@
 
 	'use strict';
 
-	var ReactDOMIDOperations = __webpack_require__(43);
-	var LinkedValueUtils = __webpack_require__(122);
-	var ReactMount = __webpack_require__(44);
-	var ReactUpdates = __webpack_require__(70);
+	var ReactDOMIDOperations = __webpack_require__(44);
+	var LinkedValueUtils = __webpack_require__(123);
+	var ReactMount = __webpack_require__(45);
+	var ReactUpdates = __webpack_require__(71);
 
-	var assign = __webpack_require__(55);
-	var invariant = __webpack_require__(29);
+	var assign = __webpack_require__(56);
+	var invariant = __webpack_require__(30);
 
 	var instancesByReactID = {};
 
@@ -23413,10 +25521,10 @@
 	}
 
 	module.exports = ReactDOMInput;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 122 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23433,11 +25541,11 @@
 
 	'use strict';
 
-	var ReactPropTypes = __webpack_require__(123);
-	var ReactPropTypeLocations = __webpack_require__(81);
+	var ReactPropTypes = __webpack_require__(124);
+	var ReactPropTypeLocations = __webpack_require__(82);
 
-	var invariant = __webpack_require__(29);
-	var warning = __webpack_require__(41);
+	var invariant = __webpack_require__(30);
+	var warning = __webpack_require__(42);
 
 	var hasReadOnlyValue = {
 	  'button': true,
@@ -23553,10 +25661,10 @@
 	};
 
 	module.exports = LinkedValueUtils;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 123 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -23572,11 +25680,11 @@
 
 	'use strict';
 
-	var ReactElement = __webpack_require__(58);
-	var ReactPropTypeLocationNames = __webpack_require__(82);
+	var ReactElement = __webpack_require__(59);
+	var ReactPropTypeLocationNames = __webpack_require__(83);
 
-	var emptyFunction = __webpack_require__(31);
-	var getIteratorFn = __webpack_require__(124);
+	var emptyFunction = __webpack_require__(32);
+	var getIteratorFn = __webpack_require__(125);
 
 	/**
 	 * Collection of methods that allow declaration and validation of props that are
@@ -23917,7 +26025,7 @@
 	module.exports = ReactPropTypes;
 
 /***/ },
-/* 124 */
+/* 125 */
 /***/ function(module, exports) {
 
 	/**
@@ -23962,7 +26070,7 @@
 	module.exports = getIteratorFn;
 
 /***/ },
-/* 125 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -23978,11 +26086,11 @@
 
 	'use strict';
 
-	var ReactChildren = __webpack_require__(126);
-	var ReactDOMSelect = __webpack_require__(128);
+	var ReactChildren = __webpack_require__(127);
+	var ReactDOMSelect = __webpack_require__(129);
 
-	var assign = __webpack_require__(55);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var warning = __webpack_require__(42);
 
 	var valueContextKey = ReactDOMSelect.valueContextKey;
 
@@ -24051,10 +26159,10 @@
 	};
 
 	module.exports = ReactDOMOption;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 126 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24070,11 +26178,11 @@
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(72);
-	var ReactElement = __webpack_require__(58);
+	var PooledClass = __webpack_require__(73);
+	var ReactElement = __webpack_require__(59);
 
-	var emptyFunction = __webpack_require__(31);
-	var traverseAllChildren = __webpack_require__(127);
+	var emptyFunction = __webpack_require__(32);
+	var traverseAllChildren = __webpack_require__(128);
 
 	var twoArgumentPooler = PooledClass.twoArgumentPooler;
 	var fourArgumentPooler = PooledClass.fourArgumentPooler;
@@ -24241,7 +26349,7 @@
 	module.exports = ReactChildren;
 
 /***/ },
-/* 127 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24257,13 +26365,13 @@
 
 	'use strict';
 
-	var ReactCurrentOwner = __webpack_require__(21);
-	var ReactElement = __webpack_require__(58);
-	var ReactInstanceHandles = __webpack_require__(61);
+	var ReactCurrentOwner = __webpack_require__(22);
+	var ReactElement = __webpack_require__(59);
+	var ReactInstanceHandles = __webpack_require__(62);
 
-	var getIteratorFn = __webpack_require__(124);
-	var invariant = __webpack_require__(29);
-	var warning = __webpack_require__(41);
+	var getIteratorFn = __webpack_require__(125);
+	var invariant = __webpack_require__(30);
+	var warning = __webpack_require__(42);
 
 	var SEPARATOR = ReactInstanceHandles.SEPARATOR;
 	var SUBSEPARATOR = ':';
@@ -24433,10 +26541,10 @@
 	}
 
 	module.exports = traverseAllChildren;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 128 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24452,12 +26560,12 @@
 
 	'use strict';
 
-	var LinkedValueUtils = __webpack_require__(122);
-	var ReactMount = __webpack_require__(44);
-	var ReactUpdates = __webpack_require__(70);
+	var LinkedValueUtils = __webpack_require__(123);
+	var ReactMount = __webpack_require__(45);
+	var ReactUpdates = __webpack_require__(71);
 
-	var assign = __webpack_require__(55);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var warning = __webpack_require__(42);
 
 	var valueContextKey = '__ReactDOMSelect_value$' + Math.random().toString(36).slice(2);
 
@@ -24627,10 +26735,10 @@
 	}
 
 	module.exports = ReactDOMSelect;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 129 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24646,13 +26754,13 @@
 
 	'use strict';
 
-	var LinkedValueUtils = __webpack_require__(122);
-	var ReactDOMIDOperations = __webpack_require__(43);
-	var ReactUpdates = __webpack_require__(70);
+	var LinkedValueUtils = __webpack_require__(123);
+	var ReactDOMIDOperations = __webpack_require__(44);
+	var ReactUpdates = __webpack_require__(71);
 
-	var assign = __webpack_require__(55);
-	var invariant = __webpack_require__(29);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var invariant = __webpack_require__(30);
+	var warning = __webpack_require__(42);
 
 	function forceUpdateIfMounted() {
 	  if (this._rootNodeID) {
@@ -24746,10 +26854,10 @@
 	}
 
 	module.exports = ReactDOMTextarea;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 130 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24766,14 +26874,14 @@
 
 	'use strict';
 
-	var ReactComponentEnvironment = __webpack_require__(80);
-	var ReactMultiChildUpdateTypes = __webpack_require__(32);
+	var ReactComponentEnvironment = __webpack_require__(81);
+	var ReactMultiChildUpdateTypes = __webpack_require__(33);
 
-	var ReactCurrentOwner = __webpack_require__(21);
-	var ReactReconciler = __webpack_require__(66);
-	var ReactChildReconciler = __webpack_require__(131);
+	var ReactCurrentOwner = __webpack_require__(22);
+	var ReactReconciler = __webpack_require__(67);
+	var ReactChildReconciler = __webpack_require__(132);
 
-	var flattenChildren = __webpack_require__(132);
+	var flattenChildren = __webpack_require__(133);
 
 	/**
 	 * Updating children of a component may trigger recursive updates. The depth is
@@ -25248,10 +27356,10 @@
 	};
 
 	module.exports = ReactMultiChild;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 131 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25268,12 +27376,12 @@
 
 	'use strict';
 
-	var ReactReconciler = __webpack_require__(66);
+	var ReactReconciler = __webpack_require__(67);
 
-	var instantiateReactComponent = __webpack_require__(78);
-	var shouldUpdateReactComponent = __webpack_require__(83);
-	var traverseAllChildren = __webpack_require__(127);
-	var warning = __webpack_require__(41);
+	var instantiateReactComponent = __webpack_require__(79);
+	var shouldUpdateReactComponent = __webpack_require__(84);
+	var traverseAllChildren = __webpack_require__(128);
+	var warning = __webpack_require__(42);
 
 	function instantiateChild(childInstances, child, name) {
 	  // We found a component instance.
@@ -25376,10 +27484,10 @@
 	};
 
 	module.exports = ReactChildReconciler;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 132 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25395,8 +27503,8 @@
 
 	'use strict';
 
-	var traverseAllChildren = __webpack_require__(127);
-	var warning = __webpack_require__(41);
+	var traverseAllChildren = __webpack_require__(128);
+	var warning = __webpack_require__(42);
 
 	/**
 	 * @param {function} traverseContext Context passed through traversal.
@@ -25430,10 +27538,10 @@
 	}
 
 	module.exports = flattenChildren;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 133 */
+/* 134 */
 /***/ function(module, exports) {
 
 	/**
@@ -25488,7 +27596,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 134 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25505,16 +27613,16 @@
 
 	'use strict';
 
-	var EventListener = __webpack_require__(135);
-	var ExecutionEnvironment = __webpack_require__(25);
-	var PooledClass = __webpack_require__(72);
-	var ReactInstanceHandles = __webpack_require__(61);
-	var ReactMount = __webpack_require__(44);
-	var ReactUpdates = __webpack_require__(70);
+	var EventListener = __webpack_require__(136);
+	var ExecutionEnvironment = __webpack_require__(26);
+	var PooledClass = __webpack_require__(73);
+	var ReactInstanceHandles = __webpack_require__(62);
+	var ReactMount = __webpack_require__(45);
+	var ReactUpdates = __webpack_require__(71);
 
-	var assign = __webpack_require__(55);
-	var getEventTarget = __webpack_require__(97);
-	var getUnboundedScrollPosition = __webpack_require__(136);
+	var assign = __webpack_require__(56);
+	var getEventTarget = __webpack_require__(98);
+	var getUnboundedScrollPosition = __webpack_require__(137);
 
 	var DOCUMENT_FRAGMENT_NODE_TYPE = 11;
 
@@ -25704,7 +27812,7 @@
 	module.exports = ReactEventListener;
 
 /***/ },
-/* 135 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25728,7 +27836,7 @@
 
 	'use strict';
 
-	var emptyFunction = __webpack_require__(31);
+	var emptyFunction = __webpack_require__(32);
 
 	/**
 	 * Upstream version of event listener. Does not take into account specific
@@ -25791,10 +27899,10 @@
 	};
 
 	module.exports = EventListener;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 136 */
+/* 137 */
 /***/ function(module, exports) {
 
 	/**
@@ -25837,7 +27945,7 @@
 	module.exports = getUnboundedScrollPosition;
 
 /***/ },
-/* 137 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25853,16 +27961,16 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(39);
-	var EventPluginHub = __webpack_require__(47);
-	var ReactComponentEnvironment = __webpack_require__(80);
-	var ReactClass = __webpack_require__(138);
-	var ReactEmptyComponent = __webpack_require__(84);
-	var ReactBrowserEventEmitter = __webpack_require__(45);
-	var ReactNativeComponent = __webpack_require__(85);
-	var ReactPerf = __webpack_require__(34);
-	var ReactRootIndex = __webpack_require__(62);
-	var ReactUpdates = __webpack_require__(70);
+	var DOMProperty = __webpack_require__(40);
+	var EventPluginHub = __webpack_require__(48);
+	var ReactComponentEnvironment = __webpack_require__(81);
+	var ReactClass = __webpack_require__(139);
+	var ReactEmptyComponent = __webpack_require__(85);
+	var ReactBrowserEventEmitter = __webpack_require__(46);
+	var ReactNativeComponent = __webpack_require__(86);
+	var ReactPerf = __webpack_require__(35);
+	var ReactRootIndex = __webpack_require__(63);
+	var ReactUpdates = __webpack_require__(71);
 
 	var ReactInjection = {
 	  Component: ReactComponentEnvironment.injection,
@@ -25880,7 +27988,7 @@
 	module.exports = ReactInjection;
 
 /***/ },
-/* 138 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25896,18 +28004,18 @@
 
 	'use strict';
 
-	var ReactComponent = __webpack_require__(139);
-	var ReactElement = __webpack_require__(58);
-	var ReactPropTypeLocations = __webpack_require__(81);
-	var ReactPropTypeLocationNames = __webpack_require__(82);
-	var ReactNoopUpdateQueue = __webpack_require__(140);
+	var ReactComponent = __webpack_require__(140);
+	var ReactElement = __webpack_require__(59);
+	var ReactPropTypeLocations = __webpack_require__(82);
+	var ReactPropTypeLocationNames = __webpack_require__(83);
+	var ReactNoopUpdateQueue = __webpack_require__(141);
 
-	var assign = __webpack_require__(55);
-	var emptyObject = __webpack_require__(74);
-	var invariant = __webpack_require__(29);
-	var keyMirror = __webpack_require__(33);
-	var keyOf = __webpack_require__(95);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var emptyObject = __webpack_require__(75);
+	var invariant = __webpack_require__(30);
+	var keyMirror = __webpack_require__(34);
+	var keyOf = __webpack_require__(96);
+	var warning = __webpack_require__(42);
 
 	var MIXINS_KEY = keyOf({ mixins: null });
 
@@ -26654,10 +28762,10 @@
 	};
 
 	module.exports = ReactClass;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 139 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26673,12 +28781,12 @@
 
 	'use strict';
 
-	var ReactNoopUpdateQueue = __webpack_require__(140);
+	var ReactNoopUpdateQueue = __webpack_require__(141);
 
-	var canDefineProperty = __webpack_require__(59);
-	var emptyObject = __webpack_require__(74);
-	var invariant = __webpack_require__(29);
-	var warning = __webpack_require__(41);
+	var canDefineProperty = __webpack_require__(60);
+	var emptyObject = __webpack_require__(75);
+	var invariant = __webpack_require__(30);
+	var warning = __webpack_require__(42);
 
 	/**
 	 * Base class helpers for the updating state of a component.
@@ -26782,10 +28890,10 @@
 	}
 
 	module.exports = ReactComponent;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 140 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26801,7 +28909,7 @@
 
 	'use strict';
 
-	var warning = __webpack_require__(41);
+	var warning = __webpack_require__(42);
 
 	function warnTDZ(publicInstance, callerName) {
 	  if (process.env.NODE_ENV !== 'production') {
@@ -26906,10 +29014,10 @@
 	};
 
 	module.exports = ReactNoopUpdateQueue;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 141 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26926,14 +29034,14 @@
 
 	'use strict';
 
-	var CallbackQueue = __webpack_require__(71);
-	var PooledClass = __webpack_require__(72);
-	var ReactBrowserEventEmitter = __webpack_require__(45);
-	var ReactDOMFeatureFlags = __webpack_require__(57);
-	var ReactInputSelection = __webpack_require__(142);
-	var Transaction = __webpack_require__(73);
+	var CallbackQueue = __webpack_require__(72);
+	var PooledClass = __webpack_require__(73);
+	var ReactBrowserEventEmitter = __webpack_require__(46);
+	var ReactDOMFeatureFlags = __webpack_require__(58);
+	var ReactInputSelection = __webpack_require__(143);
+	var Transaction = __webpack_require__(74);
 
-	var assign = __webpack_require__(55);
+	var assign = __webpack_require__(56);
 
 	/**
 	 * Ensures that, when possible, the selection range (currently selected text
@@ -27065,7 +29173,7 @@
 	module.exports = ReactReconcileTransaction;
 
 /***/ },
-/* 142 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27081,11 +29189,11 @@
 
 	'use strict';
 
-	var ReactDOMSelection = __webpack_require__(143);
+	var ReactDOMSelection = __webpack_require__(144);
 
-	var containsNode = __webpack_require__(75);
-	var focusNode = __webpack_require__(111);
-	var getActiveElement = __webpack_require__(145);
+	var containsNode = __webpack_require__(76);
+	var focusNode = __webpack_require__(112);
+	var getActiveElement = __webpack_require__(146);
 
 	function isInDocument(node) {
 	  return containsNode(document.documentElement, node);
@@ -27194,7 +29302,7 @@
 	module.exports = ReactInputSelection;
 
 /***/ },
-/* 143 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27210,10 +29318,10 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(25);
+	var ExecutionEnvironment = __webpack_require__(26);
 
-	var getNodeForCharacterOffset = __webpack_require__(144);
-	var getTextContentAccessor = __webpack_require__(91);
+	var getNodeForCharacterOffset = __webpack_require__(145);
+	var getTextContentAccessor = __webpack_require__(92);
 
 	/**
 	 * While `isCollapsed` is available on the Selection object and `collapsed`
@@ -27411,7 +29519,7 @@
 	module.exports = ReactDOMSelection;
 
 /***/ },
-/* 144 */
+/* 145 */
 /***/ function(module, exports) {
 
 	/**
@@ -27489,7 +29597,7 @@
 	module.exports = getNodeForCharacterOffset;
 
 /***/ },
-/* 145 */
+/* 146 */
 /***/ function(module, exports) {
 
 	/**
@@ -27527,7 +29635,7 @@
 	module.exports = getActiveElement;
 
 /***/ },
-/* 146 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27543,16 +29651,16 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(46);
-	var EventPropagators = __webpack_require__(89);
-	var ExecutionEnvironment = __webpack_require__(25);
-	var ReactInputSelection = __webpack_require__(142);
-	var SyntheticEvent = __webpack_require__(93);
+	var EventConstants = __webpack_require__(47);
+	var EventPropagators = __webpack_require__(90);
+	var ExecutionEnvironment = __webpack_require__(26);
+	var ReactInputSelection = __webpack_require__(143);
+	var SyntheticEvent = __webpack_require__(94);
 
-	var getActiveElement = __webpack_require__(145);
-	var isTextInputElement = __webpack_require__(98);
-	var keyOf = __webpack_require__(95);
-	var shallowEqual = __webpack_require__(133);
+	var getActiveElement = __webpack_require__(146);
+	var isTextInputElement = __webpack_require__(99);
+	var keyOf = __webpack_require__(96);
+	var shallowEqual = __webpack_require__(134);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -27733,7 +29841,7 @@
 	module.exports = SelectEventPlugin;
 
 /***/ },
-/* 147 */
+/* 148 */
 /***/ function(module, exports) {
 
 	/**
@@ -27767,7 +29875,7 @@
 	module.exports = ServerReactRootIndex;
 
 /***/ },
-/* 148 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -27783,24 +29891,24 @@
 
 	'use strict';
 
-	var EventConstants = __webpack_require__(46);
-	var EventListener = __webpack_require__(135);
-	var EventPropagators = __webpack_require__(89);
-	var ReactMount = __webpack_require__(44);
-	var SyntheticClipboardEvent = __webpack_require__(149);
-	var SyntheticEvent = __webpack_require__(93);
-	var SyntheticFocusEvent = __webpack_require__(150);
-	var SyntheticKeyboardEvent = __webpack_require__(151);
-	var SyntheticMouseEvent = __webpack_require__(102);
-	var SyntheticDragEvent = __webpack_require__(154);
-	var SyntheticTouchEvent = __webpack_require__(155);
-	var SyntheticUIEvent = __webpack_require__(103);
-	var SyntheticWheelEvent = __webpack_require__(156);
+	var EventConstants = __webpack_require__(47);
+	var EventListener = __webpack_require__(136);
+	var EventPropagators = __webpack_require__(90);
+	var ReactMount = __webpack_require__(45);
+	var SyntheticClipboardEvent = __webpack_require__(150);
+	var SyntheticEvent = __webpack_require__(94);
+	var SyntheticFocusEvent = __webpack_require__(151);
+	var SyntheticKeyboardEvent = __webpack_require__(152);
+	var SyntheticMouseEvent = __webpack_require__(103);
+	var SyntheticDragEvent = __webpack_require__(155);
+	var SyntheticTouchEvent = __webpack_require__(156);
+	var SyntheticUIEvent = __webpack_require__(104);
+	var SyntheticWheelEvent = __webpack_require__(157);
 
-	var emptyFunction = __webpack_require__(31);
-	var getEventCharCode = __webpack_require__(152);
-	var invariant = __webpack_require__(29);
-	var keyOf = __webpack_require__(95);
+	var emptyFunction = __webpack_require__(32);
+	var getEventCharCode = __webpack_require__(153);
+	var invariant = __webpack_require__(30);
+	var keyOf = __webpack_require__(96);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -28357,10 +30465,10 @@
 	};
 
 	module.exports = SimpleEventPlugin;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 149 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28377,7 +30485,7 @@
 
 	'use strict';
 
-	var SyntheticEvent = __webpack_require__(93);
+	var SyntheticEvent = __webpack_require__(94);
 
 	/**
 	 * @interface Event
@@ -28404,7 +30512,7 @@
 	module.exports = SyntheticClipboardEvent;
 
 /***/ },
-/* 150 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28421,7 +30529,7 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(103);
+	var SyntheticUIEvent = __webpack_require__(104);
 
 	/**
 	 * @interface FocusEvent
@@ -28446,7 +30554,7 @@
 	module.exports = SyntheticFocusEvent;
 
 /***/ },
-/* 151 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28463,11 +30571,11 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(103);
+	var SyntheticUIEvent = __webpack_require__(104);
 
-	var getEventCharCode = __webpack_require__(152);
-	var getEventKey = __webpack_require__(153);
-	var getEventModifierState = __webpack_require__(104);
+	var getEventCharCode = __webpack_require__(153);
+	var getEventKey = __webpack_require__(154);
+	var getEventModifierState = __webpack_require__(105);
 
 	/**
 	 * @interface KeyboardEvent
@@ -28536,7 +30644,7 @@
 	module.exports = SyntheticKeyboardEvent;
 
 /***/ },
-/* 152 */
+/* 153 */
 /***/ function(module, exports) {
 
 	/**
@@ -28591,7 +30699,7 @@
 	module.exports = getEventCharCode;
 
 /***/ },
-/* 153 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28608,7 +30716,7 @@
 
 	'use strict';
 
-	var getEventCharCode = __webpack_require__(152);
+	var getEventCharCode = __webpack_require__(153);
 
 	/**
 	 * Normalization of deprecated HTML5 `key` values
@@ -28699,7 +30807,7 @@
 	module.exports = getEventKey;
 
 /***/ },
-/* 154 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28716,7 +30824,7 @@
 
 	'use strict';
 
-	var SyntheticMouseEvent = __webpack_require__(102);
+	var SyntheticMouseEvent = __webpack_require__(103);
 
 	/**
 	 * @interface DragEvent
@@ -28741,7 +30849,7 @@
 	module.exports = SyntheticDragEvent;
 
 /***/ },
-/* 155 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28758,9 +30866,9 @@
 
 	'use strict';
 
-	var SyntheticUIEvent = __webpack_require__(103);
+	var SyntheticUIEvent = __webpack_require__(104);
 
-	var getEventModifierState = __webpack_require__(104);
+	var getEventModifierState = __webpack_require__(105);
 
 	/**
 	 * @interface TouchEvent
@@ -28792,7 +30900,7 @@
 	module.exports = SyntheticTouchEvent;
 
 /***/ },
-/* 156 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28809,7 +30917,7 @@
 
 	'use strict';
 
-	var SyntheticMouseEvent = __webpack_require__(102);
+	var SyntheticMouseEvent = __webpack_require__(103);
 
 	/**
 	 * @interface WheelEvent
@@ -28852,7 +30960,7 @@
 	module.exports = SyntheticWheelEvent;
 
 /***/ },
-/* 157 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28868,7 +30976,7 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(39);
+	var DOMProperty = __webpack_require__(40);
 
 	var MUST_USE_ATTRIBUTE = DOMProperty.injection.MUST_USE_ATTRIBUTE;
 
@@ -28984,7 +31092,7 @@
 	module.exports = SVGDOMPropertyConfig;
 
 /***/ },
-/* 158 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29001,12 +31109,12 @@
 
 	'use strict';
 
-	var DOMProperty = __webpack_require__(39);
-	var ReactDefaultPerfAnalysis = __webpack_require__(159);
-	var ReactMount = __webpack_require__(44);
-	var ReactPerf = __webpack_require__(34);
+	var DOMProperty = __webpack_require__(40);
+	var ReactDefaultPerfAnalysis = __webpack_require__(160);
+	var ReactMount = __webpack_require__(45);
+	var ReactPerf = __webpack_require__(35);
 
-	var performanceNow = __webpack_require__(160);
+	var performanceNow = __webpack_require__(161);
 
 	function roundFloat(val) {
 	  return Math.floor(val * 100) / 100;
@@ -29226,7 +31334,7 @@
 	module.exports = ReactDefaultPerf;
 
 /***/ },
-/* 159 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29242,7 +31350,7 @@
 
 	'use strict';
 
-	var assign = __webpack_require__(55);
+	var assign = __webpack_require__(56);
 
 	// Don't try to save users less than 1.2ms (a number I made up)
 	var DONT_CARE_THRESHOLD = 1.2;
@@ -29430,7 +31538,7 @@
 	module.exports = ReactDefaultPerfAnalysis;
 
 /***/ },
-/* 160 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29447,7 +31555,7 @@
 
 	'use strict';
 
-	var performance = __webpack_require__(161);
+	var performance = __webpack_require__(162);
 	var curPerformance = performance;
 
 	/**
@@ -29464,7 +31572,7 @@
 	module.exports = performanceNow;
 
 /***/ },
-/* 161 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29481,7 +31589,7 @@
 
 	'use strict';
 
-	var ExecutionEnvironment = __webpack_require__(25);
+	var ExecutionEnvironment = __webpack_require__(26);
 
 	var performance;
 
@@ -29492,7 +31600,7 @@
 	module.exports = performance || {};
 
 /***/ },
-/* 162 */
+/* 163 */
 /***/ function(module, exports) {
 
 	/**
@@ -29511,7 +31619,7 @@
 	module.exports = '0.14.3';
 
 /***/ },
-/* 163 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29527,12 +31635,12 @@
 
 	'use strict';
 
-	var ReactMount = __webpack_require__(44);
+	var ReactMount = __webpack_require__(45);
 
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
-/* 164 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29548,9 +31656,9 @@
 
 	'use strict';
 
-	var ReactDefaultInjection = __webpack_require__(87);
-	var ReactServerRendering = __webpack_require__(165);
-	var ReactVersion = __webpack_require__(162);
+	var ReactDefaultInjection = __webpack_require__(88);
+	var ReactServerRendering = __webpack_require__(166);
+	var ReactVersion = __webpack_require__(163);
 
 	ReactDefaultInjection.inject();
 
@@ -29563,7 +31671,7 @@
 	module.exports = ReactDOMServer;
 
 /***/ },
-/* 165 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -29579,17 +31687,17 @@
 	 */
 	'use strict';
 
-	var ReactDefaultBatchingStrategy = __webpack_require__(108);
-	var ReactElement = __webpack_require__(58);
-	var ReactInstanceHandles = __webpack_require__(61);
-	var ReactMarkupChecksum = __webpack_require__(64);
-	var ReactServerBatchingStrategy = __webpack_require__(166);
-	var ReactServerRenderingTransaction = __webpack_require__(167);
-	var ReactUpdates = __webpack_require__(70);
+	var ReactDefaultBatchingStrategy = __webpack_require__(109);
+	var ReactElement = __webpack_require__(59);
+	var ReactInstanceHandles = __webpack_require__(62);
+	var ReactMarkupChecksum = __webpack_require__(65);
+	var ReactServerBatchingStrategy = __webpack_require__(167);
+	var ReactServerRenderingTransaction = __webpack_require__(168);
+	var ReactUpdates = __webpack_require__(71);
 
-	var emptyObject = __webpack_require__(74);
-	var instantiateReactComponent = __webpack_require__(78);
-	var invariant = __webpack_require__(29);
+	var emptyObject = __webpack_require__(75);
+	var instantiateReactComponent = __webpack_require__(79);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * @param {ReactElement} element
@@ -29649,10 +31757,10 @@
 	  renderToString: renderToString,
 	  renderToStaticMarkup: renderToStaticMarkup
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 166 */
+/* 167 */
 /***/ function(module, exports) {
 
 	/**
@@ -29680,7 +31788,7 @@
 	module.exports = ReactServerBatchingStrategy;
 
 /***/ },
-/* 167 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -29697,12 +31805,12 @@
 
 	'use strict';
 
-	var PooledClass = __webpack_require__(72);
-	var CallbackQueue = __webpack_require__(71);
-	var Transaction = __webpack_require__(73);
+	var PooledClass = __webpack_require__(73);
+	var CallbackQueue = __webpack_require__(72);
+	var Transaction = __webpack_require__(74);
 
-	var assign = __webpack_require__(55);
-	var emptyFunction = __webpack_require__(31);
+	var assign = __webpack_require__(56);
+	var emptyFunction = __webpack_require__(32);
 
 	/**
 	 * Provides a `CallbackQueue` queue for collecting `onDOMReady` callbacks
@@ -29772,7 +31880,7 @@
 	module.exports = ReactServerRenderingTransaction;
 
 /***/ },
-/* 168 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -29788,17 +31896,17 @@
 
 	'use strict';
 
-	var ReactChildren = __webpack_require__(126);
-	var ReactComponent = __webpack_require__(139);
-	var ReactClass = __webpack_require__(138);
-	var ReactDOMFactories = __webpack_require__(169);
-	var ReactElement = __webpack_require__(58);
-	var ReactElementValidator = __webpack_require__(170);
-	var ReactPropTypes = __webpack_require__(123);
-	var ReactVersion = __webpack_require__(162);
+	var ReactChildren = __webpack_require__(127);
+	var ReactComponent = __webpack_require__(140);
+	var ReactClass = __webpack_require__(139);
+	var ReactDOMFactories = __webpack_require__(170);
+	var ReactElement = __webpack_require__(59);
+	var ReactElementValidator = __webpack_require__(171);
+	var ReactPropTypes = __webpack_require__(124);
+	var ReactVersion = __webpack_require__(163);
 
-	var assign = __webpack_require__(55);
-	var onlyChild = __webpack_require__(172);
+	var assign = __webpack_require__(56);
+	var onlyChild = __webpack_require__(173);
 
 	var createElement = ReactElement.createElement;
 	var createFactory = ReactElement.createFactory;
@@ -29849,10 +31957,10 @@
 	};
 
 	module.exports = React;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 169 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -29869,10 +31977,10 @@
 
 	'use strict';
 
-	var ReactElement = __webpack_require__(58);
-	var ReactElementValidator = __webpack_require__(170);
+	var ReactElement = __webpack_require__(59);
+	var ReactElementValidator = __webpack_require__(171);
 
-	var mapObject = __webpack_require__(171);
+	var mapObject = __webpack_require__(172);
 
 	/**
 	 * Create a factory that creates HTML tag elements.
@@ -30032,10 +32140,10 @@
 	}, createDOMFactory);
 
 	module.exports = ReactDOMFactories;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 170 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -30058,15 +32166,15 @@
 
 	'use strict';
 
-	var ReactElement = __webpack_require__(58);
-	var ReactPropTypeLocations = __webpack_require__(81);
-	var ReactPropTypeLocationNames = __webpack_require__(82);
-	var ReactCurrentOwner = __webpack_require__(21);
+	var ReactElement = __webpack_require__(59);
+	var ReactPropTypeLocations = __webpack_require__(82);
+	var ReactPropTypeLocationNames = __webpack_require__(83);
+	var ReactCurrentOwner = __webpack_require__(22);
 
-	var canDefineProperty = __webpack_require__(59);
-	var getIteratorFn = __webpack_require__(124);
-	var invariant = __webpack_require__(29);
-	var warning = __webpack_require__(41);
+	var canDefineProperty = __webpack_require__(60);
+	var getIteratorFn = __webpack_require__(125);
+	var invariant = __webpack_require__(30);
+	var warning = __webpack_require__(42);
 
 	function getDeclarationErrorAddendum() {
 	  if (ReactCurrentOwner.current) {
@@ -30319,10 +32427,10 @@
 	};
 
 	module.exports = ReactElementValidator;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 171 */
+/* 172 */
 /***/ function(module, exports) {
 
 	/**
@@ -30378,7 +32486,7 @@
 	module.exports = mapObject;
 
 /***/ },
-/* 172 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -30393,9 +32501,9 @@
 	 */
 	'use strict';
 
-	var ReactElement = __webpack_require__(58);
+	var ReactElement = __webpack_require__(59);
 
-	var invariant = __webpack_require__(29);
+	var invariant = __webpack_require__(30);
 
 	/**
 	 * Returns the first child in a collection of children and verifies that there
@@ -30414,10 +32522,10 @@
 	}
 
 	module.exports = onlyChild;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -30433,8 +32541,8 @@
 
 	'use strict';
 
-	var assign = __webpack_require__(55);
-	var warning = __webpack_require__(41);
+	var assign = __webpack_require__(56);
+	var warning = __webpack_require__(42);
 
 	/**
 	 * This will log a single deprecation notice per function and forward the call
@@ -30468,30 +32576,35 @@
 	}
 
 	module.exports = deprecated;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)));
-
-/***/ },
-/* 174 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(19);
-
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)));
 
 /***/ },
 /* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	module.exports = __webpack_require__(20);
+
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	/**
-	 * Created by ���� on 2015/12/15.
+	 * Created by liuhan
+	 * on 2015/12/15.
 	 */
-	var React = __webpack_require__(17);
+	var React = __webpack_require__(18);
 
 	var NavBar = React.createClass({
 	    displayName: "NavBar",
+
+	    SCREEN_MODEL_PORTRAIT: "Portrait Mode",
+	    SCREEN_MODEL_EXPAND: "Expanded Mode",
+	    SCREEN_MODEL_EXTRA: "Extra Mode",
 
 	    setState: function setState(state) {
 	        this.props.onChange(state);
@@ -30499,7 +32612,7 @@
 
 	    ratioChange: function ratioChange(event) {
 	        var ratio = event.target.value;
-	        if (ratio === "x169") {
+	        if (ratio === "1920x1080(16:9)") {
 	            this.setState({ width: 1920, minHeight: 1080 });
 	        } else if (ratio === "x1610") {
 	            this.setState({ width: 1280, minHeight: 800 });
@@ -30508,9 +32621,39 @@
 	        }
 	    },
 
+	    resolution: function resolution(event) {
+	        var value = $(event.target).html();
+	        if (value === "1920x1080(16:9)") {
+	            this.setState({ width: 1920, minHeight: 1080 });
+	        } else if (value === "1200x800(16:10)") {
+	            this.setState({ width: 1280, minHeight: 800 });
+	        } else if (value === "1024x768(4:3)") {
+	            this.setState({ width: 1024, minHeight: 768 });
+	        }
+	    },
+
 	    toggleScreen: function toggleScreen(event) {
 	        this.setState({
 	            doubleScreen: event.target.checked
+	        });
+	    },
+
+	    screenModel: function screenModel(event) {
+	        var value = $(event.target).html();
+	        $("#expandType span.value").html(value);
+
+	        var mode = 1;
+	        if (value === this.SCREEN_MODEL_PORTRAIT) {
+	            mode = 1;
+	        }
+	        if (value === this.SCREEN_MODEL_EXPAND) {
+	            mode = 2;
+	        }
+	        if (value === this.SCREEN_MODEL_EXTRA) {
+	            mode = 3;
+	        }
+	        this.setState({
+	            expandMode: mode
 	        });
 	    },
 
@@ -30546,42 +32689,70 @@
 	                    React.createElement(
 	                        "button",
 	                        { type: "button", className: "btn btn-success navbar-btn", onClick: this.addGridClick },
-	                        "Add Grid"
+	                        "Add Block"
 	                    )
 	                ),
 	                React.createElement(
 	                    "li",
-	                    null,
+	                    { className: "dropdown" },
 	                    React.createElement(
-	                        "select",
-	                        { onChange: this.ratioChange },
+	                        "a",
+	                        { href: "#", className: "dropdown-toggle", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
+	                        "Screen Resolution",
+	                        React.createElement("span", { className: "caret" })
+	                    ),
+	                    React.createElement(
+	                        "ul",
+	                        { className: "dropdown-menu", "aria-labelledby": "Resolution" },
 	                        React.createElement(
-	                            "option",
-	                            { value: "x43" },
-	                            "1024x768(4:3)"
+	                            "li",
+	                            null,
+	                            React.createElement(
+	                                "a",
+	                                { onClick: this.resolution },
+	                                "1024x768(4:3)"
+	                            )
 	                        ),
 	                        React.createElement(
-	                            "option",
-	                            { value: "x169" },
-	                            "1920x1080(16:9)"
+	                            "li",
+	                            null,
+	                            React.createElement(
+	                                "a",
+	                                { onClick: this.resolution },
+	                                "1200x800(16:10)"
+	                            )
 	                        ),
 	                        React.createElement(
-	                            "option",
-	                            { value: "x1610" },
-	                            "1200x800(16:10)"
+	                            "li",
+	                            null,
+	                            React.createElement(
+	                                "a",
+	                                { onClick: this.resolution },
+	                                "1920x1080(16:9)"
+	                            )
 	                        )
 	                    )
 	                ),
 	                React.createElement(
 	                    "li",
-	                    null,
+	                    { className: "dropdown" },
 	                    React.createElement(
-	                        "select",
-	                        { onChange: this.selectTheme },
+	                        "a",
+	                        { href: "#", className: "dropdown-toggle", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
+	                        "Theme",
+	                        React.createElement("span", { className: "caret" })
+	                    ),
+	                    React.createElement(
+	                        "ul",
+	                        { className: "dropdown-menu", "aria-labelledby": "themeMenu" },
 	                        React.createElement(
-	                            "option",
-	                            { value: "default" },
-	                            "default"
+	                            "li",
+	                            null,
+	                            React.createElement(
+	                                "a",
+	                                { href: "#" },
+	                                "Default"
+	                            )
 	                        )
 	                    )
 	                ),
@@ -30589,6 +32760,51 @@
 	                    "li",
 	                    null,
 	                    React.createElement("input", { type: "checkbox", onClick: this.toggleScreen })
+	                ),
+	                React.createElement(
+	                    "li",
+	                    { className: "dropdown" },
+	                    React.createElement(
+	                        "a",
+	                        { href: "#", className: "dropdown-toggle", id: "expandType", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
+	                        React.createElement(
+	                            "span",
+	                            { className: "value" },
+	                            "Screen Model"
+	                        ),
+	                        React.createElement("span", { className: "caret" })
+	                    ),
+	                    React.createElement(
+	                        "ul",
+	                        { className: "dropdown-menu", "aria-labelledby": "screenMenu" },
+	                        React.createElement(
+	                            "li",
+	                            null,
+	                            React.createElement(
+	                                "a",
+	                                { onClick: this.screenModel },
+	                                this.SCREEN_MODEL_PORTRAIT
+	                            )
+	                        ),
+	                        React.createElement(
+	                            "li",
+	                            null,
+	                            React.createElement(
+	                                "a",
+	                                { onClick: this.screenModel },
+	                                this.SCREEN_MODEL_EXPAND
+	                            )
+	                        ),
+	                        React.createElement(
+	                            "li",
+	                            null,
+	                            React.createElement(
+	                                "a",
+	                                { onClick: this.screenModel },
+	                                this.SCREEN_MODEL_EXTRA
+	                            )
+	                        )
+	                    )
 	                ),
 	                React.createElement(
 	                    "li",
@@ -30625,15 +32841,15 @@
 	module.exports = NavBar;
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var React = __webpack_require__(17);
-	var $ = __webpack_require__(13);
+	var React = __webpack_require__(18);
+	var $ = __webpack_require__(11);
 
-	var AxisLines = __webpack_require__(197);
+	var AxisLines = __webpack_require__(178);
 	var GridLayout = __webpack_require__(179);
 
 	/**
@@ -30675,6 +32891,10 @@
 	        });
 	    },
 
+	    moreGrid: function moreGrid() {
+	        this.refs["layout"].addBlock();
+	    },
+
 	    /**
 	     * ������������ҳ������header��footer�� �������ü�����������ռ�ĸ߶ȣ�
 	     * Ȼ������ʣ���߶ȸ���state�� �ػ�Layout�Ͳο���
@@ -30714,8 +32934,15 @@
 	            swidth = swidth * 2;
 	        }
 
+	        var headerWidth = "100%";
+	        if (this.props.doubleScreen) {
+	            if (this.props.expandMode === 3 || this.props.expandMode === 1) {
+	                headerWidth = "50%";
+	            }
+	        }
+
 	        var contentHeight = this.props.height;
-	        var headerHeight = 0;
+	        var contentWidth = this.props.width;
 	        if (this.props.showHeader) {
 	            contentHeight -= this.state.headerHeight;
 	        }
@@ -30726,24 +32953,34 @@
 	            contentHeight -= this.themeConfig.default.padding[0];
 	            contentHeight -= this.themeConfig.default.padding[2];
 	        }
-	        var contentWidth = this.props.width;
-
 	        /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
+
 	        return React.createElement(
 	            "div",
 	            { className: "screen", style: {
 	                    width: swidth,
 	                    minHeight: this.props.minHeight
 	                } },
-	            React.createElement("div", { className: "styles" }),
-	            React.createElement("div", { className: "header" }),
-	            React.createElement(GridLayout, { width: this.props.width, height: this.props.height, contentHeight: contentHeight,
-	                contentWidth: contentWidth,
-	                doubleScreen: this.props.doubleScreen }),
+	            React.createElement(
+	                "div",
+	                { className: "display" },
+	                React.createElement("div", { className: "styles" }),
+	                React.createElement("div", { className: "header", style: {
+	                        width: headerWidth
+	                    } }),
+	                React.createElement(GridLayout, { width: this.props.width, height: this.props.height,
+	                    showHeader: this.props.showHeader, showFooter: this.props.showFooter,
+	                    doubleScreen: this.props.doubleScreen, expandMode: this.props.expandMode,
+	                    headerHeight: this.state.headerHeight, footerHeight: this.state.footerHeight,
+	                    padding: this.state.padding,
+	                    ref: "layout" }),
+	                React.createElement("div", { className: "footer", style: {
+	                        width: headerWidth
+	                    } })
+	            ),
 	            React.createElement(AxisLines, { width: this.props.width, height: this.props.height, headerHeight: this.state.headerHeight,
 	                contentWidth: contentWidth,
-	                doubleScreen: this.props.doubleScreen }),
-	            React.createElement("div", { className: "footer" })
+	                doubleScreen: this.props.doubleScreen, expandMode: this.props.expandMode })
 	        );
 	    }
 	});
@@ -30751,621 +32988,7 @@
 	module.exports = ThemeScreen;
 
 /***/ },
-/* 177 */,
-/* 178 */,
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(17);
-	var $ = __webpack_require__(13);
-	var EditPanel = __webpack_require__(180);
-	/**
-	<GridLayout width={this.state.width} height={this.state.height} contentHeight={this.state.contentHeight}
-	            contentWidth={this.state.contentWidth}
-	            doubleScreen={this.state.doubleScreen}/>
-	*/
-	var GridLayout = React.createClass({
-	    displayName: "GridLayout",
-
-	    componentDidMount: function componentDidMount() {
-	        this.initGridster();
-	    },
-
-	    initGridster: function initGridster() {
-	        var rhtml = $(".gridster").html();
-	        $(".gridster ul").remove();
-	        $(".gridster").append(rhtml);
-
-	        console.log(this.props);
-	        var col = 12;
-	        if (this.props.doubleScreen) {
-	            col = col * 2;
-	        }
-	        $(".gridster ul").gridster({
-	            widget_margins: [1, 1],
-	            widget_base_dimensions: [this.props.contentWidth / 12 - 2, this.props.contentHeight / 10 - 2],
-	            min_cols: col,
-	            min_rows: 10,
-	            resize: {
-	                enabled: true
-	            }
-	        });
-	        $(".gridster ul").css("min-height", this.props.contentHeight);
-	        //EditPanel.init();
-	    },
-
-	    componentDidUpdate: function componentDidUpdate() {
-	        this.initGridster();
-	    },
-
-	    addGrid: function addGrid() {
-	        var gridster = $(".gridster ul").gridster().data('gridster');
-	        gridster.add_widget("<li class='j-grid-block player-revert'></li>", 12, 2, 1, 1);
-	        //EditPanel.init();
-	    },
-
-	    saveGridInfo: function saveGridInfo() {},
-
-	    render: function render() {
-	        return React.createElement(
-	            "div",
-	            { className: "gridster" },
-	            React.createElement(
-	                "ul",
-	                null,
-	                React.createElement("li", { "data-row": "1", "data-col": "1", "data-sizex": "12", "data-sizey": "4",
-	                    className: "j-grid-block player-revert" })
-	            )
-	        );
-	    }
-
-	});
-
-	module.exports = GridLayout;
-
-/***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	__webpack_require__(181);
-	__webpack_require__(189);
-	var React = __webpack_require__(17);
-	var $ = __webpack_require__(13);
-
-	var EditPanel = React.createClass({
-	    displayName: "EditPanel",
-
-	    initialOptions: {
-	        _dot: ".",
-	        _id: "#",
-	        panelId: "j-edit-panel",
-	        barId: "j-edit-bar",
-	        txtPanel: "j-panel-text",
-	        imgPanel: "j-panel-img",
-	        gridClass: "j-gridster",
-	        panelText: "edit-panel-text",
-	        gridBlockClass: "j-grid-block",
-	        hideClass: "hide",
-	        dataPanelIndex: "data-panel-index",
-	        myGridContainer: "j-grid-container"
-
-	    },
-	    statics: {
-	        init: function init() {
-	            $(".j-grid-block").on("mouseover", function () {
-	                var $offset = $(this).offset(),
-	                    _top = $offset.top,
-	                    _W = $(this).innerWidth(),
-	                    _left = $offset.left + _W - 260;
-	                $("#j-edit-bar").css({ "top": _top + 5, "left": _left }).fadeIn().attr("data-bar-index", $(this).index());
-	            });
-
-	            $(".panel-drag").dragDiv("#j-edit-panel");
-
-	            $('.btn-triger').click(function () {
-	                $(this).closest('.float-btn-group').toggleClass('open');
-	            });
-	        }
-	    },
-	    txtPanelFn: function txtPanelFn() {
-	        var $textElem = $(this.initialOptions._dot + this.initialOptions.panelText),
-	            $createdHtml = $textElem.html(),
-	            $blank = $textElem.find(".placeholder");
-	        var _indx = $(this.initialOptions._id + this.initialOptions.panelId).attr(this.initialOptions.dataPanelIndex);
-	        var $gridLi = $(this.initialOptions._dot + this.initialOptions.gridBlockClass).eq(_indx),
-	            $tempLi = $gridLi.find(this.initialOptions._dot + this.initialOptions.myGridContainer);
-
-	        if ($blank.length < 1) {
-	            $tempLi.html($createdHtml);
-	        } else {
-	            $tempLi.empty();
-	        }
-	        $(this.initialOptions._dot + this.initialOptions.txtPanel).addClass(this.initialOptions.hideClass);
-	    },
-	    imgPanelFn: function imgPanelFn() {
-	        $(this.initialOptions._dot + this.initialOptions.imgPanel).addClass(this.initialOptions.hideClass);
-	    },
-	    closePanelHandler: function closePanelHandler() {
-	        var $panel = $(this.initialOptions._id + this.initialOptions.panelId);
-	        this.txtPanelFn();
-	        this.imgPanelFn();
-	        $panel.fadeOut();
-	    },
-	    render: function render() {
-	        var _nameEditor = {
-	            txt: "Text Settings",
-	            img: "Image Settings"
-	        };
-	        var _panelId = this.initialOptions.panelId;
-	        return React.createElement(
-	            "div",
-	            { id: _panelId, className: "edit-panel panel-drag" },
-	            React.createElement(
-	                "div",
-	                { className: "j-panel-text hide" },
-	                React.createElement(
-	                    "div",
-	                    { className: "edit-panel-title panel-drag" },
-	                    React.createElement(
-	                        "span",
-	                        { className: "bold" },
-	                        _nameEditor.txt
-	                    ),
-	                    React.createElement(
-	                        "span",
-	                        { className: "edit-panel-close", onClick: this.closePanelHandler },
-	                        React.createElement(
-	                            "i",
-	                            { className: "fa fa-times-circle" },
-	                            " "
-	                        )
-	                    )
-	                ),
-	                React.createElement("div", { className: "edit-panel-text" })
-	            ),
-	            React.createElement(
-	                "div",
-	                { className: "j-panel-img panel-img-pop panel-drag hide" },
-	                React.createElement(
-	                    "div",
-	                    { className: "pop_title" },
-	                    _nameEditor.img,
-	                    " ",
-	                    React.createElement(
-	                        "a",
-	                        { href: "javascript:void(0);", onClick: this.closePanelHandler },
-	                        "x"
-	                    )
-	                ),
-	                React.createElement(
-	                    "div",
-	                    { className: "pop_main" },
-	                    React.createElement("div", { className: "main_editbg" }),
-	                    React.createElement(
-	                        "p",
-	                        null,
-	                        React.createElement(
-	                            "a",
-	                            { href: "javascript:;" },
-	                            "Change"
-	                        )
-	                    ),
-	                    React.createElement(
-	                        "p",
-	                        null,
-	                        React.createElement(
-	                            "a",
-	                            { href: "javascript:;" },
-	                            "Edit"
-	                        )
-	                    )
-	                ),
-	                React.createElement(
-	                    "div",
-	                    { className: "pop_content" },
-	                    React.createElement(
-	                        "p",
-	                        null,
-	                        "How's this image resized?"
-	                    ),
-	                    React.createElement(
-	                        "div",
-	                        { className: "content_list" },
-	                        React.createElement(
-	                            "a",
-	                            { href: "javascript:;" },
-	                            React.createElement("img", { src: "images/01.png", width: "29", height: "20" })
-	                        ),
-	                        React.createElement(
-	                            "span",
-	                            null,
-	                            "Autocenter"
-	                        )
-	                    ),
-	                    React.createElement(
-	                        "div",
-	                        { className: "content_list" },
-	                        React.createElement(
-	                            "a",
-	                            { href: "javascript:;" },
-	                            React.createElement("img", { src: "images/02.png", width: "29", height: "30" })
-	                        ),
-	                        React.createElement(
-	                            "span",
-	                            null,
-	                            "center"
-	                        )
-	                    ),
-	                    React.createElement(
-	                        "div",
-	                        { className: "content_list" },
-	                        React.createElement(
-	                            "a",
-	                            { href: "javascript:;" },
-	                            React.createElement("img", { src: "images/03.png", width: "29", height: "30" })
-	                        ),
-	                        React.createElement(
-	                            "span",
-	                            null,
-	                            "Stretch"
-	                        )
-	                    ),
-	                    React.createElement(
-	                        "div",
-	                        { className: "content_list" },
-	                        React.createElement(
-	                            "a",
-	                            { href: "javascript:;" },
-	                            React.createElement("img", { src: "images/04.png", width: "29", height: "20" })
-	                        ),
-	                        React.createElement(
-	                            "span",
-	                            null,
-	                            "Fit"
-	                        )
-	                    )
-	                ),
-	                React.createElement(
-	                    "div",
-	                    { className: "pop_footer" },
-	                    "Image Text"
-	                )
-	            )
-	        );
-	    }
-
-	});
-
-	module.exports = EditPanel;
-
-/***/ },
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var $ = __webpack_require__(13);
-	var jQuery = __webpack_require__(13);
-	__webpack_require__(184);
-
-	/*  my plugin  */
-	(function ($) {
-	    /*  panel drag */
-	    $.fn.dragDiv = function (divWrap) {
-	        return this.each(function () {
-	            var $divMove = $(this),
-	                /*draggable area */
-	            $divWrap = divWrap ? $divMove.parents(divWrap) : $divMove; /*whole movable area*/
-	            var mX = 0,
-	                mY = 0,
-	                dX = 0,
-	                dY = 0,
-	                isDown = false; /*mousedown flag*/
-	            if (document.attachEvent) {
-	                /*ie listener*/
-	                $divMove[0].attachEvent('onselectstart', function () {
-	                    return false;
-	                });
-	            }
-	            $divMove.mousedown(function (event) {
-	                var event = event || window.event;
-	                mX = event.clientX;
-	                mY = event.clientY;
-	                dX = $divWrap.offset().left;
-	                dY = $divWrap.offset().top;
-	                isDown = true; /* drag : start */
-	            });
-	            $(document).mousemove(function (event) {
-	                var event = event || window.event;
-	                var x = event.clientX,
-	                    y = event.clientY;
-	                if (isDown) {
-	                    $divWrap.css({ "left": x - mX + dX, "top": y - mY + dY });
-	                }
-	            });
-	            $divMove.mouseup(function () {
-	                isDown = false; /*drag : start */
-	            });
-	        });
-	    };
-	})(jQuery);
-
-/***/ },
-/* 182 */,
-/* 183 */,
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(185);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(9)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./font-awesome.min.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./font-awesome.min.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(3)();
-	// imports
-
-
-	// module
-	exports.push([module.id, "/*!\r\n *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome\r\n url('../fonts/fontawesome-webfont.svg') format('svg')\r\n *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\r\n */\r\n@font-face {\r\n    font-family: 'FontAwesome';\r\n\r\n    /** src: url('../fonts/fontawesome-webfont.eot') format('embedded-opentype');**/\r\n\r\n    src: url(" + __webpack_require__(186) + ") format('truetype');\r\n\r\n    /**, url('../fonts/fontawesome-webfont.woff') format('woff'), url('../fonts/fontawesome-webfont.ttf') format('truetype');*/\r\n\r\n    font-weight: normal;\r\n    font-style: normal\r\n}\r\n\r\n.fa {\r\n    display: inline-block;\r\n    font: normal normal normal 14px/1 FontAwesome;\r\n    font-size: inherit;\r\n    text-rendering: auto;\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale\r\n}\r\n\r\n.fa-lg {\r\n    font-size: 1.33333333em;\r\n    line-height: .75em;\r\n    vertical-align: -15%\r\n}\r\n\r\n.fa-2x {\r\n    font-size: 2em\r\n}\r\n\r\n.fa-3x {\r\n    font-size: 3em\r\n}\r\n\r\n.fa-4x {\r\n    font-size: 4em\r\n}\r\n\r\n.fa-5x {\r\n    font-size: 5em\r\n}\r\n\r\n.fa-fw {\r\n    width: 1.28571429em;\r\n    text-align: center\r\n}\r\n\r\n.fa-ul {\r\n    padding-left: 0;\r\n    margin-left: 2.14285714em;\r\n    list-style-type: none\r\n}\r\n\r\n.fa-ul > li {\r\n    position: relative\r\n}\r\n\r\n.fa-li {\r\n    position: absolute;\r\n    left: -2.14285714em;\r\n    width: 2.14285714em;\r\n    top: .14285714em;\r\n    text-align: center\r\n}\r\n\r\n.fa-li.fa-lg {\r\n    left: -1.85714286em\r\n}\r\n\r\n.fa-border {\r\n    padding: .2em .25em .15em;\r\n    border: solid .08em #eee;\r\n    border-radius: .1em\r\n}\r\n\r\n.pull-right {\r\n    float: right\r\n}\r\n\r\n.pull-left {\r\n    float: left\r\n}\r\n\r\n.fa.pull-left {\r\n    margin-right: .3em\r\n}\r\n\r\n.fa.pull-right {\r\n    margin-left: .3em\r\n}\r\n\r\n.fa-spin {\r\n    -webkit-animation: fa-spin 2s infinite linear;\r\n    animation: fa-spin 2s infinite linear\r\n}\r\n\r\n@-webkit-keyframes fa-spin {\r\n    0% {\r\n        -webkit-transform: rotate(0deg);\r\n        transform: rotate(0deg)\r\n    }\r\n    100% {\r\n        -webkit-transform: rotate(359deg);\r\n        transform: rotate(359deg)\r\n    }\r\n}\r\n\r\n@keyframes fa-spin {\r\n    0% {\r\n        -webkit-transform: rotate(0deg);\r\n        transform: rotate(0deg)\r\n    }\r\n    100% {\r\n        -webkit-transform: rotate(359deg);\r\n        transform: rotate(359deg)\r\n    }\r\n}\r\n\r\n.fa-rotate-90 {\r\n    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);\r\n    -webkit-transform: rotate(90deg);\r\n    -ms-transform: rotate(90deg);\r\n    transform: rotate(90deg)\r\n}\r\n\r\n.fa-rotate-180 {\r\n    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);\r\n    -webkit-transform: rotate(180deg);\r\n    -ms-transform: rotate(180deg);\r\n    transform: rotate(180deg)\r\n}\r\n\r\n.fa-rotate-270 {\r\n    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);\r\n    -webkit-transform: rotate(270deg);\r\n    -ms-transform: rotate(270deg);\r\n    transform: rotate(270deg)\r\n}\r\n\r\n.fa-flip-horizontal {\r\n    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);\r\n    -webkit-transform: scale(-1, 1);\r\n    -ms-transform: scale(-1, 1);\r\n    transform: scale(-1, 1)\r\n}\r\n\r\n.fa-flip-vertical {\r\n    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);\r\n    -webkit-transform: scale(1, -1);\r\n    -ms-transform: scale(1, -1);\r\n    transform: scale(1, -1)\r\n}\r\n\r\n:root .fa-rotate-90, :root .fa-rotate-180, :root .fa-rotate-270, :root .fa-flip-horizontal, :root .fa-flip-vertical {\r\n    filter: none\r\n}\r\n\r\n.fa-stack {\r\n    position: relative;\r\n    display: inline-block;\r\n    width: 2em;\r\n    height: 2em;\r\n    line-height: 2em;\r\n    vertical-align: middle\r\n}\r\n\r\n.fa-stack-1x, .fa-stack-2x {\r\n    position: absolute;\r\n    left: 0;\r\n    width: 100%;\r\n    text-align: center\r\n}\r\n\r\n.fa-stack-1x {\r\n    line-height: inherit\r\n}\r\n\r\n.fa-stack-2x {\r\n    font-size: 2em\r\n}\r\n\r\n.fa-inverse {\r\n    color: #fff\r\n}\r\n\r\n.fa-glass:before {\r\n    content: \"\\F000\"\r\n}\r\n\r\n.fa-music:before {\r\n    content: \"\\F001\"\r\n}\r\n\r\n.fa-search:before {\r\n    content: \"\\F002\"\r\n}\r\n\r\n.fa-envelope-o:before {\r\n    content: \"\\F003\"\r\n}\r\n\r\n.fa-heart:before {\r\n    content: \"\\F004\"\r\n}\r\n\r\n.fa-star:before {\r\n    content: \"\\F005\"\r\n}\r\n\r\n.fa-star-o:before {\r\n    content: \"\\F006\"\r\n}\r\n\r\n.fa-user:before {\r\n    content: \"\\F007\"\r\n}\r\n\r\n.fa-film:before {\r\n    content: \"\\F008\"\r\n}\r\n\r\n.fa-th-large:before {\r\n    content: \"\\F009\"\r\n}\r\n\r\n.fa-th:before {\r\n    content: \"\\F00A\"\r\n}\r\n\r\n.fa-th-list:before {\r\n    content: \"\\F00B\"\r\n}\r\n\r\n.fa-check:before {\r\n    content: \"\\F00C\"\r\n}\r\n\r\n.fa-remove:before, .fa-close:before, .fa-times:before {\r\n    content: \"\\F00D\"\r\n}\r\n\r\n.fa-search-plus:before {\r\n    content: \"\\F00E\"\r\n}\r\n\r\n.fa-search-minus:before {\r\n    content: \"\\F010\"\r\n}\r\n\r\n.fa-power-off:before {\r\n    content: \"\\F011\"\r\n}\r\n\r\n.fa-signal:before {\r\n    content: \"\\F012\"\r\n}\r\n\r\n.fa-gear:before, .fa-cog:before {\r\n    content: \"\\F013\"\r\n}\r\n\r\n.fa-trash-o:before {\r\n    content: \"\\F014\"\r\n}\r\n\r\n.fa-home:before {\r\n    content: \"\\F015\"\r\n}\r\n\r\n.fa-file-o:before {\r\n    content: \"\\F016\"\r\n}\r\n\r\n.fa-clock-o:before {\r\n    content: \"\\F017\"\r\n}\r\n\r\n.fa-road:before {\r\n    content: \"\\F018\"\r\n}\r\n\r\n.fa-download:before {\r\n    content: \"\\F019\"\r\n}\r\n\r\n.fa-arrow-circle-o-down:before {\r\n    content: \"\\F01A\"\r\n}\r\n\r\n.fa-arrow-circle-o-up:before {\r\n    content: \"\\F01B\"\r\n}\r\n\r\n.fa-inbox:before {\r\n    content: \"\\F01C\"\r\n}\r\n\r\n.fa-play-circle-o:before {\r\n    content: \"\\F01D\"\r\n}\r\n\r\n.fa-rotate-right:before, .fa-repeat:before {\r\n    content: \"\\F01E\"\r\n}\r\n\r\n.fa-refresh:before {\r\n    content: \"\\F021\"\r\n}\r\n\r\n.fa-list-alt:before {\r\n    content: \"\\F022\"\r\n}\r\n\r\n.fa-lock:before {\r\n    content: \"\\F023\"\r\n}\r\n\r\n.fa-flag:before {\r\n    content: \"\\F024\"\r\n}\r\n\r\n.fa-headphones:before {\r\n    content: \"\\F025\"\r\n}\r\n\r\n.fa-volume-off:before {\r\n    content: \"\\F026\"\r\n}\r\n\r\n.fa-volume-down:before {\r\n    content: \"\\F027\"\r\n}\r\n\r\n.fa-volume-up:before {\r\n    content: \"\\F028\"\r\n}\r\n\r\n.fa-qrcode:before {\r\n    content: \"\\F029\"\r\n}\r\n\r\n.fa-barcode:before {\r\n    content: \"\\F02A\"\r\n}\r\n\r\n.fa-tag:before {\r\n    content: \"\\F02B\"\r\n}\r\n\r\n.fa-tags:before {\r\n    content: \"\\F02C\"\r\n}\r\n\r\n.fa-book:before {\r\n    content: \"\\F02D\"\r\n}\r\n\r\n.fa-bookmark:before {\r\n    content: \"\\F02E\"\r\n}\r\n\r\n.fa-print:before {\r\n    content: \"\\F02F\"\r\n}\r\n\r\n.fa-camera:before {\r\n    content: \"\\F030\"\r\n}\r\n\r\n.fa-font:before {\r\n    content: \"\\F031\"\r\n}\r\n\r\n.fa-bold:before {\r\n    content: \"\\F032\"\r\n}\r\n\r\n.fa-italic:before {\r\n    content: \"\\F033\"\r\n}\r\n\r\n.fa-text-height:before {\r\n    content: \"\\F034\"\r\n}\r\n\r\n.fa-text-width:before {\r\n    content: \"\\F035\"\r\n}\r\n\r\n.fa-align-left:before {\r\n    content: \"\\F036\"\r\n}\r\n\r\n.fa-align-center:before {\r\n    content: \"\\F037\"\r\n}\r\n\r\n.fa-align-right:before {\r\n    content: \"\\F038\"\r\n}\r\n\r\n.fa-align-justify:before {\r\n    content: \"\\F039\"\r\n}\r\n\r\n.fa-list:before {\r\n    content: \"\\F03A\"\r\n}\r\n\r\n.fa-dedent:before, .fa-outdent:before {\r\n    content: \"\\F03B\"\r\n}\r\n\r\n.fa-indent:before {\r\n    content: \"\\F03C\"\r\n}\r\n\r\n.fa-video-camera:before {\r\n    content: \"\\F03D\"\r\n}\r\n\r\n.fa-photo:before, .fa-image:before, .fa-picture-o:before {\r\n    content: \"\\F03E\"\r\n}\r\n\r\n.fa-pencil:before {\r\n    content: \"\\F040\"\r\n}\r\n\r\n.fa-map-marker:before {\r\n    content: \"\\F041\"\r\n}\r\n\r\n.fa-adjust:before {\r\n    content: \"\\F042\"\r\n}\r\n\r\n.fa-tint:before {\r\n    content: \"\\F043\"\r\n}\r\n\r\n.fa-edit:before, .fa-pencil-square-o:before {\r\n    content: \"\\F044\"\r\n}\r\n\r\n.fa-share-square-o:before {\r\n    content: \"\\F045\"\r\n}\r\n\r\n.fa-check-square-o:before {\r\n    content: \"\\F046\"\r\n}\r\n\r\n.fa-arrows:before {\r\n    content: \"\\F047\"\r\n}\r\n\r\n.fa-step-backward:before {\r\n    content: \"\\F048\"\r\n}\r\n\r\n.fa-fast-backward:before {\r\n    content: \"\\F049\"\r\n}\r\n\r\n.fa-backward:before {\r\n    content: \"\\F04A\"\r\n}\r\n\r\n.fa-play:before {\r\n    content: \"\\F04B\"\r\n}\r\n\r\n.fa-pause:before {\r\n    content: \"\\F04C\"\r\n}\r\n\r\n.fa-stop:before {\r\n    content: \"\\F04D\"\r\n}\r\n\r\n.fa-forward:before {\r\n    content: \"\\F04E\"\r\n}\r\n\r\n.fa-fast-forward:before {\r\n    content: \"\\F050\"\r\n}\r\n\r\n.fa-step-forward:before {\r\n    content: \"\\F051\"\r\n}\r\n\r\n.fa-eject:before {\r\n    content: \"\\F052\"\r\n}\r\n\r\n.fa-chevron-left:before {\r\n    content: \"\\F053\"\r\n}\r\n\r\n.fa-chevron-right:before {\r\n    content: \"\\F054\"\r\n}\r\n\r\n.fa-plus-circle:before {\r\n    content: \"\\F055\"\r\n}\r\n\r\n.fa-minus-circle:before {\r\n    content: \"\\F056\"\r\n}\r\n\r\n.fa-times-circle:before {\r\n    content: \"\\F057\"\r\n}\r\n\r\n.fa-check-circle:before {\r\n    content: \"\\F058\"\r\n}\r\n\r\n.fa-question-circle:before {\r\n    content: \"\\F059\"\r\n}\r\n\r\n.fa-info-circle:before {\r\n    content: \"\\F05A\"\r\n}\r\n\r\n.fa-crosshairs:before {\r\n    content: \"\\F05B\"\r\n}\r\n\r\n.fa-times-circle-o:before {\r\n    content: \"\\F05C\"\r\n}\r\n\r\n.fa-check-circle-o:before {\r\n    content: \"\\F05D\"\r\n}\r\n\r\n.fa-ban:before {\r\n    content: \"\\F05E\"\r\n}\r\n\r\n.fa-arrow-left:before {\r\n    content: \"\\F060\"\r\n}\r\n\r\n.fa-arrow-right:before {\r\n    content: \"\\F061\"\r\n}\r\n\r\n.fa-arrow-up:before {\r\n    content: \"\\F062\"\r\n}\r\n\r\n.fa-arrow-down:before {\r\n    content: \"\\F063\"\r\n}\r\n\r\n.fa-mail-forward:before, .fa-share:before {\r\n    content: \"\\F064\"\r\n}\r\n\r\n.fa-expand:before {\r\n    content: \"\\F065\"\r\n}\r\n\r\n.fa-compress:before {\r\n    content: \"\\F066\"\r\n}\r\n\r\n.fa-plus:before {\r\n    content: \"\\F067\"\r\n}\r\n\r\n.fa-minus:before {\r\n    content: \"\\F068\"\r\n}\r\n\r\n.fa-asterisk:before {\r\n    content: \"\\F069\"\r\n}\r\n\r\n.fa-exclamation-circle:before {\r\n    content: \"\\F06A\"\r\n}\r\n\r\n.fa-gift:before {\r\n    content: \"\\F06B\"\r\n}\r\n\r\n.fa-leaf:before {\r\n    content: \"\\F06C\"\r\n}\r\n\r\n.fa-fire:before {\r\n    content: \"\\F06D\"\r\n}\r\n\r\n.fa-eye:before {\r\n    content: \"\\F06E\"\r\n}\r\n\r\n.fa-eye-slash:before {\r\n    content: \"\\F070\"\r\n}\r\n\r\n.fa-warning:before, .fa-exclamation-triangle:before {\r\n    content: \"\\F071\"\r\n}\r\n\r\n.fa-plane:before {\r\n    content: \"\\F072\"\r\n}\r\n\r\n.fa-calendar:before {\r\n    content: \"\\F073\"\r\n}\r\n\r\n.fa-random:before {\r\n    content: \"\\F074\"\r\n}\r\n\r\n.fa-comment:before {\r\n    content: \"\\F075\"\r\n}\r\n\r\n.fa-magnet:before {\r\n    content: \"\\F076\"\r\n}\r\n\r\n.fa-chevron-up:before {\r\n    content: \"\\F077\"\r\n}\r\n\r\n.fa-chevron-down:before {\r\n    content: \"\\F078\"\r\n}\r\n\r\n.fa-retweet:before {\r\n    content: \"\\F079\"\r\n}\r\n\r\n.fa-shopping-cart:before {\r\n    content: \"\\F07A\"\r\n}\r\n\r\n.fa-folder:before {\r\n    content: \"\\F07B\"\r\n}\r\n\r\n.fa-folder-open:before {\r\n    content: \"\\F07C\"\r\n}\r\n\r\n.fa-arrows-v:before {\r\n    content: \"\\F07D\"\r\n}\r\n\r\n.fa-arrows-h:before {\r\n    content: \"\\F07E\"\r\n}\r\n\r\n.fa-bar-chart-o:before, .fa-bar-chart:before {\r\n    content: \"\\F080\"\r\n}\r\n\r\n.fa-twitter-square:before {\r\n    content: \"\\F081\"\r\n}\r\n\r\n.fa-facebook-square:before {\r\n    content: \"\\F082\"\r\n}\r\n\r\n.fa-camera-retro:before {\r\n    content: \"\\F083\"\r\n}\r\n\r\n.fa-key:before {\r\n    content: \"\\F084\"\r\n}\r\n\r\n.fa-gears:before, .fa-cogs:before {\r\n    content: \"\\F085\"\r\n}\r\n\r\n.fa-comments:before {\r\n    content: \"\\F086\"\r\n}\r\n\r\n.fa-thumbs-o-up:before {\r\n    content: \"\\F087\"\r\n}\r\n\r\n.fa-thumbs-o-down:before {\r\n    content: \"\\F088\"\r\n}\r\n\r\n.fa-star-half:before {\r\n    content: \"\\F089\"\r\n}\r\n\r\n.fa-heart-o:before {\r\n    content: \"\\F08A\"\r\n}\r\n\r\n.fa-sign-out:before {\r\n    content: \"\\F08B\"\r\n}\r\n\r\n.fa-linkedin-square:before {\r\n    content: \"\\F08C\"\r\n}\r\n\r\n.fa-thumb-tack:before {\r\n    content: \"\\F08D\"\r\n}\r\n\r\n.fa-external-link:before {\r\n    content: \"\\F08E\"\r\n}\r\n\r\n.fa-sign-in:before {\r\n    content: \"\\F090\"\r\n}\r\n\r\n.fa-trophy:before {\r\n    content: \"\\F091\"\r\n}\r\n\r\n.fa-github-square:before {\r\n    content: \"\\F092\"\r\n}\r\n\r\n.fa-upload:before {\r\n    content: \"\\F093\"\r\n}\r\n\r\n.fa-lemon-o:before {\r\n    content: \"\\F094\"\r\n}\r\n\r\n.fa-phone:before {\r\n    content: \"\\F095\"\r\n}\r\n\r\n.fa-square-o:before {\r\n    content: \"\\F096\"\r\n}\r\n\r\n.fa-bookmark-o:before {\r\n    content: \"\\F097\"\r\n}\r\n\r\n.fa-phone-square:before {\r\n    content: \"\\F098\"\r\n}\r\n\r\n.fa-twitter:before {\r\n    content: \"\\F099\"\r\n}\r\n\r\n.fa-facebook:before {\r\n    content: \"\\F09A\"\r\n}\r\n\r\n.fa-github:before {\r\n    content: \"\\F09B\"\r\n}\r\n\r\n.fa-unlock:before {\r\n    content: \"\\F09C\"\r\n}\r\n\r\n.fa-credit-card:before {\r\n    content: \"\\F09D\"\r\n}\r\n\r\n.fa-rss:before {\r\n    content: \"\\F09E\"\r\n}\r\n\r\n.fa-hdd-o:before {\r\n    content: \"\\F0A0\"\r\n}\r\n\r\n.fa-bullhorn:before {\r\n    content: \"\\F0A1\"\r\n}\r\n\r\n.fa-bell:before {\r\n    content: \"\\F0F3\"\r\n}\r\n\r\n.fa-certificate:before {\r\n    content: \"\\F0A3\"\r\n}\r\n\r\n.fa-hand-o-right:before {\r\n    content: \"\\F0A4\"\r\n}\r\n\r\n.fa-hand-o-left:before {\r\n    content: \"\\F0A5\"\r\n}\r\n\r\n.fa-hand-o-up:before {\r\n    content: \"\\F0A6\"\r\n}\r\n\r\n.fa-hand-o-down:before {\r\n    content: \"\\F0A7\"\r\n}\r\n\r\n.fa-arrow-circle-left:before {\r\n    content: \"\\F0A8\"\r\n}\r\n\r\n.fa-arrow-circle-right:before {\r\n    content: \"\\F0A9\"\r\n}\r\n\r\n.fa-arrow-circle-up:before {\r\n    content: \"\\F0AA\"\r\n}\r\n\r\n.fa-arrow-circle-down:before {\r\n    content: \"\\F0AB\"\r\n}\r\n\r\n.fa-globe:before {\r\n    content: \"\\F0AC\"\r\n}\r\n\r\n.fa-wrench:before {\r\n    content: \"\\F0AD\"\r\n}\r\n\r\n.fa-tasks:before {\r\n    content: \"\\F0AE\"\r\n}\r\n\r\n.fa-filter:before {\r\n    content: \"\\F0B0\"\r\n}\r\n\r\n.fa-briefcase:before {\r\n    content: \"\\F0B1\"\r\n}\r\n\r\n.fa-arrows-alt:before {\r\n    content: \"\\F0B2\"\r\n}\r\n\r\n.fa-group:before, .fa-users:before {\r\n    content: \"\\F0C0\"\r\n}\r\n\r\n.fa-chain:before, .fa-link:before {\r\n    content: \"\\F0C1\"\r\n}\r\n\r\n.fa-cloud:before {\r\n    content: \"\\F0C2\"\r\n}\r\n\r\n.fa-flask:before {\r\n    content: \"\\F0C3\"\r\n}\r\n\r\n.fa-cut:before, .fa-scissors:before {\r\n    content: \"\\F0C4\"\r\n}\r\n\r\n.fa-copy:before, .fa-files-o:before {\r\n    content: \"\\F0C5\"\r\n}\r\n\r\n.fa-paperclip:before {\r\n    content: \"\\F0C6\"\r\n}\r\n\r\n.fa-save:before, .fa-floppy-o:before {\r\n    content: \"\\F0C7\"\r\n}\r\n\r\n.fa-square:before {\r\n    content: \"\\F0C8\"\r\n}\r\n\r\n.fa-navicon:before, .fa-reorder:before, .fa-bars:before {\r\n    content: \"\\F0C9\"\r\n}\r\n\r\n.fa-list-ul:before {\r\n    content: \"\\F0CA\"\r\n}\r\n\r\n.fa-list-ol:before {\r\n    content: \"\\F0CB\"\r\n}\r\n\r\n.fa-strikethrough:before {\r\n    content: \"\\F0CC\"\r\n}\r\n\r\n.fa-underline:before {\r\n    content: \"\\F0CD\"\r\n}\r\n\r\n.fa-table:before {\r\n    content: \"\\F0CE\"\r\n}\r\n\r\n.fa-magic:before {\r\n    content: \"\\F0D0\"\r\n}\r\n\r\n.fa-truck:before {\r\n    content: \"\\F0D1\"\r\n}\r\n\r\n.fa-pinterest:before {\r\n    content: \"\\F0D2\"\r\n}\r\n\r\n.fa-pinterest-square:before {\r\n    content: \"\\F0D3\"\r\n}\r\n\r\n.fa-google-plus-square:before {\r\n    content: \"\\F0D4\"\r\n}\r\n\r\n.fa-google-plus:before {\r\n    content: \"\\F0D5\"\r\n}\r\n\r\n.fa-money:before {\r\n    content: \"\\F0D6\"\r\n}\r\n\r\n.fa-caret-down:before {\r\n    content: \"\\F0D7\"\r\n}\r\n\r\n.fa-caret-up:before {\r\n    content: \"\\F0D8\"\r\n}\r\n\r\n.fa-caret-left:before {\r\n    content: \"\\F0D9\"\r\n}\r\n\r\n.fa-caret-right:before {\r\n    content: \"\\F0DA\"\r\n}\r\n\r\n.fa-columns:before {\r\n    content: \"\\F0DB\"\r\n}\r\n\r\n.fa-unsorted:before, .fa-sort:before {\r\n    content: \"\\F0DC\"\r\n}\r\n\r\n.fa-sort-down:before, .fa-sort-desc:before {\r\n    content: \"\\F0DD\"\r\n}\r\n\r\n.fa-sort-up:before, .fa-sort-asc:before {\r\n    content: \"\\F0DE\"\r\n}\r\n\r\n.fa-envelope:before {\r\n    content: \"\\F0E0\"\r\n}\r\n\r\n.fa-linkedin:before {\r\n    content: \"\\F0E1\"\r\n}\r\n\r\n.fa-rotate-left:before, .fa-undo:before {\r\n    content: \"\\F0E2\"\r\n}\r\n\r\n.fa-legal:before, .fa-gavel:before {\r\n    content: \"\\F0E3\"\r\n}\r\n\r\n.fa-dashboard:before, .fa-tachometer:before {\r\n    content: \"\\F0E4\"\r\n}\r\n\r\n.fa-comment-o:before {\r\n    content: \"\\F0E5\"\r\n}\r\n\r\n.fa-comments-o:before {\r\n    content: \"\\F0E6\"\r\n}\r\n\r\n.fa-flash:before, .fa-bolt:before {\r\n    content: \"\\F0E7\"\r\n}\r\n\r\n.fa-sitemap:before {\r\n    content: \"\\F0E8\"\r\n}\r\n\r\n.fa-umbrella:before {\r\n    content: \"\\F0E9\"\r\n}\r\n\r\n.fa-paste:before, .fa-clipboard:before {\r\n    content: \"\\F0EA\"\r\n}\r\n\r\n.fa-lightbulb-o:before {\r\n    content: \"\\F0EB\"\r\n}\r\n\r\n.fa-exchange:before {\r\n    content: \"\\F0EC\"\r\n}\r\n\r\n.fa-cloud-download:before {\r\n    content: \"\\F0ED\"\r\n}\r\n\r\n.fa-cloud-upload:before {\r\n    content: \"\\F0EE\"\r\n}\r\n\r\n.fa-user-md:before {\r\n    content: \"\\F0F0\"\r\n}\r\n\r\n.fa-stethoscope:before {\r\n    content: \"\\F0F1\"\r\n}\r\n\r\n.fa-suitcase:before {\r\n    content: \"\\F0F2\"\r\n}\r\n\r\n.fa-bell-o:before {\r\n    content: \"\\F0A2\"\r\n}\r\n\r\n.fa-coffee:before {\r\n    content: \"\\F0F4\"\r\n}\r\n\r\n.fa-cutlery:before {\r\n    content: \"\\F0F5\"\r\n}\r\n\r\n.fa-file-text-o:before {\r\n    content: \"\\F0F6\"\r\n}\r\n\r\n.fa-building-o:before {\r\n    content: \"\\F0F7\"\r\n}\r\n\r\n.fa-hospital-o:before {\r\n    content: \"\\F0F8\"\r\n}\r\n\r\n.fa-ambulance:before {\r\n    content: \"\\F0F9\"\r\n}\r\n\r\n.fa-medkit:before {\r\n    content: \"\\F0FA\"\r\n}\r\n\r\n.fa-fighter-jet:before {\r\n    content: \"\\F0FB\"\r\n}\r\n\r\n.fa-beer:before {\r\n    content: \"\\F0FC\"\r\n}\r\n\r\n.fa-h-square:before {\r\n    content: \"\\F0FD\"\r\n}\r\n\r\n.fa-plus-square:before {\r\n    content: \"\\F0FE\"\r\n}\r\n\r\n.fa-angle-double-left:before {\r\n    content: \"\\F100\"\r\n}\r\n\r\n.fa-angle-double-right:before {\r\n    content: \"\\F101\"\r\n}\r\n\r\n.fa-angle-double-up:before {\r\n    content: \"\\F102\"\r\n}\r\n\r\n.fa-angle-double-down:before {\r\n    content: \"\\F103\"\r\n}\r\n\r\n.fa-angle-left:before {\r\n    content: \"\\F104\"\r\n}\r\n\r\n.fa-angle-right:before {\r\n    content: \"\\F105\"\r\n}\r\n\r\n.fa-angle-up:before {\r\n    content: \"\\F106\"\r\n}\r\n\r\n.fa-angle-down:before {\r\n    content: \"\\F107\"\r\n}\r\n\r\n.fa-desktop:before {\r\n    content: \"\\F108\"\r\n}\r\n\r\n.fa-laptop:before {\r\n    content: \"\\F109\"\r\n}\r\n\r\n.fa-tablet:before {\r\n    content: \"\\F10A\"\r\n}\r\n\r\n.fa-mobile-phone:before, .fa-mobile:before {\r\n    content: \"\\F10B\"\r\n}\r\n\r\n.fa-circle-o:before {\r\n    content: \"\\F10C\"\r\n}\r\n\r\n.fa-quote-left:before {\r\n    content: \"\\F10D\"\r\n}\r\n\r\n.fa-quote-right:before {\r\n    content: \"\\F10E\"\r\n}\r\n\r\n.fa-spinner:before {\r\n    content: \"\\F110\"\r\n}\r\n\r\n.fa-circle:before {\r\n    content: \"\\F111\"\r\n}\r\n\r\n.fa-mail-reply:before, .fa-reply:before {\r\n    content: \"\\F112\"\r\n}\r\n\r\n.fa-github-alt:before {\r\n    content: \"\\F113\"\r\n}\r\n\r\n.fa-folder-o:before {\r\n    content: \"\\F114\"\r\n}\r\n\r\n.fa-folder-open-o:before {\r\n    content: \"\\F115\"\r\n}\r\n\r\n.fa-smile-o:before {\r\n    content: \"\\F118\"\r\n}\r\n\r\n.fa-frown-o:before {\r\n    content: \"\\F119\"\r\n}\r\n\r\n.fa-meh-o:before {\r\n    content: \"\\F11A\"\r\n}\r\n\r\n.fa-gamepad:before {\r\n    content: \"\\F11B\"\r\n}\r\n\r\n.fa-keyboard-o:before {\r\n    content: \"\\F11C\"\r\n}\r\n\r\n.fa-flag-o:before {\r\n    content: \"\\F11D\"\r\n}\r\n\r\n.fa-flag-checkered:before {\r\n    content: \"\\F11E\"\r\n}\r\n\r\n.fa-terminal:before {\r\n    content: \"\\F120\"\r\n}\r\n\r\n.fa-code:before {\r\n    content: \"\\F121\"\r\n}\r\n\r\n.fa-mail-reply-all:before, .fa-reply-all:before {\r\n    content: \"\\F122\"\r\n}\r\n\r\n.fa-star-half-empty:before, .fa-star-half-full:before, .fa-star-half-o:before {\r\n    content: \"\\F123\"\r\n}\r\n\r\n.fa-location-arrow:before {\r\n    content: \"\\F124\"\r\n}\r\n\r\n.fa-crop:before {\r\n    content: \"\\F125\"\r\n}\r\n\r\n.fa-code-fork:before {\r\n    content: \"\\F126\"\r\n}\r\n\r\n.fa-unlink:before, .fa-chain-broken:before {\r\n    content: \"\\F127\"\r\n}\r\n\r\n.fa-question:before {\r\n    content: \"\\F128\"\r\n}\r\n\r\n.fa-info:before {\r\n    content: \"\\F129\"\r\n}\r\n\r\n.fa-exclamation:before {\r\n    content: \"\\F12A\"\r\n}\r\n\r\n.fa-superscript:before {\r\n    content: \"\\F12B\"\r\n}\r\n\r\n.fa-subscript:before {\r\n    content: \"\\F12C\"\r\n}\r\n\r\n.fa-eraser:before {\r\n    content: \"\\F12D\"\r\n}\r\n\r\n.fa-puzzle-piece:before {\r\n    content: \"\\F12E\"\r\n}\r\n\r\n.fa-microphone:before {\r\n    content: \"\\F130\"\r\n}\r\n\r\n.fa-microphone-slash:before {\r\n    content: \"\\F131\"\r\n}\r\n\r\n.fa-shield:before {\r\n    content: \"\\F132\"\r\n}\r\n\r\n.fa-calendar-o:before {\r\n    content: \"\\F133\"\r\n}\r\n\r\n.fa-fire-extinguisher:before {\r\n    content: \"\\F134\"\r\n}\r\n\r\n.fa-rocket:before {\r\n    content: \"\\F135\"\r\n}\r\n\r\n.fa-maxcdn:before {\r\n    content: \"\\F136\"\r\n}\r\n\r\n.fa-chevron-circle-left:before {\r\n    content: \"\\F137\"\r\n}\r\n\r\n.fa-chevron-circle-right:before {\r\n    content: \"\\F138\"\r\n}\r\n\r\n.fa-chevron-circle-up:before {\r\n    content: \"\\F139\"\r\n}\r\n\r\n.fa-chevron-circle-down:before {\r\n    content: \"\\F13A\"\r\n}\r\n\r\n.fa-html5:before {\r\n    content: \"\\F13B\"\r\n}\r\n\r\n.fa-css3:before {\r\n    content: \"\\F13C\"\r\n}\r\n\r\n.fa-anchor:before {\r\n    content: \"\\F13D\"\r\n}\r\n\r\n.fa-unlock-alt:before {\r\n    content: \"\\F13E\"\r\n}\r\n\r\n.fa-bullseye:before {\r\n    content: \"\\F140\"\r\n}\r\n\r\n.fa-ellipsis-h:before {\r\n    content: \"\\F141\"\r\n}\r\n\r\n.fa-ellipsis-v:before {\r\n    content: \"\\F142\"\r\n}\r\n\r\n.fa-rss-square:before {\r\n    content: \"\\F143\"\r\n}\r\n\r\n.fa-play-circle:before {\r\n    content: \"\\F144\"\r\n}\r\n\r\n.fa-ticket:before {\r\n    content: \"\\F145\"\r\n}\r\n\r\n.fa-minus-square:before {\r\n    content: \"\\F146\"\r\n}\r\n\r\n.fa-minus-square-o:before {\r\n    content: \"\\F147\"\r\n}\r\n\r\n.fa-level-up:before {\r\n    content: \"\\F148\"\r\n}\r\n\r\n.fa-level-down:before {\r\n    content: \"\\F149\"\r\n}\r\n\r\n.fa-check-square:before {\r\n    content: \"\\F14A\"\r\n}\r\n\r\n.fa-pencil-square:before {\r\n    content: \"\\F14B\"\r\n}\r\n\r\n.fa-external-link-square:before {\r\n    content: \"\\F14C\"\r\n}\r\n\r\n.fa-share-square:before {\r\n    content: \"\\F14D\"\r\n}\r\n\r\n.fa-compass:before {\r\n    content: \"\\F14E\"\r\n}\r\n\r\n.fa-toggle-down:before, .fa-caret-square-o-down:before {\r\n    content: \"\\F150\"\r\n}\r\n\r\n.fa-toggle-up:before, .fa-caret-square-o-up:before {\r\n    content: \"\\F151\"\r\n}\r\n\r\n.fa-toggle-right:before, .fa-caret-square-o-right:before {\r\n    content: \"\\F152\"\r\n}\r\n\r\n.fa-euro:before, .fa-eur:before {\r\n    content: \"\\F153\"\r\n}\r\n\r\n.fa-gbp:before {\r\n    content: \"\\F154\"\r\n}\r\n\r\n.fa-dollar:before, .fa-usd:before {\r\n    content: \"\\F155\"\r\n}\r\n\r\n.fa-rupee:before, .fa-inr:before {\r\n    content: \"\\F156\"\r\n}\r\n\r\n.fa-cny:before, .fa-rmb:before, .fa-yen:before, .fa-jpy:before {\r\n    content: \"\\F157\"\r\n}\r\n\r\n.fa-ruble:before, .fa-rouble:before, .fa-rub:before {\r\n    content: \"\\F158\"\r\n}\r\n\r\n.fa-won:before, .fa-krw:before {\r\n    content: \"\\F159\"\r\n}\r\n\r\n.fa-bitcoin:before, .fa-btc:before {\r\n    content: \"\\F15A\"\r\n}\r\n\r\n.fa-file:before {\r\n    content: \"\\F15B\"\r\n}\r\n\r\n.fa-file-text:before {\r\n    content: \"\\F15C\"\r\n}\r\n\r\n.fa-sort-alpha-asc:before {\r\n    content: \"\\F15D\"\r\n}\r\n\r\n.fa-sort-alpha-desc:before {\r\n    content: \"\\F15E\"\r\n}\r\n\r\n.fa-sort-amount-asc:before {\r\n    content: \"\\F160\"\r\n}\r\n\r\n.fa-sort-amount-desc:before {\r\n    content: \"\\F161\"\r\n}\r\n\r\n.fa-sort-numeric-asc:before {\r\n    content: \"\\F162\"\r\n}\r\n\r\n.fa-sort-numeric-desc:before {\r\n    content: \"\\F163\"\r\n}\r\n\r\n.fa-thumbs-up:before {\r\n    content: \"\\F164\"\r\n}\r\n\r\n.fa-thumbs-down:before {\r\n    content: \"\\F165\"\r\n}\r\n\r\n.fa-youtube-square:before {\r\n    content: \"\\F166\"\r\n}\r\n\r\n.fa-youtube:before {\r\n    content: \"\\F167\"\r\n}\r\n\r\n.fa-xing:before {\r\n    content: \"\\F168\"\r\n}\r\n\r\n.fa-xing-square:before {\r\n    content: \"\\F169\"\r\n}\r\n\r\n.fa-youtube-play:before {\r\n    content: \"\\F16A\"\r\n}\r\n\r\n.fa-dropbox:before {\r\n    content: \"\\F16B\"\r\n}\r\n\r\n.fa-stack-overflow:before {\r\n    content: \"\\F16C\"\r\n}\r\n\r\n.fa-instagram:before {\r\n    content: \"\\F16D\"\r\n}\r\n\r\n.fa-flickr:before {\r\n    content: \"\\F16E\"\r\n}\r\n\r\n.fa-adn:before {\r\n    content: \"\\F170\"\r\n}\r\n\r\n.fa-bitbucket:before {\r\n    content: \"\\F171\"\r\n}\r\n\r\n.fa-bitbucket-square:before {\r\n    content: \"\\F172\"\r\n}\r\n\r\n.fa-tumblr:before {\r\n    content: \"\\F173\"\r\n}\r\n\r\n.fa-tumblr-square:before {\r\n    content: \"\\F174\"\r\n}\r\n\r\n.fa-long-arrow-down:before {\r\n    content: \"\\F175\"\r\n}\r\n\r\n.fa-long-arrow-up:before {\r\n    content: \"\\F176\"\r\n}\r\n\r\n.fa-long-arrow-left:before {\r\n    content: \"\\F177\"\r\n}\r\n\r\n.fa-long-arrow-right:before {\r\n    content: \"\\F178\"\r\n}\r\n\r\n.fa-apple:before {\r\n    content: \"\\F179\"\r\n}\r\n\r\n.fa-windows:before {\r\n    content: \"\\F17A\"\r\n}\r\n\r\n.fa-android:before {\r\n    content: \"\\F17B\"\r\n}\r\n\r\n.fa-linux:before {\r\n    content: \"\\F17C\"\r\n}\r\n\r\n.fa-dribbble:before {\r\n    content: \"\\F17D\"\r\n}\r\n\r\n.fa-skype:before {\r\n    content: \"\\F17E\"\r\n}\r\n\r\n.fa-foursquare:before {\r\n    content: \"\\F180\"\r\n}\r\n\r\n.fa-trello:before {\r\n    content: \"\\F181\"\r\n}\r\n\r\n.fa-female:before {\r\n    content: \"\\F182\"\r\n}\r\n\r\n.fa-male:before {\r\n    content: \"\\F183\"\r\n}\r\n\r\n.fa-gittip:before {\r\n    content: \"\\F184\"\r\n}\r\n\r\n.fa-sun-o:before {\r\n    content: \"\\F185\"\r\n}\r\n\r\n.fa-moon-o:before {\r\n    content: \"\\F186\"\r\n}\r\n\r\n.fa-archive:before {\r\n    content: \"\\F187\"\r\n}\r\n\r\n.fa-bug:before {\r\n    content: \"\\F188\"\r\n}\r\n\r\n.fa-vk:before {\r\n    content: \"\\F189\"\r\n}\r\n\r\n.fa-weibo:before {\r\n    content: \"\\F18A\"\r\n}\r\n\r\n.fa-renren:before {\r\n    content: \"\\F18B\"\r\n}\r\n\r\n.fa-pagelines:before {\r\n    content: \"\\F18C\"\r\n}\r\n\r\n.fa-stack-exchange:before {\r\n    content: \"\\F18D\"\r\n}\r\n\r\n.fa-arrow-circle-o-right:before {\r\n    content: \"\\F18E\"\r\n}\r\n\r\n.fa-arrow-circle-o-left:before {\r\n    content: \"\\F190\"\r\n}\r\n\r\n.fa-toggle-left:before, .fa-caret-square-o-left:before {\r\n    content: \"\\F191\"\r\n}\r\n\r\n.fa-dot-circle-o:before {\r\n    content: \"\\F192\"\r\n}\r\n\r\n.fa-wheelchair:before {\r\n    content: \"\\F193\"\r\n}\r\n\r\n.fa-vimeo-square:before {\r\n    content: \"\\F194\"\r\n}\r\n\r\n.fa-turkish-lira:before, .fa-try:before {\r\n    content: \"\\F195\"\r\n}\r\n\r\n.fa-plus-square-o:before {\r\n    content: \"\\F196\"\r\n}\r\n\r\n.fa-space-shuttle:before {\r\n    content: \"\\F197\"\r\n}\r\n\r\n.fa-slack:before {\r\n    content: \"\\F198\"\r\n}\r\n\r\n.fa-envelope-square:before {\r\n    content: \"\\F199\"\r\n}\r\n\r\n.fa-wordpress:before {\r\n    content: \"\\F19A\"\r\n}\r\n\r\n.fa-openid:before {\r\n    content: \"\\F19B\"\r\n}\r\n\r\n.fa-institution:before, .fa-bank:before, .fa-university:before {\r\n    content: \"\\F19C\"\r\n}\r\n\r\n.fa-mortar-board:before, .fa-graduation-cap:before {\r\n    content: \"\\F19D\"\r\n}\r\n\r\n.fa-yahoo:before {\r\n    content: \"\\F19E\"\r\n}\r\n\r\n.fa-google:before {\r\n    content: \"\\F1A0\"\r\n}\r\n\r\n.fa-reddit:before {\r\n    content: \"\\F1A1\"\r\n}\r\n\r\n.fa-reddit-square:before {\r\n    content: \"\\F1A2\"\r\n}\r\n\r\n.fa-stumbleupon-circle:before {\r\n    content: \"\\F1A3\"\r\n}\r\n\r\n.fa-stumbleupon:before {\r\n    content: \"\\F1A4\"\r\n}\r\n\r\n.fa-delicious:before {\r\n    content: \"\\F1A5\"\r\n}\r\n\r\n.fa-digg:before {\r\n    content: \"\\F1A6\"\r\n}\r\n\r\n.fa-pied-piper:before {\r\n    content: \"\\F1A7\"\r\n}\r\n\r\n.fa-pied-piper-alt:before {\r\n    content: \"\\F1A8\"\r\n}\r\n\r\n.fa-drupal:before {\r\n    content: \"\\F1A9\"\r\n}\r\n\r\n.fa-joomla:before {\r\n    content: \"\\F1AA\"\r\n}\r\n\r\n.fa-language:before {\r\n    content: \"\\F1AB\"\r\n}\r\n\r\n.fa-fax:before {\r\n    content: \"\\F1AC\"\r\n}\r\n\r\n.fa-building:before {\r\n    content: \"\\F1AD\"\r\n}\r\n\r\n.fa-child:before {\r\n    content: \"\\F1AE\"\r\n}\r\n\r\n.fa-paw:before {\r\n    content: \"\\F1B0\"\r\n}\r\n\r\n.fa-spoon:before {\r\n    content: \"\\F1B1\"\r\n}\r\n\r\n.fa-cube:before {\r\n    content: \"\\F1B2\"\r\n}\r\n\r\n.fa-cubes:before {\r\n    content: \"\\F1B3\"\r\n}\r\n\r\n.fa-behance:before {\r\n    content: \"\\F1B4\"\r\n}\r\n\r\n.fa-behance-square:before {\r\n    content: \"\\F1B5\"\r\n}\r\n\r\n.fa-steam:before {\r\n    content: \"\\F1B6\"\r\n}\r\n\r\n.fa-steam-square:before {\r\n    content: \"\\F1B7\"\r\n}\r\n\r\n.fa-recycle:before {\r\n    content: \"\\F1B8\"\r\n}\r\n\r\n.fa-automobile:before, .fa-car:before {\r\n    content: \"\\F1B9\"\r\n}\r\n\r\n.fa-cab:before, .fa-taxi:before {\r\n    content: \"\\F1BA\"\r\n}\r\n\r\n.fa-tree:before {\r\n    content: \"\\F1BB\"\r\n}\r\n\r\n.fa-spotify:before {\r\n    content: \"\\F1BC\"\r\n}\r\n\r\n.fa-deviantart:before {\r\n    content: \"\\F1BD\"\r\n}\r\n\r\n.fa-soundcloud:before {\r\n    content: \"\\F1BE\"\r\n}\r\n\r\n.fa-database:before {\r\n    content: \"\\F1C0\"\r\n}\r\n\r\n.fa-file-pdf-o:before {\r\n    content: \"\\F1C1\"\r\n}\r\n\r\n.fa-file-word-o:before {\r\n    content: \"\\F1C2\"\r\n}\r\n\r\n.fa-file-excel-o:before {\r\n    content: \"\\F1C3\"\r\n}\r\n\r\n.fa-file-powerpoint-o:before {\r\n    content: \"\\F1C4\"\r\n}\r\n\r\n.fa-file-photo-o:before, .fa-file-picture-o:before, .fa-file-image-o:before {\r\n    content: \"\\F1C5\"\r\n}\r\n\r\n.fa-file-zip-o:before, .fa-file-archive-o:before {\r\n    content: \"\\F1C6\"\r\n}\r\n\r\n.fa-file-sound-o:before, .fa-file-audio-o:before {\r\n    content: \"\\F1C7\"\r\n}\r\n\r\n.fa-file-movie-o:before, .fa-file-video-o:before {\r\n    content: \"\\F1C8\"\r\n}\r\n\r\n.fa-file-code-o:before {\r\n    content: \"\\F1C9\"\r\n}\r\n\r\n.fa-vine:before {\r\n    content: \"\\F1CA\"\r\n}\r\n\r\n.fa-codepen:before {\r\n    content: \"\\F1CB\"\r\n}\r\n\r\n.fa-jsfiddle:before {\r\n    content: \"\\F1CC\"\r\n}\r\n\r\n.fa-life-bouy:before, .fa-life-buoy:before, .fa-life-saver:before, .fa-support:before, .fa-life-ring:before {\r\n    content: \"\\F1CD\"\r\n}\r\n\r\n.fa-circle-o-notch:before {\r\n    content: \"\\F1CE\"\r\n}\r\n\r\n.fa-ra:before, .fa-rebel:before {\r\n    content: \"\\F1D0\"\r\n}\r\n\r\n.fa-ge:before, .fa-empire:before {\r\n    content: \"\\F1D1\"\r\n}\r\n\r\n.fa-git-square:before {\r\n    content: \"\\F1D2\"\r\n}\r\n\r\n.fa-git:before {\r\n    content: \"\\F1D3\"\r\n}\r\n\r\n.fa-hacker-news:before {\r\n    content: \"\\F1D4\"\r\n}\r\n\r\n.fa-tencent-weibo:before {\r\n    content: \"\\F1D5\"\r\n}\r\n\r\n.fa-qq:before {\r\n    content: \"\\F1D6\"\r\n}\r\n\r\n.fa-wechat:before, .fa-weixin:before {\r\n    content: \"\\F1D7\"\r\n}\r\n\r\n.fa-send:before, .fa-paper-plane:before {\r\n    content: \"\\F1D8\"\r\n}\r\n\r\n.fa-send-o:before, .fa-paper-plane-o:before {\r\n    content: \"\\F1D9\"\r\n}\r\n\r\n.fa-history:before {\r\n    content: \"\\F1DA\"\r\n}\r\n\r\n.fa-circle-thin:before {\r\n    content: \"\\F1DB\"\r\n}\r\n\r\n.fa-header:before {\r\n    content: \"\\F1DC\"\r\n}\r\n\r\n.fa-paragraph:before {\r\n    content: \"\\F1DD\"\r\n}\r\n\r\n.fa-sliders:before {\r\n    content: \"\\F1DE\"\r\n}\r\n\r\n.fa-share-alt:before {\r\n    content: \"\\F1E0\"\r\n}\r\n\r\n.fa-share-alt-square:before {\r\n    content: \"\\F1E1\"\r\n}\r\n\r\n.fa-bomb:before {\r\n    content: \"\\F1E2\"\r\n}\r\n\r\n.fa-soccer-ball-o:before, .fa-futbol-o:before {\r\n    content: \"\\F1E3\"\r\n}\r\n\r\n.fa-tty:before {\r\n    content: \"\\F1E4\"\r\n}\r\n\r\n.fa-binoculars:before {\r\n    content: \"\\F1E5\"\r\n}\r\n\r\n.fa-plug:before {\r\n    content: \"\\F1E6\"\r\n}\r\n\r\n.fa-slideshare:before {\r\n    content: \"\\F1E7\"\r\n}\r\n\r\n.fa-twitch:before {\r\n    content: \"\\F1E8\"\r\n}\r\n\r\n.fa-yelp:before {\r\n    content: \"\\F1E9\"\r\n}\r\n\r\n.fa-newspaper-o:before {\r\n    content: \"\\F1EA\"\r\n}\r\n\r\n.fa-wifi:before {\r\n    content: \"\\F1EB\"\r\n}\r\n\r\n.fa-calculator:before {\r\n    content: \"\\F1EC\"\r\n}\r\n\r\n.fa-paypal:before {\r\n    content: \"\\F1ED\"\r\n}\r\n\r\n.fa-google-wallet:before {\r\n    content: \"\\F1EE\"\r\n}\r\n\r\n.fa-cc-visa:before {\r\n    content: \"\\F1F0\"\r\n}\r\n\r\n.fa-cc-mastercard:before {\r\n    content: \"\\F1F1\"\r\n}\r\n\r\n.fa-cc-discover:before {\r\n    content: \"\\F1F2\"\r\n}\r\n\r\n.fa-cc-amex:before {\r\n    content: \"\\F1F3\"\r\n}\r\n\r\n.fa-cc-paypal:before {\r\n    content: \"\\F1F4\"\r\n}\r\n\r\n.fa-cc-stripe:before {\r\n    content: \"\\F1F5\"\r\n}\r\n\r\n.fa-bell-slash:before {\r\n    content: \"\\F1F6\"\r\n}\r\n\r\n.fa-bell-slash-o:before {\r\n    content: \"\\F1F7\"\r\n}\r\n\r\n.fa-trash:before {\r\n    content: \"\\F1F8\"\r\n}\r\n\r\n.fa-copyright:before {\r\n    content: \"\\F1F9\"\r\n}\r\n\r\n.fa-at:before {\r\n    content: \"\\F1FA\"\r\n}\r\n\r\n.fa-eyedropper:before {\r\n    content: \"\\F1FB\"\r\n}\r\n\r\n.fa-paint-brush:before {\r\n    content: \"\\F1FC\"\r\n}\r\n\r\n.fa-birthday-cake:before {\r\n    content: \"\\F1FD\"\r\n}\r\n\r\n.fa-area-chart:before {\r\n    content: \"\\F1FE\"\r\n}\r\n\r\n.fa-pie-chart:before {\r\n    content: \"\\F200\"\r\n}\r\n\r\n.fa-line-chart:before {\r\n    content: \"\\F201\"\r\n}\r\n\r\n.fa-lastfm:before {\r\n    content: \"\\F202\"\r\n}\r\n\r\n.fa-lastfm-square:before {\r\n    content: \"\\F203\"\r\n}\r\n\r\n.fa-toggle-off:before {\r\n    content: \"\\F204\"\r\n}\r\n\r\n.fa-toggle-on:before {\r\n    content: \"\\F205\"\r\n}\r\n\r\n.fa-bicycle:before {\r\n    content: \"\\F206\"\r\n}\r\n\r\n.fa-bus:before {\r\n    content: \"\\F207\"\r\n}\r\n\r\n.fa-ioxhost:before {\r\n    content: \"\\F208\"\r\n}\r\n\r\n.fa-angellist:before {\r\n    content: \"\\F209\"\r\n}\r\n\r\n.fa-cc:before {\r\n    content: \"\\F20A\"\r\n}\r\n\r\n.fa-shekel:before, .fa-sheqel:before, .fa-ils:before {\r\n    content: \"\\F20B\"\r\n}\r\n\r\n.fa-meanpath:before {\r\n    content: \"\\F20C\"\r\n}", ""]);
-
-	// exports
-
-
-/***/ },
-/* 186 */
-/***/ function(module, exports) {
-
-	module.exports = "data:application/x-font-ttf;base64,AAEAAAAOAIAAAwBgRkZUTWezKZ0AAADsAAAAHEdERUYCLQAEAAABCAAAACBPUy8yiwJ6TAAAASgAAABgY21hcNSTrFwAAAGIAAACsmdhc3D//wADAAAEPAAAAAhnbHlmTVIgigAABEQAAY28aGVhZAhmEdoAAZIAAAAANmhoZWEPAgnbAAGSOAAAACRobXR4HCQUegABklwAAAf8bG9jYQF/nfoAAZpYAAAEAm1heHACVgIcAAGeXAAAACBuYW1lTCJ1QAABnnwAAAM4cG9zdHEN3nEAAaG0AAAUYndlYmazrlP8AAG2GAAAAAYAAAABAAAAAMw9os8AAAAAy1MioAAAAADQImQtAAEAAAAOAAAAGAAAAAAAAgABAAEB/wABAAQAAAACAAAAAwYbAZAABQAEBIwEMwAAAIYEjAQzAAACcwBaBDMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcHlycwBAACD1AAYA/wAAAAYAASMAAAABAAAAAAAAAAAAAAAgAAEAAAADAAAAAwAAABwAAQAAAAABrAADAAEAAAAcAAQBkAAAAGAAQAAFACAAIACgAKkArgC0AMYA2CAKIC8gXyEiIh4iYCX88A7wHvA+8E7wXvBu8H7wjvCe8K7wsvDO8N7w7vD+8Q7xHvEu8T7xTvFe8W7xfvGO8Z7xrvG+8c7x3vHu8f7yDvUA//8AAAAgAKAAqACuALQAxgDYIAAgLyBfISIiHiJgJfzwAPAQ8CHwQPBQ8GDwcPCA8JDwoPCw8MDw0PDg8PDxAPEQ8SDxMPFA8VDxYPFw8YDxkPGg8bDxwPHQ8eDx8PIA9QD////j/2T/Xf9Z/1T/Q/8y4Avf59+43vbd+9262h8QHBAbEBkQGBAXEBYQFRAUEBMQEhAREAQQAxACEAEQAA//D/4P/Q/8D/sP+g/5D/gP9w/2D/UP9A/zD/IP8Q/wDP8AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQYAAAEAAAAAAAAAAQIAAAACAAAAAAAAAAAAAAAAAAAAAQAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcGGAgFGgkKGQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//wACAAIAcAAAAxAGAAADAAcAADchESEDESER4AHA/kBwAqBwBSD6cAYA+gAAAAAAAQAAAAAAAAAAAAAAADEAAAEAXf8ABqMFgAAdAAABFAcBESEyFhQGIyEiJjQ2MyERASY1ND4BMyEyHgEGoyv9iAFAGiYmGvyAGiYmGgFA/YgrJCgXBYAXKCQFRiMr/Yj9ACY0JiY0JgMAAngrIxcbCAgbAAABAAD/AAYABYAAKwAAAREUDgIiLgI0PgIzMhcRBREUDgIiLgI0PgIzMhcRNDY3ATYzMhYGAERoZ1pnaEREaGctaVf9AERoZ1pnaEREaGctaVcmHgNADBAoOAUg+6AyTisVFStOZE4rFScCGe39OzJOKxUVK05kTisVJwPHHzMKAQAEOAACAAD/AAaABYAABwAhAAAAEAAgABAAIAEUBiMiJwEGIyIkJgIQEjYkIAQWEhUUBwEWBID++f6O/vkBBwFyAwdMNDYk/qmz3I/++71vb70BBQEeAQW9b3wBVyUCBwFyAQf++f6O/vn+gDRMJgFWfG+9AQUBHgEFvW9vvf77j9yz/qklAAADAAD/gAcABQAAGgA9AE0AACURBgcEBw4CKwIiLgEnJiUmJxEUFjMhMjYRPAIuAyMhIgYVFBcWFx4EOwIyPgM3Njc+ATcRFAYjISImNRE0NjMhMhYGgCAl/vSeM0BtMAEBMG1AM57+9CUgEw0FwA0TAQUGDAj6QA0Tk8HQBjoiNy4UAQEULjciOgbQwTZdgF5C+kBCXl5CBcBCXiADACQezoQrMDExMCuEzh4k/QANExMEKAISCREICgUTDah0mKUFMRolEhIlGjEFpZgrkWD7wEJeXkIEQEJeXgAAAQAA/4AHAAWAABwAAAQiJwEuBDU0NjMyHgIXPgMzMhYVFAcBA5o0Ev2QCiNMPC/+4D6Bb1AkJFBvgT7g/uX9kYASAloIJF9kjkPc+CtJQCQkQEkr+Nzd5f2oAAABAAD/rQaABeAAIgAAARQHARMWFRQGIyInJQUGIyImNTQ3EwEmNTQ3JRM2MhcTBRYGgBr+lVYBFRQTFf4//j8WEhUVAlb+lBk4AfbhEzwT4QH2OAN5Fhr+nv4MBw0VHQzs7AwdFQYOAfQBYhsVJQlJAccpKf45SQkAAAAAAgAA/60GgAXgAAkAKwAACQElCwEFAQMlBQEUBwETFhUUIyInJQUGIyImNTQ3EwEmNTQ3JRM2MhcTBRYEcQEy/lq9vf5aATJJAXoBeQHHGv6VVgEpExX+P/4/FhIVFQJW/pQZOAH24RM8E+EB9jgCFAEpPgF+/oI+/tf+W8fHAwoWGv6e/gwHDTIM7OwMHRUGDgH0AWIbFSUJSQHHKSn+OUkJAAACAAD/gAWABYAAHwAnAAAlFAYjISImNTQ+BTMyHgIyPgIzMh4FABAGICYQNiAFgJJ5/JZ5kgcVIDZGZT0JQlOFhoVTQgk9ZUY2IBUH/sDh/sLh4QE+g3iLi3g1ZXVkX0MoKzUrKzUrKENfZHVlA+f+wuHhAT7hAAALAAD/AAeABYAADwAfAC8APwBPAF8AbwB/AI8AnwCvAAAFNTQmKwEiBh0BFBY7ATI2ETU0JisBIgYdARQWOwEyNhE1NCYrASIGHQEUFjsBMjYBETQmIyEiBhURFBYzITI2ATU0JisBIgYdARQWOwEyNgE1NCYrASIGHQEUFjsBMjYBETQmIyEiBhURFBYzITI2ATU0JisBIgYdARQWOwEyNhE1NCYrASIGHQEUFjsBMjYRNTQmKwEiBh0BFBY7ATI2NxEUBiMhIiY1ETQ2MyEyFgGAJhqAGiYmGoAaJiYagBomJhqAGiYmGoAaJiYagBomBAAmGv0AGiYmGgMAGib8ACYagBomJhqAGiYFgCYagBomJhqAGib+gCYa/QAaJiYaAwAaJgGAJhqAGiYmGoAaJiYagBomJhqAGiYmGoAaJiYagBomgF5C+cBCXl5CBkBCXkCAGiYmGoAaJiYBmoAaJiYagBomJgGagBomJhqAGiYm/RoCABomJhr+ABomJgSagBomJhqAGiYm+5qAGiYmGoAaJiYDGgIAGiYmGv4AGiYm/pqAGiYmGoAaJiYBmoAaJiYagBomJgGagBomJhqAGiYmuvrAQl5eQgVAQl5eAAQAAAAABoAFgAAPAB8ALwA/AAABERQGIyEiJjURNDYzITIWGQEUBiMhIiY1ETQ2MyEyFgERFAYjISImNRE0NjMhMhYZARQGIyEiJjURNDYzITIWAwBMNP4ANExMNAIANExMNP4ANExMNAIANEwDgEw0/gA0TEw0AgA0TEw0/gA0TEw0AgA0TAIA/oA0TEw0AYA0TEwCzP6ANExMNAGANExM/Mz+gDRMTDQBgDRMTALM/oA0TEw0AYA0TEwACQAAAAAHAAWAAA8AHwAvAD8ATwBfAG8AfwCPAAABFRQGIyEiJj0BNDYzITIWERUUBiMhIiY9ATQ2MyEyFgEVFAYjISImPQE0NjMhMhYBFRQGIyEiJj0BNDYzITIWARUUBiMhIiY9ATQ2MyEyFgEVFAYjISImPQE0NjMhMhYBFRQGIyEiJj0BNDYzITIWARUUBiMhIiY9ATQ2MyEyFhEVFAYjISImPQE0NjMhMhYCADgo/sAoODgoAUAoODgo/sAoODgoAUAoOAKAOCj+wCg4OCgBQCg4/YA4KP7AKDg4KAFAKDgCgDgo/sAoODgoAUAoOAKAOCj+wCg4OCgBQCg4/YA4KP7AKDg4KAFAKDgCgDgo/sAoODgoAUAoODgo/sAoODgoAUAoOAEgwCg4OCjAKDg4AdjAKDg4KMAoODj92MAoODgowCg4OAPYwCg4OCjAKDg4/djAKDg4KMAoODj92MAoODgowCg4OAPYwCg4OCjAKDg4/djAKDg4KMAoODgB2MAoODgowCg4OAAABgAAAAAHAAWAAA8AHwAvAD8ATwBfAAABFRQGIyEiJj0BNDYzITIWERUUBiMhIiY9ATQ2MyEyFgEVFAYjISImPQE0NjMhMhYBFRQGIyEiJj0BNDYzITIWARUUBiMhIiY9ATQ2MyEyFhEVFAYjISImPQE0NjMhMhYCADgo/sAoODgoAUAoODgo/sAoODgoAUAoOAUAOCj8QCg4OCgDwCg4+wA4KP7AKDg4KAFAKDgFADgo/EAoODgoA8AoODgo/EAoODgoA8AoOAEgwCg4OCjAKDg4AdjAKDg4KMAoODj92MAoODgowCg4OAPYwCg4OCjAKDg4/djAKDg4KMAoODgB2MAoODgowCg4OAAAAAEAeQAOBocEsgAWAAAAFAcBBwYiLwEBJjQ/ATYyFwkBNjIfAQaHHP0siBxQHIj+lhwciBxQHAEmApAcUByIA/JQHP0siBwciAFqHFAciBwc/tkCkRwciAABAG7/7gUSBJIAIwAAJBQPAQYiJwkBBiIvASY0NwkBJjQ/ATYyFwkBNjIfARYUBwkBBRIciBxQHP7a/tocUByIHBwBJv7aHByIHFAcASYBJhxQHIgcHP7aASb+UByIHBwBJv7aHByIHFAcASYBJhxQHIgcHP7aASYcHIgcUBz+2v7aAAADAAD/AAaABYAAIwArAEQAAAEVFAYrARUUBisBIiY9ASMiJj0BNDY7ATU0NjsBMhYdATMyHgEQACAAEAAgABQGIyInAQYjIiQmAhASNiQgBBYSFRQHAQQAEw3gEw1ADRPgDRMTDeATDUANE+ANE4D++f6O/vkBBwFyAwdLNTYk/qmz3I/++71vb70BBQEeAQW9b3wBVwLgQA0T4A0TEw3gEw1ADRPgDRMTDeAT5gFyAQf++f6O/vn+tWpLJgFWfG+9AQUBHgEFvW9vvf77j9yz/qkAAAMAAP8ABoAFgAAPABcAMAAAARUUBiMhIiY9ATQ2MyEyHgEQACAAEAAgABQGIyInAQYjIiQmAhASNiQgBBYSFRQHAQQAEw39wA0TEw0CQA0TgP75/o7++QEHAXIDB0s1NiT+qbPcj/77vW9vvQEFAR4BBb1vfAFXAuBADRMTDUANExPmAXIBB/75/o7++f61aksmAVZ8b70BBQEeAQW9b2+9/vuP3LP+qQAAAAACAAD/gAYABgAAKQA1AAABFAIGBCAkJgI1NBI3NhYXFgYHDgEVFB4CMj4CNTQmJy4BNz4BFxYSAREUBiImNRE0NjIWBgB6zv7k/sj+5M56oZIraR8gDypia1GKvdC9ilFrYioPIB9qKpKh/YBMaExMaEwCgJz+5M56es4BHJy2AUJtIA4rKmkgStZ5aL2KUVGKvWh51kogaSorDiBt/r4CSv2ANExMNAKANExMAAAAAAUAAP+ABwAFgAAPAB8ALwA/AE8AACUVFAYrASImPQE0NjsBMhYlERQGKwEiJjURNDY7ATIWJREUBisBIiY1ETQ2OwEyFgERFAYrASImNRE0NjsBMhYBERQGKwEiJjURNDY7ATIWAQASDsAOEhIOwA4SAYASDsAOEhIOwA4SAYASDsAOEhIOwA4SAYASDsAOEhIOwA4SAYASDsAOEhIOwA4SYMAOEhIOwA4SEnL+wA4SEg4BQA4SEvL9wA4SEg4CQA4SEgFy/EAOEhIOA8AOEhIB8vpADhISDgXADhISAAAAAgAA/4AGAAWAAAcAbgAAADQmIgYUFjIBFRQGDwEGBxYXFhQHDgEjIi8BBgcGBwYrASImLwEmJwcGIyInJicmNTQ3PgE3Ji8BLgE9ATQ2PwE2NyYnJjU0Nz4BMzIfATY3Njc2OwEyFh8BFhc3NjMyFxYXFhUUBw4BBxYfAR4BBACW1JaW1AKWEAy5ExQjSAoJG5AWDA6KLC8QDQcd3g4VARwxKY0KDw4LficHCA9IEhsOtw0QEAu6DhkoQwoJGpEWDQ2KLC8QDQcd3g4VARwxKY4JDw0MgSQHCA9IEhoPtw0QAhbUlpbUlgFt3gwWAhw2JTJYDBoKJY4JbBcPiDIcEQ24EBVrCQtyNgoNDAsVWxkyMRsCFQ3eDBYCHC4uOVEMDAoNJI8KaxcPiDIcEQ24EBVrCQp3MwgODAsVWxkyMBwCFQAABgAA/4AFgAWAAA8AHwAvADsAQwBnAAABERQGKwEiJjURNDY7ATIWBREUBisBIiY1ETQ2OwEyFgURFAYrASImNRE0NjsBMhYTESERFB4BMyEyPgEBIScmJyEGBwUVFAYrAREUBiMhIiY1ESMiJj0BNDYzITc+ATMhMhYfASEyFgIAEg5ADhISDkAOEgEAEg5ADhISDkAOEgEAEg5ADhISDkAOEoD8gA4PAwNAAw8O/WABwDAHCv7DCgcDbxIOYF5C/MBCXmAOEhIOATVGD04oAUAoTg9GATUOEgMg/cAOEhIOAkAOEhIO/cAOEhIOAkAOEhIO/cAOEhIOAkAOEhL9HgO0/EwWJRERJQRKdQkCAgmVQA4S/ExTeXVTA7gSDkAOEqclNDQlpxIAAAAAAgAaAAAGZgUDABMANQAAAREUBiMhESERISImNRE0NjUJARY3BwYHIyInCQEGJyYvASY2NwE2Mh8BNTQ2OwEyFhURFx4BBYAmGv6A/wD+gBomAQI/Aj8B3z4IDQMNCP1M/UwMDA0IPggCCgLPIFgg9BIOwA4S2woCAiD+IBomAYD+gCYaAeABBAEB2v4mAkFKCQIHAkH9vwgBAglKChsIAlcaGszDDhISDv5otggbAAADAAD/AAYABgAAEwAaACMAAAEeARURFAYjISImNRE0NjMhMhYXBxEhJicBJgERISImNREhEQW8HCg4KPrAKDg4KAOAKGAchAF4Cgz+xwwBY/5gKDj9AASEHGAo+4AoODgoBkAoOCgcRP6IHQwBOQz6EgQAOCgBoPoAAAAAAwAA/4AGAAWAABQAIAAsAAABERQGIyEiJj0BNDY7ARE0NjsBMhYAEC4BIA4BEB4BIDYAEAIEICQCEBIkIAQDgBIO/sAOEhIO4BIOQA4SAaCS+v7Y+pKS+gEo+gFyzv6f/l7+n87OAWEBogFhA+D+QA4SEg5ADhIBYA4SEv3+ASj6kpL6/tj6kpICX/5e/p/OzgFhAaIBYc7OAAAAAgAyAAAHTgUAABEAQwAAATUDLgErASIGBwMVBhY7ATI2ARQjITI2JwMuASMhIgYHAwYWMyEiNTQ3AT4BMyEiBg8BBhY7ATI2LwEuASMhMhYXARYEVxgBFA26DRQBGAESDPQMEgL2Lv1ADRIBFAEUDf7wDRQBFAESDf1ALhoBoQgkFAFTDRQBDwESDaYNEgEPARQNAVMUJAgBoRoCHAQBQA0TEw3+wAQMEBD+OUkTDQEADRMTDf8ADRNJNj4EFBMcEw3ADhISDsANExwT++w+AAQAAAAABoAGAAAHAA8AJQA9AAAkNCYiBhQWMiQ0JiIGFBYyExEUBiMhIiY1ETQ2MyEXFjI/ASEyFgEWBwEGIicBJjc2MyERNDYzITIWFREhMgUAJjQmJjQBJiY0JiY0pjgo+kAoODgoAdGHOpw6iAHQKDj+uxEf/kASNhL+QB8RESoBACYaAQAaJgEAKqY0JiY0JiY0JiY0JgEg/sAoODgoAUAoOIg4OIg4AhEpHf5AExMBwB0pJwHAGiYmGv5AAAMAAP+ABgAFgAAYACQAMAAAARQHAQYiJwEmNzY7ARE0NjsBMhYVETMyFgIgDgEQHgEgPgEQJgQQAgQgJAIQEiQgBARgCv7BCxgL/sAPCAgWwBIOwA4SwA4SzP7Y+pKS+gEo+pKSAXLO/p/+Xv6fzs4BYQGiAWECYAwM/sEJCQFAEBMUAWAOEhIO/qASAjKS+v7Y+pKS+gEo+r3+Xv6fzs4BYQGiAWHOzgAAAAADAAD/gAYABYAAGAAkADAAAAEGKwERFAYrASImNREjIiY1NDcBNjIXARYCIA4BEB4BID4BECYEEAIEICQCEBIkIAQEXggWwBIOwA4SwA4SCgE/CxgLAUAP0v7Y+pKS+gEo+pKSAXLO/p/+Xv6fzs4BYQGiAWEClBT+oA4SEg4BYBIODAwBPwkJ/sAQAfmS+v7Y+pKS+gEo+r3+Xv6fzs4BYQGiAWHOzgACAAAAAAYABQAADQAjAAABIS4BJwMhAw4BByEXISURFAYjISImNRE0NxM+ATMhMhYXExYD/wE8AQMB1P081AEDAQE8XwFAAmAmGvqAGiYZ7go1GgNAGjUK7hkCQAMKAwHw/hACDALAov4eGiYmGgHiPj0CKBkiIhn92D0AAwAA/4AGAAWAAA8AGwAnAAAAFAcBBiMiJyY1ETQ3NhcBFhAuASAOARAeASA2ABACBCAkAhASJCAEBKAg/eAPERAQICAhHwIgoJL6/tj6kpL6ASj6AXLO/p/+Xv6fzs4BYQGiAWECpUoS/sAJCBMlAoAlExIT/sDLASj6kpL6/tj6kpICX/5e/p/OzgFhAaIBYc7OAAEAAP+ABgAFgAAzAAABERQGIyEiJyY/ASYjIg4CFB4CMzI2NzY3Mh8BHgEHBgQjIiQmAhASNiQzMgQXNzYXFgYAJhr+QCoRER+KlMlovYpRUYq9aHfUSQcQDguJCQEIbf7KrJz+5M56es4BHJyTARNrgh0pJwUA/kAaJignHoqJUYq90L2KUWhfCgIJiggZCoSRes4BHAE4ARzOem9lgR8REQAAAgAA/4AGAAWAACQARwAAARQHAgAhIiQnBwYiJjURNDYzITIWFA8BHgEzMjY3Njc2OwEyFhMRFAYjISImND8BJiMiBgcGBwYrASImPQESACEyBBc3NjIWBecBQP5o/u6S/u9rgRM0JiYaAcAaJhOJR7RhhuhGCyoIFsANExkmGv5AGiYTipTJhuhGCyoIFscNE0EBmgETkgEUa4ITNCYB4AUC/vT+s25mgRMmGgHAGiYmNBOJQkiCchFkFxMDE/5AGiYmNBOKiYJyEWQXEw0HAQwBTW9lgRMmAAAAAAgAAAAABwAFgAAPAB8ALwA/AE8AXwBvAH8AAAEVFAYrASImPQE0NjsBMhY1FRQGKwEiJj0BNDY7ATIWNRUUBisBIiY9ATQ2OwEyFgEVFAYjISImPQE0NjMhMhY1FRQGIyEiJj0BNDYzITIWNRUUBiMhIiY9ATQ2MyEyFhMRNCYjISIGFREUFjMhMjYTERQGIyEiJjURNDYzITIWAYATDUANExMNQA0TEw1ADRMTDUANExMNQA0TEw1ADRMEgBMN/EANExMNA8ANExMN/EANExMNA8ANExMN/EANExMNA8ANE4ATDfpADRMTDQXADROAXkL6QEJeXkIFwEJeAWBADRMTDUANExPzQA0TEw1ADRMT80ANExMNQA0TE/3zQA0TEw1ADRMT80ANExMNQA0TE/NADRMTDUANExP9MwNADRMTDfzADRMTBE37wEJeXkIEQEJeXgACAAAAAASABYAABwAfAAABITU0JiIGFQERFAYjISImNRE0NjsBNTQAIAAdATMyFgFAAgCW1JYDQDgo/EAoODgoIAEIAXABCCAoOAMAwGqWlmr+4P3AKDg4KAJAKDjAuAEI/vi4wDgAAAIAQP+ABwAFgAARADcAAAEUBxEUBisBIiY1ESY1NDYyFgURFAYHBiMiLgIjIgUGIyImNRE0NzY3NjMyFhcWMzI+AjMyFgFAQBMNQA0TQEtqSwXAGRvXmj19XItJwP7wERAaJh8VOuy5a7p+JjI2f11TDRomBQBIJvsODRMTDQTyJkg1S0t1/QUZGw50LDQskgkmGgLmIBcOHXg6OxMqNComAAAAAQAAAAAGgAWAAEsAAAEUDwIOASMVFAYrASImNRE0NjsBMhYdATIWFzc2NTQCJCAEAhUUHwE+ATM1NDY7ATIWFREUBisBIiY9ASImLwImNTQSNiQgBBYSBoA8FLkWiVgSDkAOEhIOQA4SR3YiRB2w/tf+sv7XsB1EInZHEg5ADhISDkAOEliJFrkUPIbgATQBTAE04IYCiqaUMSFTayAOEhIOAkAOEhIOIEc8DF9ilAEGnJz++pRiXww8RyAOEhIO/cAOEhIOIGtTITGUppcBGM16es3+6AAAAQAAACADAATgABMAAAERFAYiJwEhIiY1ETQ2MyEBNjIWAwAmNBP+s/76GiYmGgEGAU0TNCYEoPvAGiYTAU0mGgGAGiYBTRMmAAAAAAIAAAAgBIAE4AATAC0AAAERFAYiJwEhIiY1ETQ2MyEBNjIWABQGBwYjIiY1ND4DNC4DNTQ2MzIXFgMAJjQT/rP++homJhoBBgFNEzQmAYBVRgoPGiYYIiIYGCIiGCYaDwpGBKD7wBomEwFNJhoBgBomAU0TJv4SmIMcBSUbFR0VGS5ELhkVHRUbJQUbAAAAAAQAAP+5BoAFRwATAC0ASQBrAAABERQGIicBISImNRE0NjMhATYyFgAUBgcGIyImNTQ+AzQuAzU0NjMyFxYEEAIHBiMiJjU0NzY3PgE0JicmJyY1NDYzMhcWBBACBwYjIiY1NDc+ATc2NzYSEAInJicuAScmNTQ2MzIXFgMAJjQT/rP++homJhoBBgFNEzQmAYBVRgoPGiYYIiIYGCIiGCYaDwpGAVWqjA0MGyYnOBRKU1NKFDgnJhoNDYwBqv7TDQ0aJicHHwcuJHuKinskLgcfBycmGg0N0wSg+8AaJhMBTSYaAYAaJgFNEyb+EpiDHAUlGxUdFRkuRC4ZFR0VGyUFGzf+zv79OwUmGicUHQ82o7ijNg8dFCcaJgU7tv40/n9bBSYaJBcEDQQZGlsBEAEyARBbGhkEDQQXJBomBVsADAAAAAAFgAWAAAMABwALAA8AEwAXABsAHwAjAC8AMwA3AAABFSM1ExUjNSEVIzUBIREhESERIQEhESEBESERARUjNSEVIzUTESE1IxEjESEVMzUBESERIREhEQGAgICAA4CA/IABgP6AAYD+gAMAAYD+gP8A/YAEgIABgICA/oCAgAGAgP2A/YAFgP2AAYCAgAMAgICAgPwBAX8BgAGA/oABgP2A/YACgP4AgICAgAIA/oCA/oACgICAAwD9gAKA/YACgAAAAAAQAAAAAAcABYAAAwAHAAsADwATABcAGwAfACMAJwArAC8AMwA3ADsAPwAAMyMRMxMjETMTIxEzEyMRMxMjETMTIxEzEyMRMxMjETMTIxEzEyMRMxMjETMTIxEzEyMRMxMjETMTIxEzEyMRMz8/Pz8gIF4fH50fH50+Pn4fHz8fHz8fH50/P50/P34/P34/P14/P71eXj8gIF4/PwWA+oEFf/qBBX/6gQV/+oEFf/qBBX/6gQV/+oEFf/qBBX/6gQV/+oEFf/qBBX/6gQV/+oEFf/qBBX/6gAWAAAAAAgAA/5UF6wWAAAcAHQAAADQmIgYUFjIBFAcBBiMiJwEuATURNDYzITIWFwEWAcBLaktLagR2Jf4VJzQ1Jf01JjVMNAGgNYAmAsslBAtqS0tqS/5ANSX+FCUlAswlgDUBoDRMNSb9NicAAAAAAwAA/5UHawWAAAcAHQA1AAAANCYiBhQWMgEUBwEGIyInAS4BNRE0NjMhMhYXARYFFAcBBiMiJicBNjU0JwEuASMzMhYXARYBwEtqS0tqBHYl/hUnNDUl/TUmNUw0AaA1gCYCyyUBgCX+FSc0JC4eAdYlJf01JoA14DWAJgLLJQQLaktLakv+QDUl/hQlJQLMJYA1AaA0TDUm/TYnNDUl/hQlHB8B1iU1NCcCyiY1NSb9NicAAwAK/4AGeQWAAFQAZAB0AAABFgcBDgEjISImJyY3NDY3NiY3PgI3PgE3NiY3PgE3PgE3NiY3PgE3PgE3NiY3PgI3PgYXBzYzITIWBwEOASMhIgcGFxYzITI2NwE2JxYFBhYzITI2PwE2JiMhIgYHAwYWMyEyNj8BNiYjISIGBwZnKBb+7RNzQfxlTY8cGBYGAQEIAQIMFQYXLAgDBQIDHAMVKgQBBwQEJAQTLwQBCAICDhYGCBENExQhJxwBJg0C+UpQFv7uJEdd/JsbCwsKGHgDmx02CAEsBwIm++0EDA4CYA0ZBBUEDA79oA0ZBGgEDA4CYA0ZBBUEDA79oA0ZBAQiOUj8dkBXa05DPAQuDggbBgsUGwomayYKKAgLIgYkcCIJLgUNIwUadSYIIwkIFBoIDCUhJxkWAQYDCXBK/HZ3RQ8QG0YfGgPbFiMPHg0TEw1ADRMTDf7ADRMTDUANExMNAAABAAD/lwUABYAAHAAAATIXHgEVERQGBwYjIicJAQYjIicuATURNDY3NjMEjBcVIScnIRMZMCP+R/5HJC8XFSEnJyEVFwWACQ04Ivr3IjgNCCABqP5YIQkNOCIFCSI4DQkAAAAABAAA/4AGgAWAAAMADAAUADwAACkBESERIREjIiY9ASEANCYiBhQWMjcRFAYrARUUBiMhIiY9ASMiJjURNDY7ARE0NjMhMhYfAR4BFREzMhYBgAOA/IADgKAoOP2ABIAmNCYmNKYTDeA4KPxAKDjgDRNxT0A4KAKgKGAcmBwoQE9xAQABgAGAOCig/SY0JiY0JkD+YA0ToCg4OCigEw0BoE9xAiAoOCgcmBxgKP8AcQADAAD/gAeABgAABwAhACkAAAAyFhQGIiY0ATIWFREUBiMhIiY1ETQ2OwE3PgEzITIWHwEAIAAQACAAEANJ7qmp7qkD4GqWlmr6gGqWlmrgMxNlNQIANWUTM/1nAXIBB/75/o7++QNgqe6pqe4CSZZq/IBqlpZqA4BqlogxR0cxiPuAAQcBcgEH/vn+jgAAAAACAAD/gAaABYAABwBQAAABAzIWMzI3JgE3PgQ3EwE7ARYXExYSFx4BFxYXHgEXFhUUBhUiJiMiBAc0PwEyPgU1NC4BJyUGAhUUHgMzFhUUByImIyIGIwYC1aohzzkTJlf8ygIXQjAzJgztARhLNQgDzSGSKQ9WHRQPE4oPBgE//kBM/uonBIMBFwgVCQ0FPlIB/j4aZRw7JkwDAQI66ToIJQNQA9H+PgQC/fx2TwcLChMnHwJoAtQOB/4gTv6ZXyLdOi0MDx0GJhMEEgQQDgErIxwFAgcGCgwIEKHCAwI6/u0ZFh8SCQgTJwkSFAgOAAADAAD/gAWABYAAFQArAGEAACUWMyARNCcuBCMiBxQGFRQGHgEDFjMyPgI1NC4CIyIHFBYVFAYVFAE3PgE3PgQ8ATUQJy4ELwE2JDMyFjMyHgMVFA4DBx4BFRQOAyMiJiMiBAIrSkIBeCkbRUJfSTpJHAECAQgGKkNSemIzOmR0QjJQCAH95AIPjCQHCwYFARYEJDUuMwUEYgHkgxdbFkaFfFw4IS1UPjWazUZ1n6hcLLAsav5uDyABT3JCLDwhEQQKNdQ0CHdKXQLWBxo/dFRGaTscDTLKMxtqGi78cF4EGA8MHiUcLxUyBQPWKwgNCQUEAVMCEwEaOlR9SzRXOTogGCPGlWSfZkUcBhYAAQAA/4AEAAWAADkAABU3PgE3Njc2GgEnNS4CJzceAjMyPgE3BgcOAQcOAwcGAgcOAx8BFhcGByIGIyImIyYjIgYRBpckHA0BemoBGD1OExMhrn06MGWNHAUOHo8lCAwGCQIbeRECFhIOAQERqAMNCysLHXQcikQzuH5VAicSI0IHAjQCCyMZDQsFA2cCCQUFCQInMgolDxMvIToNlP3hVAliUlUPEgQbLDcDFAISAAACAAD/gAb6BYAAGwB9AAAlMhYPAQYiLwEmNjsBESMiJj8BNjIfARYGKwERARcWMzI2MzIWMyEyFj4CPwEyFjMWFRQHBgcmJy4CJy4DBiMiJiIGBwYXFBIVFAYWFx4BFxYVFA8BBiQjIgYjJj0BPgI3NhE0Aj0BNDY0LgEnJiMiBgcOAgcmJxEG0CESFH4UOhR+FBIhUFAhEhR+FDoUfhQSIVD50TYMxyywLCSPJAElBh4LFQ4IKgQUBAIFJx0ZHQMQDQEGDBMHHQIRYzJOIAkBBAUFCiioJAUDIkz+5EEyyjMDEVlsGBMGAQIEAwuXIXgUEx4hGioOgCUaohoaoholBAAlGqIaGqIaJfwABP8bBQQBAQEFDQsBAXDgUB0OBCxUCU5FAQgJAwIBAQQEUTde/bShEG9IIRUrECgKDg8BAhQSMwEJGyAaDioBVWUBlGV1AhsXHBQEDBgODXdnAhoSAX8AAAIAAP8DBgAFgABhAJUAABMXFjMyNjMyJAQXFj8BMhYzFhUUBwYHJicuAjUmJyYjIiYiBgcGHwE1FB4BFRQGFhceARcWFRQPAQYkIyIGIyY9AT4CNz4CNCY1NCY1ND4BLgEnJiMiBgcOAgcmJxEBMh4CFxYUBw4DIyIuATQ2NSEUFhQOASMiLgInJjQ3PgMzMh4BFAYVITQmND4BUTYMxyywLEYBYQEAdyEXKgQUBAIFJx0ZHQMQDgoRBT0eflBsKgkBAQIBBQUKKKgkBQMiTP7kQTLKMwMRWWwYBwkDAQUBAQEFBAuXKfQQEx4hGioOBR4MPDdABBoaBEA3PAwNDwUD/AADBQ8NDDw3QAQaGgRANzwMDQ8FAwQAAwUPBX8bBQQCAQQBIAEBcOBQHQ4ELFQJTUYBDQYCAgQFUTeYNDfGokgQb0ghFSsQKAoODwECFBIzAQkbIBoOEHSvh6wDBx0IB0pIUTYFDBsLDHdoAhoSAX/6/ycsNgMVOBUDNiwnFSQfIwICIx8kFScsNgMVOBUDNiwnFSQfIwICIx8kFQAABAAAAAAHAAWAAA8AHwAvAD8AACUVFAYjISImPQE0NjMhMhYBFRQGIyEiJj0BNDYzITIWARUUBiMhIiY9ATQ2MyEyFgEVFAYjISImPQE0NjMhMhYHACYa+YAaJiYaBoAaJv6AJhr7ABomJhoFABomAQAmGvoAGiYmGgYAGib+gCYa+4AaJiYaBIAaJsCAGiYmGoAaJiYBZoAaJiYagBomJgFmgBomJhqAGiYmAWaAGiYmGoAaJiYAAAQAAAAABwAFgAAPAB8ALwA/AAAlFRQGIyEiJj0BNDYzITIWARUUBiMhIiY9ATQ2MyEyFgEVFAYjISImPQE0NjMhMhYBFRQGIyEiJj0BNDYzITIWBwAmGvmAGiYmGgaAGib+gCYa/IAaJiYaA4AaJgEAJhr6gBomJhoFgBom/oAmGv2AGiYmGgKAGibAgBomJhqAGiYmAWaAGiYmGoAaJiYBZoAaJiYagBomJgFmgBomJhqAGiYmAAAEAAAAAAcABYAADwAfAC8APwAAJRUUBiMhIiY9ATQ2MyEyFhEVFAYjISImPQE0NjMhMhYRFRQGIyEiJj0BNDYzITIWERUUBiMhIiY9ATQ2MyEyFgcAJhr5gBomJhoGgBomJhr7ABomJhoFABomJhr6ABomJhoGABomJhr7gBomJhoEgBomwIAaJiYagBomJgFmgBomJhqAGiYmAWaAGiYmGoAaJiYBZoAaJiYagBomJgAAAAAEAAAAAAcABYAADwAfAC8APwAAJRUUBiMhIiY9ATQ2MyEyFhEVFAYjISImPQE0NjMhMhYRFRQGIyEiJj0BNDYzITIWERUUBiMhIiY9ATQ2MyEyFgcAJhr5gBomJhoGgBomJhr5gBomJhoGgBomJhr5gBomJhoGgBomJhr5gBomJhoGgBomwIAaJiYagBomJgFmgBomJhqAGiYmAWaAGiYmGoAaJiYBZoAaJiYagBomJgAAAAAIAAAAAAcABYAADwAfAC8APwBPAF8AbwB/AAAlFRQGKwEiJj0BNDY7ATIWERUUBisBIiY9ATQ2OwEyFhEVFAYrASImPQE0NjsBMhYBFRQGIyEiJj0BNDYzITIWARUUBisBIiY9ATQ2OwEyFgEVFAYjISImPQE0NjMhMhYRFRQGIyEiJj0BNDYzITIWERUUBiMhIiY9ATQ2MyEyFgEAEw3ADRMTDcANExMNwA0TEw3ADRMTDcANExMNwA0TBgATDfrADRMTDQVADRP6ABMNwA0TEw3ADRMGABMN+sANExMNBUANExMN+sANExMNBUANExMN+sANExMNBUANE+DADRMTDcANExMBc8ANExMNwA0TEwFzwA0TEw3ADRMT/PPADRMTDcANExMEc8ANExMNwA0TE/zzwA0TEw3ADRMTAXPADRMTDcANExMBc8ANExMNwA0TEwAABQAAAAAHAAWAAA8AHwAvAD8ATwAAAREUBiMiJwEmNDcBNjMyFgEVFAYjISImPQE0NjMhMhYRFRQGIyEiJj0BNDYzITIWERUUBiMhIiY9ATQ2MyEyFhEVFAYjISImPQE0NjMhMhYBgBMNDgn+4AkJASAJDg0TBYATDflADRMTDQbADRMTDfvADRMTDQRADRMTDfvADRMTDQRADRMTDflADRMTDQbADRMD4P3ADRMJASAJHAkBIAkT/PPADRMTDcANExMBc8ANExMNwA0TEwFzwA0TEw3ADRMTAXPADRMTDcANExMABQAAAAAHAAWAAA8AHwAvAD8ATwAAABQHAQYjIiY1ETQ2MzIXCQEVFAYjISImPQE0NjMhMhYRFRQGIyEiJj0BNDYzITIWERUUBiMhIiY9ATQ2MyEyFhEVFAYjISImPQE0NjMhMhYBYAn+4AkODRMTDQ4JASAFqRMN+UANExMNBsANExMN+8ANExMNBEANExMN+8ANExMNBEANExMN+UANExMNBsANEwLOHAn+4AkTDQJADRMJ/uD+CcANExMNwA0TEwFzwA0TEw3ADRMTAXPADRMTDcANExMBc8ANExMNwA0TEwAAAQAAAAAHAAUAAB8AAAERFAcGIyInARUUBiMhIiY1ETQ2MyEyFh0BATYzMhcWBwAnDQwbEv5tqXf9QHepqXcCwHepAZMSGwwNJwSg+8AqEQUTAZOmd6mpdwLAd6mpd6UBkhMFEQAAAAAEAAD/gAeABYAABwAOAB4ALgAAABQGIiY0NjIBESE1ARcJASEiBhURFBYzITI2NRE0JhcRFAYjISImNRE0NjMhMhYCgHCgcHCgBHD6gAFAoAIAAgD5wA0TEw0GQA0TE5NeQvnAQl5eQgZAQl4EEKBwcKBw/cD+QMABQKACAAEgEw37QA0TEw0EwA0TIPtAQl5eQgTAQl5eAAQAAP+ABesFawAGABQAGQAlAAAhNycHFTMVATQjIgcBBhUUMzI3ATYnCQEhEQEUDwEBNzYzMh8BFgFrW+tbgAJ2FgoH/eIHFgoHAh4HNgGg/MD+YAXrJab+YKYkNjUm6yVb61trgAOgFgf94gcKFgcCHgfK/mD8wAGgAuA1JaYBoKUmJuonAAACAAD/gAQABYAABwAXAAAANCYiBhQWMgEUBwEOASImJwEmNTQAIAADAJbUlpbUAZYh/pQQP0g/D/6TIQEsAagBLAMW1JaW1JYBAG1G/PohJiYhAwZGbdQBLP7UAAIAAP+ABgAFgAAHABMAACURIg4BEB4BABACBCAkAhASJCAEAwCU+pKS+gOUzv6f/l7+n87OAWEBogFhYARAkvr+2PqSAvH+Xv6fzs4BYQGiAWHOzgAAAAACAAAAAAQABcAAFQAtAAABNCcuAycmIgcOAwcGFRQWMjYlFAAgADU0Nz4DNz4BMhYXHgMXFgIAFAEdFhwHBCIEBxwWHQEUS2pLAgD+1P5Y/tRRBnFZbhwJMjQzCBxuWXEGUQGAJCEBKyE3FxAQFzchKwEhJDVLS7XU/tQBLNSRggmji9ldHiIiHl3Zi6MJfwAFAAAAAAb4BYAABgAOADkAPgBIAAABNycHFTMVACYHAQYWNwETFRQGIyEiJjURNDYzITIXFhcWDwEGJyYjISIGFREUFjMhMjY9ATQ/ATYWAwkBIREBBwE3NjIfARYUA3h0mHRgAgAgEf6iESARAV5RqXf8wHepqXcDQD82DwMDDDEOEhcW/MBCXl5CA0BCXglADyhgASD9YP7gBFxc/uBcHFAcmBwBYHSYdDhgAsAgEf6iESARAV79z753qal3A0B3qRkHEBEMMQ4GBl5C/MBCXl5Cfg0JQA8QAs3+4P1gASACHFwBIFwcHJgcUAAAAAACAAAAAAaABgAAKwBaAAABERQGIyEiJjURNDYzITEyFhUUBwYHBisBIgYVERQWMyEyNj0BNDc2NzYXFhMBBiMiJyY9ASMgBwYTFgcGIyInLgQ1ND4HOwE1NDc2MzIXARYUBYCpd/zAd6mpdwD/DRMaTTgKBnBCXl5CA0BCXhIcGhATFe3+gBIbDA0noP69c3ctAxcIBBAKChY5KiMHFSM7Tm+KtWqgJw0MGhMBgBMCI/79d6mpdwNAd6kTDRsFGiIEXkL8wEJeXkLWEwoNGBAICQHc/oATBREqwIOJ/rAXCwINDiJnYIQ4MVRgUFNBOicWwCoRBRP+gBM0AAACAAAAAAZ/BYAALwBEAAABERQGIyEiJjURNDYzITIXFhcWDwEGIyInJiMhIgYVERQWMyEyNj0BND8BNjMyFxYTAQYiJwEmND8BNjIXCQE2Mh8BFhQFgKl3/MB3qal3A0A/Ng8DAwwxCg0DBhcW/MBCXl5CA0BCXglACg0GBhTn/NIYQhj+UhgYbhhCGAEHAocYQhhuGAJe/sJ3qal3A0B3qRkHEBEMMQoCBl5C/MBCXl5C/g0JQAoDCAHU/NIYGAGuGEIYbhgY/vkChxgYbhhCAAAAAAEAAP8ABwAGAABDAAAAFAcBBiImPQEhETMyFhQHAQYiJwEmNDY7AREhFRQGIicBJjQ3ATYyFh0BIREjIiY0NwE2MhcBFhQGKwERITU0NjIXAQcAE/8AEzQm/oCAGiYT/wATNBP/ABMmGoD+gCY0E/8AExMBABM0JgGAgBomEwEAEzQTAQATJhqAAYAmNBMBAAKaNBP/ABMmGoD+gCY0E/8AExMBABM0JgGAgBomEwEAEzQTAQATJhqAAYAmNBMBABMT/wATNCb+gIAaJhP/AAABAAD/gAQABYAAHQAAATYWFREUBicBJicRFAYrASImNRE0NjsBMhYVETY3A9MTGhoT/ToJBCYagBomJhqAGiYECQVzEwwa+kAaDBMCxgkK/VoaJiYaBYAaJiYa/VoLCAABAAD/gAcABYAAKwAAATYWFREUBicBJicRFAYnASYnERQGKwEiJjURNDY7ATIWFRE2NwE2FhURNjcG0xMaGhP9OgkEGhP9OgkEJhqAGiYmGoAaJgQJAsYTGgQJBXMTDBr6QBoMEwLGCQr9OhoMEwLGCQr9WhomJhoFgBomJhr9WgsIAsYTDBr9OgsIAAEAev+ABoAFgAAZAAABNhYVERQGJwEmJxEUBicBJjQ3ATYWFRE2NwZTExoaE/06CAUaE/06ExMCxhMaBQgFcxMMGvpAGgwTAsYJCv06GgwTAsYTNBMCxhMMGv06CwgAAAEAAP98BX8FhAALAAAJAQYmNRE0NhcBFhQFaPrQFyEhFwUwFwJh/R4NFBoFwBoUDf0eDSQAAAAAAgAA/4AGAAWAAA8AHwAAAREUBiMhIiY1ETQ2MyEyFgURFAYjISImNRE0NjMhMhYGACYa/gAaJiYaAgAaJvyAJhr+ABomJhoCABomBUD6gBomJhoFgBomJhr6gBomJhoFgBomJgAAAAABAAD/gAYABYAADwAAAREUBiMhIiY1ETQ2MyEyFgYAJhr6gBomJhoFgBomBUD6gBomJhoFgBomJgAAAAABAAD/gAYGBYAAGQAAFwYmNRE0NhcBFhcRNDYXARYUBwEGJjURBgctExoaEwLGCAUaEwLGExP9OhMaBQhzEwwaBcAaDBP9OggLAsYaDBP9OhM0E/06EwwaAsYKCQAAAAABAAD/gAcABYAAKwAAFwYmNRE0NhcBFhcRNDYXARYXETQ2OwEyFhURFAYrASImNREGBwEGJjURBgctExoaEwLGCAUaEwLGCAUmGoAaJiYagBomBQj9OhMaBQhzEwwaBcAaDBP9OggLAsYaDBP9OggLAqYaJiYa+oAaJiYaAqYKCf06EwwaAsYKCQAAAAEAAP+ABAAFgAAdAAAXBiY1ETQ2FwEWFxE0NjsBMhYVERQGKwEiJjURBgctExoaEwLGCAUmGoAaJiYagBomBQhzEwwaBcAaDBP9OggLAqYaJiYa+oAaJiYaAqYKCQAAAAIAAQAABgEFBgALABsAABMBNjIXARYGIyEiJgEhIiY1ETQ2MyEyFhURFAYOAsYTNBMCxhMMGvpAGgwFxvqAGiYmGgWAGiYmAi0CxhMT/ToTGhr95iYaAQAaJiYa/wAaJgAAAAABAJr/mgSmBeYAFAAACQIWFA8BBiInASY0NwE2Mh8BFhQEk/3tAhMTE6YTNBP9GhMTAuYTNBOmEwTT/e397RM0E6YTEwLmEzQTAuYTE6YTNAAAAAABAFr/mgRmBeYAFAAACQEGIi8BJjQ3CQEmND8BNjIXARYUBFP9GhM0E6YTEwIT/e0TE6YTNBMC5hMCk/0aExOmEzQTAhMCExM0E6YTE/0aEzQAAAACAAD/gAYABYAAIwAvAAABNTQmIyERNCYrASIGFREhIgYdARQWMyERFBY7ATI2NREhMjYAEAIEICQCEBIkIAQEwCYa/wAmGoAaJv8AGiYmGgEAJhqAGiYBABomAUDO/p/+Xv6fzs4BYQGiAWECQIAaJgEAGiYmGv8AJhqAGib/ABomJhoBACYBK/5e/p/OzgFhAaIBYc7OAAIAAP+ABgAFgAAPABsAAAE1NCYjISIGHQEUFjMhMjYAEAIEICQCEBIkIAQEwCYa/QAaJiYaAwAaJgFAzv6f/l7+n87OAWEBogFhAkCAGiYmGoAaJiYBK/5e/p/OzgFhAaIBYc7OAAAAAgAA/4AGAAWAACsANwAAATQvATc2NTQvASYjIg8BJyYjIg8BBhUUHwEHBhUUHwEWMzI/ARcWMzI/ATYAEAIEICQCEBIkIAQEfRO1tRMTWhMbGhO1tRMaGxNaExO1tRMTWhMbGhO1tRMaGxNaEwGDzv6f/l7+n87OAWEBogFhAZ4aE7W1ExobE1oTE7W1ExNaExsaE7W1ExobE1oTE7W1ExNaEwHO/l7+n87OAWEBogFhzs4AAgAA/4AGAAWAABcAIwAAATQvASYiBwEnJiIPAQYVFBcBFjMyNwE+ARACBCAkAhASJCAEBQQSWxM0E/5o4hM0E1sSEgFqExobEwIfEvzO/p/+Xv6fzs4BYQGiAWEDIhwSWhMT/mniExNaEhwbEv6WExMCHxJK/l7+n87OAWEBogFhzs4AAwAA/4AGAAWAAA8AOgBGAAAlNTQmKwEiBh0BFBY7ATI2ATQuASMiBwYfARYzMjc2NzYzMhYVFAYHDgEdARQWOwEyNjU0Njc+BCQQAgQgJAIQEiQgBAOAEg7ADhISDsAOEgEAb6ZX84APF4QHDBAJNSEiNDBLKDA/aRIOwA4SKyEgIjofGQGAzv6f/l7+n87OAWEBogFhoMAOEhIOwA4SEgKuWJZS1RgSZAYMRBgYNCEmLhYcdUMkDhISDhM9ExIVMS9KPf5e/p/OzgFhAaIBYc7OAAADAAD/gAYABYAAHgAuADoAACU1NCYrARE0JiMhIgYdARQWOwERIyIGHQEUFjMhMjYDNTQmKwEiBh0BFBY7ATI2BBACBCAkAhASJCAEBAASDmASDv7ADhISDmBgDhISDgHADhKAEg7ADhISDsAOEgKAzv6f/l7+n87OAWEBogFhoKAOEgIADhISDqAOEv7AEg6gDhISA46gDhISDqAOEhLB/l7+n87OAWEBogFhzs4AAAIAAP+ABgAFgAAvAF8AAAEjIiY9ATQ2OwEuAScVFAYrASImPQEOAQczMhYdARQGKwEeARc1NDY7ATIWHQE+AQEVFAYrAQ4BBxUUBisBIiY9AS4BJyMiJj0BNDY7AT4BNzU0NjsBMhYdAR4BFzMyFgStbRomJhptIKFsJhqAGiZsoSBtGiYmGm0goWwmGoAaJmyhAXMmGo8l66EmGoAaJqHrJY8aJiYajyXroSYagBomoesljxomAgAmGoAaJmyhIG0aJiYabSChbCYagBombKEgbRomJhptIKEBLIAaJqHrJY8aJiYajyXroSYagBomoesljxomJhqPJeuhJgAAAAADAAD/gAYABYAAIwAvADsAAAEHBiIvAQcGIi8BJjQ/AScmND8BNjIfATc2Mh8BFhQPARcWFDYQLgEgDgEQHgEgNgAQAgQgJAIQEiQgBARJkgoaComJChoKkgoKiYkKCpIKGgqJiQoaCpIKComJCs2S+v7Y+pKS+gEo+gFyzv6f/l7+n87OAWEBogFhAcmSCgqJiQoKkgoaComJChoKkgoKiYkKCpIKGgqJiQoaGQEo+pKS+v7Y+pKSAl/+Xv6fzs4BYQGiAWHOzgAAAAADAAD/gAYABYAAFAAgACwAAAkBBiInASY0PwE2Mh8BATYyHwEWFBYQLgEgDgEQHgEgNgAQAgQgJAIQEiQgBAST/loTNBP+2hMTZhM0E5MBExM0E2YTepL6/tj6kpL6ASj6AXLO/p/+Xv6fzs4BYQGiAWEC0/5aExMBJhM0E2YTE5MBExMTZhM0+gEo+pKS+v7Y+pKSAl/+Xv6fzs4BYQGiAWHOzgAAAAADAAD/gAYABYUACQASACIAAAE0JwEWMzI+AgUBJiMiDgEVFAAQAgYEICQmAhASNiQgBBYFIFf9Domgb8mSVvwZAvOHpZT6kgUges3+4/7I/uPNenrNAR0BOAEdzQKDoYb9D1lXksu8AvJbkvyUogE//sb+4s56es4BHgE6AR3OenrOAAABAED/NQYABUsAIAAAARUUBiMhARYUDwEGIyInASY1NDcBNjMyHwEWFAcBITIWBgBBNP1AASUmJkslNTQn/XUlJQKLJjU0JksmJv7bAsA0QQKAgDVL/tokbCRMJSUCjCU1NCcCiiYmSiZqJv7bSwAAAQAA/zUFwAVLACAAAAEUBwEGIyIvASY0NwEhIiY9ATQ2MyEBJjQ/ATYzMhcBFgXAJf11JzQzJ0smJgEl/UA0QUE0AsD+2yYmSyY0NSYCiyUCQDYl/XUlJUsmaiYBJUs1gDVLASYkbCRLJib9dSMAAAEANf+ABksFQAAhAAABFA8BBiMiJwERFAYrASImNREBBiIvASY1NDcBNjMyFwEWBkslSyY1NiT+2ks1gDVL/tokbCRLJiYCiyM3NiUCiyUCNTMnSyYmASX9QDRBQTQCwP7bJiZLJjQ1JgKLJSX9dScAAAAAAQA1/7UGSwWAACIAAAEUBwEGIyInASY1ND8BNjMyFwERNDY7ATIWFREBNjMyHwEWBksl/XUnNDUl/XUmJkonNDUlASZMNIA0TAEmJTU0J0slAsA1Jf10JSUCjCQ2NSZLJSX+2gLANExMNP1AASYlJUsnAAABAAD/gAcABcAALAAAABQHAQYiJjURIyIOBRUUFxQWFRQGIyInLgInAjU0NxIhMxE0NjIXAQcAE/4AEzQm4GKbmXFiPiMFBREPEAwHDA8DfzWiAsngJjQTAgADmjQT/gATJhoBAAwfNlV1oGU3RAYjCQ8UEQkaIgcBHabHhgGTAQAaJhP+AAAAAgAA/4AGAAWAABcALwAAABQHARcWFAYjISImNRE0NjIfAQE2Mh8BAREUBiIvAQEGIi8BJjQ3AScmNDYzITIWAvMK/rSQEyYa/kAaJiY0E5ABTAoaCnIDFyY0E5D+tAoaCnIKCgFMkBMmGgHAGiYB7RoK/rSQEzQmJhoBwBomE5ABTAoKcgNJ/kAaJhOQ/rQKCnIKGgoBTJATNCYmAAAAAAIADf+NBfMFcwAXAC8AAAERFAYiLwEBBiIvASY0NwEnJjQ2MyEyFgAUBwEXFhQGIyEiJjURNDYyHwEBNjIfAQMAJjQTkP60ChoKcgoKAUyQEyYaAcAaJgLzCv60kBMmGv5AGiYmNBOQAUwKGgpyAkD+QBomE5D+tAoKcgoaCgFMkBM0JiYCkxoK/rSQEzQmJhoBwBomE5ABTAoKcgAAAAABAAAAAAWABYAAIwAAARUUBiMhERQGKwEiJjURISImPQE0NjMhETQ2OwEyFhURITIWBYA4KP5gOCjAKDj+YCg4OCgBoDgowCg4AaAoOAMgwCg4/mAoODgoAaA4KMAoOAGgKDg4KP5gOAAAAAABAAACAAWAA4AADwAAARUUBiMhIiY9ATQ2MyEyFgWAOCj7QCg4OCgEwCg4AyDAKDg4KMAoODgAAAEAev+ABgYFgAA1AAABHgEPAQ4BJyURFAYrASImNREFBiYvASY2Ny0BLgE/AT4BFwURNDY7ATIWFRElNhYfARYGBwUFyi4bGkAaZy7+9kw0gDRM/vYuZxpAGhsuAQr+9i4bGkAaZy4BCkw0gDRMAQouZxpAGhsu/vYB5hpnLm4uGxqZ/s00TEw0ATOZGhsubi5nGpqaGmcubi4bGpkBMzRMTDT+zZkaGy5uLmcamgAAAwAA/4AGAAWAAAsAGwAtAAAAIAQSEAIEICQCEBIBNTQmKwEiBh0BFBY7ATI2AxM0JyYrASIHBhUTFBY7ATI2Ai8BogFhzs7+n/5e/p/OzgKyEg3ADRQUDcANEgISCgoO3A4KChEUDrkOEwWAzv6f/l7+n87OAWEBogFh++++DhMUDb4NFBMBZgJtDAYICAYM/ZMKDw8AAAAEAAAAAAYABUAADQAWAB8ASgAAJTURNSEVERUUFjsBMjYBMycmIyIGFBYkNCYjIg8BMzIFERQGKwERFAYjISImNREjIiY1ETQ2MyEiJjQ2MzIfATc2MzIWFAYjITIWA6D+wCQcwBwk/jjDfhorKDg4Atg4KCsafcIoAbASDmA4KPvAKDhgDhISDgG4XYODXWs9gIA9a12Dg10BuA4StDgB1MDA/iw4GRsbA2WhHzhQODhQOB+hoP7ADhL+YCg4OCgBoBIOAUAOEoO6g02lpU2DuoMSAAIAAAAABwAFgAAVAE8AAAA0JiMiBAYHBhUUFjMyNz4BNzYkMzIBFAcGAAcGIyInLgEjIg4CIyIuAScuAzU0PgI1NCYnJjU0PgI3PgQ3PgQzMh4CBQAmGqz+3ON6EyYaGBUbXhSJAQe2GgImFC7+69vW4JSKD5IXEC8rPh0eKhQRAggDAz5KPhwCCVeXvm03tLOylScKJxQiJxgnPyAQAyY0JmOphxUYGiYTGF4TfGgBBl9i4P7CbWwvBUpATEAWGh0EDgYNByNNNjoTBEQKMzVz0p93JBIPAwknJQonERcJXIR0AAIAAP8ABYAGAAAPADMAAAUVFAYjISImPQE0NjMhMhYBFA4FFRQXJxcuBDU0PgU1NCcXJx4EBYATDfrADRMTDQVADRP/ADFPYGBPMUMEAVqMiVo3MU9gYE8xQgMBWoyJWjegQA0TEw1ADRMTBBNOhF1TSEhbM2CAAQEpVHSBrGJOhF1TSEhbM16CAQEpVHSBrAAAAAADAAAAAAcABIAAEQAhADEAAAEmJxYVFAAgADU0NwYHFgQgJAA0JiMiBhUUFjI2NTQ2MzIAFAcGACAAJyY0NzYAIAAXBoCY5T3++f6O/vk95ZiFAZEB1AGR/bUcFH2zHCgcelYUA2wUjP4n/fL+J4wUFIwB2QIOAdmMAkDsdWh5uf75AQe5eWh17M3z8wI5KByzfRQcHBRWev7SRCPm/usBFuUjRCPlARb+6uUABQAA/6AHAATgAAkAGQA9AEMAVQAAJTcuATU0NwYHEgA0JiMiBhUUFjI2NTQ2MzIlFAcGAA8BBiMiJyY1NDcuAScmNDc2ACEyFzc2MzIeAxcWExQGBwEWBBQHBgcGBCM3NiQ3Jic3HgEXAitOV2I95ZinAokcFH2zHCgcelYUAYcBaf5cajEKEgx6ECyP8VgUFJkBxgENWVs2ChIFGiQeIQMQJZ6CARgIAcAUJ0aW/nXeStQBaXlzpz9frznJjT/Aa3lodez+/gJuKByzfRQcHBRWeu8HArz9DL1ZEEYKEgxLQdiJH0wf6wEQEWEQDBMSEwIK/jCL5TIB9i2ERiJAUay+hBLuvLNzcECyXwAAAAADABD/gAbwBgAADwAhADMAACU1NCYrASIGHQEUFjsBMjYDEzQnJisBIgcGFRMUFjsBMjYDARYHDgEjISImJyY3AT4BMhYEABMNwA0TEw3ADRMCEgoNC9wLDQoRFA65DhMNAwAjJRE7IvoAIjsRJSMDABE8Rjyhvg4TEw6+DhMTAYQBywwHCwsHDv43Cg0NA7D6gD8/HSIiHT8/BYAfJCQAAQAAAAAFbAVsADIAAAEWBg8BExYPAQYjIicmJwkBFxYPAQYrASYvAiYnJj8BNjMyHwEJASYnJj8BNhcFNz4BBWAsQEyhoAURgAcMBAMPBv7p/v01BQ1gCQ4CDwm9/AsCAQpgCQ4GAsIBA/4EDgMCC4AOEAKZoEzABWA0wEyh/UgTDmAGAQMNAfz+/cIRDmAJAgv8vQcQDQxhCQE1AQMBFwgQEAuADQWfoExAAA8AAP8ABoAGAAADAAcACwAPABMAFwAbAB8AIwAzADcAOwA/AE8AcwAAFyERIQEhESElIREhASERISUhESEBIREhASERIQEhESElIREhARE0JisBIgYVERQWOwEyNgEhESElIREhASERITcRNCYrASIGFREUFjsBMjYlERQGIyEiJjURNDY7ATU0NjsBMhYdASE1NDY7ATIWHQEzMhaAASD+4AFgAUD+wP6gASD+4AFgAUD+wP6gASD+4ALgAUD+wP6AAUD+wAMAASD+4P6AAUD+wP6gEw1ADRMTDUANEwLgASD+4P6AAUD+wAGAASD+4CATDUANExMNQA0TAYBMNPqANExMNIBeQkBCXgGAXkJAQl6ANEyAASD+4AEgQAFA/sABQEABIPwAASABwAEg/AABIEABQAIgASANExMN/uANExP8rQFAQAEg/uABIMABIA0TEw3+4A0TE037ADRMTDQFADRMYEJeXkJgYEJeXkJgTAAAAAMAAP+gBwAF4AASADcAcQAAAQYHLgQrASImPQE0NjsBMgAUBwEGIyImPQEiDgEuBic2Nx4EMyE1NDYzMhcBEhQHAQYjIiY9ASEiDgIHBgcOBisBIiY9ATQ2OwEyPgI3Njc+BjMhNTQ2MzIXAQKaPE0WHjMzSyzgDhISDuD6BQYJ/sAJDg0TIGo4WjRMMkI0Ohs7TRYeMzNLLAEAEg4MDAE/CQn+wAkODRP/ADBOPCoYIC4dKUM9V114ROAOEhIO4DBOPCoYIC4dKUM9V114RAEAEg4MDAE/BB9ctS03SCkdEg7ADhL8DhwJ/sAJEw3AAQEDBw4XIi49J120LTdIKR3ADhIK/sEDdxwJ/sAJEw3AHjw/Lj5tQlp4UFYzIRIOwA4SHjw/Lj5tQlp4UFYzIcAOEgr+wQAAAAEAAP8ABwAFAAAmAAAAEAIEIyInBgUGBwYmJzUmNiY+Ajc+BTcmAjU0PgEkMzIEBwDw/mT0RkvG/voxQREbBAMFAQoCDAIHMBUpGB4LnbWO8AFMtvQBnAMu/qT+2asIr0MOCAIWEgEEEAQPAw4CCDUXOC5IKFkBBpaC7axlqwAAAwAA/4AGAAWAACMAMwBDAAABFRQCBCAkAj0BNDYzITIWHQEUHgMyPgM9ATQ2MyEyFgERFAYjISImNRE0NjMhMhYFERQGIyEiJjURNDYzITIWBgDF/qH+SP6hxSYaAYAaJi88Ui4qLlI8LyYaAYAaJvwAJhr+gBomJhoBgBomBAAmGv6AGiYmGgGAGiYCwIDJ/r61tQFCyYAaJiYagDRMJhYEBBYmTDSAGiYmAmb+gBomJhoBgBomJhr+gBomJhoBgBomJgAAAAABAFoAFQamBCAAFAAAJQcGIicJAQYiLwEmNDcBNjIXARYUBpOmEzQT/e397RM0E6YTEwLmEzQTAuYTzaUTEwIT/e0TE6UTNRMC5RMT/RsTNQAAAAABAFr/4AamA+sAFAAACQEGIicBJjQ/ATYyFwkBNjIfARYUBpP9GhM0E/0aExOmEzQTAhMCExM0E6YTAtj9GxMTAuUTNROlExP97QITExOlEzUAAAACAAAAAAeABIAAJQBLAAAlFAYjISIuAzwBPQERIyImNTQ3ATYyFwEWFRQGKwERITIfARYBFAcBBiInASY1NDY7AREhIi8BJjU0NjMhMh4DHAEdAREzMhYFABMN/EAICwcEAsAaJg8BQBM8EwFADyYawAJAEAmgBwKAD/7AFDoU/sAPJhrA/cAQCaAHEw0DwAgLBwQCwBomIA0TBAoGEQYUAaABoCYaGBEBgBYW/oARGBom/oALwAsBlhgR/oAXFwGAERgaJgGADMAJCw0TBAoGEQYUAaD+YCYAAAAAAwAA/4AGgAUAAAcADwA7AAAkFAYiJjQ2MgQUBiImNDYyExEUBgcFHgIVFAchMhYUBiMhIiY1ND4BNwMjIiY0NjMhMh4EFyEyFgKAS2pLS2oDy0tqS0tqyyAZ++wBBwUYA5gaJiYa/AAaJhYlArHMGiYmGgEAEBkPCwQHAQSxGiY1aktLaktLaktLaksDwP4AGCUDegcdGAoQMCY0JiYaDjNEBAM3JjQmDRIfFiUHJgABAAAAAAaABYAAFAAAAREUBiMhIiY1ETQ2MyEyFh0BITIWBoCEXPtAXISEXAFAXIQCoFyEA6D9QFyEhFwDwFyEhFwghAAAAAACAAAAAAdXBYAAEwAqAAABFAcBDgEjISImNTQ3AT4BMyEyFgEVISIGBwEHNCY1ETQ2MyEyFh0BITIWB1cf/rArm0L7wCI1HwFQK5tCBEAiNf6p/MBezj3+rwUBhFwBQFyEAiBchAJIHyP+dDNHGh4fIwGMM0caATqgX0j+dAYEEQQDwFyEhFwghAAAAAEAQP8AAsAGAAAfAAAAFAYrAREzMhYUBwEGIicBJjQ2OwERIyImNDcBNjIXAQLAJhqAgBomE/8AEzQT/wATJhqAgBomEwEAEzQTAQAE2jQm/AAmNBP/ABMTAQATNCYEACY0EwEAExP/AAAAAAEAAAFABwADwAAfAAAAFAcBBiImPQEhFRQGIicBJjQ3ATYyFh0BITU0NjIXAQcAE/8AEzQm/AAmNBP/ABMTAQATNCYEACY0EwEAApo0E/8AEyYagIAaJhMBABM0EwEAEyYagIAaJhP/AAAAAAUAAP+ACAAFgAADAAcADQARABUAAAERIREBESERARUhETMRAREhEQERIRECgP8AAoD/AAUA+ACABQD/AAKA/wACgP4AAgACAPwABAD7gIAGAPqAA4D9AAMAAYD7gASAAAIAAP+ABgAFgAAwAEAAAAEGBzY3BgcmIyIGFRQXLgEnBhUUFyYnFRQWFwYjIiceARcGIyInFjMyPgM1NCc2AREUBiMhIiY1ETQ2MyEyFgUAOEFEGUFFPVxXewWB4k8dWy81ZEkdFg0aFWtEdJEaGJSucMSMZTEBPwEqqXf8QHepqXcDwHepA54ZCShNJg1Ce1cdEwd0YTI4cj0BGQJLdQ4IBD9SAVoDXkd3m6lUEgktAQL8QHepqXcDwHepqQAAAAEAAP+ABgAFgAAkAAAlFAYrAREzNyM1NDYzNzUmIyIGHQEjFTMRISImNRE0NjMhMhYVBgCpd8DLHuk4RIRgVIik4OD94HepqXcDwHepoHepAmDgjzY6Ac8JoZGm4P2gqXcDwHepqXcABwAA/4AHAAWAAA8AFwAbACMAJwAuAD4AAAA0JiMiBhUUFjI2NTQ2MzI2FAYiJjQ2MgEhNSEAECYgBhAWIAEhNSEDIT0BIQchJREUBiMhIiY1ETQ2MyEyFgOgEg5CXhIcEjgoDvKW1JaW1PyWBgD6AASA4f7C4eEBPvzhAYD+gIAGAPzEQP18BoBLNfoANUtLNQYANUsCshwSXkIOEhIOKDgI1JaW1Jb8woABHwE+4eH+wuEEAoD+wHaKgID7ADVLSzUFADVLSwACAAD/SAaTBYAAFQBHAAAANCYiBhUUFyYjIgYUFjI2NTQnFjMyARQGIyIuAicHFxYVFAYjIicBBiMiJjU0EiQzMhYVFAcBNy4DNTQ2MzIXHgQDQHCgcBMpKlBwcKBwEykqUAPDYhEJJyIrA2DcHE4qKBz9YbC9o82+ATKgo82DAWNgAy4iIGIRDQoGUFRZOQOwoHBwUCopE3CgcHBQKikT/gARYiAiLgNg3BwoKk4cAp+DzaOgATK+zaO9sP6dYAMrIicJEWIKBk1SWkIAAAAABgAA/w8HgAXwAAcAEQAbAH8AvQD7AAAANCYiBhQWMgE0JiIGFRQWMjYRNCYiBhUUFjI2ARUUBg8BBgcWFxYVFAcOASMiLwEGBwYHBisBIiYvASYnBwYjIicmNTQ3PgE3Ji8BLgE9ATQ2PwE2NyYnJjU0Nz4BMzIfATY3Njc2OwEyFh8BFhc3NjMyFxYVFAcOAQcWHwEeAQEVFAcGBxYVFAcGIyImJwYiJw4BIyInJjU0NyYnJj0BNDc2NyY1NDc+AjMyFhc2Mhc2PwEyFxYVFAcWFxYRFRQHBgcWFRQHBiMiJicGIicOASMiJyY1NDcmJyY9ATQ3NjcmNTQ3PgIzMhYXNjIXNj8BMhcWFRQHFhcWA4CW1JaW1AOWTGhMS2pLTGhMS2pL/oAOCZsLFSI4BwcXdxMLCnMlKAsMBxe6CxIBFyIpdgcNCwqQBwo+EBcMmAoODgmbCxUiOAcHFngTCwpzIisLDAcXugsSARciKXYIDAsKkAcMPA8XC5gKDgKAlQwSMwR6AghMDhQUFA5MCAJ6BDMSDJWVDREzBAQ+OAIITA4UFBQzKQYEeAQzEQ2VlQwSMwR6AghMDhQUFA5MCAJ6BDMSDJWVDREzBAQ+OAIITA4UFBQzKQYEeAQzEQ2VAhbUlpbUlv8ANExMNDVLSwQ1NExMNDVLS/6QuQoTARgjKTBDCgoMBx53B1oTDGwvGA8KmQoVWQcIhRsJCg5OFiwmGAERC7kKEwEYIykwQwsJDAgedgdaEg5sLhgPCpkKFVkHCIUbCQoQTBYwIhcCEf3gjBAPGxlxGQQDR14VAgIVXkcDBBlxGRsPEIwQDx0XcRkEAwIkIF0VAgJHKQJGAwQZcRcdDwPwjBAPGxlxGQQDR14VAgIVXkcDBBlxGRsPEIwQDx0XcRkEAwIkIF0VAgJHKQJGAwQZcRcdDwAAAAACAAD/gAcABQAAJQBPAAAAEAYEIyInBgcGByMiJicmND4FNz4ENy4BNTQ2JCAEARQGBx4EFx4GFAcOAScmJyYnBiMgJxYzMiQ3PgE1NCceAQWAvP67v1ZafJokMgMLEwIBAQMCBQMGAQUkEB0VCnyOvAFFAX4BRQI8jnwKFR0QJAUBBgMFAgMBAQMUDDIkmnxaVv7xyToeoQEodH2GF4GWA4v+6uyJEFgoCQcQDQMHBgYEBwMHAQYmFSUoGEjSd4vsiYn9iXjRSBgoJRUmBgEHAwcEBgYHAw4QAQcJKFgQhARaVFzwhk1LR9YAAAMAAP+ABgAGAAAHADwAbQAAJDQmIgYUFjIBNCYjITQ2NTQmIw4CBwYHDgYrAREzMh4EFxY7ATI1NCc+ATQnNjU0Jic+ATcUBxYVFAcWFRQHFgYrAiImJyYjISImNRE0NjMhNjc2Nz4CNzYzMh4BFRQHMzIWAQAmNCYmNASmTjL+oGBAYBoYJSkWNwQmGSwkKScQICANJR0vFzAF04N5wAUeIxI1FA8gK4AxCSYDPAGsjSRdYLt7dBb+4DVLSzUBEiRlOjEYFyYrJzNUhkYwsGiYpjQmJjQmAoAzTTrLO2JeGnaFKxdEBTIgNSMkEv2ABgcPCBECSacaHhBJSiAyRRk9EQFcJFlKISRNQxUWZU2LoS0rKEs1AoA1SxiDSzUZeYQqJUGKdV1jmAAAAAMAAP8ABgAFgAAHAD0AcAAAADQmIgYUFjIBNCYnPgE1NCc2NCYnNjU0JisBIgcOBSsBETMyHgUXFhceAhcyNjU0JjUhMjY3FAYrARYVFAcOASMiJy4DJyYnJichIiY1ETQ2MyEyNz4BOwEyFgcVFhUUBxYVFAcWAQAmNCYmNASmKyAPFDUSIx4FYleAg9MFMBcvHSUNICAQJykkLBkmBDcWKSUYGmBAYAFgMk6AmGiwMCMjhlQzJyIoCxgTMDtlJP7uNUtLNQEgFnSAvmlwjK0BPAMmCTEEJjQmJjQm/gAjXAERPRlFMiBKSRAeGlVSSQIRCA8HBv2AEiQjNSAyBUQXK4V2Gl5iO8s6TTJnmGNddkRFQSUhYlNWFTJNgxhLNQKANUsoLCyeiQVNZRYVQ00kIUoAAQAA/60DQAXgABIAAAERBQYjIiY1NDcTASY1NDclEzYDQP4/FhIVFQJW/pQZOAH24RMF4PrF7AwdFQYOAfQBYhsVJQlJAccpAAAAAAIAAP+ABwAFgAAcADkAAAE0LgMiDgIHBiInLgMiDgMVFBcJATY3FAcBBiInAS4ENTQ2MzIeAhc+AzMyFgaAK0NgXGh4ZUgYEj4SGEhleGhcYEMruwJFAkS8gOX9kRI0Ev2QCiNMPC/+4D6Bb1AkJFBvgT7g/gOsUXxJLhAzTUMcFhYcQ00zEC5JfFGou/3QAi+8qN3l/agSEgJaCCRfZI5D3PgrSUAkJEBJK/gAAAAAAgAAAAAGIAUAACgAQAAAJRQWDgIjISImNRE0NjMhMhYVFBYOAiMhIgYVERQWMyE6Ah4DABQHAQYiJjURISImNRE0NjMhETQ2MhcBAoACAQUPDf7Ad6mpdwFADRMCAQUPDf7AQl5eQgEgARQGEQYKBAOgE/3gEzQm/kAaJiYaAcAmNBMCIGAEIBUaDal3AsB3qRMNBCAVGg1eQv1AQl4CBAcLAjI0E/3gEyYaASAmGgGAGiYBIBomE/3gAAAEAAD/gAYABYAAAwAPACUANQAANzMRIzcuASIGFRQWOwEyNgEzETQmIyIHMzUjFgMzETQ3PgEzMhUBERQGIyEiJjURNDYzITIW7efn9gFGdElHOQE7SAJJ55J4iEkC5wMD5wcPPCx0AdSpd/xAd6mpdwPAd6l6ArbWNERENDNFRfynAY6annVlQv2MAYQmEiMxnQJz/EB3qal3A8B3qakAAgAA/wAEgAWAAAsALgAAARE0JiIGFREUFjI2ARQGIyEDDgErASInAyEiJjU0NjMRIiY0NjMhMhYUBiMRMhYB4BIcEhIcEgKgJhr+UzMCEQwBGwVM/mwaJp1jNExMNAKANExMNGOdAqABwA4SEg7+QA4SEv6uGib+HQwRGwHlJhp7xQIATGhMTGhM/gDFAAAAAgAAAAAHAAYAACcAPwAAAREUBiMhIiY1ETQ2MyEyFh0BFAYjISIGFREUFjMhMjY1ETQ2OwEyFgERFAYiLwEBBiIvASY0NwEnJjQ2MyEyFgWAqXf8wHepqXcCwA4SEg79QEJeXkIDQEJeEg5ADhIBgCY0E7D9dAoaCnIKCgKMsBMmGgIAGiYCYP7Ad6mpdwNAd6kSDkAOEl5C/MBCXl5CAUAOEhIDUv4AGiYTsP10CgpyChoKAoywEzQmJgACAAAAAAYABQAAFwBAAAAAFAcBBiImNREhIiY1ETQ2MyERNDYyFwkBERQGIyEiJjU0Jj4CMyEyNjURNCYjISoCLgM1NCY+AjMhMhYEoBP94BM0Jv5AGiYmGgHAJjQTAiABc6l3/sANEwIBBQ8NAUBCXl5C/uABFAYRBgoEAgEFDw0BQHepApo0E/3gEyYaASAmGgGAGiYBIBomE/3gATP9QHepEw0EIBUaDV5CAsBCXgIEBwsIBCAVGg2pAAMAAP+ABoAFgAAGAA0ASQAAASY1IRUUFiU1IRQHPgE3FRQOAgcGBw4BFRQWMzIWHQEUBiMhIiY9ATQ2MzI2NTQmJyYnLgM9ATQ2MyE1NDYzITIWHQEhMhYBykr/AL0Ew/8ASo29gFONzXEqNSYdPUNLdRIO/MAOEnVLQz0dJjUqcc2NUzgoASBeQgJAQl4BICg4Ao2i0WBOqPZg0aIdqM6AR5B0TwU2KSJNMzZKW0VADhISDkBFW0o2M00iKTYFT3SQR4AoOGBCXl5CYDgAAAAIAAD/gAYABYAABwAOABYAHgAlAC0AMwCNAAAlBicmNzYXFicWBwYmNzYnBicmNzYXFhcGJyY3NhcWFwYnJjYXFhcUIwY1NDM2FxYGJjc2AREUBisBIi4CPQE0Jz4ENTQnNicmBg8BJiIHLgIHBhcGFRQeAxcGBw4BIiYnLgEvASIGHgEfAR4BHwEeAz8BFBYVFA4BKwEiJjURNDYzITIWAYoIDA0JCAwMMgkJCBIJCTUFCAoDAwoKHAYKCQcGCgl6BA8RCA8QPBAREBE6AiAEEBADxql34BARFgo0OVthQSlPJS0caicmXcZdEDVyHSwlTylAYVs5KAkVMEJBFxM7FBQVEAYMBwcWKwoKDT5IQxYXARYWFuB3qal3A8B3qbgJDAsICQwLNQwHBhoFBy8HBQUHBQMFKQcKCwUGCQt1DAYEFgQFEAsCDQsCAwoIGAMCA7H8QHepAggVEe9hLQYYNk+DVXlVW3EJKBgYGhoLIC0JcVtVeVWCUDYYBiRDCgorKSAoBAMJDg4FBQo4FxcmLw0BBAQmggMWFwOpdwPAd6mpAAAEAAD/gAaABcAABwAPACcAPwAAJDQmIgYUFjIkNCYiBhQWMhMRFAYjISImNRE0NjMhHgEzITI2NyEyFgEGIyERFAYjISImNREhIicmNwE2MhcBFgUAJjQmJjQBJiY0JiY0pjgo+kAoODgoAasVYz0BAD1jFQGrKDj+uxEq/wAmGv8AGib/ACoRER8BwBI2EgHAHyY0JiY0JiY0JiY0JgEg/sAoODgoAUAoODhISDg4AmAo/kAaJiYaAcAoJx4BwBMT/kAeAAAAAAIAAP+ABf8FgAAxAGQAAAE0JicuAjU0NjU0JyYjIgYjIiYjIg4BBwYHDgIVFBYVFAYUFjMyNjMyFjMyNz4BEjcUAgYHBiMiJiMiBiMiJjU0NjU0JjU0PgI3Njc2MzIWMzI2MzIWFRQGFRQeAxceAQV/DgsMCggKCgQJE04UPOg7K2dDOIlBYH8xGRYYFhhhGTnhObVngdV3gIz8m3zKOeI4GGEZSWUWGSRJgFZOmsJ6POc6E0wUUUoKAgQECQIQEgLGLIsbHhwtGhdbFiUSAQkwFxgWNjFJ6e+BKKApF1csHRYfJC3XARSLpf67+zcsHR1vSRhYFyihKW/VzrZBOz1OMAplVBdaFwoREQoWBiidAAAAAAEAAAAABYAFgABPAAABFAYHBgcGIyIuAycmJyYAJyYnLgQ1NDc2Nz4BMzIXFhceAhceAhUUDgIVFB4CFx4BFx4DMzI+AjMyHgEXHgIXFhcWBYAUCxVlXlwbM0AfUAliTYD+708wIwMeCxIHMzgyGVcbDgcSIwsmIA8DHQ45QzkKBxUBTMSJAiIOGwkSODI8FA4dKgQZOUYTRgYDASgbVxkyODMHEgseAyMwTwERgE1iCVAfQDMbXF5lFQsUAwZGE0Y5GQQqHQ4UPDI4EgkbDiICicRMARUHCjlDOQ4dAw8gJgsjEgcAAAACAAAAAAWABYAADwAfAAABISIGFREUFjMhMjY1ETQmFxEUBiMhIiY1ETQ2MyEyFgRg/MBCXl5CA0BCXl7eqXf8wHepqXcDQHepBQBeQvzAQl5eQgNAQl6g/MB3qal3A0B3qakAAgAA/5cFAAWAAAYAIwAAASERATcXARMyFx4BFREUBgcGIyInCQEGIyInLgE1ETQ2NzYzBID8AAGnWVkBpwwXFSEnJyETGTAj/kf+RyQvFxUhJychFRcFAPsmAZZVVf5qBVoJDTgi+vciOA0IIAGo/lghCQ04IgUJIjgNCQAAAAACAAD/gAYABYAARQBVAAABNCcuAS8BLgIjIg4BIyIuAicuAScuAzU0PgI1NC4BJy4FIyIHDgEVFB4EFxYAFx4FMzI2NzYBERQGIyEiJjURNDYzITIWBQACA0c1NQUcFgoSOjgQBxMMFgNjjzcCDQYHKTEpChQDAxgaGxcKCzA1LkQFBQ0HEgI8ATmkBjASKRkkEDmTFRYBAKl3/EB3qal3A8B3qQFXCwUIKxwdAxQKQUIHBg0CN49jAxYMEwcNKSQrDwoWHAUGLS4xIAQWFZM5ECQZKRIwBqT+xzwCEgcNBQVELjUDOfxAd6mpdwPAd6mpAAAAAQAsAAAGVAUAADEAAAEGBxYVFAIOAQQjICcWMzI3LgEnFjMyNy4BPQEWFy4BNTQ3FgQXJjU0NjMyFzY3Bgc2BlRDXwFMm9b+0qz+8eEjK+GwaaYfIRwrKnCTRE5CTix5AVvGCL2GjGBtYCVpXQRoYkUOHIL+/e63bZEEigJ9YQULF7F1BCYDLI5TWEuVswomJIa9ZhU5cz8KAAAAAQBf/4ADvwYAABQAAAERIyIGHQEhAyMRIREjESE1NDYzMgO/nVY8ASUn/v7O/wD/0K2TBfT++EhIvf7Y/QkC9wEo2rrNAAAAAQAA/6cGAAWAAFIAAAEUAAcGJj0BNCc+BDU0JzYnJgYPASYiBy4CBwYXBhUUHgMXBgcOASImJy4BLwEiBh4BHwEeAR8BHgM/ARQWFRQGJyYANTQSJCAEEgYA/tvoGxk0OVthQSlPJS0caicmXcZdEDVyHSwlTylAYVs5KAkVMEJBFxM7FBQVEAYMBwcWKwoKDT5IQxYXARob6P7bzgFhAaIBYc4CgPv+b00FGBLTYS0GGDZPg1V5VVtxCSgYGBoaCyAtCXFbVXlVglA2GAYkQwoKKykgKAQDCQ4OBQUKOBcXJi8NAQQEJmYDEhgFTQGR+9EBYc7O/p8AAAAAAQAAAAAGgAWAACUAAAERFAYrASImNRE0JiIGHQEzMhYVERQGIyEiJjURNDYzITU0ACAABoAmGkAaJpbUlmAoODgo/EAoODgoAqABBwFyAQcDwP8AGiYmGgEAapaWasA4KP3AKDg4KAJAKDjAuQEH/vkAAAAFAAD/gAeABYAADwAZACMAJwArAAABMhYVERQGIyEiJjURNDYzFSIGHQEhNTQmIxEyNjURIREUFjM3NSEVMzUhFQbgQl5eQvnAQl5eQg0TBoATDQ0T+YATDWABAIABgAWAXkL7QEJeXkIEwEJegBMN4OANE/sAEw0CYP2gDROAgICAgAADAAAAAAWABYAABwAhAD0AAAAUBiImNDYyARYHBisBIiYnJgAnLgE9ATQ3NjsBFgQXFhIFFgcGKwEiJicmAgAkJy4BPQE0NzY7AQwBFxYSAYBwoHBwoAJwAhMSHYcZJAIW/rvlGSEVERoFoAEkcXKHAg0CFBIcjxolAQyy/uP+fdcZIxQSGgMBBgHfurvWARCgcHCgcP7FHBQVIRnlAUUWAiQZhx0SEQ2HcnH+3KIbFBQjGdcBgwEdsg0BJRmPHBISDda7uv4hAAUAAAAABgAFAAAHAA8AHwApAD8AAAAUBiImNDYyBBQGIiY0NjIXETQmIyEiBhURFBYzITI2ASEDLgEjISIGBwERFAYjISImNRE0NxM+ATMhMhYXExYEEC9CLy9CAS8vQi8vQp8TDftADRMTDQTADRP7MgScnQQYDvzyDhgEBLFeQvtAQl4QxRFcNwMON1wRxRABYUIvL0IvL0IvL0Iv8AFADRMTDf7ADRMTAe0B4g0REQ39fv7AQl5eQgFAGTICXjVCQjX9ojIAAgAA/4MHAAWAAC4ANAAAATIWFAYjERQGIwAlDgEWFw4BHgIXDgEmJy4ENjcjIiY9ATQ2MyEgATIWFQMRAAURBAaANUtLNUw0/l/+dTpCBCYUBhIxLyYdpawuBy0TGwMKEXpCXl5CAeABswHNNEyA/nb+igF5A4BLakv+gDRMAVshE15rJyFBMzspHjoyGyoXgTx2VHE2XkLAQl4BgEw0/CQDuv7SKf7yKgAAAAMAQP8ABsAGAAALABkAQQAABDQjIiY1NCIVFBYzASEAETQuAiIOAhUQARQGIyEUBiImNSEiJjU+BDU0EjcmNTQ2MhYVFAcWEhUUHgMDkBA7VSBnSf12BRT+9jBambqZWjAEwEw0/kCW1Jb+QDRMMlJYPSfqvgg4UDgIvuonPVhSsCBVOxAQSWcBMAEsAhQzbGI/P2JsM/3s/tQ0TGqWlmpMNCpck6ryi5gBBRwTFCg4OCgUExz++5iL8qqTXAAAAAEAAv+ABf4FfQBJAAABFxYHBg8BFxYHBi8BBwYHBiMiLwEHBicmLwEHBicmPwEnJicmPwEnJjc2PwEnJjc2HwE3Njc2HwE3NhcWHwE3NhcWDwEXFhcWBwVgih4KDCi8NQwfHSm6MAopDAcfFIeHHCopCjC6KR0fDDW8KAwKHoqKHgoMKLw1DB8dKbowCikpHYeHHSkpCjC6KR0fDDW8KAwKHgKAhxwqKQowuikdHww1vCgMAhaKih4KCym8NQwfHSm6MAopKhyHhxwqKQowuikdHww1vCkKDB+Lix4LCim8NQwfHSm6MAopKhwAAwAA/4AHAAWAAAcANQBoAAAkNCYiBhQWMgE0JiMhND4CNTQmIyIHBgcGBwYHBisBETMyHgEzMjU0Jz4BNCc2NTQmJyEyNjcUBisBBgcWFRQHFgYjIicmIyEiJjURNDYzITI+BTc2Nz4EMzIWFRQHITIWAQAmNCYmNAWmTjL9wB4kHllHGEIYDShIRx5FRyAgSL7FUb0FHiMSNRQPAUs0TICXaakEIQM8AayNhb2kO/7gNUtLNQEgChcYFRsOGAJBIw0oIi8/Jn2jFgF2aJimNCYmNCYCgDNNFDk1UytDPYssFUBRURk5/YBAQKcaHhBJSiAyRRk9EUw1aZg+ORUWZU2LoUU7SzUCgDVLCRMRHA8cA0o3FVI+QCOGekQ8mAAAAwAA/4AHAAWAADcAPwBzAAAlMxEjIi4CJy4CJyYnJicuBCMiBhUUHgIVISIGFRQWMyEOARUUFwYUFhcGFRQWMzI+ASQ0JiIGFBYyExEUBiMhIgcGIyImPwEmNTQ3JicjIiY1NDYzISY1NDYzMh4DFxYXHgYzITIWBWAgICNBPCgdAgMFAkgoDhgBExIWFQhHWR4kHv3AMk5MNAFLDxQ1EiMeBGFXVMa+AWgmNCYmNKZLNf7gO6S+f46wAQE9AyEEqWmXmGgBdhajfSY/LyIoDSNBAhgOGxUYFwoBIDVLgAKAGDIqIQMDBgJRQBYuAychJhc9QytTNTkUTTM0TBE9GUUyIEpJEBggVVJAQCY0JiY0JgKA/YA1SztFm4wFTGYWFTk+mGlnmDxEeoYjQD5SFTdKAxwPHBETCUsAAAMAAP8ABgAGAAAHADUAaAAABDQmIgYUFjITNCMiBy4BIgcmIyIGBxE0JiMiBhURIi4CIyIGFRQXFhcWFxYXFh0BITU0PgE3FAcGFREUBiMhIiY1ETQuBScmJy4ENTQ2MzIXETQ2MzIWHQEWFzYzMhc2FgUAJjQmJjSmpxoeEElKIDJFGT0RTDQzTRQ5NVMrQz2LLBVAUVEZOQKAQECARTtLNf2ANUsJExEcDxwDSjcVUj5AI4Z6RDyYZ2mYPjkVFmVNi6FaNCYmNCYDPL0FHiMSNRQPAUs0TE4y/cAeJB5ZRxhCGA0oSEceRUcgIEi+xVaFvaQ7/uA1S0s1ASAKFxgVGw4YAkEjDSgiLz8mfaMWAXZomJdpqQQhAzwBrAAAAAMAAP8ABgAGAAA0ADwAcAAAATQuAT0BIRUUDgIHBgcGBwYHDgQVFBYzMj4CMxEUFjMyNjURFjMyNxYyNjcWMzI2AjQmIgYUFjIBFAYvAQYjIicGBxUUBiMiJjURBiMiJjU0PgM3Njc+BjURNDYzITIWFREUFxYFgEBA/YAYMiohCQVRQBYuAychJhc9QytTNTkUTTM0TC45RTIgSkkQGCBVUoAmNCYmNAEmm4wFTGYWFTZBmGlnmDZKeYcjQD5SFTdKAxwPHBETCUs1AoA1SztFAkBUxr5IICAjQTwoHQgESCgOGAETEhYVCEdZHiQe/cAyTkw0AUsjNRIjHgRhAz00JiY0Jv1EjrABAT0DHgepaZeYaAF2FqN9Jj8vIigNI0ECGA4bFRgXCgEgNUtLNf7gO6S+AAAAAAIAAP+ABgAFgAAfACsAAAE1NCYjITc2NC8BJiIHAQcGFB8BARYyPwE2NC8BITI2ABACBCAkAhASJCAEBQAmGv4KvRMTWxI2Ev6WWxISWwFqEjYSWxISvQH2GiYBAM7+n/5e/p/OzgFhAaIBYQJAgBomvRM0E1sSEv6WWxI2Elv+lhISWxI2Er0mASv+Xv6fzs4BYQGiAWHOzgAAAAIAAP+ABgAFgAAfACsAAAA0LwEBJiIPAQYUHwEhIgYdARQWMyEHBhQfARYyNwE3JBACBCAkAhASJCAEBQUSW/6WEjYSWxISvf4KGiYmGgH2vRMTWxI2EgFqWwENzv6f/l7+n87OAWEBogFhAmU2ElsBahISWxI2Er0mGoAaJr0TNBNbEhIBalv+/l7+n87OAWEBogFhzs4AAgAA/4AGAAWAAB8AKwAAADQnAScmIg8BAQYUHwEWMj8BERQWOwEyNjURFxYyPwEkEAIEICQCEBIkIAQFBBL+llsSNhJb/pYSElsSNhK9JhqAGia9EzQTWwEOzv6f/l7+n87OAWEBogFhAmY2EgFqWxISW/6WEjYSWxISvf4KGiYmGgH2vRMTW/3+Xv6fzs4BYQGiAWHOzgACAAD/gAYABYAAHwArAAAANC8BJiIPARE0JisBIgYVEScmIg8BBhQXARcWMj8BAQAQAgQgJAIQEiQgBAUEElsSNhK9JhqAGia9EzQTWxISAWpbEjYSWwFqAQ7O/p/+Xv6fzs4BYQGiAWECZDYSWxISvQH2GiYmGv4KvRMTWxI2Ev6WWxISWwFqAP/+Xv6fzs4BYQGiAWHOzgAAAAADAAD/gAYABYAACwHYAhgAAAAgBBIQAgQgJAIQEgEOAQcyPgE3Njc2NzYXJjY3PgE/AQYmJxQHNCYGJy4CJy4BJy4DIg4BIyYOAgcOAQc2JyYHNiYnMy4CJy4BBwYeARUWBhUUFgcOAQcGFhcWDgIPAQYmJyYnJgcmJyYHNicmBz4BNTY3PgIjFjc+ATc2HgEzFjYnFicmJyYHBhcmDgEnLgEnIgc2Jic2Jy4BBw4BHgIXFgcOAgcGFgcuAScWLwEiBiYnJjc2Fy4BJwYHFjc+ATc2FzcWFyYHBgcWBy4CJyIHBgcWFx4CNxYHNhcWFxYHLgEHBhY3IgYUBxcGFjcGFxYXHgIXHgEXBhYHIgYjHgEXHgI3NicmJy4BJzIeAgcGHgIXHgEjMhYXHgEXHgMXHgEXFjI2NzYWFxY3Bh4CFx4BFzY3BhY3NjUGJzQuAjYzMjYmJy4BJwYmJxQGFSInPgE3PgMmBwYHDgIHBiYnLgE1ND4BJz4BNz4BFjY3JicmIxY2FxY3NCY3FjceARceAjY3FhcWFxY+ASYvATQ1Jy4BNjc+Ajc2JzI3Ii4BIzYnPgE3Fjc2Jz4BNxY2NDc+AT8BNiMWNzYnNiYnNhY3NicmAzY3LgEnJic2LgInLgMGIwcOAxcmJy4CBgcOAQcmNicmDgQHDgEHLgE1HgEXFgcGBwYXFAYXFAIvAaIBYc7O/p/+Xv6fzs4DRAIPBgIFBQEGEA4mIhECFwMDGAMCDAsBBgkOAgoKBgECDwIBAwMFBggHAQMGAwYCAwsDDxAKBgkDBwUBDxQDCDQHBQEHAQ0cBAMaAwUHBwIBBgUEAwsTBAcJFwYFJBkhBgYHDAMCAwkBDAcDIw8FDQQJChMFDgMJDAkFAwwPCAoBERAIAQkFCAgDHAoTGwcbBgUBCwoNAg4GAg0KAQMGBQUIAwcgCgQYEQUEBAEDBA4DLjAGBgUQAiIIBQ4GBxcUAgcCBA8OCBAGklkHBQQCAwoJBgErEwIDDQEQAQMHBwcFAQIDEQ0NIQYCAxIMBAQMCAIXAQEDAQMZAwECBAYCGg8CAwUCAggJBgEDCg4UAgYQCAkWBgUGAgINDBQDBRsICgwRBQ8cByQTAgULBwIFGgUGAQMUCA4fEgUDAgIECQIGAQEUAgUWBQMNAgEDAgEJBgILDBMHAQQGBgciBw0TBQEGAwwEAgUEBAEBAwMBBysGDwcFAgUYAxkFAwgDBwUKAgsIBwgBAQEBAQ8HCgoBDhEEFQYHBAEIBwEJBwUFBQkMBwYFHwMHAgMEFgIRAwMSDQoQAwwJAxECDxYRvc6RAxMDEgYBBwkQAwIKBAsGBwMDBQYCARUPBQwJCwYFAgEHDgUDDwkOBA0CAwYCAhMCBAMHExsCBBAQAQWAzv6f/l7+n87OAWEBogFh/sUBEQEKDAEHCAYGCBMCFgECBQUWARANAgYHAgQBAwkYAwULBQIHBgUKCgIBAQUBAgIBBQYEAQQQBgQJCAIFCQQGCRMDBg4FBxENCBAECBUGAgQFAwICBRYPGQUICQ0NCQUBDg8DBhcCDQoBDwwEDwUYBQYBCgEYCAESBwIECQQEARcMCwEZAQ8IDgEMDwQCBQcJBwQEAQoEAQUEAgQUBAUZBAkDAQQCBwgMBAIDDQIPGgECAgkBDgcFEAkEAwYGDAYDDggBAVCOBwEBEAYGCAsBHBEECwcCDgMFGwEgJwQBDC0DAygIAQILCQYFIwYGHAkCBw4GAw4IAhQqGQQFFQQDBAQBBxUQFgIGGxQKCCQGBw0GCgICEQMEBQECIgQTCAENEgsDBhIGBAUIGAIDHQ8hAQkICQYHEgQIGAMJAggBCQIBAx0IBBANDAcBARMDDwgDAwIECCoQCiEREAIPAwEBAQQEAQIDAwkGCw0BEQUbEgMEAwIHAgMFDgooBAMCEQsHCAkJCAMSEwkBBQgEExAJBgQFCwMQAgwKCAgHBwYCCBAEBQgBCwQCDQsJBgcCAQECCgYF/IIkmQMDAgcBBwwGCgICCAMGAgEBAwMDAREFAQkFAgYFFAMFGQYGAwYLAgkDBBADBAUDCjINHxEZDxYEBxsIBgAAAwAV/xUGfgWAAAcAFQAvAAAkNCYiBhQWMgkBBiMiLwEmNTQ3AR4BARQHDgEjIgAQADMyFhcWFAcFFRc+AjMyFgGAJjQmJjQCqv1WJTU0J2omJgKpJ5cC3Bcv6425/vkBB7k6fywQEP7bwQWUewkPESY0JiY0JgHk/VYlJWwkNjUmAqlilwGMJ0OGpwEHAXIBByEeCyILqeBrA1tHFAAAAAYAAAAABwAFgAADAAcACwAbACsAOwAAJSE1IQEhNSEBITUhAREUBiMhIiY1ETQ2MyEyFhkBFAYjISImNRE0NjMhMhYZARQGIyEiJjURNDYzITIWBAACgP2A/oAEAPwAAoABgP6AAgAmGvmAGiYmGgaAGiYmGvmAGiYmGgaAGiYmGvmAGiYmGgaAGiaAgAGAgAGAgPxA/wAaJiYaAQAaJiYB5v8AGiYmGgEAGiYmAeb/ABomJhoBABomJgAAAQAF/4AFewUAABUAAAEWBwERFAcGIyInASY1EQEmNzYzITIFexEf/hMnDQwbEv8AE/4THxERKgUAKgTZKR3+E/0aKhEFEwEAExoB5gHtHSknAAAABAAAAAAHAAYAAAMAFwAbAC8AAAEhNSEBERQGIyEiJjURIRUUFjMhMjY9ASMVITUBESERNDYzITU0NjMhMhYdASEyFgKAAgD+AASAXkL6QEJeAqAmGgFAGiZg/wAEAPkAXkIBYDgoAkAoOAFgQl4FAID9AP4gQl5eQgHgoBomJhqggIAB4P6AAYBCXqAoODgooF4AAAEAAP+ABgAFgABHAAAJAjc2FxYVERQGIyEiJyY/AQkBFxYHBiMhIiY1ETQ3Nh8BCQEHBiMiJyY1ETQ2MyEyFxYPAQkBJyY3NjMhMhYVERQHBiMiJwUD/p0BY5AdKScmGv5AKhERH5D+nf6dkB8RESr+QBomKCcekAFj/p2QExoMDCgmGgHAKhERH5ABYwFjkB8RESoBwBomJw0MGhMD4/6d/p2QHxERKv5AGiYoJx6QAWP+nZAeJygmGgHAKhERH5ABYwFjkBMFESoBwBomKCcekP6dAWOQHicoJhr+QCoRBRMAAAYAAP8AB4AGAAARADEAOQBBAFMAWwAAAQYHIyImNRAzMh4BMzI3BhUUARQGIyEiJjU0PgUzMh4CMj4CMzIeBQAUBiImNDYyABAGICYQNiABFAYrASYnNjU0JxYzMj4BMzICFAYiJjQ2MgJRomeGUnB8Bkt4O0NCBQSAknn8lnmSBxUgNkZlPQpCUIaIhlBCCj1lRjYgFQf8AJbUlpbUA1bh/sLh4QE+AyFwUoZnolEFQkM7eEsGfICW1JaW1AKABXtRTgFhKisXJR2L/Q54i4t4NWV1ZF9DKCs1Kys1KyhDX2R1ZQUy1JaW1Jb+H/7C4eEBPuH9n05RewV1ix0lFysqAWrUlpbUlgAAAAADABD/kAZwBfAAIQBDAGkAAAE0LwEmIyIHHgQVFAYjIi4DJwYVFB8BFjMyPwE2ATQvASYjIg8BBhUUHwEWMzI3LgQ1NDYzMh4DFzYAFA8BBiMiLwEmNTQ3JwYjIi8BJjQ/ATYzMh8BFhUUBxc2MzIfAQWwHNAcKCoeAyALEwc4KA8ZGgwfAyEczhspKByTHP1BHM4cKCcdkxwc0BspKh4DIAsTBzgoDxkaDB8DIQN/VZNTeHlTzlNYWFZ6eFTQVFWTU3h5U85TWFhWenhU0AFAKBzQHCADHwwaGQ8oOAcTCyADHyooHM8bGpIcAugoHM8cG5IcJygc0BsfAx8MGhkPKDgHEwsgAx/94fBTklNVz1N4e1ZYWFTQVPBTklNVz1N4e1ZYWFTQAAEAAAAAB4AFgAAbAAABFAYjISIANTQ2NyY1NAAzMgQXNjMyFhUUBx4BB4Dhn/vAuf75jnQCASzUngEBO0ZgapYpgagBgJ/hAQe5hNs2HA/UASywjj6Waks/HtEAAgBz/4AGDQWAABcAIQAAJRYGIyEiJjcBESMiJjQ2MyEyFhQGKwERBQEhASc1ESMRFQX3OEVq+4BqRTgB90AaJiYaAgAaJiYaQP7s/vACyP7wFIBYWX9/WQMZAY8mNCYmNCb+cUT+UwGtHyUBj/5xJQAAAAAHAAH/gAcABQAABwBOAFwAagB4AIYAjAAAADIWFAYiJjQFARYHBg8BBiMiJwEHBgcWBw4BBwYjIicmNz4BNzYzMhc2PwEnJicGIyInLgEnJjY3NjMyFx4BFxYHFh8BATYzMh8BFhcWBwU2JicmIyIHBhYXFjMyAz4BJyYjIgcOARcWMzIBFzU0PwEnBw4BBw4BBx8BAScBFQcXFhceAR8BATcBBwYHA6Y0JiY0JgFsAfscAwUegA0QEQ79Tm4IBA4EB2JThJGIVloLB2JShJJTRAkNenoNCURTkoRSYgcFKStViZGEU2IHBA4ECG4Csg4REA2AHgUDHPtcLjJRXGRKJy4yUVxkSi5RMi4nSmRcUTIuJ0pkAQ5gIQ5PGgMOBQIEAddgAuCA/QCgCQIFBA4EGgNggP34sQILAoAmNCYmNBr+chQkIxBABwgBg0IEATEwTY01VE5Ue0yONVQfDQlJSQkNH1Q1jkw7bCdPVDSOTTAxAQRCAYMIB0AQIyQUiiqEMzskKoQzO/07M4QqJDszhCokAqA6CyQUCC8aAxAEAgMB6SACQED+UXFgCAIEBBAEGv7AQAGYigMEAAAFAAD/AAcABgAAHwAiACUAMwA8AAABMhYVERQGIyEiJjURISImNRE0NjcBPgEzITIWFRE2MwcBIQkBIRMBESERFAYjIREhETQ2AREhERQGIyERBqAoODgo/EAoOP3gKDgoHAGYHGAoAaAoOEQ8gP7VASv9gP7VASvEATz+gDgo/mACACgD2P6AOCj+YASAOCj7QCg4OCgBIDgoAqAoYBwBmBwoOCj+uCjV/tUCq/7V/qQBPAGg/mAoOP2AAQAoYPz4BID+YCg4/YAAAAABAAT/hAV8BXwAPwAAJRQGIyInASY1NDYzMhcBFhUUBiMiJwEmIyIGFRQXARYzMjY1NCcBJiMiBhUUFwEWFRQGIyInASY1NDYzMhcBFgV8nnWHZPz3cdyfnnMCXQo9EA0K/aJPZmqSTAMIP1JAVD/9uxoiHSYZAZoKPhAMCv5mP3JSWD0CRWSXdZ5kAwhznJ/ecf2iCgwQPQoCX02WamlM/Pc/VEBSPwJFGCYdIBv+ZgoMED4KAZo9WFJyP/27YgAEAAD/gAYABYAAAwAhADEARQAAKQERIQEzETQmJwEuASMRFAYjISImNREjETMRNDYzITIWFQERNCYrASIGFREUFjsBMjYFERQGIyEiJjURNDYzITIWFwEeAQGAAwD9AAOAgBQK/ucKMA84KP3AKDiAgDgoA0AoOP6AEw3ADRMTDcANEwKAOCj6wCg4OCgDoChgHAEYHCgBgP6AA4AOMQoBGQoU/mAoODgoAaD7AAGgKDg4KAIAAUANExMN/sANExMT/GAoODgoBUAoOCgc/ugcYAAAAAEAAP+ABgAFgAAPAAABERQGIyEiJjURNDYzITIWBgCpd/xAd6mpdwPAd6kEYPxAd6mpdwPAd6mpAAAAAAMAAAAABgAFAAAPAB8ALwAAJRUUBiMhIiY9ATQ2MyEyFhEVFAYjISImPQE0NjMhMhYRFRQGIyEiJj0BNDYzITIWBgAmGvqAGiYmGgWAGiYmGvqAGiYmGgWAGiYmGvqAGiYmGgWAGibAgBomJhqAGiYmAeaAGiYmGoAaJiYB5oAaJiYagBomJgAGAAD/wAcABUAABwAPAB8AJwA3AEcAACQUBiImNDYyEhQGIiY0NjIBFRQGIyEiJj0BNDYzITIWABQGIiY0NjIBFRQGIyEiJj0BNDYzITIWERUUBiMhIiY9ATQ2MyEyFgGAcKBwcKBwcKBwcKAF8BMN+0ANExMNBMANE/qAcKBwcKAF8BMN+0ANExMNBMANExMN+0ANExMNBMANE9CgcHCgcAGQoHBwoHD9oMANExMNwA0TEwPjoHBwoHD9oMANExMNwA0TEwHzwA0TEw3ADRMTAAAAAAYAD/8ABwAF9wAeADwATABcAGwAfAAABRQGIyInNxYzMjY1NAcnPgI3NSIGIxUjNSEVBx4BExUhJjU0PgM1NCYjIgcnPgEzMhYVFA4CBzM1ARUUBiMhIiY9ATQ2MyEyFgEVITUzNDY9ASMGByc3MxEBFRQGIyEiJj0BNDYzITIWERUUBiMhIiY9ATQ2MyEyFgF9bVFqQjkxOR0raRoIMSQTEEEQagFNXzM8Av6WBi9CQi8dGS4jVRhfOklkRFJFAX8F6hMN+0ANExIOBMANE/qA/rFrAQIIKkeIagXsEw37QA0TEg4EwA0TEw37QA0TEw0EwA0TVFBcQlgtHRxACDgKQykSAQI1mFhzDEoCQJ8kEjNUNCssFxkbOjszOVNHMlMuNxk8/sHADRMTDcAOEhMDdmNjKaIoDBElTH/+bP59wA0TEw3ADhITAfPADRMTDcANExMAAAAAAwAA/4AHAAWAAA8ANQBlAAABMhYdARQGIyEiJj0BNDYzJSYnJjU0NzYhMhcWFxYXFhUUDwEvASYnJiMiBwYVFBcWFxYXFhcDIRYVFAcGBwYHBgcGIyIvASYnJj0BNCcmPwE1Nx4CFxYXFhcWMzI3Njc2NTQnJgbgDhISDvlADhISDgHDHBcwhoUBBDJ1Qm8KCw4FDFQOMjVYenJEQ0JC1UVoOiXsAZsHKRcwJUhQSVB7clGMOQ8IAgEBAmYPHg8FIy0rPjtJQEtNLS9RIgKAEg5ADhISDkAOEkAjLWFbtYB/EwwkJlB7PBIbAwYClThbOzpYSUNDPhQuHBj/ACc1b2U3MSMuMBIVFygQDAgODWwwHiYlLAIiSiYIOSUkFRYbGjw9RFRJHQACAAD/gAYABYAAYwBzAAATJi8BNjMyFxYzMjc2NzI3BxcVBiMiBwYVFBYVFxMWFxYXFjMyNzY3Njc2NzY1NC4BLwEmJyYPASc3MxcWNxcWFRQHBgcGBwYVFBYVFhMWBwYHBgcGBwYjIicmJyYnJjURNCcmATU0JiMhIgYdARQWMyEyNjAlCAMNGzw0hCJWUnQeOB4BAjxAPBMNAQEOBi0jPVhZaFc4KzARJBEVBw8GBAUTIitkDgJUzUx4EgYELSdJBg8DCA4GFQ8aJkpLa22Sp3V3PD0WEBEZBVYSDvpADhISDgXADhIFIQICWAEEBwMEAQIOQAkJGQ52DScG5f7ofE47IS8cEiEkHDg6SZxPYpNWO0MVIwECA1YKAw0CJg0HGAwBCwYPGgcoCxP+h8NtTC5BOjkgIS4vS0x3UJ0BTbwZJPqCQA4SEg5ADhISAAAKAAAAAAaABYAADwAfAC8APwBPAF8AbwB/AI8AnwAAJTU0JiMhIgYdARQWMyEyNhE1NCYjISIGHQEUFjMhMjYBNTQmIyEiBh0BFBYzITI2ATU0JiMhIgYdARQWMyEyNgE1NCYjISIGHQEUFjMhMjYBNTQmIyEiBh0BFBYzITI2ATU0JiMhIgYdARQWMyEyNgE1NCYjISIGHQEUFjMhMjYRNTQmIyEiBh0BFBYzITI2ExEUBiMhIiY1ETQ2MyEyFgIAEg7+wA4SEg4BQA4SEg7+wA4SEg4BQA4SAgASDv7ADhISDgFADhL+ABIO/sAOEhIOAUAOEgIAEg7+wA4SEg4BQA4SAgASDv7ADhISDgFADhL+ABIO/sAOEhIOAUAOEgIAEg7+wA4SEg4BQA4SEg7+wA4SEg4BQA4SgF5C+sBCXl5CBUBCXqDADhISDsAOEhIBjsAOEhIOwA4SEv6OwA4SEg7ADhISAw7ADhISDsAOEhL+jsAOEhIOwA4SEv6OwA4SEg7ADhISAw7ADhISDsAOEhL+jsAOEhIOwA4SEgGOwA4SEg7ADhISAU77wEJeXkIEQEJeXgAAAAYAG/+bBoAGAAADABMAGwAjACsAMwAACQEnASQUBwEGIi8BJjQ3ATYyHwElFw8BLwE/AQEXDwEvAT8BARcPAS8BPwEBFw8BLwE/AQSmASVr/tsCKhL6+hI2EsYSEgUGEjYSxvrLYmIeHmJiHgF8xMQ8PMTEPAPeYmIeHmJiHv2eYmIeHmJiHgO7ASVr/tvVNhL6+hISxhI2EgUGEhLGkR4eYmIeHmL+/Dw8xMQ8PMT9Xh4eYmIeHmICHh4eYmIeHmIAAAAEAED/gAcABQAABwAQABgATQAAJDQmIgYUFjIBIREjIg8BBhUANCYiBhQWMgERFA4EJiMUBiImNSEUBiImNSMiBi4ENTQ2MxE0Jj4DPwE+ATsBNTQ2MyEyFgKATGhMTGj+zAGAng0JwwkFAExoTExoAUwIEw4hDCcDltSW/oCW1JZAAycMIQ4TCCYaAQEECRMNxhM/G6AmGgQAGiZMaExMaEwCgAEACcMJDf2uaExMaEwEwPwADxcOCQMBAWqWlmpqlpZqAQEDCQ4XDxomAUAINhYvGyINxhMawBomJgAAAAEAAP+ABgAFgABKAAAAEAIEIyInNjc2Nx4BMzI+ATU0LgEjIg4DFRQWFxY3PgE3NicmNTQ2MzIWFRQGIyImNz4CNTQmIyIGFRQXAwYXJgI1NBIkIAQGAM7+n9FvazsTCS0Uaj15vmh34o5ptn9bK1BNHggCDAIGETPRqZepiWs9Sg4IJRc2Mj5WGWMRBM7+zgFhAaIBYQNR/l7+n84gXUcisSc5ifCWcsh+OmB9hkNoniAMIAcwBhcUPVqX2aSDqu5XPSN1WR8yQnJVSTH+XkZrWwF86dEBYc7OAAABAAD/gAYABYAATAAAATIWFREUBiMhNjc2Nx4BMzISNTQuAiMiDgMVFBYXFjY3Njc2JyY1NDYzMhYVFAYjIiY3PgI1NCYjIgYVFBcDBhcjIiY1ETQ2MwTgd6mpd/0rVRcJLBVpPLXlRnu2ami1fVorT00NFQQKBQYRMs+nlaeHajxKDgglFjUxPVUYYhgRt3epqXcFgKl3/EB3qXpYIq8nOAEn4lSdeUk5YHuFQmacIAUKDiwRFxM+WJbVooGo7Fc8InVXHzFBcVNIMf5iZJqpdwPAd6kAAAAFAAD/gAYABYAAFwAlAFMAXwBvAAABFAYjIi4CNTQ+AjMyFx4HAxQGIyIuATU0NjMyHgE/ASEiDgEVFBYzMjcGFRQXBgcOARUUHgMzMj4CNTQuAzQ+AzU0JicBMzUjNSMVIxUzFTMBERQGIyEiJjURNDYzITIWAz11USlPSCwyUVMrFAsCKgokDRkJCUpCOzVQI0A8NVEjalj+91WYZ4FeFhUNKK9SLzklPE5NJjx5akIoOjooHywsHy0yAXaAgECAgEABgKl3/EB3qal3A8B3qQE+TEkTJkQsLkQjDwIBHwcdDx4WHwIRPE9VbDQ9VlpwzkBAhFddewMdGSwyDDMdWDMrRSweDB89aEExUTQrLSwpJi5JLjxPM/5AQICAQKACYPxAd6mpdwPAd6mpAAAABAAg/4AGTgYAADAARQBgAGwAAAEUHgMVFAcGBCMiJicmNTQ2NzYlLgE1NDcGIyImNTQ2Nz4BMyEHIx4BFRQOAycyNjc2NTQuAiMiBgcGFRQeAxMyPgI1NC4GJyYjIg4DFRQeAgEzFSMVIzUjNTM1MwLfQFtaQDBI/uqfhOU5JVlKgwERIB8VLhaUy0g/TdNwAaKKg0pMMUVGMZImUBo1Ij9qQCpRGS8UKz1ZNjprWzcODycUORBDAxAgNWhvUzZGcX0Da9XVadTUaQLkJEVDUIBOWlN6c1NgPEdRii5SEipAKSQxBMGUUpo2QkBYP4xaSHNHO0A+IRs5ZjqGfVInITtlLmdnUjT8lxo0Xj4ZMCQvFy4MMAICDiQ4XTtGazsdA2xs29ts2QAEAAAAAAeABQAADAAcACwAPAAAASE1IxEjBxc2NzMRIyQUDgIiLgI0PgIyHgEBESImNSEUBiMRMhYVITQ2ExEUBiMhIiY1ETQ2MyEyFgMAAYCAcpRNKg0CgAIAKk1+ln5NKipNfpZ+TQIqapb7gJZqapYEgJbqJhr5ABomJhoHABomAYBgAcCJUCUU/uDmjJB8Tk58kIyQfE5OfP4qAgCWamqW/gCWamqWA0D7gBomJhoEgBomJgAAAQAAAUAEAAOAAA0AAAAUBwEGIicBJjQ2MyEyBAAT/kATNBP+QBMmGgOAGgNaNBP+QBMTAcATNCYAAAAAAQAAAQAEAANAAA0AAAAUBiMhIiY0NwE2MhcBBAAmGvyAGiYTAcATNBMBwAFaNCYmNBMBwBMT/kAAAAAAAQBAAIACgASAAA0AAAERFAYiJwEmNDcBNjIWAoAmNBP+QBMTAcATNCYEQPyAGiYTAcATNBMBwBMmAAAAAQAAAIACQASAAA0AAAAUBwEGIiY1ETQ2MhcBAkAT/kATNCYmNBMBwAKaNBP+QBMmGgOAGiYT/kAAAAAAAwAA/4AGgAWAAAYADQAdAAAzIREhERQWJREhESEyNhMRFAYjISImNRE0NjMhMhagAmD9gBMFbf2AAmANE4BeQvrAQl5eQgVAQl4EgPugDRMgBGD7gBMEzftAQl5eQgTAQl5eAAIAAP/ABAAFQAANABsAAAAUBwEGIicBJjQ2MyEyEhQGIyEiJjQ3ATYyFwEEABP+QBM0E/5AEyYaA4AaJiYa/IAaJhMBwBM0EwHAAdo0E/5AExMBwBM0JgFaNCYmNBMBwBMT/kAAAAAAAQAA/8AEAAIAAA0AAAAUBwEGIicBJjQ2MyEyBAAT/kATNBP+QBMmGgOAGgHaNBP+QBMTAcATNCYAAAAAAQAAAwAEAAVAAA0AAAAUBiMhIiY0NwE2MhcBBAAmGvyAGiYTAcATNBMBwANaNCYmNBMBwBMT/kAAAAAAAgAA/4AHAAUAABoAOgAAAREUBiMhIiY1ERYXBBceAjsCMj4BNzYlNhMUBgcABw4EKwIiLgMnJiQnLgE1NDYzITIWBwBeQvpAQl4sOQFqhzlHdjMBATN2RzmqAUg5K2JJ/ohcCkErPTYXAQEXNj0rQQpb/qoiPm5TTQXAQV8DOvzmQl5eQgMaMSb2YyovMTEvKnveJwFWT5Az/vtABy8dJBISJB0vB0DtGCqTP05oXgADAAD/sAYABWwAAwAPACsAAAERIREBFgYrASImNTQ2MhYBESERNCYjIgYHBhURIRIQLwEhFSM+AzMyFgFd/rYBXwFnVAJSZGemZASP/rdRVj9VFQv+twIBAQFJAhQqR2c/q9ADj/whA98BMkliYklKYWH83f3IAhJpd0UzHjP91wGPAfAwMJAgMDgf4wAAAAABAAD/gAYABYAANAAAABACBgQjIiQnJjY/ATYzFhceATMyPgI0LgIjIgYHFxYHBiMhIiY1ETQ3Nh8BNiQzMgQWBgB6zv7knKz+ym0HAQiJCg8QB0nUd2i9ilFRir1oYrRGiR8RESr+QBomKCcegmsBE5OcARzOAxz+yP7kznqRhAoZCIoJAgpfaFGKvdC9ilFHQooeJygmGgHAKhERH4Flb3rOAAEAKP8VBusF2ABxAAAhFA8BBiMiJwEmNTQ3AQcGIiceBhUUBw4FIyInASY1ND4ENzYzMh4FFyY0NwE2MhcuBjU0Nz4FMzIXARYVFA4EBwYjIi4FJxYUDwEBNjMyFwEWBuslayc0NSX+lSYr/wB+DigOAhUEEAQIAxwDGwsaEhoNKBz+aBwJCRYLHgMeJgoQEQoRBhQCDg4BXA4oDgIVBBAECAMcAxsLGhIaDSgcAZgcCQkWCx4DHiYKEBEKEQYUAg4OfgEAKzU0JwFrJTUlbCUlAWwkNjUrAQB+Dg4CFAYRChEQCiYeAx4LFgkJHAGYHCgNGhIaCxsDHAMIBBAEFQIOKA4BXA4OAhQGEQoREAomHgMeCxYJCRz+aBwoDRoSGgsbAxwDCAQQBBUCDigOfv8AKyX+lScAAAcAAP+ABwAFAAAHAA8AIQApADEAOQBLAAAANCYiBhQWMgA0JiIGFBYyARM2LgEGBwMOAQcGHgE2NzYmJDQmIgYUFjIANCYiBhQWMgQ0JiIGFBYyARAHBiMhIicmETQSNiQgBBYSAYBLaktLagELS2pLS2oB92UGGzIuB2U8XhAUUJqKFBAsAmJLaktLav3LS2pLS2oCC0tqS0tqAYuNEyP6hiMTjY7wAUwBbAFM8I4BS2pLS2pLAgtqS0tqS/6fAX4aLQ4bGv6CBU08TYooUE08cg5qS0tqSwLLaktLakt1aktLakv+wP773h0d3QEGtgFM8I6O8P60AAAAAAIAAP8ABwAFAAAWADwAAAAgBAYVFBYfAQcGBzY/ARcWMzIkNhAmBBACBCMiJwYFBgcjIiYnNSY2Jj4CNz4FNyYCNTQSJCAEBEz+aP6d0Y+CVxsYLph7KzlFPcwBY9HRAVHw/mT0RkvG/voxQQUPGAQDBQEKAgwCBzAVKRgeC5218AGcAegBnASAi+yJcMtKMmBbUT9sJgYIi+wBEuzH/qT+2asIr0MOCBURAQQQBA8DDgIINRc4LkgoWQEGlq4BJ6urAAADAAD/gAcABQAAFAA6AGQAAAAgBAYVFBYfAQc2PwEXFjMyJDY0JiQgBBYQBgQjIicGBwYHIyImJyY0PgU3PgQ3LgE1NDYBHgQXHgYUBw4BJyYnJicGIyAnFjMyJDc+ATU0Jx4BFRQGA1n+zv72nWpgYSMiHCw1TkuZAQqdnf2eAX4BRby8/ru/Vlp8miQyAwsTAgEBAwIFAwYBBSQQHRUKfI68BToKFR0QJAUBBgMFAgMBAQMUDDIkmnxaVv7xyToeoQEodH2GF4GWjgSAaLJmUpg4OFQUEx8KDmiyzLLoiez+6uyJEFgoCQcQDQMHBgYEBwMHAQYmFSUoGEjSd4vs+/gYKCUVJgYBBwMHBAYGBwMOEAEHCShYEIQEWlRc8IZNS0fWe3jRAAEAAf8AA3wFgAAhAAABFgcBBiMiJy4BNxMFBiMiJyY3Ez4BMyEyFhUUBwMlNjMyA3USC/3kDR0EChERBMX+agQIEg0SBckEGBABSBMaBasBjAgEEwPKFBj7exkCBRwQAyhlAQsPGAM5DhIZEQgK/jFiAgAAAQAA/4AHAAWAAFUAAAERFAYjISImNRE0NjsBNSEVMzIWFREUBiMhIiY1ETQ2OwE1IRUzMhYVERQGIyEiJjURNDY7ATU0NjMhNSMiJjURNDYzITIWFREUBisBFSEyFh0BMzIWBwA4KP7AKDg4KGD+AGAoODgo/sAoODgoYP4AYCg4OCj+wCg4OChgTDQCAGAoODgoAUAoODgoYAIANExgKDgBIP7AKDg4KAFAKDjAwDgo/sAoODgoAUAoOMDAOCj+wCg4OCgBQCg4wDRMwDgoAUAoODgo/sAoOMBMNMA4AAADAAD/gAaABcAAEwBPAFkAAAERFAYiJjU0NjIWFRQWMjY1ETYyBRQGIyInLgEjIgYHDgEHBiMiJy4BJy4BIgYHDgEHBiMiJy4BJy4BIyIGBwYjIiY1NDc2ACQzMgQeARcWARUmIgc1NDYyFgOAmNCYJjQmTmROIT4DIRMNCwwxWDpEeCsHFQQLERILBBUHK3eIdysHFQQLEhELBBUHK3hEOlgxDAsNEwEtAP8BVb6MAQ3gpSEB/QAqLComNCYCxP28aJiYaBomJhoyTk4yAkQLJg0TCi4uSjwKJAYREQYkCjxKSjwKJAYREQYkCjxKLi4KEw0FArcBEYhQk+OKAgLSYgICYhomJgAEAAD/AAcABgAACAAYABsANwAABSERISImNREhATU0JiMhIgYdARQWMyEyNgEhCQERFAYjISImPQEhIiY1ETQ2MyEyFhURFhcBHgEDAAOA/mAoOP6AAQATDf1ADRMTDQLADRMBAAEr/tUCADgo/EAoOP3gKDg4KARAKDgVDwGYHCiAAoA4KAGgASBADRMTDUANExP9bQEr/lX9YCg4OCigOCgFQCg4OCj+uA0P/mgcYAAAAAADAAD/gAQABYAAEAAoAFwAAAEUBiImNTQmIyImNDYzMh4BFzQuAiIOAhUUFx4BFxYXMzY3PgE3NjcUBw4CBxYVFAcWFRQHFhUUBiMOASImJyImNTQ3JjU0NyY1NDcuAicmNTQ+AjIeAgLgExoTbDQNExMNMmNLoEVvh4qHb0VECikKgA3kDYAKKQpEgGctOzwELxkZLQ0/LhRQXlAULj8NLRkZLwQ8Oy1nWZG3vreRWQPADRMTDS4yExoTIEw0SHxPLS1PfEhlTwssC5mRkZkLLAtPZZtxMUxzMhw2JRsbJTQdFxguMiw0NCwyLhgXHTQlGxslNhwyc0wxcZtjq3FBQXGrAAIAAP+gBwAE4AAaADQAAAEVFAYjIRUUBiMiJwEmNTQ3ATYzMhYdASEyFhAUBwEGIyImPQEhIiY9ATQ2MyE1NDYzMhcBBwATDfqgEw0MDP7BCQkBQAkODRMFYA0TCf7ACQ4NE/qgDRMTDQVgEg4MDAE/AWDADRPADRMKAUAJDQ4JAUAJEw3AEwIhHAn+wAkTDcATDcANE8AOEgr+wQAAAAACAAAAAAeABYAAGQA1AAABNCYrARE0JisBIgYVESMiBhUUFwEWMjcBNgUUBiMhIgA1NDY3JjU0ADMyBBc2MzIWFRQHHgEFABIO4BMNwA0T4A0TCQFgCRwJAV8KAoDhn/vAuf75jHYCASzUnAEDO0dfapYpgqcCYA4SAWANExMN/qATDQ4J/qAJCQFfDNSf4QEHuYLcNx4N1AEsrpA+lmpMPh/RAAIAAAAAB4AFgAAZADUAAAE0JwEmIgcBBhUUFjsBERQWOwEyNjURMzI2ARQGIyEiADU0NjcmNTQAMzIEFzYzMhYVFAceAQUACf6gCRwJ/qEKEg7gEw3ADRPgDRMCgOGf+8C5/vmMdgIBLNScAQM7R19qlimCpwKgDgkBYAkJ/qEMDA4S/qANExMNAWAT/u2f4QEHuYLcNx4N1AEsrpA+lmpMPh/RAAAAAAMAAP+ABYAFgAAHAFgAYAAAJBQGIiY0NjIFFAYjISImNTQ+AzcGHQEOARUUFjI2NTQmJzU0NxYgNxYdASIGHQEGFRQWMjY1NCc1NDYyFh0BBhUUFjI2NTQnNTQmJzQ2LgInHgQAEAYgJhA2IAGAJjQmJjQEJpJ5/JZ5kgslOmhEFjpGcKBwRzkZhAFGhBlqliA4UDggTGhMIDhQOCBFOwEBBAoIRGg6JQv+wOH+wuHhAT7aNCYmNCZ9eYqKeUR+lnNbDzREyxRkPVBwcFA9ZBTLPh9oaB8+QJZqWR0qKDg4KCodWTRMTDRZHSooODgoKh1ZRHciCkEfNCoTD1tzln4D2P7C4eEBPuEAAAACAAD/gAWABYAABwBNAAAANCYiBhQWMjcUBgcRFAQgJD0BLgE1ETQ2MzIXPgEzMhYUBiMiJxEUFiA2NREGIyImNDYzMhYXNjMyFhURFAYHFRQWIDY1ES4BNTQ2MhYFACY0JiY0pkc5/vn+jv75pNwmGgYKETwjNUtLNSEfvAEIvB8hNUtLNSM8EQoGGibcpLwBCLw5R3CgcAMmNCYmNCZAPmIV/nWf4eGfhBTYkAIAGiYCHiRLaksS/m5qlpZqAZISS2pLJB4CJhr+AJDYFIRqlpZqAYsVYj5QcHAABAAA/4AHAAWAAAMADQAbACUAAAEhNSEFESMiJjURNDYzIREhETM1NDYzITIWHQEFERQGKwERMzIWAoACAP4A/qBAXISEXASg/ACAOCgCQCg4AgCEXEBAXIQEgICA+wCEXANAXIT7AAUAoCg4OCig4PzAXIQFAIQAAgBA/wAGwAYAAAsAMwAABDQjIiY1NCIVFBYzARQGIyEUBiImNSEiJjU+BDU0EjcmNTQ2MhYVFAcWEhUUHgMDkBA7VSBnSQNATDT+QJbUlv5ANEwyUlg9J+q+CDhQOAi+6ic9WFKwIFU7EBBJZwEwNExqlpZqTDQqXJOq8ouYAQUcExQoODgoFBMc/vuYi/Kqk1wAAAMAAP+AB0AFAAAHAA8AIgAAADQmKwERMzIBIRQGIyEiJgAQBisBFRQGIyEiJjURNDYzITIGgHBQQEBQ+fAHAJZq+wBqlgdA4Z9AhFz9QFyEJhoEgJ8DMKBw/oD9wGqWlgQJ/sLhIFyEhFwC4BomAAACAAD/AAWABgAALQBCAAABERQGBxEUBisBIiY1ES4BNRE0NjIWFREUFjI2NRE0NjIWFREUFjI2NRE0NjIWBREUBisBIiY1ESMiJjURNDYzITIWAoBHOUw0gDRMOUcmNCYmNCYmNCYmNCYmNCYDAEw0gDRM4A0TvIQBABomBcD9gD1kFPz1NExMNAMLFGQ9AoAaJiYa/mAaJiYaAaAaJiYa/mAaJiYaAaAaJiYa+cA0TEw0AgATDQMghLwmAAYAAP8ABgAGAAATABoAIwAzAEMAUwAAAR4BFREUBiMhIiY1ETQ2MyEyFhcHESEmJwEmAREhIiY1ESERATQ2MyEyFh0BFAYjISImNQUyFh0BFAYjISImPQE0NjMBMhYdARQGIyEiJj0BNDYzBbwcKDgo+sAoODgoA4AoYByEAXgKDP7HDAFj/mAoOP0AAQASDgLADhISDv1ADhIC4A4SEg79QA4SEg4CwA4SEg79QA4SEg4EhBxgKPuAKDg4KAZAKDgoHET+iB0MATkM+hIEADgoAaD6AANgDhISDkAOEhIOoBIOQA4SEg5ADhL/ABIOQA4SEg5ADhIAFAAA/wAFgAYAAA8AHwAvAD8ATwBfAG8AfwCPAJ8ArwC/AM8A3wDvAP8BDwEfAS0BPQAAJRUUBisBIiY9ATQ2OwEyFjUVFAYrASImPQE0NjsBMhYFFRQGKwEiJj0BNDY7ATIWJRUUBisBIiY9ATQ2OwEyFgEVFAYrASImPQE0NjsBMhYlFRQGKwEiJj0BNDY7ATIWJRUUBisBIiY9ATQ2OwEyFiUVFAYrASImPQE0NjsBMhYBFRQGKwEiJj0BNDY7ATIWJRUUBisBIiY9ATQ2OwEyFiUVFAYrASImPQE0NjsBMhYlFRQGKwEiJj0BNDY7ATIWARUUBisBIiY9ATQ2OwEyFiUVFAYrASImPQE0NjsBMhYlFRQGKwEiJj0BNDY7ATIWARUUBisBIiY9ATQ2OwEyFiUVFAYrASImPQE0NjsBMhYFFRQGKwEiJj0BNDY7ATIWASERIREhNTQ2MyEyFhUBERQGIyEiJjURNDYzITIWAYATDUANExMNQA0TEw1ADRMTDUANEwEAEw1ADRMTDUANE/8AEw1ADRMTDUANEwMAEw1ADRMTDUANE/8AEw1ADRMTDUANE/8AEw1ADRMTDUANE/8AEw1ADRMTDUANEwMAEw1ADRMTDUANE/8AEw1ADRMTDUANE/8AEw1ADRMTDUANE/8AEw1ADRMTDUANEwMAEw1ADRMTDUANE/8AEw1ADRMTDUANE/8AEw1ADRMTDUANEwIAEw1ADRMTDUANE/8AEw1ADRMTDUANEwEAEw1ADRMTDUANE/8AAYD7gAGAEw0BQA0TAgAmGvsAGiYmGgUAGibgQA0TEw1ADRMT80ANExMNQA0TEw1ADRMTDUANExPzQA0TEw1ADRMT/fNADRMTDUANExPzQA0TEw1ADRMT80ANExMNQA0TE/NADRMTDUANExP980ANExMNQA0TE/NADRMTDUANExPzQA0TEw1ADRMT80ANExMNQA0TE/3zQA0TEw1ADRMT80ANExMNQA0TE/NADRMTDUANExP+80ANExMNQA0TE/NADRMTDUANExMNQA0TEw1ADRMT+pMGAPoA4A0TEw0FYPmAGiYmGgaAGiYmAA0AAP8ABYAGAAAPAB8ALwA/AE8AXwBvAH8AjwCfALcA2wD1AAAlFRQGKwEiJj0BNDY7ATIWNRUUBisBIiY9ATQ2OwEyFgUVFAYrASImPQE0NjsBMhYlFRQGKwEiJj0BNDY7ATIWARUUBisBIiY9ATQ2OwEyFiUVFAYrASImPQE0NjsBMhYlFRQGKwEiJj0BNDY7ATIWARUUBisBIiY9ATQ2OwEyFiUVFAYrASImPQE0NjsBMhYFFRQGKwEiJj0BNDY7ATIWASERIRUUBiMhIiY9ASERITU0NjMhMhYVGQE0JisBIgYdASM1NCYrASIGFREUFjsBMjY9ATMVFBY7ATI2JREUBiMhIiY1ETQ2MyERNDYzITIWFREhMhYBgBMNQA0TEw1ADRMTDUANExMNQA0TAQATDUANExMNQA0T/wATDUANExMNQA0TAwATDUANExMNQA0T/wATDUANExMNQA0T/wATDUANExMNQA0TAgATDUANExMNQA0T/wATDUANExMNQA0TAQATDUANExMNQA0T/wABgP8AOCj+QCg4/wABgBMNAUANExMNQA0TgBMNQA0TEw1ADROAEw1ADRMCACYa+wAaJiYaAUA4KAHAKDgBQBom4EANExMNQA0TE/NADRMTDUANExMNQA0TEw1ADRMT80ANExMNQA0TE/3zQA0TEw1ADRMT80ANExMNQA0TE/NADRMTDUANExP+80ANExMNQA0TE/NADRMTDUANExMNQA0TEw1ADRMT/JMEgCAoODgoIPuA4A0TEw0DwAFADRMTDWBgDRMTDf7ADRMTDWBgDRMTLfsAGiYmGgUAGiYBICg4OCj+4CYABQBA/4AHgAWAAAcAEAAYADwAYwAAJDQmIgYUFjIBIREjBg8BBgcANCYiBhQWMhM1NCYrATU0JisBIgYdASMiBh0BFBY7ARUUFjsBMjY9ATMyNgERFAYrARQGIiY1IRQGIiY1IyImNDYzETQ2PwE+ATsBETQ2MyEyFgKAS2pLS2r+ywGAng4IwwcCBQBLaktLassSDuASDsAOEuAOEhIO4BIOwA4S4A4SAQAmGsCW1Jb+gJbUloAaJiYaGhPGE0AaoCYaBIAaJktqS0tqSwKAAQACB8MMCv2taktLaksDIMAOEuAOEhIO4BIOwA4S4A4SEg7gEgIu+4AaJmqWlmpqlpZqJjQmAaAaQBPGExoBQBomJgAABQAA/4AHAAWAACMAJwAxAD8ASQAAATU0JisBNTQmKwEiBh0BIyIGHQEUFjsBFRQWOwEyNj0BMzI2ASE1IQURIyImNRE0NjMhESERMzU0NjMhMhYdAQURFAYrAREzMhYFABIO4BIOwA4S4A4SEg7gEg7ADhLgDhL9gAIA/gD+gCBchIRcBMD7wKA4KAJAKDgCAIRcICBchAGgwA4S4A4SEg7gEg7ADhLgDhISDuASAu6AgPsAhFwDQFyE+wAFAKAoODgooOD8wFyEBQCEAAAAAAEAAAAAB4AEgAA6AAABBg0BByMBMzIWFAYrAzUzESMHIyc1MzUzNSc1NzUjNSM1NzMXMxEjNTsCMhYUBisBATMXBQQXFgeAAf7h/qDgQP7bRRomJhpgoEBAoMBgICCAwMCAICBgwKBAQKBgGiYmGkUBJUDgAWABBRoBAkAgQCBA/qAJDgkgAaDgIMAgCBiAGAggwCDgAaAgCQ4J/qBAIDojAwAAAgBAAAAGgAWAAAYAGAAAAREhERQWMwEVITU3IyImNREnNyE3IRcHEQKA/wBLNQSA+4CAgJ/hQCAB4CADwCBAAoABgP8ANUv+QMDAwOGfAUBAgIDAIPzgAAIAAP+ABgAFgAAjADMAACURNCYrASIGFREhETQmKwEiBhURFBY7ATI2NREhERQWOwEyNgERFAYjISImNRE0NjMhMhYFACYagBom/gAmGoAaJiYagBomAgAmGoAaJgEAqXf8QHepqXcDwHepwAOAGiYmGv7AAUAaJiYa/IAaJiYaAUD+wBomJgO6/EB3qal3A8B3qakAAAAAAgAA/4AGAAWAACMAMwAAATU0JiMhETQmKwEiBhURISIGHQEUFjMhERQWOwEyNjURITI2AREUBiMhIiY1ETQ2MyEyFgUAJhr+wCYagBom/sAaJiYaAUAmGoAaJgFAGiYBAKl3/EB3qal3A8B3qQJAgBomAUAaJiYa/sAmGoAaJv7AGiYmGgFAJgI6/EB3qal3A8B3qakAAAACAC0ATQPzBDMAFAApAAAkFA8BBiInASY0NwE2Mh8BFhQHCQEEFA8BBiInASY0NwE2Mh8BFhQHCQECcwoyChoK/i4KCgHSChoKMgoK/ncBiQGKCjIKGgr+LgoKAdIKGgoyCgr+dwGJrRoKMgoKAdIKGgoB0goKMgoaCv53/ncKGgoyCgoB0goaCgHSCgoyChoK/nf+dwAAAAIADQBNA9MEMwAUACkAAAAUBwEGIi8BJjQ3CQEmND8BNjIXAQQUBwEGIi8BJjQ3CQEmND8BNjIXAQJTCv4uChoKMgoKAYn+dwoKMgoaCgHSAYoK/i4KGgoyCgoBif53CgoyChoKAdICTRoK/i4KCjIKGgoBiQGJChoKMgoK/i4KGgr+LgoKMgoaCgGJAYkKGgoyCgr+LgAAAgBNAI0EMwRTABQAKQAAJBQPAQYiJwkBBiIvASY0NwE2MhcBEhQPAQYiJwkBBiIvASY0NwE2MhcBBDMKMgoaCv53/ncKGgoyCgoB0goaCgHSCgoyChoK/nf+dwoaCjIKCgHSChoKAdLtGgoyCgoBif53CgoyChoKAdIKCv4uAXYaCjIKCgGJ/ncKCjIKGgoB0goK/i4AAAACAE0ArQQzBHMAFAApAAAAFAcBBiInASY0PwE2MhcJATYyHwESFAcBBiInASY0PwE2MhcJATYyHwEEMwr+LgoaCv4uCgoyChoKAYkBiQoaCjIKCv4uChoK/i4KCjIKGgoBiQGJChoKMgKtGgr+LgoKAdIKGgoyCgr+dwGJCgoyAXYaCv4uCgoB0goaCjIKCv53AYkKCjIAAAEALQBNAnMEMwAUAAAAFAcJARYUDwEGIicBJjQ3ATYyHwECcwr+dwGJCgoyChoK/i4KCgHSChoKMgPtGgr+d/53ChoKMgoKAdIKGgoB0goKMgAAAAEADQBNAlMEMwAUAAAAFAcBBiIvASY0NwkBJjQ/ATYyFwECUwr+LgoaCjIKCgGJ/ncKCjIKGgoB0gJNGgr+LgoKMgoaCgGJAYkKGgoyCgr+LgAAAAEATQENBDMDUwAUAAAAFA8BBiInCQEGIi8BJjQ3ATYyFwEEMwoyChoK/nf+dwoaCjIKCgHSChoKAdIBbRoKMgoKAYn+dwoKMgoaCgHSCgr+LgAAAAEATQEtBDMDcwAUAAAAFAcBBiInASY0PwE2MhcJATYyHwEEMwr+LgoaCv4uCgoyChoKAYkBiQoaCjIDLRoK/i4KCgHSChoKMgoK/ncBiQoKMgAAAAIAAP+AB4AGAAAPAC8AAAERNCYjISIGFREUFjMhMjYTERQGIyEUHgEVFAYjISImNTQ+ATUhIiY1ETQ2MyEyFgcAEw35wA0TEw0GQA0TgF5C/eAgICYa/gAaJiAg/eBCXl5CBkBCXgIgA0ANExMN/MANExMDTfvAQl4lUT0NGiYmGg48UCZeQgRAQl5eAAAAAAQAAAAAB4AFAAAPAB8AKwAzAAABIiY1ETQ2MyEyFhURFAYjAREUFjMhMjY1ETQmIyEiBgEzFRQGIyEiJj0BMwUyNCsBIhQzAaBCXl5CBEBCXl5C+6ATDQRADRMTDfvADRMFYKBeQvnAQl6gA3AQEKAQEAEAXkICwEJeXkL9QEJeA2D9QA0TEw0CwA0TE/xTYCg4OChgYCAgAAAAAAMAAAAABIAFgAAHABcAJwAAJDQmIgYUFjIlETQmIyEiBhURFBYzITI2ExEUBiMhIiY1ETQ2MyEyFgKAJjQmJjQBphMN/MANExMNA0ANE4BeQvzAQl5eQgNAQl5mNCYmNCbgA8ANExMN/EANExMDzfvAQl5eQgRAQl5eAAAEAAAAAAMABQAABwAXAB8ALwAAJDQmIgYUFjIlETQmIyEiBhURFBYzITI2AjQrASIUOwElERQGIyEiJjURNDYzITIWAdAvQi8vQgD/Ew3+AA0TEw0CAA0TwBCgEBCgATBMNP4ANExMNAIANExfQi8vQi/wAsANExMN/UANExMDTSAgIPwANExMNAQANExMAAACAAD/gAYABYAACwAXAAAAIA4BEB4BID4BECYEEAIEICQCEBIkIAQDlP7Y+pKS+gEo+pKSAXLO/p/+Xv6fzs4BYQGiAWEEoJL6/tj6kpL6ASj6vf5e/p/OzgFhAaIBYc7OAAAAAgAAAAAGgAWAACEAQwAAAREUBiMhIiY1ETQ+AjsBMhYdARQGKwEiBh0BFBY7ATIWBREUBiMhIiY1ETQ+AjsBMhYdARQGKwEiBh0BFBY7ATIWAwBwUP6AUHBRir1oQBomJhpAapY4KOBQcAOAcFD+gFBwUYq9aEAaJiYaQGqWOCjgUHACQP6AUHBwUALAaL2KUSYagBomlmogKDhwUP6AUHBwUALAaL2KUSYagBomlmogKDhwAAAAAAIAAAAABoAFgAAhAEMAAAERFA4CKwEiJj0BNDY7ATI2PQE0JisBIiY1ETQ2MyEyFgURFA4CKwEiJj0BNDY7ATI2PQE0JisBIiY1ETQ2MyEyFgMAUYq9aEAaJiYaQGqWOCjgUHBwUAGAUHADgFGKvWhAGiYmGkBqljgo4FBwcFABgFBwBMD9QGi9ilEmGoAaJpZqICg4cFABgFBwcFD9QGi9ilEmGoAaJpZqICg4cFABgFBwcAAAAAAIAAD/gAYABcAACQARABkAIQApADEAOQBBAAAkFAYjIiY0NjMyABQGIiY0NjIAFAYiJjQ2MgAUBiImNDYyABQGIiY0NjIkFAYiJjQ2MgAUBiImNDYyAhQGIiY0NjIB8FU7PFRUPDsCBUtqS0tq/etehF5ehARuQlxCQlz9AmeSZ2eSAjdwoHBwoAKQOFA4OFCYL0IvL0L8eFRUeFT+5WpLS2pLAkKEXl6EXv3OXEJCXEIDWZJnZ5JnYKBwcKBw/OhQODhQOAGBQi8vQi8AAAAAAQAA/4AGAAWAAAsAAAAQAgQgJAIQEiQgBAYAzv6f/l7+n87OAWEBogFhA1H+Xv6fzs4BYQGiAWHOzgAAAQAA/4AHAAXAACwAAAEUAw4CBwYjIiY1NDY1NjU0LgUrAREUBiInASY0NwE2MhYVETMgExYHAH8DDwwHDBAPEQUFIz5icZmbYuAmNBP+ABMTAgATNCbgAsmiNQGgpv7jByIaCREUDwkjBkQ3ZaB1VTYfDP8AGiYTAgATNBMCABMmGv8A/m2GAAQAAP+ABoAFAAALABcAMQBYAAAAFA4BIi4BND4BMhYEFA4BIi4BND4BMhYXNCYjIgcGIicmIyIGFRQeAzsBMj4DExQHDgQjIi4EJyY1NDcmNTQ3MhYXNjMyFz4BMxYVFAcWAoAZPVQ9GRk9VD0CmRk9VD0ZGT1UPbmKdimaR6xHmCt2ikBikoZSqFKGkmJA4D0mh5PBllxOgKeKiGohPogbM2yka5OilIRppGszG4gBaFBURERUUFRERFRQVEREVFBURER8eKgVCwsVqHhYg0stDg4tS4MBCM98TXA8IwkGEyk+ZEF70O2fUlh0Zk9UIyBSTmZ0V1GgAAAAAAIAAAAABoAFgAAXACwAACURNCYjISImPQE0JiMhIgYVERQWMyEyNhMRFAYjISImNRE0NjMhMhYdASEyFgYAOCj9QCg4OCj+wCg4OCgEwCg4gIRc+0BchIRcAUBchAKgXITgAsAoODgoQCg4OCj8QCg4OALo/UBchIRcA8BchIRcIIQAAAMAAAAAB3UFgAARACcARQAAATQjISIGBwEGFRQzITI2NwE2JSE1NCYjISImPQE0JiMhIgYVEQE+AQUUBwEOASMhIiY1ETQ2MyEyFh0BITIWHQEzMhYXFgb1NfvAKFsa/toSNQRAKFwZASYS+4sDADgo/cAoODgo/sAoOAEALJAFOS7+2SuSQ/vAXISEXAFAXIQCIFyEwDZaFg8CXSMrH/6VGBAjLB8Baxa0oCg4OChAKDg4KPyrATs1RaM+Ov6VNUWEXAPAXISEXCCEXKAxLiAAAAAABQAA/4AGAAWAABQAHAAkADQAQAAAAQ4BIiYnJjY3NhYXHgEyNjc+AR4BABQGIiY0NjIEFAYiJjQ2MgAQLgIgDgIQHgIgPgESEAIEICQCEBIkIAQEbiXK/solCBgaGS8IGYeohxkIMDIY/gpLaktLagJLS2pLS2oBS2ar7f787atmZqvtAQTtq+bO/p/+Xv6fzs4BYQGiAWEBzXmUlHkZLwgIGBpQY2NQGhgQLwHPaktLaktLaktLakv9/gEE7atmZqvt/vztq2ZmqwJA/l7+n87OAWEBogFhzs4AAAUAAP+ABgAFgAAUABwAJAA0AEAAAAEWDgEmJy4BIgYHDgEnLgE3PgEyFgAUBiImNDYyBBQGIiY0NjIAEC4CIA4CEB4CID4BEhACBCAkAhASJCAEBG4IGDIwCBmHqIcZCC8ZGhgIJcr+yv43S2pLS2oCS0tqS0tqAUtmq+3+/O2rZmar7QEE7avmzv6f/l7+n87OAWEBogFhATMZLxAYGlBjY1AaGAgILxl5lJQCCWpLS2pLS2pLS2pL/f4BBO2rZmar7f787atmZqsCQP5e/p/OzgFhAaIBYc7OAAAFAAD/gAYABYAACwATABsAKwA3AAAAFAYjISImNDYzITIAFAYiJjQ2MgQUBiImNDYyABAuAiAOAhAeAiA+ARIQAgQgJAIQEiQgBASAJhr9gBomJhoCgBr+JktqS0tqAktLaktLagFLZqvt/vztq2Zmq+0BBO2r5s7+n/5e/p/OzgFhAaIBYQHaNCYmNCYBtWpLS2pLS2pLS2pL/f4BBO2rZmar7f787atmZqsCQP5e/p/OzgFhAaIBYc7OAAQAAAAAB4AEAAAjACsAMwBDAAABNTQmKwE1NCYrASIGHQEjIgYdARQWOwEVFBY7ATI2PQEzMjYENCYiBhQWMgA0JiIGFBYyJBAAIyInIwYjIgAQADMhMgNAEg7AEg6ADhLADhISDsASDoAOEsAOEgJAS2pLS2oBS0tqS0tqAUv+1NTAktySwNT+1AEs1AOA1AHAgA4SwA4SEg7AEg6ADhLADhISDsASZ2pLS2pLAUtqS0tqS9T+WP7UgIABLAGoASwAAAAPAAAAAAeABIAACwAXACMALwA7AEcAUwBfAGsAdwCDAI8AnwCjALMAAAEVFCsBIj0BNDsBMjcVFCsBIj0BNDsBMicVFCsBIj0BNDsBMgEVFCMhIj0BNDMhMiUVFCsBIj0BNDsBMicVFCsBIj0BNDsBMgEVFCsBIj0BNDsBMicVFCsBIj0BNDsBMgEVFCsBIj0BNDsBMgEVFCsBIj0BNDsBMgEVFCsBIj0BNDsBMgUVFCsBIj0BNDsBMgURFCsBIj0BNDsBNTQ7ATITESERAREUBiMhIiY1ETQ2MyEyFgGAEGAQEGAQgBDgEBDgEIAQYBAQYBAEABD8oBAQA2AQ/YAQYBAQYBCAEGAQEGAQAYAQYBAQYBCAEGAQEGAQAYAQYBAQYBABgBBgEBBgEP4AEGAQEGAQAQAQYBAQYBABABDgEBBwEGAQgPmABwBLNfmANUtLNQaANUsBcGAQEGAQ8GAQEGAQ8GAQEGAQ/fBgEBBgEPBgEBBgEPBgEBBgEP7wYBAQYBDwYBAQYBD+8GAQEGAQ/vBgEBBgEAHwYBAQYBAQYBAQYBAQ/qAQEGAQ8BD9AAOA/IADgPyANUtLNQOANUtLAAAAAAMAQP+ABwAFgAAWACoAVgAAAREGIyInLgEjIgcRNjMyHgIfARYzMgEUBgcRFAYrASImNREuATU0NjIWBREUBwYHBiMiLwEuAiMiBAcGIyInJjURNDc+AzMyFhcWMzI3Njc2FxYGgKmJUj9kqF6t5vW8N2FjNzccLDl4+20jHRIOQA4SHSNLaksFwCMKB9qXWEYcQEZwOmb+9V8PEhAQIB8jV42kSXDCcCYzerwWCR8fHwHrAmhbIDE3f/2pcQ8lGRsOFgNxIzoR+w4OEhIOBPIROiM1S0t1/QUnEgUEdCMOIR4cWDoJCBMlAuYjFBUrPSY+NxNwDAUQEhQAAAYAQP+ABwAFgAAFAAsAKgAyAEYAcgAAATUGBxU2EzUGBxU2ATUGJzUmJy4JIyIHFTMyFhcWFxUWMzITNQYjIicVFgEUBgcRFAYrASImNREuATU0NjIWBREUBwYHBiMiLwEuAiMiBAcGIyInJjURNDc+AzMyFhcWMzI3Njc2FxYDQLXLzbOs1NcD6euVFBMFOA0yEy4aLCMsFhcaE2a1axMUKjF4ramJLSGU+6wjHRIOQA4SHSNLaksFwCMKB9qXWEYcQEZwOmb+9V8PEhAQIB8jV42kSXDCcCYzerwWCR8fHwIYwBBluWABsMUIdr1v/ji4dC3gBgkDHAYYBxMGCwQEA946NQkGvBECB71bCMQqAe4jOhH7Dg4SEg4E8hE6IzVLS3X9BScSBQR0Iw4hHhxYOgkIEyUC5iMUFSs9Jj43E3AMBRASFAACAA0AAAaABDMAFAAkAAAJAQYiLwEmNDcJASY0PwE2MhcBFhQBFRQGIyEiJj0BNDYzITIWAkn+LgoaCjIKCgGJ/ncKCjIKGgoB0goELRIO/EAOEhIOA8AOEgIp/i4KCjIKGgoBiQGJChoKMgoK/i4KGv4tQA4SEg5ADhISAAAAAAMALf+TB1ME7QAUACQAOQAAJQcGIicBJjQ3ATYyHwEWFAcJARYUCQEOAS8BLgE3AT4BHwEeAQkBBiIvASY0NwkBJjQ/ATYyFwEWFAJpMgoaCv4uCgoB0goaCjIKCv53AYkKAkX+iwQXDD4NDQQBdQQXDD4NDQKN/i4KGgoyCgoBif53CgoyChoKAdIKiTIKCgHSChoKAdIKCjIKGgr+d/53ChoEIfr1DQ0EEQQXDQULDQ0EEQQX/Wj+LgoKMgoaCgGJAYkKGgoyCgr+LgoaAAACAAD/gAcABbsAFQA7AAABFRQHBiMiJwEmNDcBNhcWHQEBBhQXARQOAwcGIyInJjcSJy4BJxUUBwYjIicBJjQ3ATYXFhURBBcWAoAnDQwbEv4AExMCAB0pJ/5zExMGDSIrNRwGCBQGAxkCK5VA1aEnDQwbEv4AExMCAB0pJwGbvKkBxkYqEQUTAgATNBMCAB8RESpF/nITNBP+TTqXfX04DBEBCBoBkKVHTw37KhEFEwIAEzQTAgAfEREq/vocwa0AAAAAAgAC/60GfgXgAAoAKAAAAS0BLwEDERcFAycJARMWBiMiJyUFBiMiJjcTASY2NyUTNjMyFxMFHgEEogEB/pxCHp87AT48DAH1/pVWBRYXERf+P/4/FxEXFgVW/pQgEi0B9uEUHRwV4QH2LRICQ/o0CjwBQvw9H6gBY0IBNf6e/gwhJQzs7AwlIQH0AWIgNwdJAccpKf45SQc3AAAAAQAC/4AFgAUAABYAAAkBBiMiJy4BNREhIi4BNjcBNjMyFx4BBXn9gBEoBQoWG/3AFiMKEhQFAA0QGxIPBwSj+wAjAgUjFgJAGywoCgKABxMOKQAAAwAA/wAGgAWAAAIABQA4AAABIREJASEBFRQGKwEVFAYrASImPQEhIiY1ESMiJj0BNDY7ATU0NjsBMhYdASE3NjIXFhQPAREzMhYCLQJT/YACU/2tBIASDuASDsAOEvygDhLgDhISDuASDsAOEgNT9goaCgkJ9+AOEgEAAlP92gJT/WDADhLgDhISDuASDgNgEg7ADhLgDhISDuD3CQkKGgr2/K0SAAAABAAA/4AEAAWAAAcADwAXAEsAACQ0JiIGFBYyEjQmIgYUFjIENCYiBhQWMjcUBgcCBwYHDgEdAR4BFRQGIiY1NDY3ES4BNTQ2MhYVFAYHETY3PgU1LgE1NDYyFgEgOFA4OFA4OFA4OFACuDhQODhQmDQsAuBEh4BTLDRwoHA0LCw0cKBwNCw2ZDdBTConESw0cKBwGFA4OFA4BLhQODhQOEhQODhQOGA0WRn+4X8mKyg+RRoZWTRQcHBQNFkZAzQZWTRQcHBQNFkZ/g8aHxEZJSo8TzQZWTRQcHAAAAgAAP+ABoAGAAAOABoAJgBBAF0AaQB1AIMAAAkBBiMiJyY0NwE2MhcWFBcRFAYiJjURNDYyFiYUBiMhIiY0NjMhMgUUDwEGIyInASYnNwEeAT8BNjU0JwE3FhcBFgEHASYjIg8BBhUUFwEHJicBJjU0PwE2MzIXARYEFAYjISImNDYzITIBERQGIiY1ETQ2MhYFAQYiJyY0NwE2MhcWFAG3/wAKDQwLCQkBAAoaCgmgEhwSEhwS4BIO/sAOEhIOAUAOBQJVk1N4eVP+shUV7wERG1Ibkxwc/u4SIxUBUFT9l+/+7xwoJx2THBwBEhIjFf6wVFWTU3h5UwFOFQKOEg7+wA4SEg4BQA798hIcEhIcEgGX/wALGAsJCQEAChoKCQEJ/wAJCQoaCgEACQkKGjP+wA4SEg4BQA4SEuAcEhIcEqB4U5JTVQFPFSMS/u4bARuSHCcoHAET7xUV/rBWAl4SARIcG5IcJygc/u7wFRUBUFZ2eFOSU1X+sRVpHBISHBICAP7ADhISDgFADhISpf8ACQkKGgoBAAkJChoAAAAAAgBgAAAD/AUAAA8APAAAARUUBisBIiY9ATQ2OwEyFgEUDgMHDgEVFAYrASImPQE0Njc+ATU0JiMiBwYHBiMiLwEuATcSITIeAgLAGBDwEBgYEPAQGAE8HydHLCcpNxgQ8A8Vgk47Ml09QSsjSA0SDA2kDQUIoAEwUKKCUgEY8BAYGBDwEBgYAkg2Xjs8GxYXVBkRHyUTLVOTIxs6LypAHRlaEAh9Ch4NAQo+aJcAAAACAAAAAAKABYAAHgAuAAAlFRQGIyEiJj0BNDY7AREjIiY9ATQ2MyEyFhURMzIWAxUUBiMhIiY9ATQ2MyEyFgKAJhr+ABomJhpAQBomJhoBgBomQBomgCYa/wAaJiYaAQAaJsCAGiYmGoAaJgGAJhqAGiYmGv3AJgRmwBomJhrAGiYmAAACAGIAAAIeBYAADwAfAAABFRQGIyEiJj0BNDYzITIWEwMOASMhIiYnAyY2MyEyFgIAJhr/ABomJhoBABomHhwBJxr/ABonARwBJRoBQBolASDgGiYmGuAaJiYEBv0AGiYmGgMAGiYmAAIABQAABf4FawAiAEcAACUVIy8BJicjBwYPASE1MxMDIzUhFxYXFhczNj8CIRUjAxMBFSEnJjU0PgQ1NCYjIgcGByc2NzYzMhYVFA4EBzM1A4H4nxgIAwMJCg+b/v6AxbmJARSLAhUIAwMDCBmMAQF9uMwC6v3+AwQ0TlpONDspMy4OFmkaJVNpbogxS1hMNwPop6f8KgkMFRQY+qcBIwEQqOQEJgkMCQwq5Kj+9f7YAqfOGxwSQGpDPy4+ISYxJwsbXCUdQXdjOF47Ois8IVAAAAAAAgAF/wAGAAOCACIARgAAJRUjLwEmJyMHBg8BITUzEwMjNSEXFhcWFzM2PwIhFSMDEwUVIScmNTQ+BDU0JiMiBwYHJzY3NjMyFhUUDgMHMzUDgfifGAgDAwkKD5v+/oDFuYkBFIsCFQgDAwMIGYwBAX24zALs/f4EAzROWk40OykzLg4WaRolUGxuiEVjZEoE6Ken/CoJDBUUGPqnASMBEKjkBCYJDAkMKuSo/vX+2NnOGy0BQGpDPy4+ISYxJwsbXCUdQXdjQmlDOkQnUAAAAAIAAQAAB38FAAADABcAACUBIQkBFgYHAQYjISImJyY2NwE2MyEyFgOAAVD9AP6wBvUPCxn8gCY6/QAmPxAPCxkDgCY6AwAmP4ABgP6ABDUiSxz8ACwpIiJLHAQALCkAAAEAAP/cBoAGAABoAAABFAYjIi4CIyIVFBYHFSIHDgIjIiY1ND4CNTQmIyIGFRQeAhUUBwYjIicuAS8BIiciNREeAhcWMzI3NjU0LgI1NDYzMhYVFA4CFRQWMzI2NxUOAgcGFRQXFjMyPgIzMhYGgFlPKUktRCVuIAEWCyJ/aC49VCMpI2xRVHYeJR4uJVBflgklCQ0BAgICHyUDll9QJS4eJR52VVBsIykjVD1A6C8BBQUBGCMsLRY5MVArUlsBtlFsIykjfCeYJwUBAxEKNTklRC1JKU9ZW1IrUDE5Fi0sIxgCBAICAQEEAAEFBQEYIywtFjkxUCtSW1lPKUktRCU5NR4CAgIfJQOWX1AlLh4lHnYAAAIAAP+ABIAGAAAnADMAAAEVFAAHFSEyFhQGIyEiJjQ2MyE1JgA9ATQ2MhYdARQAIAA9ATQ2MhYBERQGICY1ETQ2IBYEgP7Z2QEAGiYmGv2AGiYmGgEA2f7ZJjQmAQcBcgEHJjQm/wC8/vi8vAEIvANAgN3+uRiEJjQmJjQmhBgBR92AGiYmGoC5/vkBB7mAGiYmAWb+AIS8vIQCAIS8vAADAA3/gAVzBgAACwBDAEsAAAEHJj0BNDYyFh0BFAkBFRQGIyInBxYzMgA9ATQ2MhYdARQABxUhMhYUBiMhIiY0NjMhNSYnBwYiLwEmNDcBNjIfARYUJQERNDYzMhYBD2UqJjQmBGn+l7yENzZgYWy5AQcmNCb+2dkBABomJhr9gBomJhoBAH1u/goaClIKCgTSChoKUgr+ev2TvIRmpQJPZWdvgBomJhqANQIe/peAhLwTYDMBB7mAGiYmGoDd/rkYhCY0JiY0JoQNRP4KClIKGgoE0goKUgoaev2TAgCEvHYAAAACAAD/gAUABYAABgAiAAABESERNjc2ExEUDgUHBiInLgY1ETQ2MyEyFgRA/kB3XuvAQ2OJdH41EAwcDBA1fnSJY0MmGgSAGiYCQAKA+48/SrgDsP0AVqmDfFJJGgcGBgcaSVJ8g6lWAwAaJiYAAAAABAAA/wAGgAYAAAMAEwAjAEcAABchESElETQmKwEiBhURFBY7ATI2JRE0JisBIgYVERQWOwEyNiURFAYjISImNRE0NjsBNTQ2OwEyFh0BITU0NjsBMhYdATMyFoAFgPqAAYASDkAOEhIOQA4SAwASDkAOEhIOQA4SAYBMNPqANExMNIBeQkBCXgGAXkJAQl6ANEyABADAASAOEhIO/uAOEhIOASAOEhIO/uAOEhJO+wA0TEw0BQA0TGBCXl5CYGBCXl5CYEwAAAACAAP/gAWABeAABwBMAAAANCYiBhQWMiURFAcGIyInJS4BNSEVHgEVERQGIyEiJjURNDY3NSMiDgMHBiMiJy4BNz4ENyY1NDYyFhUUByE0NjclNjMyFxYCACY0JiY0A6YMCAwEA/5ACw7/AG+RJhr+ABomfWMgO3BHPRQEESgQDRcRDAUTOEFpOBlehF4OAS4OCwHAAwQMCAwFJjQmJjQmYP7AEAkHAWACEgtmF7Bz/OAaJiYaAyBqqR5vLztKIQgjBwwyGAogS0FFEiosQl5eQiEfCxICYAEHCQAAAgAk/yAGgAWAAAcALQAAADQmIgYUFjIBFAIHBgcDBgcFBiMiLwEmNxMBBQYjIi8BJjcTNjclNjc2JCEyFgWgOFA4OFABGJeyUXIUAg7+gAcJDAtADQVV/uf+7AMGDglAEQzgChABe2BQvAFUAQUOFAQYUDg4UDgBgPn+lbNQYP6FEArgBAlADhIBFAEZVQEJQBMUAYAOAhRyUbuOEwAAAAEAAAAABtEFAAAWAAABAyETNicmKwEDIRMhAyETAyEyFhceAQbRpP6ysg0cGzipzP6yzP7izP6yzJkE/GWxOzwqAvv9BQNAOCAh/EcDufxHA7kBR1FJSb8AAAAAAgAA/4AGAAWAABQAIAAAJTc2NCcJATY0LwEmIgcBBhQXARYyABACBCAkAhASJCAEA41mExP+zQEzExNmEzQT/joTEwHGEzQChs7+n/5e/p/OzgFhAaIBYY1mEzQTATMBMxM0E2YTE/46EzQT/joTAtf+Xv6fzs4BYQGiAWHOzgACAAD/gAYABYAAFAAgAAAlATY0JwEmIg8BBhQXCQEGFB8BFjIAEAIEICQCEBIkIAQCzQHGExP+OhM0E2YTEwEz/s0TE2YTNANGzv6f/l7+n87OAWEBogFhjQHGEzQTAcYTE2YTNBP+zf7NEzQTZhMC1/5e/p/OzgFhAaIBYc7OAAIAAP+ABgAFgAAUACAAAAE3NjQnASYiBwEGFB8BFjI3CQEWMgAQAgQgJAIQEiQgBASNZhMT/joTNBP+OhMTZhM0EwEzATMTNAGGzv6f/l7+n87OAWEBogFhAY1mEzQTAcYTE/46EzQTZhMTATP+zRMB1/5e/p/OzgFhAaIBYc7OAAAAAAIAAP+ABgAFgAAUACAAACUBNjQvASYiBwkBJiIPAQYUFwEWMgAQAgQgJAIQEiQgBAMtAcYTE2YTNBP+zf7NEzQTZhMTAcYTNALmzv6f/l7+n87OAWEBogFh7QHGEzQTZhMT/s0BMxMTZhM0E/46EwJ3/l7+n87OAWEBogFhzs4AAgAA/0AFgAWAABEAFgAAATchEyEPAS8BIxMFMzUlEyEnASEDBSUEahD8jC8CZBbFxA2vFgFqBAFnMv18D/44BYCA/b79wgOrr/3q5DU1jP7qZAFjAiC1AdX6YqKiAAAAAQAM/0AG9AWAAA8AAAEhCQITIQcFJRMhEyE3IQETBeH+9vzc/UZHASkdAaYB5kT7SDoEuSb7SAWA+sv+9QELAWSToaEBUwEpvwAAAAIAAP8QBwAGAAAHAFUAAAA0JiIGFBYyAREUBwYjIi8BBgQgJCcHBiMiJyY1ETQ2MyEyFxYPAR4BFxEjIiY9ATQ2OwE1LgE1NDYyFhUUBgcVMzIWHQEUBisBET4BNycmNzYzITIWA8AmNCYmNANmFAgEDQpdd/5x/jT+cXddCQ4ECBQSDgFgFggID2RD9ZXAGiYmGsA6RpbUlkY6wBomJhrAlfVDZA8ICBYBYA4SBOY0JiY0Jvyg/qAWCAIJXY+np49dCQIIFgFgDhIUExBkW30UAocmGoAaJqMidUZqlpZqRnUioyYagBom/XkUfVtkEBMUEgABAAAAAASABgAAIwAAATIWFREUBiMhIiY1ETQ2OwERNAAgABUUBisBIiY1NCYiBhURBCAoODgo/EAoODgoIAEHAXIBByYaQBomltSWAwA4KP3AKDg4KAJAKDgBQLkBB/75uRomJhpqlpZq/sAAAAAABQAA/4AGAAWAAAcADwAXACcAMwAAABQGIiY0NjIAECYgBhAWIAAQACAAEAAgABAuAiAOAhAeAiA+ARIQAgQgJAIQEiQgBAQAltSWltQBFuH+wuHhAT4BYf7U/lj+1AEsAagBrGar7f787atmZqvtAQTtq+bO/p/+Xv6fzs4BYQGiAWEC6tSWltSW/mEBPuHh/sLhAlT+WP7UASwBqAEs/X4BBO2rZmar7f787atmZqsCQP5e/p/OzgFhAaIBYc7OAAAAAAMAAAIABYADgAAPAB8ALwAAARUUBisBIiY9ATQ2OwEyFgUVFAYrASImPQE0NjsBMhYFFRQGKwEiJj0BNDY7ATIWAYA4KMAoODgowCg4AgA4KMAoODgowCg4AgA4KMAoODgowCg4AyDAKDg4KMAoODgowCg4OCjAKDg4KMAoODgowCg4OAAAAAADAAAAAAGABYAADwAfAC8AAAEVFAYrASImPQE0NjsBMhYRFRQGKwEiJj0BNDY7ATIWERUUBisBIiY9ATQ2OwEyFgGAOCjAKDg4KMAoODgowCg4OCjAKDg4KMAoODgowCg4ASDAKDg4KMAoODgB2MAoODgowCg4OAHYwCg4OCjAKDg4AAAEAAD/gAYABYAABwAbADUARQAAJDQmIgYUFjIlJgAnJgYdARQWFx4BFx4BOwEyNiUmAi4BJCcmBwYdARQWFxYEEhceATsBMjc2AREUBiMhIiY1ETQ2MyEyFgIAS2pLS2oBqg3+uOgOFBENmtwLARINgA0UAX8FZrHp/uGaDgkKEg3MAVzRBwESDYANCgsBH6l3/EB3qal3A8B3qctqS0tqSyLoAUgNARQNgA0SAQvcmg0RFA2aAR/psWYFAQoKDYANEgEH0f6kzA0SCgkDzfxAd6mpdwPAd6mpAAAAAgAA/4AGAAWAAAsAGwAAACAEEhACBCAkAhASATY0JwEmBwYVERQXFjMyNwIvAaIBYc7O/p/+Xv6fzs4DsiAg/eAfISAgEBARDwWAzv6f/l7+n87OAWEBogFh/ZcSShIBQBMSEyX9gCUTCAkAAwA2/zUGywXKAAMAEwAvAAAJBTY0JwEmIgcBBhQXARYyCQEGIi8BNjQmIgcnJjQ3ATYyHwEGFBYyNxcWFAQAATz9xP7EAWkCahMT/pYSNhL9lhMTAWoSNgOL/HUlayV+OHCgOH0lJQOLJWslfThwoDh+JQQ8/sT9xAE8/mkCahM0EwFqEhL9lhM0E/6WEgKP/HQlJX44oHA4fiVrJQOKJSV9OKBwOH0lawAAAAIAAP+ABgAFgAAPAB8AAAE1NCYjISIGHQEUFjMhMjYBERQGIyEiJjURNDYzITIWBQAmGvyAGiYmGgOAGiYBAKl3/EB3qal3A8B3qQJAgBomJhqAGiYmAjr8QHepqXcDwHepqQADAAAAAAWABYAADwAfAC8AAAEVFAYjISImPQE0NjMhMhYTETQmIyEiBhURFBYzITI2ExEUBiMhIiY1ETQ2MyEyFgSAEg78wA4SEg4DQA4SgF5C/MBCXl5CA0BCXoCpd/zAd6mpdwNAd6kC4EAOEhIOQA4SEv4yA0BCXl5C/MBCXl4DgvzAd6mpdwNAd6mpAAABAAMAAAP6BX8AHAAAAQYrAREUBiMhIicmPwE2MyERIyInJjcBNjIXARYD+hIowBIO/UAVCAgMoAkQAUDAKBIRGgFAEj4SAUAbA6Ul/KAOEhIUD8ALAoAlJR8BgBYW/oAgAAAAAQAD/4AD+gUAABsAABMhMhYVETMyFgcBBiInASY3NjsBESEiLwEmNzYgAsANE8AoJBv+wBI+Ev7AGhESKMD+wA4LoA0JCQUAEw78oUog/oAWFgGAHyYlAoALwA4UEwAAAgAA/4AGAAWAABQAJAAAJQE2NC8BJiIHAScmIg8BBhQXARYyAREUBiMhIiY1ETQ2MyEyFgKtAmYTE2YTNBP+LdMTNBNmExMBZhM0A2apd/xAd6mpdwPAd6ntAmYTNBNmExP+LdMTE2YTNBP+mhMDhvxAd6mpdwPAd6mpAAUAAP+ABgAFgAAGABAAFQAfAC8AAAEXByM1IzUBFgcBBicmNwE2CQMRATc2NC8BJiIPASURFAYjISImNRE0NjMhMhYBlJg0OGAB0g4R/t0RDQ4RASMR/vsCIP7g/eADgFwcHJgcUBxcAqCpd/xAd6mpdwPAd6kBrJg0YDgBug0R/t0RDg0RASMR/UACIAEg/eD+4AJgXBxQHJgcHFxg/EB3qal3A8B3qakAAAACAAD/gAYABYAAGQApAAABETQmIyEiBwYfAQEGFB8BFjI3ARcWMzI3NgERFAYjISImNRE0NjMhMhYFACYa/iAqEREfkP3qExNmEzQTAhaQEhsMDScBAKl3/EB3qal3A8B3qQJgAeAaJicpHZD96hM0E2YTEwIWkBMFEQIq/EB3qal3A8B3qakAAgAA/4AGAAWAACUANQAACQE2NCcBJgcGHQEiDgUVFBcWMzI3NicCNz4BMxUUFxYzMgERFAYjISImNRE0NjMhMhYD7QFgExP+oB4nKHfCg2E4IQqnCg8HBhYDLGouqIwoDAwaAiapd/xAd6mpdwPAd6kBswFgEzQTAWAfEREqoCc/X2B6ZTy13wwDCRgBYnc0L6AqEQUCwPxAd6mpdwPAd6mpAAAEAAD/gAYABYAAAgAGABIAHgAAAS0BAREBEQAQLgEgDgEQHgEgNgAQAgQgJAIQEiQgBAKAAQD/AAGA/gADIJL6/tj6kpL6ASj6AXLO/p/+Xv6fzs4BYQGiAWEBwICAAU/94v8AAh7+3QEo+pKS+v7Y+pKSAl/+Xv6fzs4BYQGiAWHOzgADAAD/gAYABYAADQAdAC0AAAEWBwEGIicBJjc2MyEyExE0JiMhIgYVERQWMyEyNgERFAYjISImNRE0NjMhMhYEeRIX/sATQhP+wBcSESgCgCiYEw38QA0TEw0DwA0TAQCpd/xAd6mpdwPAd6kDXSMf/kAbGwHAHyMj/SADwA0TEw38QA0TEwPN/EB3qal3A8B3qakAAwAA/4AGAAWAAA0AHQAtAAABBiMhIicmNwE2MhcBFhMRNCYjISIGFREUFjMhMjYBERQGIyEiJjURNDYzITIWBHkRKP2AKBESFwFAE0ITAUAXdRMN/EANExMNA8ANEwEAqXf8QHepqXcDwHepAaMjIyMfAcAbG/5AH/7aA8ANExMN/EANExMDzfxAd6mpdwPAd6mpAAMAAP+ABgAFgAANAB0ALQAAABQHAQYnJjURNDc2FwETETQmIyEiBhURFBYzITI2AREUBiMhIiY1ETQ2MyEyFgRAG/5AHyMjIyMfAcDbEg78QA4SEg4DwA4SAQCpd/xAd6mpdwPAd6kCoUIT/sAXEhEoAoAoERIX/sD97APADhISDvxADhISA878QHepqXcDwHepqQABAAAAAAPzBYAAYAAAJRcWBg8BDgcjIgAnIyImPQE0NjsBJjcjIiY9ATQ2OwE2ADMyFxYXFg8BDgEvAS4FIyIGByEyFxYPAQYjIQYXITIXFg8BDgEjIR4BMzI+BD8BNhcWA9AjAwwLBQQNExgbISInE+r+oj9fDRMTDUICA0MOEhIOYkMBYeBmXAsJBgMrAxYNBAQPFBkbHw5+yDIB1BAJCgMYBRv+GAMDAcsPCgkDGAISC/59MMt/EiQfHBUQBAUNDQzlnwwVBAECAwYFBQUEAgEF3RMNcQ0TOTASDnIOEtIBABcDDAsNnw0NBAEBAwQDAwKAcAwMDnIaJUQMDA9wCw91iQMEBQUEAQIFBwcAAAEAAAAAA/wFgAA/AAABERQGIyEiJj0BNDY7AREjIiY9ATQ2OwE1NDYzMhceAQ8BBgcGJy4CIyIGHQEhMhYdARQGIyERITU0NjsBMhYD/BIO/EQOEhMNYV8OEhIOX/e/uZYJAghnCQ0NCgUqYC1VaAExDRMTDf7PAZ4SDqIOEgGP/pEOEhIOlg0TAX8TDYMOEt+r3n0IGQp/CwECCQUcJF5M1xIOgw0T/oW1DRMTAAAAAQA0/wAD0gYAAGIAAAEUBgcVFAYrASImPQEuBCcmPwE2NzYXMBcWFxYzMjY1NC4DJy4INTQ2NzU0NjsBMhYdAR4EFxYPAQYHBicuBCMiBhUUHgQXHgYD0sefEg6HDRNCe1BEGQURD2cHEA8JAnGCJSVRex4lUDQ2Jy1OL0IpLhkRxJ0TDYcOEjlrQzwSBhEMUQgPDg0DFzc+VypfeBEqJUsuLzU4YDdFJRoBX5ndGq8OEhMNrwksLTMYBhUUhwoCAgsCYxoIVk8cMiIpFxUQEiMbLCk5O0opitAetA0TEg6wBiIhKhAGEhSSDwEDCgMSIx0XVkQaLCcbIxMSFBcvJj5BWAABAAAAAAOCBYAAPgAAARUUBisBDgEHFgEWBwYrASInACcmPQE0NjsBMjY3ISImPQE0NjMhJisBIiY9ATQ2MyEyFh0BFAYrARYXMzIWA4ISDqgX1KqnASQOCggVwxAJ/s7ACRMNcIShFv5VDhISDgGdOdORDRMSDgNADhISDukvEasOEgQqZg4SkLQUsv6aEBISDAFvzAkNfw0TVlISDmYOEnETDYUOEhIOZg4SPVMSAAEABAAAA/8FgABFAAAhIyImNREhIiY9ATQ2MyE1ISImPQE0NjsBASY3NjsBMhcTFhc+ATcTNjsBMhcWBwEzMhYdARQGIyEVITIWHQEUBiMhERQGAlusDRP+4A0TEw0BIP7gDRMTDdb+vwgIChLCEwrXEyUKKQe/CBW/EQoJCP7H1w0TEw3+3gEiDRMTDf7eExIOAUoSDmcNE1USDmgNEwJCEBAQEv5XJlcYWBEBpBMQDhH9vRMNaA4SVRMNZw4S/rYNEwACAAAAAAUABYAABwA4AAAANCYjIREhMgAQBiMhFSEyFh0BFAYjIRUUBisBIiY9ASMiJj0BNDY7ATUjIiY9ATQ2OwERNDYzITIEE4Jq/sABQGoBb/3I/qwB+Q4SEg7+BxMNpw4S4A4SEg7g4A4SEg7gEg4CG8gDZ8h8/kABof5+9HYSDoAOEsAOEhIOwBIOgA4SdhIOlQ0TAnUOEgAGAAAAAAcABYAACAAMABAAGQAdAG4AAAETIxMWFBc0NhM3IRchMycjARMjExQWFzQ2EzchFwUVFAYrAQMGKwEiJwMjAwYrASImJwMjIiY9ATQ2OwEnIyImPQE0NjsBAyY3NjsBMhcTIRM2OwEyFxMhEzY7ATIXFgcDMzIWHQEUBisBBzMyFgICUZ9LAQEBdCP+3CABoYsjRgGfTqJRAQEBbyH+1yICgBIO1aQHGJ8YB6bRpwcYnwsRAqDQDhISDq8hjg4SEg5tWQUKChCJGgVaAWdhBxh+GAdiAW1dBRqJEAoKBVtvDhISDpEisw4SAVUBK/7UAQQBAQUBrICAgP3UASz+1QEFAQEEAa2AgCBADhL9mBgYAmj9mBgOCgJoEg5ADhKAEg5ADhIBWA8NDBj+mAFoGBj+mAFoGAwND/6oEg5ADhKAEgAAAwA4/wAE6AWAADMASABcAAABFgceAQcOBAcVIzUiJxUjESImKwE3MzI3ETMmIxEmKwE1FzI3NTMVNjM1MxUeAwM0LgQiBiMRMhYyPgYDNC4EDgEjETIWPgYEjxKVdXQNBzNOdH9SmlAqmhJIE8gfbzIIEAYKDUxv1EAhmlIomk96aD3RHixHPFgyTwgIOiZEMUEuMR4TRxkkPDJJK0EHBTsiQiw7JiQSA4C2TByWi0dsRi8WBP/7AfwA/wG3MwGSAQEfRKQBAfz3AvX8Bx87Yf2dJDgkGQwGAv6uAQMFDBAaIi4B+CEzIRcKBgEB/s0BAQMIDhcfLgACAAD/AAYABgAABgAYAAABERYXARYXBRQWMyERFAYjISImNRE0NjMhBAAWDgGYDg79qDgoAiA4KPrAKDg4KAMgBAAB2A4O/mgOFiAoOPvgKDg4KAZAKDgABQAA/wAGAAYAAAYAGAAoADgASAAAARYXIREWFwMhERQGIyEiJjURNDYzIREUFhM1NCYjISIGHQEUFjMhMjYRNTQmIyEiBh0BFBYzITI2ETU0JiMhIgYdARQWMyEyNgW8Dg7+KBYORAIgOCj6wCg4OCgDIDjIEg79QA4SEg4CwA4SEg79QA4SEg4CwA4SEg79QA4SEg4CwA4SBCQOFgHYDg79xPvgKDg4KAZAKDj94Cg4/SBADhISDkAOEhIBDkAOEhIOQA4SEgEOQA4SEg5ADhISAAAEACL/AAZ9BgAACgAkAEIAUgAAATMvASY1IwcUBgcBFAcBBiMiJwEmNzY7ARE0NjsBMhYVETMyFgUVITUBNj8BNSIGIwYrARUjNSEVAQYPARU3NjsBNRMVITUzJyMHMxUhNTMTMxMEp7FIDAIEAwcE/fAK/sEKDQwL/sAPCAgWwBIOwA4SwA4SA0T9uAFxDAkLAgkDDBLoeAI3/o8GDwsOCRX40v7gSy/zL0v+4UbmouYEaNovEAQUASIM+x4MDP7BCQkBQBATFAVgDhISDvqgEoXpWgIREgkJAwEDc+VZ/e4IEgsCAgJ3A4FqapCQamoClv1qAAAAAAQAIv8ABn0GAAAKACQANABSAAAlMy8BJjUjBxQGBwUUBwEGIyInASY3NjsBETQ2OwEyFhURMzIWARUhNTMnIwczFSE1MxMzEwMVITUBNj8BNSIGIwYrARUjNSEVAQYPARU3NjsBNQSnsUgMAgQDBwT98Ar+wQoNDAv+wA8ICBbAEg7ADhLADhIDnf7gSy/zL0v+4UbmouYT/bgBcQwJCwIJAwwS6HgCN/6PBg8LDgkV+GjaLxAEFAEiDOIMDP7BCQkBQBATFAVgDhISDvqgEv78amqQkGpqApb9agR/6VoCERIJCQMBA3PlWf3uCBIKAwMBdwAFACL/AAcABgAAGQApADkASQBZAAAlFAcBBiMiJwEmNzY7ARE0NjsBMhYVETMyFgUVFAYjISImPQE0NjMhMhYDFRQGIyEiJj0BNDYzITIWAxUUBiMhIiY9ATQ2MyEyFgMVFAYjISImPQE0NjMhMhYC4Ar+wQoNDAv+wA8ICBbAEg7ADhLADhIEIBIO/MAOEhIOA0AOEsASDv2ADhISDgKADhLAEg7+QA4SEg4BwA4SwBIO/wAOEhIOAQAOEmAMDP7BCQkBQBATFAVgDhISDvqgEo7ADhISDsAOEhIB8sAOEhIOwA4SEgHywA4SEg7ADhISAfLADhISDsAOEhIAAAAABQAi/wAHAAYAAA8AKQA5AEkAWQAABRUUBiMhIiY9ATQ2MyEyFiUUBwEGIyInASY3NjsBETQ2OwEyFhURMzIWARUUBiMhIiY9ATQ2MyEyFhMVFAYjISImPQE0NjMhMhYTFRQGIyEiJj0BNDYzITIWBMASDv8ADhISDgEADhL+IAr+wQoNDAv+wA8ICBbAEg7ADhLADhICoBIO/kAOEhIOAcAOEsASDv2ADhISDgKADhLAEg78wA4SEg4DQA4SIMAOEhIOwA4SEnIMDP7BCQkBQBATFAVgDhISDvqgEgFywA4SEg7ADhISAfLADhISDsAOEhIB8sAOEhIOwA4SEgAAAAQAIv8ABc4GAAAKACQAQwBWAAAlNCYjIgYUFjMyNgUUBwEGIyInASY3NjsBETQ2OwEyFhURMzIWJRQOAyMiJyYnNxYXFjMyNjcjDgEjIiY1NDYzMhYDFSE1MxE0Nj0BIwcGDwEnNzMRBUJYOzQ+SUQyRv2eCv7BCg0MC/7ADwgIFsASDsAOEsAOEgLuGjhQdUU+LhgSJw8QJSZUZRACFVEsaoaQbXukHv4rpwECBwgSPlLAe98/akpyTDZWDAz+wQkJAUAQExQFYA4SEg76oBI3PndtUjEQCAdxBwQNdVcXHI9laZK9Ai9ycgGwBxgFEAwNEjpWuf1yAAAAAAQAIv8ABc4GAAAKACQANwBWAAABNCYjIgYUFjMyNgEUBwEGIyInASY3NjsBETQ2OwEyFhURMzIWBRUhNTMRNDY9ASMHBg8BJzczERMUDgMjIicmJzcWFxYzMjY3Iw4BIyImNTQ2MzIWBUJYOzQ+SUQyRv2eCv7BCg0MC/7ADwgIFsASDsAOEsAOEgLQ/iunAQIHCBI+UsB7wxo4UHVFPi4YEicPECUmVGUQAhVRLGqGkG17pATfP2pKckw2+6oMDP7BCQkBQBATFAVgDhISDvqgEvxycgGwBxgFEAwNEjpWuf1yBTM+d21SMRAIB3EHBA11Vxccj2Vpkr0AAAMAAP+ABkAFgAALABsAXAAAJTQmIyIGFRQWMzI2ExEUBiMhIiY1ETQ2MyEyFgUUBxYVFgcWBwYHFgcGBysCIi4BJyYnLgE1ETQ2Nz4BNzY3PgI3PgI3NjMyHgUVFA4BBw4CByEyFgEAJhobJSUbGiagJhr+4BomJhoBIBomBKA3DwMuEREPJwk6QIUkTBFCnFdNeyMaJiQZGGgxRCESGgkJBwscFBMaLkkvIQ8JARMTEgMOCAQBFU5ywBomJhobJSUCG/2AGiYmGgKAGiYmGlY/LCBMPTg9OSVwRUwCHxsaKwEBJRoCgRklAgJyQFchEjwlKicsPBQTFR8yKDweGCZMLCIGGBQOcgAAAAADAAD/AAZABQAACwAbAFwAAAEUBiMiJjU0NjMyFhMRNCYjISIGFREUFjMhMjYlFhUOASMhHgIXHgIVFA4FIyInLgInLgInJicuAScuATURNDY3Njc+AjsDFhcWBxYXFgcWBxQBACYaGyUlGxomoCYa/uAaJiYaASAaJgRpNwFxTv7rBAgOAxISFAEJDyEvSS4aExQcCwcJCRoSIUQxaBgZJCYaI3tNV5xCEUwkhUA6CScPEREuAwPAGiYmGhslJf3lAoAaJiYa/YAaJiavPVhOcg4UGAYlKE0mGB48KDIfFRMUPCwnKiU8EiFXQHICAiUZAoEaJQEBKxobHwJMRXAlOT04PUwgAAAMAAD/gAYABYAACQAPABcAKwA9AFwAZAB/AIwAngCyAMIAACU1NCMiBxUWMzI3MzU0IhUlFSMRIxEjNQURIzUGIyInJjURMxEUFxYzMjcRBRUUBwYjIicVIxEzFTYzMhcWFxUUBwYHBiMiJyY9ATQ3NjIXFh0BIxUUMzI3NDY0NQEVFCI9ATQyATQnLgEnJiEgBw4BBwYVFBceARcWIDc+ATc2ARMjBycjHgEXFhcVMyU1NCcmIyIHBh0BFBcWMzI3NhczESMRBiMiJyY1ESMRFBcWMzI3AREUBiMhIiY1ETQ2MyEyFgOXHREQEBEduEJC/cVQSk4BsUMnJSEJBkIBAQ4UFgE/BwwpIyFDQyAkKQwH+wIDDBs1NB0VFB1mGxWFIhgGAf6BQEACFRMKQiuI/uz+7YgsQQoUFApBK4kCJokrQQoU/Q1aSzM1TgggByMLSgEhFR0xMxsVFRszMR0VtUNDFhQPAQFDBgsgJCkB96l3/EB3qal3A8B3qemdMhDgEKsiMzPoRv5ZAadGfv6RKC0cECYBIv7yGAIPHwEYb5I0FSopJAHtoSgqFbYJHQ4WEigmGzuBOxsmJhw6TEEzGgEMFQsDOJwzM5w0/QOxUyw7BQ8PBTssV62wVCs8BQ8PBTwrVAM7ASjDwxdcF2c3yXiCOh0mJh06gjodJiYbPAFy/uUfEAIYARD+2yUSGy0BCPxAd6mpdwPAd6mpAAAACwAb/wAF5QYAAAkADwAXACsAPQBbAGMAfQCJAJsArwAAARUUIyInETYzMgUVIzU0MiUzNSEVMxEzITMRIxEGIyInJjURIxEUFxYzMjclNTQnJiMiBzUjETM1FjMyNzYlNSMUBwYjIj0BMzU0JyYjIgcGHQEUFxYzMjc2NzYBNTQiHQEUMgEUBw4BBwYgJy4BJyY1NDc+ATc2IBceARcWATMDESMRJicmJzMTBRUUBwYjIicmPQE0NzYzMhcWJREjNQYjIicmNREzERQXFjMyNxEDyycXFhYXJwFSWlr8Omv+yGlkASBZWR4bEgMBWQgMLjA2Aa0JETYyK1lZLTA2EQkBUlsCByEusxsnQ0QnHB0nRUgkEgMC/aBWVgLPGg5YOrj9Grg6WQ0aGg5YO7cC5rg6WQ0a/BpmeWQOLyUcakcBthwlRUMmHBwmQ0UlHAFPWzUyLg0IWwEDEhseASTTQxYBLRZELi5Ell5e/ccB7v6GKhUDIAFs/nkxGCU9XsVJGjg22f1pMDc3G1MNMwokRVdnTyUzMyVPrU8lMzUbGwkDwtJFRdJG/VfqdDtQBhUVBlA7cO7qdDtQBxQUB1A7cAQO/nH+8QEPSopnVP75Rq9RJTMzJlCvUCUzMyVS/g03PiUYMwGK/pEhAhYrAX0AAAIABf+ABXsF9gATACcAAAEGAwYrASImNxMyJwMmNzY7ATIXARYHARUBFgcGKwEiJwE2ATY7ATICVQr3GybvFRQK/QEBoQwLCRfvKBoDygsL/fABUAsKChbvKhj+rRICARkn8RYDZRL+Si4iEwHAAQEXFg8PLQFkEBX8WgH9mRQRDy0CbiADji0AAAAAAwAA/4AGAAWAABMAJwA3AAABNCcmKwEiBwYfARUDBhcWOwEyNwEmKwEiBwEWARY7ATI3NicBNQE2FxEUBiMhIiY1ETQ2MyEyFgKtfhUfuBIIBwh9xAkJCBC5HxMDNwcRux4T/mUBAQUUILgSBwgJ/vwBmQjbqXf8QHepqXcDwHepAwMB3SILDBHYAf6mDg4NJANRDCP9JwL+ISMMDQ8B3AEC0xCI/EB3qal3A8B3qakAAAAAAgAAAAAHAAUAAA8ALwAAADQnASYHBhURFBcWMzI3ASQUDgEHDgEHBiAnLgEnLgI0PgE3PgE3NiAXHgEXHgEFAB7+AB8iISEQDxQOAgACHgIPDxBqR978ft5HaxAODwICDw8QakfeA4LeR2sQDg8CW0oRAUAUEhIm/YAmEggKAUCWwGylQUlkCBkZCGRJQaVswGylQUlkCBkZCGRJQaUAAAUAQP+ABsAFigADABMAFwAbAB8AAAkEFQEVJwc1ATUXATUXNxUJDAGSAe7+qv4WBSz+FgEB/heTAVYBAQFX/VEBVv4S/q4FLgFS/hf+qQFXAen+rv4SAz3+z/7jAT/+5Gz+2wEBAQEBJWxgARwCAQEC/uQE2P7j/tABDv7y/vH+wQEdA37+wf7yATAABwAA/wAFfgYAAAMADwATABcAGwAfACMAACUVBTUBEQcVIScjETMRIRENAQclEwUHJRMBBwkCBwElEwcDA6D9PQO0AfuUIwF5A6D82ALADf0/UgKrJ/1VygJhTf2fAbUBjnz+cQJCeZV5h5cBlwFb/UMjAQEC4P2WAmpYQZZBAdK3krcB7/6YggFoAc39t1UCSOn9RxoCuQAEAAD/gAYABYAAFQAfAC8APwAAJREjFhUUDgEjIgA1NDcjERQWMyEyNgA0JiMiBhQWMzIBNTQmKwEiBh0BFBY7ATI2NxEUBiMhIiY1ETQ2MyEyFgVShxSA3ILF/ugUjSMaBC0ZJP7ktYB/tbV/gAHRKB2uHSgoHa4dKK50UfuKUXR0UQR2UXRuAog/RH7VfAEPwEQ//XgaIyMBs/ivr/ivApOlHCkpHKUdKCjt+4pRdHRRBHZRdHQAAwAA/4AGAAWAAA8AFwAfAAABMhYVERQGIyEiJjURNDYzADQmIgYUFjIkNCYiBhQWMgTgd6mpd/xAd6mpdwGafLB8fLACsHywfHywBYCpd/xAd6mpdwPAd6n8qLB8fLB8fLB8fLB8AAADAAD/gAYABYAAAgAJABUAAAETIQUzCQEzNyEAEAIEICQCEBIkIAQDAMn+bgI2Xv41/jVeaAIKAfvO/p/+Xv6fzs4BYQGiAWEDkv7O4AKz/U2gATH+Xv6fzs4BYQGiAWHOzgAABQAA/1AFgQWjAAoAFgAqAEMAZwAAARYGJy4BNjc2HgEXLgEHDgEXHgE3PgETLgInJAUOAgceAhcWNz4CEw4DBw4BJicuAycmJz8BFiA3HgEGEwYDDgIHBiUmJy4EJy4DJz4ENzY3JAUWFx4BAy8IdTUnHRwmJEk3bw7GYj9LAwSTXFt65BRILDH+3f7tKy5AEh5cNzzk3D81XFYIDw0sJFbPxWcuR1JAFBkgBhLfAjfgFQYQtRpVBSwrIfz+mviSDxUNBQcCCSMVGgkDHSI4JB59vAF7ASmbPBABAqU/TCARUlIREgw7EWtyLBx5RVuACAiYAnobIwkILzEHCiIaHCMJBx0cCAgj/BIaZUNJFDAvAxEIFCI1I2DEEAmUlAYiOAO4p/4YHjQcEX4mG3AMHSkbNAkyyHusSBotHh4PCy4SJVcuTBQ+AAYAAP+ABgAFgAAIABMAJwA6AFkAaQAAATQmBwYWFxY2NxYOASYnJjY3NhYTDgIHBicuAic+Ajc2Fx4CEzQ2JicGICcPARYXFhcWNz4CEzYnJicmBQYHDgIHHgIXHgMXFhcENz4CNxIBERQGIyEiJjURNDYzITIWA1BSJCsBKydUSghYhGoDAjctRo+2FEMnLJupLCZDFQ0uIh7G0iEkMjgLBQ+h/miiDAUaDy+d+bMiHg+HCRErcNj+8YReJiszBAgWJAYBCAYSDWmzAQO1GB8fBDABKKl3/EB3qal3A8B3qQKaKy4WFGkSFzY9Qm4MXEMxWBQfUgE6FRoGBRQUBgcZFBMYBwUjIgUHGf0DBycZBGpqBgyaOFEbLmMTQWoCxzUWNyE/GwwiDxQwHkSMyiQFNBQiC1AUHFsNFCYVAQsBMvxAd6mpdwPAd6mpAAAAAAEARP+ABAAGAAAiAAAlFw4BBwYuAzURIzU+BDc+ATsBESEVIREUHgI3NgOwUBewWWitcE4hqEhyRDAUBQEHBPQBTf6yDSBDME7P7SM+AQI4XHh4OgIg1xpXXW9XLQUH/lj8/foeNDUeAQIAAAIAAP+ABgAFgAAfAC8AACUnBiMGLgI1ESE1IREjIgcOAwcVMxEUHgI3PgEBERQGIyEiJjURNDYzITIWBHA+LDskNBkKAQH/ALwIAQUZNWVEgitXm2NFhwGiqXf8QHepqXcDwHepS7cWARcoKRcBjsIBRgosVmhWGaX+Xjl0akECATAEL/xAd6mpdwPAd6mpAAEAA/9AAv0GAAAXAAAAFgcBBiMiJwEmNzY7ARE0NjsBMhYVETMC9RAN/qIKDQ4K/p0NCAkU4BIOwA4S4AEAJhD+gAoKAYAQExME4A4SEg77IAAAAAEAA/8AAv0FwAAXAAABBisBERQGKwEiJjURIyImNwE2MzIXARYC/QkU4BIOwA4S4BUQDQFeCg0OCgFjDQQTE/sgDhISDgTgJhABgAoK/oAQAAAAAAEAQAEDBwAD/QAXAAABFRQGIyEVFAYnASY1NDcBNhcWHQEhMhYHABIO+yAmEP6ACgoBgBATEwTgDhIC4MAOEuAVEA0BXgoNDgoBYg4ICRTgEgAAAAEAAAEDBsAD/QAXAAABFAcBBicmPQEhIiY9ATQ2MyE1NDYXARYGwAr+gBATE/sgDhISDgTgJhABgAoCgw4K/p4OCAkU4BIOwA4S4BUQDf6iCgAAAAIAAP+ABXEGAAAmADgAAAEGBwYjIicmIyIHBiMiAwI1NDc2MzIXFjMyNzYzMhcWFwYHBhUUFgEUBwYHBgcGBzY3NjceARcUFgVxJ1SBgDFbVkE9UVEzmJWTcXCsSGloIi1iZkd3XjQ0TyNBiv7hHR4/NjYlQwNLSrABAwEBAUF9fcQgICEiAQMBBfLkkpAeHiIiQSRAQzNecXzGBHo9S0s/NhILBpVsaykDEAMEDAAABAAA/wAGgAWAAAMABwALAA8AAAERJREBESERARElEQERIRECqv1WAqr9VgaA/HUDi/x1AhL9dV4CLQLn/W0CNf13/O59ApUDbvzmAp0AAAAGAAD/AAWABX4ABwAPABwANwBNAFsAAAAyNjQmIgYUBDI2NCYiBhQFMhYVERQGIiY1ETQ2BREUBisBFRQGIiY9ASMVFAYjIiY1JyMiJjURAR4BFSE0NjcnJjc2HwE2Mhc3NhcWBwERFAYjIiY1ETQ2MzIWAd0gFxcgFgG8IBYWIBf8+yo8O1Y8PARPQC1LPFY8ijwrKjwBSi5AAq5rgPxjgGxHBwwNB0hf1F9IBw0MBwGWPCsqPDwqKzwEHRcgFxcgFxcgFxcgzzwq/lIrPDwrAa4qPBP9Zi5A4ys8PCvj4ys8PCvjQC4CmgGVN8V1dcU3gw0HBgyEKiqEDAYHDf2V/lIrPDwrAa4rOzsACQAL/wAF+QYAAAgADwAiAQcBFAEkATEBRwHvAAABDgEjBjU0NzIXBiYHNhcWASYOAQcGBwYXFjY3PgM8ASYBNCc+AyY0LgInLgEnFhcWBwYHBi4BJy4EJy4DJyY2JicuAScuATY3NhYHBhY3NjQ1LgMnBhcUIy4BBic2JicmBgcGHgE3Njc2ByImJyY2FzIWBgcGBw4BBw4BFx4DFxY3PgM3NhceAQYHDgEHBgcGJyYXFhcWNz4FFhcUDgUHDgInJicmBwYVFA4CFw4BBwYWBwYnJicmNzYPAQYXHgEXHgEXHgEGBx4CFTYnLgI3PgEXFjc2NzYXFgcGBwYWFz4BNzYmNjc2Mz4BFgE2JicmFRYXMgcGMzIFLgInLgQHBhYXFjYnNC4BBwYXFhcWFxQ/ATQuAScmIw4BFgcOAhcWPgE3NjI2AR4CDgUHDgEHDgEnLgMnJiMiBgcOAycuAScuBCcmNjc2LgE2Nz4BNz4BNRYHBicmBwYXHgMHFAYXFhceARceAjc+Ai4BJyYnJgcGJyY3PgI3PgM3NjcmJyY2NzYzNhYXHgEHBhcWFx4BFxYOAQcOAycuBCcmDgEXFgcGFjY3PgE3PgEuAScuATY3HgUClwsJBAUTBVwEDwoYCAP+mwQEBQMDBwcGBBEEAQICAQIDVTcEBwMDAgcBCQEKSiMYIVchCycfDwELCRUSDQ0BDiIZFgQEFAsnDzsGCAYWGSUcCgsSFQ0FERkWEGsSAQkpGQMBIhwbHQIBCREHCgYECwcRAQEUGBEUAQEWCQgnAQ0FCg4WChsWLzcCKhsgBQkLBQMJDBRJCSwaGTYKAQEQGSoRJiIhGxYNAgIGBgsHDQMcTzYWFSoWAwEeHQ0SF08IAgEGCBUgBAIGBAUEJC4FKAQUqAkQAx8eCCoOLicEDQYBAxQKLniFLBcLDAIBFgkGFQMXAgIRAhYPJAFDTv2hAwsGCQIDCgMDCwMBowIJEQYFCQUGAgMOKhIJC7QKDAMOBwICDgQIOAUNAw8JCQUDAgEKAgQECA4IARAOAjcUFgIHGBclGiYIJl8cEWYmEhcKIh4sVhNMFCxHJDMcHaRAE0AkKxgFCiIBAQoKAQoOVhEeGBU1IDMiCQ0SAgwFBAEiAwMiFIEjGGRBFysrAxIUCnkwRC0LBAMBARIeBwglFiYUbg4MBAI0UCdBNWokOUUFBSMiYzdZDwgGEgsKGxs2IhIbEgkOAhYmEhAUEwo4Wig7PUk1MAsnICEhAw4BDg8aEBsEZQETAQYMAw4BDwMLDQb+UgEIEQUFCAoCARAKAwgEBQMDAv6aEhgPGRsQHQoiBysFMG4UFD+idCgCBC16Lic8HxIMAT5SHiQWFUEiCAMeAQEyNAEDQhkTDwcEQAUeKBUJAwh+DwkDBAc5QgEBOR8PLB8CAwsJAR0TFh4BKiQEDw4MFwEOGgUIFw8LAQIRAQwJEQkOBgMLDQMGHwQTBAUHAgQEDxcBAQwQEw8JBAkCBQUEBgMHAQ48GgwLPh8JAwcZPzBEHQaoORJmCBgVHz8cHBMBBUFlDCAEF4cJDy4oAw87MS4YRAgQCAIFCQc0EA9IJggGLhlDFx0BE3QgFWlZGhIlIAsDKhEaAgIJBQEPFMIIBwMEAwoGBwECEDcEARLgCxEIAQEGAQEEGwMF7AIGCAIPAQ0NBgQNBQYDBgwDAQT6yAwZFxYWERQNEgQTShsQBxIJHRYRAQEDAQEcIBkBATwNBAsHDBELF1cLEDAlJAkMBAoSIiJJIRQFAw0PKgYYDBYLD0QOEQkGGQgGIA4DBiw0QScRvjRKIgkYEBYdLjASFWY2RBSPNHDGWnsrFQEdGyqfRF93cWk70FcxRygCAiIlHgEBCBMMHQUlDlQ3Rn1BRwUhMSMZEiUgGQsLSkcMHzMeGwsPAAAIAAD/gAYABYAADgAgACcALgAyAD4AVgBiAAAlJgMjBw4EBycWMzIDJicEIQYVFBYXPgM/AT4BJyYnDgEHIAUmBxYXPgEBIgc2BSYjIgcWFz4EEyYnBw4EBxYXHgEXPgEyHgQXNhACBCAkAhASJCAEBAAqYgICEDaUfogjD7jqhD0VIP7J/pYBWFAyk4p7JiUEEmd4fIrAIAEuA9zSx1cpb5T88QEBAQJPufhMT4NzRXpHPA/kA5IBCRRDS31FGRMCCQMkTUZEPDUrHgp6zv6f/l7+n87OAWEBogFhJPEBAQEGFU1Xjk0LlgKTMT5dBw584VlZm15EDg0BBdbVpUHyl+88H+/mS+UDbQEBkaQTqtQaRTY8Ff4i6LIBDBlAOUkcNSoGFwUFBAMFBgcFAsj+Xv6fzs4BYQGiAWHOzgAAAAIAAP+ABgAFgAA+AF4AAAE0LgMvAS4ENTQzMh4DMzI2NTQuASMiDgIVFB4CHwEWFxYVFAYjIi4DIyIGFRQWMzI+AgUUBiMiJwYjIiQmAjU0NyY1NDYzMhc2MzIEFhIVFAcWBJUnOlhNMWgeHCoSD5ArRCgkLBovOXCsYESAb0MmSlY8kloWIFBBM1ExKjIdMjP0qUmGb0IBa+GfgmhNSY/++71vEFDhn4JoTUmPAQW9bxBQAdkyUzYsGAsYBwcQEBoRTRghIhhALTdZLh8/b0k9WzwlDiQWDhQoJzMgLS0gPC1cgyVGdZCf4VAQb70BBY9JTWiCn+FQEG+9/vuPSU1oAAAAAwAs/4AEywYAACMAPwBEAAABNzYmIyEiBhURFDcBPgE7ATI2NzY3NiYjISImPQE0NjMhMjY3BgoBBw4EIyEiBwYBDgEnJjURNDYzITIWBwM2GgED6CUFHBX9OBcfBgEjFx4h7xYeAxgNBB8V/todJiYdAVoSIuYPTT4EBgYWGzIh/vENCQj+XhZJDDdMUgN4X0AWngQ+TQROwhciIhT7swcGAWAaDx0Pgj0VJiYdKh0lG+5J/n3+xxEWFSwWFAoJ/hsZBwkWTAWCN19qavzqEQE5AYMAAAAAAwAA/4AGAAWAAA8AHwAvAAAlETQmIyEiBhURFBYzITI2ARE0JiMhIgYVERQWMyEyNhMRFAYjISImNRE0NjMhMhYCwBIO/iAOEhIOAeAOEgKgEg7+IA4SEg4B4A4SoCYa+oAaJiYaBYAaJsAEAA4SEg78AA4SEgGOAoAOEhIO/YAOEhIDDvqAGiYmGgWAGiYmAAAAAAIAAP8ABQAF4AAxADkAAAEUBiMiJwMjFRMWFRQGKwERFAYrASImNREjIiY1NDcTNSMDBiMiJjU0NwE2MyEyFwEWABQGIiY0NjIFADgoMx3jLfcJJhrAQi6gLkLAGiYJ9y3jHTMoOBABAElnAYBnSQEAEP5gg7qDg7oB4Cg4KwFVhP5lDxIaJv7wLkJCLgEQJhoSDwGbhP6rKzgoHRgBgGtr/oAYA2C6g4O6gwACAAD/AAQABeAAJQAtAAABERQGIiY1ESMRFAYiJjURIxEUBiImNREjERQGIiY1ETQ2MyEyFgAUBiImNDYyBAA4UDhAQlxCQEJcQkA4UDhwUAKAUHD+4IO6g4O6A0D+YCg4OCgBYPxwLkJCLgHQ/jAuQkIuA5D+oCg4OCgBoFBwcAHNuoODuoMAAgAA/4AGAAWAABUAIQAAJQE+ASYnJg4BBwYjIicuAgcOARYXJBACBCAkAhASJCAEAwUBXhARHS8oVj0YJDw7JBg9VikuHREQBFjO/p/+Xv6fzs4BYQGiAWHqAdkWSmAfGgEiHCgoHCIBGh9gShaO/l7+n87OAWEBogFhzs4AAAACACz/AAbUBf8ADwBJAAAANC4CIg4CFB4CMj4BJQYHBREUBwYnJQcGIi8BBQYnJjURJSYnJj8BJyY3NjclETQ3NhcFNzYyHwElNhcWFREFFhcWDwEXFgXAW5vV6tWbW1ub1erVmwFvBBD+3A0PDv7ctAogCrT+3A4PDf7cEAQFCbS0CQUEEAEkDQ8OASS0CSIJtAEkDg8NASQQBAUJtLQJAgvq1ZtbW5vV6tWbW1ubNQ8FYP7OEAoKBl74DQ34XgYKChABMmAFDxEM+PgNEA8FYAEyEAoKBl74DAz4XgYKChD+zmAFDxAN+PgMAAIAAP+ABb4FfwASADEAACUGIyIkAjU0NwYCFRQeAjMyJCUGBCMiJCYCNTQSNiQ3NhcWBw4BFRQeATMyNzYXHgEE7jY4tv7KtGjJ/2ar7YKQAQMBJl7+heCc/uTOenPFARKZLBESIVZbkvqUdm4pHw4H6Qm0ATa2wKU8/q7Xgu2rZnvDy/N6zgEcnJkBF8x9BgIpKR9Oz3OU+pIzEh8OKAADAED/gAbABYAACwAbACsAAAA0JiMhIgYUFjMhMgERFAYjISImNRE0NjMhMhYTERQGIyEiJjURNDYzITIWBEAmGv8AGiYmGgEAGgJmJhr6gBomJhoFgBomQCYa+gAaJiYaBgAaJgKmNCYmNCYBAPxAGiYmGgPAGiYmAab/ABomJhoBABomJgAAAgAg/6AGYAXAAEIASAAAABQGKwEUBxcWFAcGIi8BDgQjESMRIi4CLwEHBiMiJy4BPwEmNSMiJjQ2OwERJyY0NjIfASE3NjIWFA8BETMyASE0NiAWBmAmGuBD0BMTEjYSxgUUQEJiMIAzZUk7Dg+3FBwYExMDEco64BomJhrgrRMmNBOtA0ytEzQmE63gGv5G/YC7AQq7Alo0Jqt30RM0ExMTxQUQKSAaA4D8gBsnJw0OzxUQEjUU43KgJjQmASatEzQmE62tEyY0E63+2gIAhbu7AAAB//8AAQd9BEcAhgAAARYHBgcGBwYXFhczHwIWFx4CDgEjBQYmLwEuAwcOBBcUBg8BBgcjBi4CLwEuAwInJjQ/ATYzJR4BHwEWFx4BHwEeAzI3PgQnLgEvASYnJjc2NzYXFhceAxQOARUUBh4CFx4BPgI3Njc+AT8BPgIXJTYWFwd9F60YKU4MER8RQAEBAQKNMgMHBwgqJv8AGEAUFB5QOUEYAwoYEw8BBwQEEiNzR5ZxXRgZCiNsaI08BgMEDyoBEgwWBQUQCBQ0DxAdNisoHA0CBhIJCgUCDgcGGTwNEhEVNbpSNRQbDgcCAwIBBhEOCBIiKj4lPC8EDAUEAgYUCgEgJzIGA/hA5iA1ZB8pKBU9AQECg1oFDyYeGQQFFAwMFVZFLwgBBRgjRSsPGQYFEwMEKUFDGBgKKI6gAQaNEBYFBhMCAgkEAwsVMmscHTxYMRwFAQgkOmhJKEINDCIJAhYTCxoCAQwFER8hOjRZJgs+Ii8fCQIEGitbPmh5Cg8DAwEDAwECBQ8JAAAHAAD/qgb3BUsACgAVACEALwBVAGkAfwAAJTYmJyYGBwYeATY3NiYnJgYHBhcWNhcOAScuATc+ARceASUuASQHBgQXHgEENzYkJRQOAgQgJC4BNTQSNzYkFxYHBh4BNj8BNjIXFgcOAR4BFx4CAh4BBw4BJy4BNzYmBwYmJyY2NzYlHgEHDgEuATc2JicuAQcGLgE2NzYWAqMVFCMiThUWEkRRdAgJDQ4dBxEeDh61LeJva1EvL9Fqb18BCwmg/v+S3/7bDgmgAQGS3wElASZKkMH+/f7m/vTVgouAqQFZSkEtBAYODwYGi9YuLS0CBQ4KDDlcRHRUGRMIKxcXFgcUWD8YKgQFGhg8AVVXMycJMjYaCBwkPj6sVxwwDB8ce/L8IkYPDhohIkUgG5sNGwUFCw0fDgULXmZgJCK5X11cGx21PGCURg4X7ZJglEYOF+2ORI+DaD5Dd7dscwEEgKmGSkCRDgwCAwICOz0/cw0OCwQEEjppAl9eezgXFgcIKxc/YA0FGhgYKQUNT2D9cxsaEjIbUrRERTUSBh84LwYaSwAAAAADAAD/gAYABXIACQATAB0AAAUGIyInPgE3HgEBERQCByYRNBIkARAHJgI1ERYEEgRtq8XEq4rDIiPD/pv9zLWnASQENbXM/bMBJKciXl5X+JCQ+AU9/hv8/mFj1wEYuwFF1v0q/ujXYwGf/AHlHtb+uwAAAAEAAP8ABXoGAABrAAABDgMuAy8BBgAHIiY0NjM2JDcOAi4DJz4BHgIXNjcOAi4FJz4BHgUfATY1LgU2Nx4EDgIPARYUBz4FFhcOBiYvAQYHPgUWBXogWF5oY15PPBARcf6f0BMaGhOtAStmJEheWGJWUyFyyIdyPxk1GgcWR0RfUlZALQZGf2JWPTMhFgUEDAgbRzg0DiYzSW08JAUGFBIIBwEBAw4vNlhfgUQCJz1OVVRMOxERFzIGGEtQd3SOAbFQdD0gAw4eGQoK5P75ARomGQHVvA4SCA0sSn5TLxQjTkwsg6ABAwIDER04SnNGHBETKTs/PzEPEHpJBhRFSnBxjUQZSVBaWFNGNg8PBVsaBxc/NTofAhdOf1I9HhIBAwMDk4gHFzsuJgIxAAQAFf8ABOsFAAAMABAAFAAeAAABFRQGKwEBESEiJj0BARUhEQEVIRElFSE1NDYzITIWBOtzUTn+/P3vUXME1vsqBNb7KgTW+ypzUQNOUXMBG0JVd/7zAQ13VUIBRv8A/wFI/wD/jENDVHd3AAMAAP+ABgAFgAAZACUAMQAAABQHAQYjIiY9ASEiJj0BNDYzITU0NjMyFwEWEC4BIA4BEB4BIDYAEAIEICQCEBIkIAQEgAn+wAkODRP+oA0TEw0BYBIODAwBP6mS+v7Y+pKS+gEo+gFyzv6f/l7+n87OAWEBogFhAo4cCf7ACRMNwBMNwA0TwA4SCv7BqwEo+pKS+v7Y+pKSAl/+Xv6fzs4BYQGiAWHOzgAAAAADAAD/gAYABYAAGQAlADEAAAEVFAYjIRUUBiMiJwEmNDcBNjMyFh0BITIWEhAuASAOARAeASA2ABACBCAkAhASJCAEBIATDf6gEg4MDP7BCQkBQAkODRMBYA0ToJL6/tj6kpL6ASj6AXLO/p/+Xv6fzs4BYQGiAWEC4MANE8AOEgoBPwkcCQFACRMNwBP+/wEo+pKS+v7Y+pKSAl/+Xv6fzs4BYQGiAWHOzgAAAwAA/4AGAAWAAA8AHwAvAAABERQGIyInASY0NwE2MzIWARE0JiMhIgYVERQWMyEyNgERFAYjISImNRE0NjMhMhYEACYaFBH+QBsbAcARFBomAQATDfxADRMTDQPADRMBAKl3/EB3qal3A8B3qQPA/YAaJgwBQBNCEwFADCb8xgPADRMTDfxADRMTA838QHepqXcDwHepqQADAAD/gAYABYAABwATAB8AAAAUBiImNDYyEiAOARAeASA+ARAmBBACBCAkAhASJCAEBACW1JaW1Cr+2PqSkvoBKPqSkgFyzv6f/l7+n87OAWEBogFhAurUlpbUlgEgkvr+2PqSkvoBKPq9/l7+n87OAWEBogFhzs4AAAAAAgAA/wAGXQXgABUANgAAARcGBCMiJAI1NBI3Fw4BFRQAMzI+ASUXBQYjIicDISImJwMmNz4BMzIWFRQGJxMhFSEXITIXEwP/Zjr+0Luc/veb0aoRepIBB7l+1XUCGzr/AA0QKBHv/igYJQNgAggOVjZCXmhEJQGn/mkQAccoEeQBXcyz3psBCZy1ASo+gzbfhbn++YLdGnKAByMB3SEYAwsQGjM/XkJFYQf+34CAI/45AAAAAgAA/4AGAAWAADsASwAAATYnJgcOBAc2FgcGBwYHBicuAycmJy4BJyYHDgEHFR4BFxY2FhceAhcWFxYXFhcWNjc2NzYSAREUBiMhIiY1ETQ2MyEyFgTmECU0hxEwQz45EFBDBwUvKxwsKxcdCQsDFwsMLxs5RjalKBATDBVDMRELDw8FESQkFSo9K1Qig3doiQEoqXf8QHepqXcDwHepA4NVL0EUAxMqN1UxBy5MNFtOFSAuGFFBZxSBIyVACBApIJQcBwgkAgMXAh0SKTcNLo2SM2MaDBUVTaCLATMBJvxAd6mpdwPAd6mpAAABAAAAAASABYAARAAAARQCBCsBIiY1EQcGIyInJj0BND8BNQcGIyInJj0BND8BNTQ2OwEyFh0BJTYWHQEUBwUVJTYWHQEUBwURNgA1NDY7ATIWBIC9/ry/oA4S1wMGCgkNF+nXAwYKCQ0X6RIOoA4SAXcPGhf+dwF3DxoX/ne8AQQSDqAOEgLAv/68vRIOAmNCAQYKEIAXCEddQgEGChCAFwhH+g4SEg61dAUUEIAXCHlddAUUEIAXCHn+GQ0BFL4OEhIAAwAAAAAFgAWAACMAMwBDAAABFRQGIyERFAYrASImNREhIiY9ATQ2MyERNDY7ATIWFREhMhYTETQmIyEiBhURFBYzITI2ExEUBiMhIiY1ETQ2MyEyFgSAEg7+oBIOQA4S/qAOEhIOAWASDkAOEgFgDhKAXkL8wEJeXkIDQEJegKl3/MB3qal3A0B3qQLgQA4S/qAOEhIOAWASDkAOEgFgDhISDv6gEv4yA0BCXl5C/MBCXl4DgvzAd6mpdwNAd6mpAAAAAAQAAP+ACIAFAAAnAC8APwBQAAABBisBNSMiJjU0Ny4BNDY3JjU0NjsBNTMyFyEeARceAhQOAQcOAQc3FhQHFzY0JwEhBgciBg8BAQ4BKwEDMzIDIxMzMhYXAR4EMwUhJgJsbp6AQA0TBzpNTToHEw1AgJ5uBFkqgRBZei0telkQgSoGNTVRRET7VQP32e85cBsc/uAaWS1gXR2dnR1dYC5YGgEgBA4vMkkkAcj8CXQBoEBALyEYGQIRGBECGRghL0BABxYDDzMsJCwzDwMWB/wkcCQeMJQw/tYmKjAYGP7gGiYB0AHgAdAmGv7gBA0hGRVQQAACAAD/gAaABgAAUgBWAAABMhYVFA8BFxYVFAYjIiYvAQUXFhUUBiMiJi8BBwYjIiY1NDY/AQMHBiMiJjU0Nj8BJyY1NDYzMhYfASUnJjU0NjMyFh8BNzYzMhYVFAYPARM3NgElAwUF7z5TXaw4B1Q7L00PN/7KNwhUPC9MDzeZHRU9UTcsnGmcGhY8UjcsnTUIVDwvTA82ATY2CFU7L00PNaIVFjxVPCydaaQY/PwBNmn+ygL4UT1hITunFRo7VjYtpWqkGBc7VjYtozUJUD0vTA81ATk2CFE8L0wPNZ8YFzxVNi2gaaAYFztWNyyhNwZPOy1JDzb+xDgI/vppATtrAAAAAAMAAP+ABgAFgAAPACkASQAAATIWFREUBiMhIiY1ETQ2MwERBgcOAQcGIzkBIicuAScuAScRFBYzITI2ETQmIyEiBhUUFhceARceBjI+BTclPgEE4HepqXf8QHepqXcD4B8hIsU1YkJCYi6/LwwqCjgoA0AoODcp/MAoOD0lL7UnAxwOHBMYFRQVGBMcDhwDAQsjPwWAqXf8QHepqXcDwHep++ABtCMUFn4kRUUgeSAIJgj+TCg4OAJlKTo4KCVPGSByGgITCREJCgUFCgkRCRMCrhdPAAAAAAYAAP8ABwAGAAAFAD8ARwBRAGEAcQAAEzQ3ASYCARQOAwcDATY3PgEmDwEmJyYOAR4BHwETAwE2Nz4BJg8BIiYjNiQzMgQXIyIGFRQeBhcWBRMWFwYjIicBFhUUAgcTNjU0ACAEFhIQAgYEICQmAhASNgAgJDYSEAImJCAEBgIQEhZ/QwFvxO4FCAUPCBsETP7qLioTDhMTzUt/DBEGAw8MUHio/uguKhMOExPNByAKaQFTxpMBC2kKN0oEBAwGEgcWAz/+Bu0BBH6BcGkDe1/Qr+s7/KIBbAFM8I6O8P60/pT+tPCOjvABVQFaAT3liIjl/sP+pv7D5YiI5QKAo5b8E18BdAEIEyc8HFoN/wADOgMFAiEdAQoBCQEMEhMOAQj+uP4IA0ADBQIhHQEKAaC7amBRNwwYExsPHgwkBWvT/XkGBSwgBFKuw9H+n2YCpqlrKgI0jvD+tP6U/rTwjo7wAUwBbAFM8Pm3iOUBPQFaAT3liIjl/sP+pv7D5QAAAAIAAP+ABwAGAAASABsAAAERBSYkJjU0NiQ3FQYEFRQEFxEBEyU3Jic1BBcEPv7w5P6M1skBXdnZ/ukBNeoDrSX985N3oQEVzAYA+gCAFKT9koz3pBqsJuCPmOYeBVD+P/56clNGHawhfAAAAAMAAP8AB4AGAAAMACYAMAAACQEVIxQGIyEiJjUjNQEhETMRIREzESERMxEhETMyFh0BITU0NjsBBTIWHQEhNTQ2MwPAA8CAKRz6ChwpgAEAAQCAAQCAAQCAAQA7HCn5gCkcOwY7HCn4gCkcBgD+gIAaJiYagP8A/QADAP0AAwD9AAMA/QAmGkBAGibAJhqAgBomAAACAAD/gAkABYAADQA2AAABExYGBCAkJjcTBRYyNwAUBwEGIiclDgEHFhUUBxMWBwYrASInJjcTJjU0NzY3JSY0NwE2MhcBBu4SBKz+1v6k/tasBBICPhY0FgRQFvugBAwE/XQrOAY/OjoCCgkPwA8JCgI6OkELV/6zFhYEYAQMBARgArz+xEV2RUV2RQE8tQcHAhAuCP6gAQHOIptlJElFJv5PDgsLCwsOAbEmRUkmz3toCC4IAWABAf6gAAEAbf+ABZMGAAAiAAABEyYjIgcTJgACJxYzMjceARIXPgM3FjMyNzEOAwcGA1sNPispQA0o/v+wXToyK0Q/jcEqJZFaeC82NTg6HEAjTgqSAkP9PQsLAsNFAcUBKIsPD2/t/sRFPemTzVcODidjOoYR+AAAAwBv/4AEkQYAABsAMABhAAAlNC4GJyYjIg4DFRQeAzMyPgIDNC4CIyIGBwYVFB4DMzI2NzYDIQcjHgEVFA4DFRQeAxUUBwYEIyImJyY1NDY3NiUuATU0NwYjIiY1NDY3PgED1Q4PJxQ5EEMDECE1Z29TNi9LY2UzOmtbN3UiPmpAKlEaLhQrPVk0JVEZNXABoYmES0wxRkUxQFpbQDFH/uughOU6JFlKgwERIB8VLhaUy0g/TNTFGTAkLxcuDDACAg4kOF07OFw7KREaNF4DmDuFfVInITtlLmdnUjQhGzgCSFg/jFpIc0c7QCIkRUNQgE5bUnpzU2A7SFGKLlISKUEpKC0EwZRSmjZCQAAAAAAIAAD/gAfABgAACgAVAEsAUwBcAHAAeQCNAAABFAYjIiY1NDYyFiQyFhUUBiMiJjU0JRQGBxYVFAYHBgQjIiQnLgE1NDcuATU0NjMyFzYlEz4BFwU+ATMyFhQGIyImJyUDBBc2MzIWACIGFBYyNjQBFBc2NyYjIgYBPgE0JicmJCAEBw4BFBYXFgQgJAE2NTQmIyIHFgE2MhYUBwYrASInJjQ2MhcWOwEyAz9RODlSU3BRAZVwUVE4OVIDPz40BYmBff6/r7D+v3yBiQUwOoReU0H4AViGBBsPAVsWXThNbW1NTG0B/sV0AUfpQFdehP7tWkBAWkD5YDMxgyQuPlcF0nB3d3B0/tX+uP7VdHB3d3B0ASsBSAErAY85Vz4xJYP93wsgFgtj3ALcYwsWIAtNvAK8Ajw4UFA4OVJSUlI5OFBQODldPmgeIRx521RSV1dSVNp6HSUfZTtehDeeBgGnDg8DUjI+bZpubE1K/pIOmDqEAoNAWkBAWv1fQyyDaBlX/VlJusq5SUtRUUtJucq6SUtRUQI/Lkc+Vxxp/gsLFiELY2MLIRYLTQAAAAYAAP+ABgAFgAAWAB4AKgA6AGwAdAAAATYyFhQHBisCIicmNDc2MhcWOwIyAhQGIiY0NjIBIiY1NDYzMhYVFAYDMhYVERQGIyEiJjURNDYzAT4BNTQmIyIHJicTFx4BMzI2NCYjIgYHJyYGBwMGByYjIgYVFBYXBhUUFgQzMiQ2NTQkMhYUBiImNAO2BxUOB0GPAQGPQAgIBxUHMXsBAXrkNEo0NEoCUx0qKh0eKiochLy8hPyAhLy8hAPpIyxIMzwml+BTzgFHMTJISDIkPA/jCREDX+CdJDkzSCchB5QA/5eWAP+U/ndKNDRKNAGJBw4WB0BABxYHBwczATRKNjZKNAFbKh0eKioeHSoBZ7yF/IKFvLyFA36FvPzUDj8nM0kwawgBCTEyRkdkSCkhNgIJCv7SBG0rSTMlPQ8ZHWKnYWGnYhuFNEo2NkoAAwAA/4AGAAWAAB4AMAA8AAABNzU0JiIGFREUBiImPQEjFRQWMzI2NRE0NjMyFh0BBTUjFRQGIyImPQEHJxUUFjI2ABACBCAkAhASJCAEA2JadKB0HCYbl3NSUXMbFBMbAYmWGxQTG1o8dKJzAVHO/p/+Xv6fzs4BYQGiAWECuRs+T3BvT/7lFBsbFHh6UnJxUAEYExwcEzbfen4UGxwTexoce1BycgGt/l7+n87OAWEBogFhzs4AAAIAAP+jB4AFXQAeADAAAAE1NCYiBhURFAYjIiY1ESERFBYyNjURNDYzMhYdAQcFIREUBiMiJjURFzcRFBYyNjUEJjxUPPyxsvsBSDxUPP2vsPzDAY8BSPuysfyDwzxUPAM4dio8PCr9nK/4+7IBCv76Kzs7KwJsq/L0rIg6of72svv5sAEMPTr+8io7OyoAAAIAAP+ABgAFgAANAB0AACURIREhIgYVESERITI2ExEUBiMhIiY1ETQ2MyEyFgXA/UD+IF2DAsAB4F2DQKl3/EB3qal3A8B3qaAB4ALAg13+IP1AgwQd/EB3qal3A8B3qakAAAAIAAAAGggABOYABQAJAA0AEQAZAB0AJQApAAABMxEhESEZASMRAREzEQMVMzUTIREhNSE1ISURIxEBIREhNSE1ISURIxEBSMz97AFIewGZzc3NUgIV/esBSP64AUh7AZoCFP3sAUf+uQFHewTm/CkCuf3rAXH+jwIV/UcCuQEezMz+4vxSo1KkAXH+jwIV/FKjUqQBcf6PAAUAAP+ABgAFgAAJABMAIwAwAEAAAAAUBiMiJxE2MzIAFAYjIicRNjMyABAmIyIHBgcGBxE3NRYzMgIQJiMiByMRNzUWMzIBERQGIyEiJjURNDYzITIWBBZMNSsbHCo1/vVMNSsbHCo1An6wfRQTFzdXfNMzQn2nsX1KQ7rTNz19Axepd/xAd6mpdwPAd6kCRIBaDwEVEQFRgFsPARUR/TEBDL4DTjpfBv2EKc4TAmkBDL4k/LgpzhMB+PxAd6mpdwPAd6mpAAAACgAp/wkHzQYAAIIAvADKAM4A3ADjAOcA6QDtAO8AAAE2HgMXHgIXDgIHLgUjDwEWFx4HHwEWDgIHJgYjIicmNTQ3PgInJgcOASMiLgEnJicEIyImNTQ2NyUmND4DNz4BMzIWFzYzMhYVFAYPAgYWMzI2NTQuAjU0Nyc2NTQnNjMyHgUXNw4DFzcuBycuAioBIyIHPgU3HgI/ARUXNjc+CD8BBgcOAQcOAgceARUUAz4BMzIeAxcGIyInATcXBwEWFRQOAwcnPgIzAQcnPgEzMhMzFwcBNRUPAT8CBMZLiWNnQSshWzxFMHmcJCw8GycuY0kKBgQJBiwHHwUSAwYBAQEHCBEDI4QgJyECAwI7NwEYEySXPRllcBwGFf4eHxAYEQ4B5ggLFRMbBQQXBg8aB6MJERkRD7YBAaUWL5AvNy8KRCsFUj4sNyoUFQoYDDIDKC0jAT0FEQcOBgoHCQQHDxoSLw5+WxAoRD8dRwgMICAWDBb3fBwsKRkiDiMLKwgHAilP/LQOOCwRAyv3J7k2CRsdFxkCeXs9QP75MG1JAaEDIzkzOAQHFU9BHP5FYAYKLQwT0x8KKQN5AQIBAgECXwMvRndhSDhqNz0eNz8QJZytvJVhAgQFCQUlBx0MHhklFiEaPylMDwEVChAfShYNOT0VAho1XX6ZFAQacBYQDxcDag4WDQoEBQIBDSARJRYRDxYDKBAat6AxJCIDFBgQEhMsSRogEAMODSQfQBwZKCgCCw/WBRUIDwYKBQUCAwQBKx4hGi4bUwkJLRwBAUwBX18VJCcXLRE5E0wPCTVWpcYrAwkKCRM2Bwv8VBorHzYuOAUtCwMkDLEw/tAPAQcPCwgHASsCDQcCdBQRAQz9fFMMBjEBAQUCAwQBAAAEAAD/EgYABe4AFwA2AF0AgwAABSYHDgEjIicmIyIHDgEXHgE2Nz4CNzYnJicmIyIHBgcGFxY2Nz4HMzIeARceATc2ATQuAiMiDgEjBi4DBw4BBwYXHgEzMj4CFx4DFxY2Nz4BNxQCBgQgJCYCNTQ+BTc+Azc+ATcWFx4BFx4GBI8FEx5ySoFABQgLDwcBCCJrYjIpVysHDCwTFBc1LxgdMRoOCREXAw8GDgkQDhMLGyMLCAoFChcBWgoXLR4hgIIkG0lPWHA3c6QCAkwdQ0Y5lnZ6IBpOQUcUIy8gHB01fND+6/7Q/ubVgCc7UktSLxMOSiM9HiQsCIE5LKwrFSRVQ1M3JzITDhYiMQQMBhQKIBwDAwQhGwcMhC8ODwoMLBgUCAcUAg0ECgQGAwIPDg8RBgQMAS8WLS0cU1QBKDo6KAEBm2VwNBQRQU1AAQE9ST4BAyIuKXjOpP7nv2xzxwEcoFmnfHFLQB0KCCUUKBgcWVGbJh1OGw0YRUh2fqsAAAAEAAD/gAYABYAAHgA8AFoAeAAAAQ8CDgEnDgEjIiY1NDY3JjY/ARcHBhQXFjI/AwMXBycmIgYUHwMHLwIuATcuATU0NjMyFhc2FgEUBiMiJicGJi8BNxcWMjY0LwM3HwIeAQceAQMUBgcWBg8BJzc2NCYiDwMnPwI+ARc+ATMyFgQuoJceQa1VEHBJVXhZRRYuQQyXCyUlJWglHpehvgyYDCVoSiUdmKCXoZceRCwbRlp4VUxzDFSrA2d4VUpyDla7RAuXDCVoSiUemKCYoJgdQC8VTGUCZkwaLkMMlwwlSmglHpigmKGYHUO4VgtzTlV4Ac+gmB5ALhVGWnlVSHAQVq5BDJgLJWgmJSUemKACEgyYDCVKaSUdmKCYoJgeQ7lXD3BJVXliShQv+5VVeV5HHCxEDJgMJUpoJR6YoJigmB5ArVULcwQXTXQLVbdDDJgMJWhKJR6YoJigmB5DLRpLZnkAAAgAAP8ABgAGAABFAFgAWwBfAGcAagCJAKMAAAEGJi8BJicuAScGBwYHDgEnNjc+ATc+ATcmBw4CBwYUBwYHBicmJyYnPgE3Njc2Mz4BNz4CFxYHFA4BBwYHFx4BFx4BAxYHBgcGIyYnJic3HgE2NzY3MgUXJwElEQUBFwMnAxc3FwEFEQEXBycGBwYrASImJyY1NDYzMh4BFx4BMzI2Nz4CNwERJQYEIyInNCcRNjc2NzY3EQUyLAEzMhURAo4BFxQULCsHRARDQ1EYBB8DBkwVgQ4RRAIIZggnHgICAQUaFxgSCgQBBiULOi9kAgpCCwkZBAQCAxkcAxk0QAx9BQQNzwMHDCYeHhoXDgQBAyEUMCQTEQK+P4v7+AK2/UoE2Wa1ZNhmLdP+LgI9/vqeNiiCkjohVE/xPwgKCAQcIQRJrUdfkFUPHyUKAZX8+g79LgcNBQEDAQUPaisCLgIBPQE7BBQBygMHCAkUHQU1AmdOXw8CBAIEWBi2Gx6JCQEiAgsIAQIRAQoFBwcEEQYRAgYDEBAjAiMEAwoBAQwVAjI5BTJRHAY0AgExAeAPDRcPDAMXDxoDAwQEDgwCkuMq/ZnoBAjp/TYfApEf/egfbkEDO7gBfPoRDaBCUxkMTi4HCQgLDxICJTEdJAcRFQYEgPvJ9gbzDQECBDYJAQYFIw8BgMZuaxX+XgAMAAD/AAcABgAADwAnADcARwBXAGcAdwCHAJcApwC3AMAAAAEyFhURFAYrASImNRE0NjMFHgEVERQGIyEiJjURNDYzITIWHwEeARUBNTQmKwEiBh0BFBY7ATI2ETU0JisBIgYdARQWOwEyNhE1NCYrASIGHQEUFjsBMjYBNTQmKwEiBh0BFBY7ATI2ETU0JisBIgYdARQWOwEyNhE1NCYrASIGHQEUFjsBMjYBNTQmKwEiBh0BFBY7ATI2ETU0JisBIgYdARQWOwEyNhE1NCYrASIGHQEUFjsBMjYTESMiJj0BIREBIEJeXkKAQl5eQgXgOkaWavygQl44KAKgKGAcmBwo/SASDoAOEhIOgA4SEg6ADhISDoAOEhIOgA4SEg6ADhIBABIOgA4SEg6ADhISDoAOEhIOgA4SEg6ADhISDoAOEgEAEg6ADhISDoAOEhIOgA4SEg6ADhISDoAOEhIOgA4SYKAoOP2ABIBeQvvAQl5eQgRAQl6jInZF/QBqll5CBgAoOCgcmBxgKPuAgA4SEg6ADhISAQ6ADhISDoAOEhIBDoAOEhIOgA4SEv4OgA4SEg6ADhISAQ6ADhISDoAOEhIBDoAOEhIOgA4SEv4OgA4SEg6ADhISAQ6ADhISDoAOEhIBDoAOEhIOgA4SEgGOAQA4KKD+AAAUAAD/AAWABgAADwAfAC8APwBPAF8AbwB/AI8AnwCvAL8AzwDfAO8A/wEPAR8BLwE/AAABMhYVERQGIyEiJjURNDYzARUUFjsBMjY9ATQmKwEiBhEVFBY7ATI2PQE0JisBIgYRFRQWOwEyNj0BNCYrASIGERUUFjsBMjY9ATQmKwEiBgM1NCYrASIGHQEUFjsBMjYRNTQmKwEiBh0BFBY7ATI2ETU0JisBIgYdARQWOwEyNhE1NCYrASIGHQEUFjsBMjYRNTQmKwEiBh0BFBY7ATI2ATU0JiMhIgYdARQWMyEyNhE1NCYrASIGHQEUFjsBMjYRNTQmKwEiBh0BFBY7ATI2ETU0JisBIgYdARQWOwEyNhE1NCYrASIGHQEUFjsBMjYBNTQmKwEiBh0BFBY7ATI2ETU0JisBIgYdARQWOwEyNhE1NCYrASIGHQEUFjsBMjYRNTQmKwEiBh0BFBY7ATI2ETU0JisBIgYdARQWOwEyNgVAGiYmGvsAGiYmGgHAEg5ADhISDkAOEhIOQA4SEg5ADhISDkAOEhIOQA4SEg5ADhISDkAOEoASDkAOEhIOQA4SEg5ADhISDkAOEhIOQA4SEg5ADhISDkAOEhIOQA4SEg5ADhISDkAOEgIAEg7+wA4SEg4BQA4SEg5ADhISDkAOEhIOQA4SEg5ADhISDkAOEhIOQA4SEg5ADhISDkAOEgEAEg5ADhISDkAOEhIOQA4SEg5ADhISDkAOEhIOQA4SEg5ADhISDkAOEhIOQA4SEg5ADhIGACYa+YAaJiYaBoAaJv7gQA4SEg5ADhIS/vJADhISDkAOEhL+8kAOEhIOQA4SEv7yQA4SEg5ADhIS/rJADhISDkAOEhIBDkAOEhIOQA4SEgEOQA4SEg5ADhISAQ5ADhISDkAOEhIBDkAOEhIOQA4SEvsOwA4SEg7ADhISAg5ADhISDkAOEhIBDkAOEhIOQA4SEgEOQA4SEg5ADhISAQ5ADhISDkAOEhL8DkAOEhIOQA4SEgEOQA4SEg5ADhISAQ5ADhISDkAOEhIBDkAOEhIOQA4SEgEOQA4SEg5ADhISAAAAAgBA/xAEwAVgAB0AJQAACQERFAYiJjURIxEUBiImNREBJjQ2Mh8BITc2MhYUJBQGIiY0NjIEpP7cQlxCQEJcQv7cHDhQHOQBcOQcUDj+oIO6g4O6A9z+3PzILkJCLgGA/oAuQkIuAzgBJBxQOBzk5Bw4UOW6g4O6gwAAAAUAAP+ABoAFgAAPAB0AMwBDAFEAAAEUDgEjIi4BNTQ+ATMyHgEBFAYjIi4BNTQ2MzIeAQUyBBIVFA4CIyImIyIGIyI1ND4CJSIuATU0PgEzMh4BFRQOASUyFhUUDgEjIiY1ND4BAwwmWD1MfDwmWD1Nezz+qlRNTINGVE1Mg0YBinYBErgiP0IrRO8/Qv1Kt3Cn0AFIPVgmPHtNPVgmPHwBZE1URoNMTVRGgwQoPGtOc5xJPGtOc5v901B2b5xKUHdvnS/D/ulzLj0dC1pZklbTrnbTTms8SptzTms8SZxzaHdQSpxvdlBKnW8AAQBA/wACwAYAABUAAAEUBgcTFgYrASImNxMuATU0PgEyHgECwHJfLQIkGsAaJAItX3JVlqqWVQPwkcUl/MsaJiYaAzUlxZGA852d8wAAAAADAAD/AAaABYAAAwAHAB8AAAUBEQUnLQENAREUBgcBBiInAS4BNRE0NjcBNjIXAR4BA4ACgP2AQAK6/Ub9RgX6JB/9QBxCHP1AHyQuJgLAFiwWAsAmLl0BXQJ86XH+/v4C/QAjPBH+gBAQAYARPCMDAChCDgEACAj/AA5CAAAAAAcAAP8ACIAGAAADAAcACwAPABMAFwBCAAAFJREFJy0BBQElEQUnLQEFJyURBSctAQUBERQGBwUGIiclJicGBwUGIiclLgE1ETQ2NyURNDY3JTYyFwUeARURBR4BAoABgP6AQAGU/mz+bAXUAYD+gEABlP5s/mwsAYD+gEABuf5H/kcF+SYh/kAZQBn+QAUCAgX+QBlAGf5AISYrIwGyKyMBwBc2FwHAIysBsiQqYMABOqRwra2t/Y3AATqkcK2trXilAQqkcL29vf09/mAkPhDgDg7gAgICAuAODuAQPiQBoCZAELoBkCZAEMAKCsAQQCb+cLoQQAAABgAA//4IAAUCAAMACQAfACYALgBBAAABIRUhAyIGByEmAzI2NzMCISICNTQAMzIeARUUByEUFiUhMjU0IyE1ITI2NTQjISUhMh4CFRQHHgEVFA4DIyEHOP4BAf/8WnAGAZgSpj92Ed1k/rnW/QEFzorNZQL9bnP7NgEozcf+0gEZTlu+/vz+6wJSV4h1P6xydDFTcoBG/Z0ErXz+0mlaw/23QDf+zQEI19ABE4jeiREeb3kyp7S+SU2Q1xxDflu1UiCmeUt7VDoaAAAABwAA/4AGAAWAAA8AHgAlACwAQQBHAEsAAAEyFhURFAYjISImNRE0NjMTIREhMjY1NCc2NTQuAgMjNTMyFRQDIzUzMhUUBSImNSE2NTQmIyIGFRQWMzI3Iw4BAzIXIz4BAyEVIQTgd6mpd/xAd6mpd9P+jQF+daCPaydKVE2wo3dhub18AgpESAGbAZWBgKSehs0+igtJMXEL/gRGagE//sEFgKl3/EB3qal3A8B3qf6R/O1zcZ4qNHA5TyoR/sK4Wl7+sdlxaCBMRQoUhLGsgoekvyIoAW56OEIBCk0AAAAEAAD/gAcABYAABwAbACcAPwAAABQGIiY0NjIANCYjIgcXHgEHDgEnLgEnHgEzMgE0JiMiBhUUFjMyNjcUACMBDgEjIiYvAREFNjMyFwE2ADMyAAYuj8qPj8r9jZJoGxtoTUEfH5hMFVIUIHZHaAPQs35/s7N/frOW/vW8/ksMwoR5uhnmAYVPXg0WARwCAQu7vAELBB/Kj4/Kj/u+0JIGKh+XTE1AHwghCDxJA99+s7N+f7Kyf73+9v7BgbKYdFwBrZ0wAgGXuwEI/vUAAAAABAAA/4AGAAWAAAgAGwBDAE0AAAA0JiIGFRQWMgAUBiMiJicWFxY2NzYmLwE2MzIBERQGIyEiJj0BFx4BMzI2NyUyNjU0JiMiBgcDJiMiByURNDYzITIWAxQGIiY0NjMyFgTacqBxcaD+EHRSOF4ZNC48eBkYMz1SFhRSA/ypd/xAd6msFJNfaJoKAVmW09OWlNIC4QkTSz7+16l3A8B3qfeOyI2NZGWNAymgcXJPUHH+yKZzOjAUFBgzPTx4GCEFAm38QHepqXeZRVx4jGf805WW09GU/r4BJXcB1Hepqf6gZI2NyI6NAAYAEP9WBu8F/wANAB4ALQA8AEsAXAAAAQMHJS4BJy4BPgI3FhsBJw4DDwEDLgE/ATY3JwEDDgEPAQYHFwMTFxY2NwEGAyUnEz4BFx4FARMWBgcOBQcmAyUnNwMlNy4DLwEFNhYfARYDRA8C/lwkPhALBw8JIgJOLLSTP2EwHwMEvhECBwgjT4wGgLwMMRMSR5QI5tMHquI5/Scv2v7DE+EUUCgYMSMwGDACl9QSCxYNKCQ9IUYLIucBOXyO3P5dlyJSRTwREQGVHzYMCycBb/6QFh0DOSUbOEokXAcMAjr+hVxIkWlUFRUBZRo8ERI/fVb96v6ZHSMDBAcFpAFvAWqtEBYWA7I//oy7DAFkHxwEAhQWLBk2/sX+lSVOIxQiFhYKEgNIAWzD7VP+ixRWWZpdQw0NAQMbDw89AAAEAAD/QAgABYAABwARABkAQwAAADQmIgYUFjITIQMuASMhIgYHADQmIgYUFjITERQGKwEVFAYiJj0BIRUUBiImPQEjIiY1ETQ2OwETPgEzITIWFxMzMhYB4F6EXl6EggP4WQIYCf0ACRgCBQNehF5ehP4SDmBwoHD8AHCgcGAOEoNdHGkXomIDAGKiF2kcXYMBfoReXoReAeABZQgTEwj9GYReXoReAQD+gA4SgFBwcFCAgFBwcFCAEg4BgF2DAaNef39e/l2DAAQAAP8ACAAGAAAzADsARQBNAAABMhYVERQGKwEVFAYiJj0BIRUUBiImPQEjIiY1ETQ2OwETPgE7ATU0NjMhMhYdATMyFhcTADI2NCYiBhQBIQMuASMhIgYHADI2NCYiBhQHIF2DEg5gcKBw/ABwoHBgDhKDXRxpF6JigBIOAcAOEoBiohdp+fqEXl6EXgFkA/hZAhgJ/QAJGAIEIYReXoReAoCDXf6ADhJAUHBwUEBAUHBwUEASDgGAXYMBo15/4A4SEg7gf17+Xf4gXoReXoQBggFlCBMTCPy7XoReXoQAAQAg/wAF4AYAADMAACQUBiMhHgEVFAYjISImNTQ2NyEiJjQ3ASMiJjQ3ASMiJjQ3ATYyFwEWFAYrAQEWFAYrAQEF4CYa/jIBCiQZ/sAZJAoB/jIaJhMBkuUaJhMBksUaJhMBgBM0EwGAEyYaxQGSEyYa5QGSWjQmEY0mGSMjGSaNESY0EwGTJjQTAZMmNBMBgBMT/oATNCb+bRM0Jv5tAAQAAP+ABgAFgAAVACsARABQAAABNCcmIyIHBhUUFjMyNzYzMhcWMzI2NzQnJiEiBwYVFBYzMjc2MyAXFjMyNhM0JyYkIyIHDgEVFBYzMjc2MzIEFxYzMj4BEAIEICQCEBIkIAQEZx7B/oWaKhsWBSCEb+KrEw4THGAj7f7JmZYwIxkHHnqBARfRGA4ZI2wofv6ysMygFx8pHwsdha6fAS1nFRMdK83O/p/+Xv6fzs4BYQGiAWEBRiATcyIJKxQdCBtnCxvsKBWNKg0zGSMIIXwNIwERLxdJSy8HJR4fKgglRD0MKVv+Xv6fzs4BYQGiAWHOzgAFAAD/gAYABYAADwAfADoATgBVAAABMhYVERQGIyEiJjURNDYzARE0JiMhIgYVERQWMyEyNgETJREUBiMhIiY9ASUDPgEzNgQWFxYHBgcnJgEyFhURJickBQYHJyMXBgcRNDYzEwYmJyY3EwV1OlFROvsWOlFROgUuKBz7FhwoKBwE6hwo/P28AhULB/sWBwsCx9QEEASqAQuvOBs0QMBhbwI+BwtVZ/7a/qEGDEHpVYRiCweTDhgCGL6BBYBROvsWOlFROgTqOlH6iwTqHCgoHPsWHCgoAv7+fZH+EAcLCweNwwG3AQMgFUc7HA4QLsYHAgMLB/5UHhZANAEChr4zVgIwBwv8fAMPDstm/vIAABEAAACMCQAEdAAOACUALwA7ADwASABUAGIAYwBxAH8AjQCPAJ0AqwC/ANMAACU3Ay4BIyIGFQMXHgEzMiU3AzQnJiIHBhUHAxQXFRQXFjMyNzY1ARcHBiIvATc2MjcXBwYjIjUnNzQzMgEDFwcUIyIvATc2MzIfAQcGIyI1Jzc0MzIfAQcGIyImNSc3NDYzMgkBEwcUBiMiLwETNjMyFjcTBxQGIyIvARM2MzIWNxMHBiMiLwETNDYzMhYBMQMTBxQGIiYvARM0NjIWFxMHFAYiJi8BEz4BMhYTBzEUBiImLwITNTY3NjMyFxYXARQGIyEuATURNDc2MzIAFzYzMhYDEBAQAQ0KCQ4ODgENCRYBKgsMDQgQCA0BCgsGCQ4LCQn77BQUAg4CERECDlgaGgIICRcXCQgBGrwZGQsKAhUVAgoLXhcXAgwNFRUNDGAVFQIOBgkUFAkGDgGB/t8VFQoHEAISEgIQBwpeExMLCBICEBACEggLYhISAhQTAhAQDQgJDAGJxg8PDxQOAQ4ODxQPYw4OEBYQAQwMARAWD9UOEhoSAQYGDAIKCQsIBw4CBGamdfzuDRIcVWDDAR4RNTl1pqTxAgsKDg4K/fXxCg000wJKEAgFBQgQBv29AesBCgcLCQcNAWyAfgkJfoAJRs/LCQrKzwn+MgHr9e0LC+31DAX89A0N9PwNH+r2EAkH9uoGCf4WAm3+hPYHCxL2AXwSC0/+LPQICxP0AdQTCyD+BvIVFfIB+gkNDf0RAur+Au8KDw4L7wH+Cw4OHv4U7AsQEAvsAewMEBD+COcNEhINcnUCfAMPCQcFCBL9lHWlAhINA4MXCiL++cAWpgAAAAAEAAD/AAYABgAADQAbACkAOQAAACAkNxUUBgQgJCY9ARYAICQ3FRQGBCAkJj0BFgAgJDcVFAYEICQmPQEWACAEFh0BFAYEICQmPQE0NgITAdoBnHfO/p7+YP6ezncBnAHaAZx3zv6e/mD+ns53AZwB2gGcd87+nv5g/p7OdwG5AaABYs7O/p7+YP6ezs4DAFZUqkV2RUV2RapU/KpWVKpFdkVFdkWqVAEqVlSqRXZFRXZFqlQEKkV2RYBFdkVFdkWARXYACAAA/wAGAAYAABMAGgAjAF4AYwB1AIAAiAAAAR4BFREUBiMhIiY1ETQ2MyEyFhcHESEmJwEmAREhIiY1ESERARYXNjMyFxYHFAYHFQYjIiYnBgcCIyIvASYnJjc+ATc2FxYVNjc2Ny4BNzY7AjIXFgcGBxYdAQYHFgE2Nw4BAQYXNjc0NzY3JjU0JjUmJxQHAzY3LgEnJicGBwYFJiMWMzI3NAW8HCg4KPrAKDg4KAOAKGAchAF4Cgz+xwwBY/5gKDj9AAL+ITM7OpMeEA4CAQZBMIY/3auZWQ8NGAEFCgQJXlUOCQI0N0QkGA0NCx8VARcMEgkCAgECDDf+GzRVM0kBgQ8NAQYHAQMBAQEMAXyHlQIWBUwzGzgeAncYdEwwDgQEhBxgKPuAKDg4KAZAKDgoHET+iB0MATkM+hIEADgoAaD6AAJRGh4HMRYeAQIBASYoIRg7/voHDAEEChooZy0JDwICVXCIflKbMigPFS8GAgMFHntFpP4bGIYoWAN6KloHJQMoBAQBAQEBARYOAQH9aTYbAREFQ21WbzgLGBwBAQAABAAA/wAGAAYAABMAGgAjAFEAAAEeARURFAYjISImNRE0NjMhMhYXBxEhJicBJgERISImNREhERMVMxMzEzY3NjUzFx4BFxMzEzM1IRUzAwYPASMnLgEnAyMDDgEPASMnJicDMzUFvBwoOCj6wCg4OCgDgChgHIQBeAoM/scMAWP+YCg4/QBpRqSfgAcDAgQDAQUDgJ+kRv7UWmMFAgIEAwEGApBykAIFAQQEAgIFY1oEhBxgKPuAKDg4KAZAKDgoHET+iB0MATkM+hIEADgoAaD6AAOAa/1rAeUUGhAIGAMiCf4bApVra/5KFBoVFQUgCQIh/d8JHwYVFRoUAbZrAAQAAP8ABgAGAAATABoAIwBTAAABHgEVERQGIyEiJjURNDYzITIWFwcRISYnASYBESEiJjURIRElFSE1Izc+AjsBFhceAh8BIxUhNSMDEzM1IRUzBw4BDwEjJicmLwEzNSEVMxMDBbwcKDgo+sAoODgoA4AoYByEAXgKDP7HDAFj/mAoOP0AAS0BGUtnBQoFAQIBBAIFBwNrTAEjRMDDQ/7pSmcEDAMCAgEEBgtqTP7eRL3CBIQcYCj7gCg4OCgGQCg4KBxE/ogdDAE5DPoSBAA4KAGg+gDqamqhBxMIBAYEBwkEoWpqAREBGmtrnwcTBAMEBgsMn2tr/vD+5QAAAAAFAAD/AAYABgAAEwAaACMAOABDAAABHgEVERQGIyEiJjURNDYzITIWFwcRISYnASYBESEiJjURIRElFSE1IzUzMjc+ATU0JicmIyEVMxEBIxEzMhcWFRQHBgW8HCg4KPrAKDg4KAOAKGAchAF4Cgz+xwwBY/5gKDj9AAEgAUddiUwqQ09KPzBS/pBcAQV3eDQfOD4fBIQcYCj7gCg4OCgGQCg4KBxE/ogdDAE5DPoSBAA4KAGg+gDqamqnDxeAUlF4GxNr/dUBGAEMEiFSWR8PAAAAAAUAAP8ABgAGAAATABoAIwAqADIAAAEeARURFAYjISImNRE0NjMhMhYXBxEhJicBJgERISImNREhEQERITU3FwEEIiY0NjIWFAW8HCg4KPrAKDg4KAOAKGAchAF4Cgz+xwwBY/5gKDj9AASA/ADAgAGA/lCgcHCgcASEHGAo+4AoODgoBkAoOCgcRP6IHQwBOQz6EgQAOCgBoPoAAcD+wMDAgAGAgHCgcHCgAAAJAAD/AAYABgAAAwAHAAsADwAjACoANwBKAFIAAAE1IxUFNSMdATUjFQU1IxUBHgEVERQGIyEiJjURNDYzITIWFwcRISYnASYBESEiJjURIxUjNSERARMWFRQGIiY1NDc2EzUzFTMyFgIyNjQmIgYUAoCAAQCAgAEAgAM8HCg4KPrAKDg4KAOAKGAchAF4Cgz+xwwBY/5gKDiAgP4AAo1rCJHekQgVY4BPFiK8aktLaksEgICAgICAgICAgICAAYQcYCj7gCg4OCgGQCg4KBxE/ogdDAE5DPoSBAA4KAGggID6AALR/qMbGVNtbVMZGz8BTYCAGv4aJjQmJjQAAAAABgAA/wAGAAYAABMAGgAjADkATABeAAABHgEVERQGIyEiJjURNDYzITIWFwcRISYnASYBESEiJjURIREBFhURFAcGIyIvASMiJj0BNDY7ATc2ATI3NhAnLgEHDgEXFhAHBhYXFicyNzY0Jy4BDgEXFhQHBhYXFgW8HCg4KPrAKDg4KAOAKGAchAF4Cgz+xwwBY/5gKDj9AAHsFBQIBAwLpoMOEhIOg6YQAbQfE4GBEDYUFQURZGQRBRUSvRsUV1cSNiYCEzQ0EwITFASEHGAo+4AoODgoBkAoOCgcRP6IHQwBOQz6EgQAOCgBoPoAAy4IFv3gFggCCacSDsAOEqcP/UcYnwGYnxUGERE1FXv+wnsVNRAPlBRd/F0TAiQ1FDmUORQ1EhEAAAAFAAD/AAYABgAAEwAaACMAMwBDAAABHgEVERQGIyEiJjURNDYzITIWFwcRISYnASYBESEiJjURIREBMhYVERQGIyEiJjURNDYzBRYVERQHBiMiJwE1ATYzMgW8HCg4KPrAKDg4KAOAKGAchAF4Cgz+xwwBY/5gKDj9AAKANExMNP6ANExMNANsFBQIBA4J/vcBCQkOBASEHGAo+4AoODgoBkAoOCgcRP6IHQwBOQz6EgQAOCgBoPoAA4BMNP6ANExMNAGANEwCCBb9wBYIAgkBCloBCgkAAAAGAAD/AAYABgAAEwAaACMANwBLAFsAAAEeARURFAYjISImNRE0NjMhMhYXBxEhJicBJgERISImNREhEQE+AR8BHgEPARcWBg8BBiYnAyY3IRYHAw4BLwEuAT8BJyY2PwE2FhcBLgE3Ez4BHwEeAQcDDgEnBbwcKDgo+sAoODgoA4AoYByEAXgKDP7HDAFj/mAoOP0AAWAIGgszCwMItrYIAwszCxoI4g4OBAQODuIIGgszCwMItrYIAwszCxoI/nYNDwKKAhYNPw0PAooCFg0EhBxgKPuAKDg4KAZAKDgoHET+iB0MATkM+hIEADgoAaD6AAOACwMIJggaC/PzCxoIJggDCwEtExMTE/7TCwMIJggaC/PzCxoIJggDC/0GAhYNAz8NDwIKAhYN/MENDwIAAQAn/5cF2QYAADYAAAEVBiMGAgYHBicuBAoBJyEWGgEWFzY3JgI1NDYzMhYVFAcOASIuASc2NTQmIyIGFRQWMzIF2WVhQcmiL1BSHEFpZHNgVxsBGxpYeXpPqXaOotC0sr46BxlDO0ESHzoyNUDSoj4CxcYXiP7yoRotMBE1co/hAQcBbs/a/pf+78Zgqe1IASi5wPXTwJ9/AQQMJyBnUVdaY1u61wAACAAA/wAHAAYAAAMABgAKAA4AEgAVABkALQAAEwERJQU3JwkBJQUnLQEFJyURCQEXEQUlAREFERQHAQYiJwEmNRE0NwE2MhcBFtgCW/6y/rXBwQMzAlv+8/6yTQEQ/vD+8IsBTv2lBM3B/rUBDf2lAzMi/M0VLBX8zSIiAzMVLBUDMyIBb/5uAWffJIGB/NwBkrTfhra2tl3fAWf+bv7vgQECJLQBkv6ZK/3eKRf93g0NAiIXKQIiKRcCIg0N/d4XAAAAAAIAAAAACAAFeAAjAFoAAAEeARUUBiMiJiMhKwIuATU0NjcmNTQ2MzIXNiQzMgQSFRQGARQWMzI3LgEnBiMiJjU0NjMyHgUzMjY1NCYjIgceAhc2MzIWFRQGIyIuBSMiBgcIb4nspwQPA/tHAQIFquxuXAykdV9NSwEns6YBGKMB+syofIlnED8MQ003TU01LFFBQUlRcUF5p6h7j2IOHyYKQkw0UEo5K09BQklSbz96qgL8Lsd6pOkBCuelbro2JytzojqavKH+7KMGGP7weo5jFEkOQUM2NUQqRFJSRCqPd3mOYRAkLAxAQjM5RSpEUlJEKo0AAAAABgAA/wAHAAYAAA8AFwAfACcALwA3AAAAIAQWEhACBgQgJCYCEBI2JCAHFzYyFzcBNyY0NycGEAAgNycGIicHEiA2ECYgBhAFFzYQJwcWFALKAWwBTPCOjvD+tP6U/rTwjo7wAsD+hKvCUqpSwvvxwhwcwloCQgF8q8JSqlLCygE+4eH+wuEDZMJaWsIcBgCO8P60/pT+tPCOjvABTAFsAUzwDlrCHBzC+/HCUqpSwqv+hP2+WsIcHMIBJuEBPuHh/sIIwqsBfKvCUqoAAQAA/wAHAAX3ACEAAAEUAgYEICQmAjU0EiQ3EQYAFRQeAiA+AjU0ACcRFgQSBwCO8P60/pT+tPCOygFf193+3War7QEE7atm/t3d1wFfygKAtv608I6O8AFMtt4Bgfkf/vwt/qDmgu2rZmar7YLmAWAtAQQf+f5/AAAAAAEAE/8ABu4GAABjAAATNhI3MjEUBw4EHgEXHgE+AT8BPgEuAS8BLgMvATceAR8BNiYvATcXDgEPAT4BPwEXDgEPAQ4BFhceAT4BPwE+Ai4ELwEmMxYxHggXEgIEIyIkJgITCNjFBQEIKEA4IQVJSDJoTT4QECccDxsNDgopLSoODWgnThQTAScVFKGgIScDBBZPHBxnLFITEx8iFC8hWVFHFhU8SRgEICoxKQ4NDgcKKC1PMUQrMBwTAQPe/m7/uf6064UCltkBeoEBAggzZneYlaZHMicQHxEQM4NyZB4dGTEhGgYGcxFGGhswbyAft7UucSIhJUcREXMOSB0dOJu5QC0fFCEREDV8d3xwZ1M9ERENAx0iQjJQSmZogkf+/f5k5pT4AVIACQAA/wAHAAYAAAwAGwAoAFAAXQBsAHkAiQCZAAAFFSYkJzcWFzcWFwcWAQcWFwcmEDcXBgcXBhUUARcGBAc1NjcnNjcXNgMHFhQHFwYHJwYHFwYiJzcmJwcmJzcmNDcnNjcXNjcnNjIXBxYXNxYBFQYHFwYHJwYHJzYkABAHJzY3JzY1NCc3Jic3JwcmJwcmJzcmJzUWBAAQAiYkIAQGAhASFgQgJDYSEAIGBCAkJgIQEjYkIAQWA2rQ/p5qOh0sQZTcEUH94lMWGzliYjkeE1IjBQg6av6e0DhBEdyUQSx66Q4O6B9DuTlaMDRcNDBaOblDH+gODukhQrk7WDAsbCwwWDu5Qv4qQTgR3JRBJiM5agFgBBBiORsWUyQjUhMeORY5IyZBlNwROEHRAWABDYfk/sT+pv7E5IeH5AE8AVoBPOSzjvD+tP6U/rTwjo7wAUwBbAFM8GZCBs+sIjEyOagsVgwCERw8NCG0AZq0ITg4HGRwbf7oIqzPBkIBDFYsqDkyAltQKlYqUFxNokMS8QoK8RJDok1cUCpWKlBdTKJEEvAKCvASRKJMAiZCAgtWKqk4KjghrM/9q/5mtCE0PBxnbXBkHDg4ISYhOCo4qSpWCwJCBs/9AAFaATzkh4fk/sT+pv7E5IeH5AKf/pT+tPCOjvABTAFsAUzwjo7wAAAHAAD/gAYABYAABwAQADkARQBpAHMAgwAAJRQjIjU0MzIDFCMiNTQzMhY3NQYjJiMiBhUUFhcVBhUUFxUGFRQeAjMyNTQmJy4BNTQ3PgE1NCc2EzMmNRE0NyMWFREUBTUGIyI9ATMyFjM1IzQ3IxYdASMVNjMyFjMVIxUUHgMzMgE0JiIGFRQWMjYlERQGIyEiJjURNDYzITIWAkZda2JmJEpNTSQmpk45MjxWdjssJilxKERMK+BgThsxMU1aCiVHiQICiQMB+h4mNTQJIwlpA4wEPCQBAxAEAgUSHzgmQP7IMEgxMkYxAmSpd/xAd6mpdwPAd6nkQj9AAZVVVFozJX0dHXJWMmgPAxFENRgDJWYtQyMQvENADgUfGCwID25PGBwJ/mEbNwGDLhcXMP54Mgl5FVLhAnVSFBgfL3UDAQLZJTY7JhgC2iQ3NiUkNTZT/EB3qal3A8B3qakAAAAABgBE/wAGvAYAAAcAEAA8AEgAbAB3AAAlNCMiFRQzMgM0JiMiFRQzMgEVBgcWFRQGBw4BFRQeBRUQISIuAjU0NzUmNTQ3NS4BNTQ2MzIXMgEjNjURNCczBhURFCUVBiMiLgM1ETM1IiYjIgc1MzU0JzMGFTMVIiYrAREUMzIAFAYjIiY1NDYzMgJTpZ6slzs8O3x8dwENJCsQknwoJy1HVlZHLf6VRXpuQbZDP0hfvoxgUmIBtt4EBN4EAl1HZz5aMh0IAgcYBhUmYAbjBqsPOQ5VVz398E45OlBPOzoWZGhlA1w9UpGHAc3KDAorKX+zFwgmJx8pFxUeLVM5/tAZOWtKpTwEKVVtHAQYqVGLuS/8vi1ZAmFeIiFb/ZtZscQnKDxgWDsBXwQCBr5MNiMpfL4E/pODBA50V1c6O1gAAAACAAD/gAYABYAAEgAiAAAJASMOAwcjLgQnIwERMwERFAYjISImNRE0NjMhMhYDOQFXlhVVM0QaAxUvOSRIDZYBQ4YCx6l3/EB3qal3A8B3qQIjAkwnn2KLOzBicUeKGv2z/k0D8fxAd6mpdwPAd6mpAAAAAAIAOf8ABMcGAAAdAEkAAAAUBiMiJwYHAhMWBgcjIiYnJj4DNzY3JjU0NjIEEAIEIyInLgE3PgEXFjMyPgI0LgIiDgIVFBcWDgEmJyY1ND4CMzIEA0pyTzwzPjX3LQEbFQUUHgIOFSZGRCg9RxBxoAHunP7znkBDFRcFBSQVMzlhsoBMTICywrKATDQKDSYpCkBdnNh2ngENBBSgcSNDT/6N/hgWIQIbFH7zv7WCPFpLIypQcS7+xP70nA4FJRUUFwQNTICywrKATEyAsmFyaBQoFA4Te4532JxcnAABABL/AAbuBgAAaQAAASY1NDY3JjY3NBI3NjMyFx4GHwEWFRQGFRQeARUeARUUBiMiLgQnJiMHBgceAhcOAQcGIyIuAScmJy4BJw4BIyIuAzU0Njc+ATcyNzY1Jy4BLwEiBw4BByMiJicmNRABDggWDQERDrl9i7mFhTFSPDIiHxQMATcSAwRNVyckCRURFQsQAQECBTtJFFM3CAIEBUDuNXNRQA8IDkAIKa1SI0R2VEEUHws7FAQKAgIweA0FBAgSSSkBBAQDFwLaEyEUOhAWPgyLASs8QjcVNjpORmNQOgVTQw40DAEFBQFyyWwrcg8UIBUfAgEEmkUUJS4qBBgGYRIWEwUCBAEBLSgDDxo2JSgnHQIWAQICAgMLvT4DFClDBAkBNi4BEwAAAAAGAAD/PggABcIACgAWACEALQBJAFsAAAA0JiMiBhUUFjMyATQmIyIGFRQWMzI2AjQmIyIGFRQWMzIBNCYjIgYVFBYzMjYBJiMiBAIVFBcGIyIuAycHNyQRNBIkMzIEFgEUBgcXJwYjIiQmEDYkMzIEFgJEMikrQkIrKQMZMygbLS0bKDPsMSkrQkIrKQKsNCcbLS0bJzT+9h8nqf7koxcjIRowPhtSCf1I/t7DAU3FsAE50wJviXU3x5ZEqf7ko6MBHKmhARyrBApSMjMoJzP+XxwsLRscLSwB71IyMygnM/5fHCwtGxwtLAGqBJr++ZxOSgMDCgQRAn/aywEfqQEco4Tp/T911Ve1bSWN8gEe8o2N8wABAAD/AAb/BgAAHgAAARYHAQYHBiMiJyUDBiMiJy4BNREJASUmJyY3ATYzMgbkIQb/AAUbDhELDf478hIfDQkTFwNg+9P+dSUDAiIGgA8RFAX1GCj6AB0QCAW5/tkXBAchFAFdBCP8Y6IOKSgTA8AJAAAAAAIAAP8ABv8F9wAaACAAAAEWBwEGBwYjIiclAQYjIicuATURJSYnJjcBNgETAQUJAQbkIQb/AAUbDhELDf3x/tYSHQ4JExb+KCUDAyMGgCP+y936ZgFQA1/+IgX1GCj6AB0QCAXX/rkVBAchFAHEwQ4pJxQDwBX6DgUr/MWJAn/84wAAAAIAAP+ABgAFgAA0AEkAAAAQAgYEIyIkJyY2PwE2MxYXHgEzMj4CNC4CIyIGBxcWBwYjISImNRE0NzYfATYkMzIEFgURFAYjISImPQE0NjsBETQ2OwEyFgYAes7+5Jys/sptBwEIiQoPEAdJ1HdovYpRUYq9aGK0RokfEREq/kAaJignHoJrAROTnAEczv36Eg7+wA4SEg7gEg5ADhIDHP7I/uTOepGEChkIigkCCl9oUYq90L2KUUdCih4nKCYaAcAqEREfgWVves6Y/kAOEhIOQA4SAWAOEhIAAAACAAD/gAYABYAADwAbAAAAIA4CEB4CID4CEC4BABACBCAkAhASJCAEA4L+/O2rZmar7QEE7atmZqsBkc7+n/5e/p/OzgFhAaIBYQUAZqvt/vztq2Zmq+0BBO2r/rf+Xv6fzs4BYQGiAWHOzgABAD7/gAbCBYAAhQAABSImIyIGIyImNTQ+Ajc2NQM0JyYjISIHBhUDFBceAxUUBiMiJiMiBiMiJjU0PgI3NjUnETQ2LgQnLgEiJjU0NjMyFjMyNjMyFhUUDgIHBhUTFBcWMyEyNzY1EzQnLgI1NDYzMhYzMjYzMhYVFA4CBwYVExQXHgMVFAYGkiyxLSywLBgaIiw6ECEBAQ0l/V0mDQEBJRBAMigZGC+5LiuqKhcZHyk2DyEBAQECBQgOCQ88LiQYGC65LiqpKhkZIis4DyMBAQ0aArsZDQEBIxJRMxkZLLAsK6wrGRkjLToPIwEiEDwvJBiABwcpGR8eBAoKFXcBhxUKBAQKFf6NjhYKBgEdHxosBwcqGB4eBQoKF3g5Ay0DLhsyIicYBgoEHB8aLAcHLBoeGwIGChWL/sAVCwMDCxUBQIsVCwMXJhosBwcsGh4cAQUKF4r8UXcVCgcCHR4aLAAAAAEAGP+ABP4FgAAsAAABFRQGIyIHBgcGFREUBisBIiY1ESMRFAYrASImNREmJyYnJjU0NzY3NikBMhYE/iUYMgQaBgMkGWwZJI8jGmwaI5NifkJAWFh5bwEyAd8ZJAVDSR1AAQYZCzX7gBkkJBkEwvs+GSQkGQHwDC86eXWOpnh2KSUkAAkAAP+ABgAFAAADABMAFwAbAB8ALwA/AEMARwAAJRUhNSUyFhURFAYjISImNRE0NjMBFSE1ExUjNQEVITUDMhYVERQGIyEiJjURNDYzATIWFREUBiMhIiY1ETQ2MwUVIzUTFSE1AWD+oALAGiYmGv8AGiYmGgGg/KDg4AYA/SDgGiYmGv8AGiYmGgOAGiYmGv8AGiYmGgJA4OD8oICAgIAmGv8AGiYmGgEAGiYBgICAAgCAgPwAgIAEgCYa/wAaJiYaAQAaJv4AJhr/ABomJhoBABomgICAAgCAgAABAAD/gAYABYAAJQAAATIWEAYgJjU0NyUGIyImEDYzMhclJjU0NiAWEAYjIicFFhQHBTYEwIW7u/72uwL+mFx+hbu7hX5cAWgCuwEKu7uFflz+mAICAWhcAgC7/va7u4UMFrRWuwEKu1a0FgyFu7v+9rtWtBYYFrRWAAAAAgAA/4AGAAWAACUANQAAJDQmIyIHJzY0JzcWMzI2NCYiBhUUFwcmIyIGFBYzMjcXBhUUFjIBERQGIyEiJjURNDYzITIWBQB9WFQ98QIC8T1UWH19sH4C8T5TWH19WFM+8QJ+sAF9qXf8QHepqXcDwHep/bB+OngQDhB4On6wfX1YBxB4OX2wfTl4EAdYfQPg/EB3qal3A8B3qakABwAA/wAHAAYAABEALwA+AEwAWABkAHMAAAAuAQcOAQcGFhcWMzI3PgE3NgEXBxcWFA8BFhUUAgYEICQmAhASNiQzMhc3NjIfARMGIyIvASY0NzYyHwEWFBcGIi8BJjQ3NjIfARYUNhQGKwEiJjQ2OwEyJxUUBiImPQE0NjIWFwcGIyInJjQ/ATYyFxYUAkUUMBlspiwKFBkNCyoSIoFUGQO4LvREExNAWW+9/vv+4v77vW9vvQEFj7ahQBM1E0T7CgwNClsJCQoaCloK3AsYC1oKCgkbCVsJIBIOYA4SEg5gDq4SHBISHBKXWwoMDQoKCloKGgoJA5oyFAospmwZMAoFKFSBIgsBrS7zRBM1E0Chto/++71vb70BBQEeAQW9b1lAExNEASwKCloKGgoJCVsJG+8JCVsJGwkKCloKGrscEhIcEqBgDhISDmAOEhJFWgoKCRsJWwkJChoAAwAA/wAHAAYAAAQAFAA1AAABJQUDIQIgBBYSEAIGBCAkJgIQEjYBNj0BBycTFyYnFwUlNwYHNxMHJxUUFzcFEwcWMjcnEyUCYQEfAR9t/p0FAWwBTPCOjvD+tP6U/rTwjo7wBG2VZvA/hpbvNf7h/uE175aHPvBmlR4BRot0dfZ1dIsBRgLQ0ND+sASAjvD+tP6U/rTwjo7wAUwBbAFM8PtIy/sDWeABQwzOTHyfn3xMzgz+veBZA/vLhCj+1kUnJ0UBKigAAAAMAAAAAAcABYAADwAfAC8APwBJAFkAaQB5AIkAogCyALwAACUVFAYrASImPQE0NjsBMhYDFRQGKwEiJj0BNDY7ATIWARUUBisBIiY9ATQ2OwEyFgMVFAYrASImPQE0NjsBMhYlIiY9ASEVFAYjARUUBisBIiY9ATQ2OwEyFgMVFAYrASImPQE0NjsBMhYBFRQGKwEiJj0BNDY7ATIWAxUUBisBIiY9ATQ2OwEyFgEVITU0BQQdASE1ND4EJCAEHgQRFRQGKwEiJj0BNDY7ATIWERUUBiMhIiY9AQHAEg7ADhISDsAOEsASDsAOEhIOwA4SAkASDsAOEhIOwA4SwBIOwA4SEg7ADhL9whwmAgImGwL/Eg7ADhISDsAOEsASDsAOEhIOwA4SAkASDsAOEhIOwA4SwBIOwA4SEg7ADhIBgP3+/oL+gv3+ETNQjbMBDQE+AQy0jVAzERIOwA4SEg7ADhImG/6AGybgwA4SEg7ADhISAXLADhISDsAOEhL+csAOEhIOwA4SEgFywA4SEg7ADhISkiYbgYEbJv3gwA4SEg7ADhISAXLADhISDsAOEhL+csAOEhIOwA4SEgFywA4SEg7ADhISAYoNCmgCAWUKDRE0TEtNOiUlOk1LTDT+V8AOEhIOwA4SEgFUgRsmJhuBAAAAAAUAAP8ABwAGAAAQABQAJQAvADkAAAERFAYjERQGIyEiJjUREzYzIREhEQERFAYjISImNREiJjURITIXARUhNTQ2MyEyFgUVITU0NjMhMhYCwCYaJhr+ABom+QcYAuj/AAQAJhr+ABomGiYBqBgH/Nn+oBIOASAOEgKg/qASDgEgDhIEwP0AGib9wBomJhoCAANpF/1AAsD8gP4AGiYmGgJAJhoDABcBN+DgDhISDuDgDhISAAEAAP8ABwAGAAAcAAAAFhQHARcHBgQnASM1ASYSPwEXATYyFhQHARcBNga2SiX+b5ago/47uf6WtQFqfC+joJYBkCZqSiX+cOoBkSYEYEpqJv5wlqCjL3z+lrUBarkBxaOglgGRJUprJf5v6gGQJQAEABn/DAbnBgAACQAVADoAZwAAARQGIiY1NDYyFgUUBiMiJjU0NjMyFhMRNCYjISIGFREeBTI2MzYXFhcWFzYXMh4CPgU3BgcSBwYHBicmNwM1LgEnAxYHBicmJyYTJicmNhceARcRNDYzITIWFRE3NhYDaX+yf3+yfwH2flpZf39ZWn7hQE/7qFM7K1tHWzNZHFUCRBsGBBojB28FPxdEJkczST1Kxnn7VGtCdWhOVgQBCCEHAQRXT2h1QWlT+3kZKicDEANeQwTpQ14VJyoDHFN3d1NUdnZUU3d3U1R2dv74AptXSURc/V8XIhYPBwEEARwGAxkaWwQDAQEDBgsQFx8YlWf+47RxIyAvM3EBRgECCAH+rnIyLyAkcrQBG2eVJTQbAgoDArZIZmZI/UoPGzQAAAQAZP+ABpwGAAADAAcADwAZAAABESMRIREjERM3ESERIRU3AREBIQcjNSEREwOAkQIfkZH9+1YBRtkDHP5O/rrZ2f5ybQRO/k4Bsv5OAbL9CP4DG/vn2dkEqvwL/k7Z2QSGASEAAAAABQBZ/wEFqgX9ABYAKwA/AE4AZQAAJRUCBwYHBiYnJicmNz4BNzI3PgEXHgEnBg8BBCMmJyYnJj4BFzIXFh8BHgEBDgEHBicmAycmNjc2FxYXHgEXFgEWBwYnASY3NiQXFhcWEgUWBwYFBgc3BiYnJjc2Nz4BNzYXHgEXAwUBBQwnNv8jDQQBBQQ8lwE7DzEZGBuWAzF4/u0RIxMMBQgSKiMNvUYtVBcZAzkHqTMlGg6qLw4FESMwAXbLTggc/VoFOzo4/oYIGykBTTooCQMmApsDHQ/+xkMYARcuDh4eAUp9MgkcJTCWBtl//twNIAgJXioPFQwOCkqzRhMLCQom5DcPJ1gCIhkyTLVEAk0dEiIJK/68NtYUDhUKARVNFTIVKxEBJ0IbBxYCUWYUEVgCViMbK10PCiMS/cHIJxQKTA8IAgYUFi8oAWWrQgYTERfdOQAAAAoAAAAACAAFgAADAAcACwAPABMAFwAbACMALAA4AAABIREhExUhNQERIREBFSE1ARUhNQEVITUBFSE1AREjERQWMjYlESERFAchMjYTERQGIyEiJjURITUEAP6AAYCA/YACgP2ABQD+AAIA/gACAP4AAgD+APwAgCY0JgaA+gALBcsaJoBwUPmAUHABAAQA/oD/AICAAwD9gAKA/QCAgAEAgIABAICAAQCAgPxAA8D8QBomJhoEQPvAIR8mBNr7QFBwcFAEQIAABAAqAA0H1gWAAAkAHwA5AFEAACQiJjU0NjIWFRQ3Ii4BIg4BIyImNTQ3PgEyFhcWFRQGASInLgEjIg4DIyImNTQ3NiQgBBcWFRQGEyInJiQgBAcGIyImNTQ3NiQgBBcWFRQGBBQokn1SfWgCTH+Cf0sDEpcKTuzm7E4KlwD/CwyI6JhVq39kOgIRlgqEAXgBgAF4hAqW/gsLs/5//jj+f7MLCxGXCrsCBAIaAgS7CpcNkxQgLCwgFHwyMjIylhINCk1YWE0KDRKWARAIaWMsPj4slhIMCoSSkoQKDBKWAQ8JnZ+fnQmWEg0KuszMugoNEpYAAA0AAP8ABoAGAAAHAA8AFwAfACcALwA3AD8ASwBTAGMAawB7AAAENCYiBhQWMiQ0JiIGFBYyADQmIgYUFjIANCYiBhQWMgA0JiIGFBYyADQmIgYUFjIANCYiBhQWMgA0JiIGFBYyARE0JiIGFREUFjI2ADQmIgYUFjIBETQmIyEiBhURFBYzITI2EDQmIgYUFjITERQGIyEiJjURNDYzITIWAYBLaktLagHLS2pLS2r+y0tqS0tqA0tLaktLav7LS2pLS2r+y0tqS0tqA0tLaktLav7LS2pLS2oDS0xoTExoTP6AS2pLS2oByyYa+wAaJiYaBQAaJktqS0tqy0w0+oA0TEw0BYA0TDVqS0tqS0tqS0tqSwHLaktLakv+y2pLS2pLActqS0tqSwHLaktLakv+y2pLS2pLActqS0tqS/2AAYA0TEw0/oA0TEwC/2pLS2pLAcABABomJhr/ABomJv6laktLaksDAPoANExMNAYANExMAAMATP+ABrQGAAARADMAUgAAATQrASIGBwMGFRQWOwEyPgIFEAcGISMiBgcDDgErASImNTQ3MzI2NxM+ATsBIAARNCcWBxAHBiEjIgYHAw4BKwEiJjU0NwE+ATMhMh4FBFjtRiA3Bz8CIhg1RXdqPQJc3Nv+dz0gNgdJCEEl1R8sDZciPAhJCDsiPQGGAbIzt7fd2v52PCA3B0kIQCXWHysCASwIQSUBvERyf2RdPiUEQp8rH/7sBQsYHxo4a0/+96OhKx/+xCQzKB8KNy8hATwhMAFAAQWBTlw6/vikoSwf/sUkMycgCAwFFSQzCBYmP1V6AAAEAHf/gAaNBgAAEQAuADwAXAAAAR4CBgcuBCcuAT4BFxYlHgQOAQcGIyInLgE3PgEuAicmNjc2MzIWAQYHJic2JyYnFhcWFxYTHgMSCgEHDgEjIicuATc2EjYuAycmNjc2MzIWAloTGAomKxVcY2M6BD4nRIY+igGpCxM2HxQUS0QzVzYsORgoPCoQMB4HHy0/IikvUwFXETcRLhkeG0NyYgkGGv0JHTorGQ9PSRZYMycjQzMeOkALEiMqFwQiLUElLDFVA7U9fZ6gQVGYZk8kASKEfCciU8EZKp+O2cLhYEgfKIo6VdyztkoPP4UfETL9N6CXg3Ouu7KkWnklK7MCwRFBqrr+8/7z/rWeMDcQH4pDfgEH2NOWfzUGQY0iFDMAAAAABwAA/4AJAAWAAAgADwAYABwAPgBJAFkAAAEjNj8BPgE3FwUDJiMhBwQlAycuAScTMwEDMxMjBSYjIgYHBhceARUUBiMiLwEHFjMWNjc0Jy4BNTQ2MzYfASUjIgcDMzczFhczExEUBiMhIiY1ETQ2MyEyFge3ig40AwQMAwz6gjoLQP70AgE3AQ+iERp2SIevAQUlpmimAphFUHucAQGSMCY8J1ZGFhdKb4KdAowxLDEuRjYPAcCAQRb2riPUBQ+agEw0+AA0TEw0CAA0TAIiJY4JCiAKN3gBJzYNT1z+SllGdx3+AgKB/X4CghAbdl5mSBckFR4gIQuQIgF4ZGpEGSIVFiEBGQibNv20YBZKA8L7ADRMTDQFADRMTAAQAAD/gAkABYAABwASABoAJAAxAE8AbACCAJUAowC5ANUA5ADzAR0BLQAAASMiFRQzMjYlMzU2LgQjIgUjIhUUMzI2JTQjIgYVFDMyNiUzAyM3ByMnByMTMxclFAcGByM3BiMiJjU0NjMyFzQ+ATU0IyIHNDc2MzIXByYjIhUUFhcWFRQnIic0NxYzMjU0JicmNTQzMhczByMOAhUUMzI3BwYjIic0NzY3MxcUByMGFjMyNwcGIyI1NDYzMhY3BgcmBgcjNzY3Mwc+ATcHJiMiBhUUFjMyNwcGIyImNTQ2MzIXFAcGByM3BiMiJjU0NjMyFzY1NCMiBzQ3NjMyFwYHJgYHIzc2NzMUBz4BNzMDIzcGIyImNTQ2MzIXFhAuASMiBxYXIyYnBgcjNjcmIyIOARAeATMyNyYnMxYXNjczBgcWMzI2AREUBiMhIiY1ETQ2MyEyFgKfDS8UERYBjD4BAQEDBgkHHAIUDDAUERYBQB4TGBwUGfpbVyw4IEcnBCI1LFECATQEEAEvARQmFx00Lw4JAQEkHR4HJh1KnAgWExsJEShXIhgHHRYgCRErVB5sHAcdAgkFEwgICBUTKwIIAxY3xQdvAxoZHhwJHhtfNyojKYsNCRYSEDgDFgczAw4XzAkcFh8oGxkVGwocFi01RzgaxQQNBC4BFCcXHDMvDwgCJB0eCCYdSY0OBxcRETgDEwo0BA8XnTgrNQMXHR8lNyUfFnuR+5S1k38sMixyciwyLH+TtZT7kZH7lLWTeC0yLmpqLjIteJO1lPsBhEw0+AA0TEw0CAA0TAJbIBYePAMEBQkHBgRKIBYeMikoHyoorf76ycnIyAEGozgGJGUMFhogGicrAQMFBAEUCgQsCwQxAxEICAcTKUgBBgIvCBMHCQgUJ0gENBEvHgMQAi8HLwwsFH5pFx0WFg42CF83RyonFycCNGYOgkUhFRElOQ43Kx4iDTsIPTRGWXESGE8iFhogGicrAQcGFAoELAsDGCYCMmgOaF8LFhURLP76ExcwKDVOHcoBKPqSbnSolmdnlqh0bpL6/tj6km5vmYpfX4qZb26SBA77ADRMTDQFADRMTAAADAAA/4AJAAWAAAoAEQAbAB8AQgBXAGIAagBxAH0AigCaAAABFAcGKwE1MzIXFiUUKwE1MzIFNCYrAREzMjc2FzMRIwU0JicuATU0NjMyFzcmIyIGFRQWFxYXFhUUBiMiJwcWMzI2BTUGIyImNTQ2MzIXNSYjIgYUFjMyAREOAQwCBSEyNgA0JiIGFBYyJRMjBycjEzczNSM1MzUjNTM1IwEzJzY1NCYrAREzNTMBERQGIyEiJjURNDYzITIWATkkHTwRET0cJAbwQBMUP/lTZE9fX0otPB5BQQFAKTcdFRsVHRgiKTksPCQuJQgTHBYwFyosRzNAARYlKTE/Py4rJigoSmdmSioE90Gf/sT+qf4U/v4GIRom/K1qlmpqlgECkEdaWUeO0Lh3c3N3uAGHUGlMPjhhQQkBIU03+Ag3TU03B/g3TQL3MyEa3BsfDTRlckpd/rMmM1kBTegoLBQKEg4QFRssJTcoIykQDQYMFhQbLChAPSlNJUEyMEMmTRRlkmX9twIPKFiSgYwwJgLElmpqlmoIAVbg4P6qCThaOEo5/rOMEE4vNP6zhQIk+ww4Tk44BPQ4Tk4AAAAAEgAA/4AJAAWAAAIACwAOABUAHAAjACYAOgBPAFsAzgDiAPkBBQEJASQBPwFiAAATMycBNycjFTMVIxUlFzUXNCsBFTMyJTQrARUzMgE0KwEVMzIFMyclESM1ByMnFSMnIwcjEzMTETMXNwEUDgQiJiMVIycHIREhFzczMiUVIxEzFSMVMxUjFQEVFAYjISImNREzNzMXMzUXMzcVITU3Mh0BITUeAjYzNzMXMzUXMxEjFScjFScjIgc1IxUmIyEHJyMVJyMHETQ2MyEyFhURIyIHNSMiBzUhFSYrARUmKwEHJyERITcXMzUzMjcVMzUzMhYdASEyNxUzMiUUBgceAR0BIzU0JisBFSMRMzIWARQGBx4BHQEjNDYuAysBFSMRFzIWARUjETMVIxUzFSMVAREjEQEUKwE1MzI1NCYiLgE1NDY7ARUjIhUUFjYeATcVBisBNTMyNTQmBi4CNTQ2OwEVIyIVFB4BAxEjJxUjJyMHIyI1NDsBFSImDgQVFBY7ATczExEzFzV3WS0CQUpGo46OAT1jvShUUykBISpSUSv+6ipSUSsBy1ks/BZCXjlehBmHGUZ0YG5qVU0CmAsRHBgnGCkJflBT/wABBFBSz23+3dnZmJSUBdRNN/gIN01vGTcZ2hNxFAIdCgoBFxdAKVUJGTgZ4yK2tBm5F/lFKKwYMf2MKyvGFqlOTTcH+DdNeDMesTcX/sQfONEXROo2Mv6jAVc3NNMVOx+uCAgEAhE5H6g8/S0YFhkSQRgiRUGaMDr+6xkVGhFBAQEFDBcSRkCZMToCEdjYl5SU/u1CAvdmfn4iIjEyIjQognckIzExI+8YQH19IRklKyUZNSiBdiQ6T5RceoQahhlLgYU/ByoPHwwRBhskHVxhbWNyA1Zs/YZPTzE3Nk5u2TwhRSgdPQHyHTwmbC/+8dTU1NQ8PAEP/v8BAbi4/dQUHhQNBwIBW1paAQ9ZWfw4AQ85MTc2/dHlN09PNwKmPT0uLi8vYwEOVhcMDAECPT06OgF6LCwsLBYWFhZhYSwsswGHN09PN/1aFhYWFhYWFhY6Ov6GOztZDWZjBAhXGBj7FygJCSIdNi0hFWMBDx4BqBgoCQkhHjUJIw8WCgdiAQ8BHf10OAEPODE3NgKp/vEBD/10VjoZEAoHJiQnKjkZEAkBBiUOZSM6GQ0MAQULJR4nKjkZFAQGAkL+8svLPDyFijsCAQMKER0TJijV/wABALy8AAAAAAsAAP+ACQAFgAAMABMAIAAnAEEAegCiAMIA8gEGARYAAAEjIjU0Nz4BMzIVFAYFIjU0MxcGJSMiNTQ3PgEzMhUUBgUiNTQzFwYBIyIOAQcGAhUUFjsBMj4BMzI+AjU0LgIFIgciDgcHBhQzMjY3NjMyFRQHDgIHDgMVFBYzMj4BNwYVFBY7AT4EPwE2NTQFIyIHDgIHJzQnLgYqASMiFRceARcWFRQGFRQzMjcTNjU0NyMiBwYCFRQzOgM+BD8BPgEzMj4CNTQuAgUiBwYHBgcGFRQzMjc2MzIVFAcGBw4DFBYzMj4BNwYVFB4DMjsBMj8BNjU0NyMiBw4BBxUUFzsBMjY3EyM3NCYTERQGIyEiJjURNDYzITIWAUIPExMFFBJNPQEqL3sDBQK8DxMTBRMTTT0BKi97AwX6N4AIDQQFA1QLCD4ZDw8ZL1FQLx01NgE3JiQCDQUKBQgFBQQCCQkFIQMeHEoKCBQXBiY1PB80JhgrFxsDCwc4AQwDBwMBLQQBf0oWEQUxLAQFGwEFBwYLBg0FDwEmAQUoBQI9KD0P9QrqgRILBlErAQ0FDQYLBgcEARUCEQsvUVAvHTU2ATcaMCYKBwQICAEoHhxKCgQ1JjU8HzQmGCoaGQMECQcOBQcIKgYtA7E3GQgKNRAQATkKEQJTAQELi0w0+AA0TEw0CAA0TAKxEhw5DwkxKSWhHT4DWJ8THDkPCDEpJaAePgNZAW8IBwkH/pIJBwtFRQ8iRzEkMhcIYAYCAQICBAQGCAUdFAoBCCQLAwICAQEEDBszJSYrDQ0RBwgICwEFAgUGBcINEVEFFwdYSwEETVkFBwYEAgEBFQU1xC0QCBNVEA0ZAZ8UBgljFw3+mwwUAgIEBQcFWwoODiNGMSQyFwheBgYKCAsYDwoMCCQMAgEGBAwbM0orDA4RDwEFBwQDARnCDxBRWygs9kMFEAINCgF2BQcLAYf7ADRMTDQFADRMTAAKAAD/gAkABYAACgAPADIASABXAFsAbAB0AIsAmwAAARQHBiMiJzU2MzIFIzYzMgU0JicuATU0MzIXNyYjIgcGFRQWFx4BFRQjIiYnBxYzMjc2ATcjNQ8DMxUUFxYzMjc1BiMiPQEFNSYjIgYHJyMRMxE2MzITMxEjBTQnJiMiBycjETc1FjMyNzYANCYiBhQWMgE0JyYjIgYVFBcWMzI3JwYjIicmJzM2ExEUBiMhIiY1ETQ2MyEyFgY9FRMhFxIdHDkBtm4GMjP57EJEJCAmOkISQ1JNLjBBQycfMB1SHxJIYFEwMwEnE2CBEi4RPiwmSSAvIAwqAYkPDSAvCgqDlho4EC+WlgJuLShHQDUIhJYkIFMzPf4sLkIuLkIDsDAyXmBvPzdqZTsQOUcrFBcF+AKATDT4ADRMTDQIADRMAnlFJSMJ4B5WYuk7QRkNFg4aIXAgJidGOkEYDhcQHxkScSklKQEjb4cVcghn21QkHgt2BzLFGYsDIB44/ikBMh/+rwHX3no5NDgv/XsZlws4QQHEQi4uQi/+63E/QIRygDw3KGcfExMvDgKx+wA0TEw0BQA0TEwAAAMADv8AB/IGAAALABcAPwAAARIXFAYjIRQGIiYnBTI0IyImNTQiFRQWARYGBwEGJi8BJjY/ASY1PgQ1NBI3JjU0NjIWFRQHHgEXATYWFwYWPe1MNP5AltSVAQEAEBA7VSBnBDMIAQr4sAobCFQIAQq6EzJSWD0n6r4IOFA4CHy+NQGiChsIAqz+nMg0TGqWlWqvIFU7EBBJZwZAChsJ+aoIAgpgChsIoSAiKlyTqvKLmAEFHBMUKDg4KBQTEoFdAWsIAgoAAAAABAAO/wAH8gYAAAsAFgAmAE4AAAQ0IyImNTQiFRQWMwkBLgEjIg4CFRABFAYjIRQGIiYnNyEmAzcSARcWBgcBBiYvASY2PwEmNT4ENTQSNyY1NDYyFhUUBx4BFwE2FgQQEDtVIGdJ/fcDbSq1hV2ZWjAEwEw0/kCW1JUBlQL1pj1vPQFDVAgBCviwChsIVAgBCroTMlJYPSfqvgg4UDgIfL41AaIKG7AgVTsQEElnAesC+Fh1P2JsM/6A/kA0TGqWlWqBuwEQYf6cBKhgChsJ+aoIAgpgChsIoSAiKlyTqvKLmAEFHBMUKDg4KBQTEoFdAWsIAgAAAAAFAAD/gAWABYAADwAfAC8ANwBbAAAlETQmKwEiBhURFBY7ATI2JRE0JisBIgYVERQWOwEyNiURNCYrASIGFREUFjsBMjYBIScmJyEGBwUVFAYrAREUBiMhIiY1ESMiJj0BNDYzITc+ATMhMhYfASEyFgIAEg5ADhISDkAOEgEAEg5ADhISDkAOEgEAEg5ADhISDkAOEv3gAcAwBwr+wwoHA28SDmBeQvzAQl5gDhISDgE1Rg9OKAFAKE4PRgE1DhKgAsAOEhIO/UAOEhIOAsAOEhIO/UAOEhIOAsAOEhIO/UAOEhID7nUJAgIJlUAOEvxMU3l1UwO4Eg5ADhKnJTQ0JacSAAMAAP+ABgAFgAAsADwASAAAARUUDgIjIgA1NAAzMh4DHQEUKwEiPQE0JiMiBhUUFjMyNj0BNDY7ATIWAiAOAhAeAiA+AhAuAQAQAgQgJAIQEiQgBAR+SXN5Oc3+7QEQyyJTZ1I4EHYQg0iMsbeORIwJBncGCvz+/O2rZmar7QEE7atmZqsBkc7+n/5e/p/OzgFhAaIBYQHObTJOKxYBFs/LARAJGylILW0QEEYrMbeSl8UwKkYHCQkDK2ar7f787atmZqvtAQTtq/63/l7+n87OAWEBogFhzs4AAAACAAD/gAYABYAADgBiAAABNCYjIg4CFRQWMzI+AQUUDgIHIgYjIicmJw4BIyImNTQSNjMyFhc/AT4BOwEyFxYHAwYVFBYzPgQ1EAAhIg4CEB4CMzI3NhYfARYHBgcOASMiJCYCEBI2JDMgAAPMa14/emI9a2FgoFUCNEp7jEsGEwdfLxwFNJ9eobGE4oVXiCYCCwEJBXYFCAUCeAUZIBw6WEIw/qT+3ILtq2Zmq+2C5LELGggpCAECCmb7hZz+5M56es4BHJwBWAGoAvlsej1spmFweoXHEW+sYjMCATUhMkJYv66dAQqbR0ATOAYMCwUL/ZoYGCcaAQknPXZOASQBXGar7f787atmkAkCCzEMDA0JU1p6zgEcATgBHM56/lgAAAAAAgAA/wAHAAYAACMAKAAAABYQDwEXFhQPAQYiLwEBBisBBScTNTQ3AScmND8BNjIfATc2CQEnARUGRLxe4WgKCtIKGgpp/aUlNcv/AECAJQJbaQoK0goaCmjfXfzFAkDA/cAGALz+913faAoaCtIKCmn9pSWAQAEAyzUlAltpChoK0goKaOFe+kACQMD9wMAAAgAA/wAG/gYAABAAKQAAATIWFRQHAAcGIyImNTQ3ATYBHgEfARYAIyIuAjUeAzMyNz4EBk9GaS3+tIVheX61XAJ+O/y6J4dTAQT+9dd7vnM6B0Q4Pg8pDhlBSmZoBgBdRj9Y/Yt7W7l/gFQCQzb79kxsFkfV/vRdosx2BTInIiVCXTskDwAAAAUAAP8ABwAGAAArAGwAfACMAJwAACURIREyPgE3PgEyFhceAjMyPgE3PgIzMhYXHgIyPgE3PgEzMhYXHgITFSImJy4CIyIOAQcOAiMiJicuAiMiDgEHDgIjIiYnLgIjIg4BBw4BIzU0NjsBESERIREhESERIREzMhYBFAYjIiY1ND4ENTIWBRQGIyImNTQ+BDUyFgUUBiMiJjU0PgQ1MhYHAPkALVAmHB4rRikgHSRQLi1QJB4VFycYIyseHCZQWlAmHB4rIyIrHhwmUC0jKSAdJFAtLlAkHRYWKBgjKx4dJFAuLVAkHhUXJxgjKx4cJlAtLlAkHR4rI3BQQAEAAQABAAEAAQBAUHD7AEg4NUsTHCIcEyZaAgBIODVLExwiHBMmWgIASDg1SxMcIhwTJlqA/oABgBwbGBsWFhsZGhwdGRkTEA4WGxgbHBwbGBsWFhsYGxwBQMAWGxkaHBwaGRMQDhYbGRocHRkZExAOFhsYGxwcGhkbFsBQcAHA/kABwP5AAcD+QHADEE1TSzUdLBggHzomlExNU0s1HSwYIB86JpRMTVNLNR0sGCAfOiaUAAIAAP+ACAAFgAAFAAsAACEVIREzEQkBIREJAQgA+ACABgABAPmAAcACQIAGAPqABAD8gAJAAkD9wAAAAAMAAP+ABsAGAAALABAAFgAACQEGBCMiJAIQEiQzEyEUAgcTIREyBBIDAAIiav7lndH+n87OAWHRuwMFeGyk/QDRAWHOAob93mx4zgFhAaIBYc79AJ3+5WoCogMAzv6fAAIAAP+ACAAFgAAFAB8AACEVIREzEQERFAYvAQEGIi8BAScBNjIfAQEnJjYzITIWCAD4AIAHACcQef2HChoK6f5gwAJJChoK6QHQeRARFQGzDhKABgD6gATg/k0VERB5/YcKCun+YMACSQoK6QHQeRAnEgAAAQAAAAAHAARXAGAAAAEUFx4DFwQVFAYjIi4GJy4DIyIOARUUFjMyNzY3FwYHFwYhIiYCNTQ+AjMyHgYXFjMyNjU0LgYnJjU0NhceARcjHgIXByYnNSYjIgYFDAoKHjQkJQFF05U7aU5MMjkeMQsgO1h4UmCuZtWdsVE4G1QPHQGD/v+T9YhXkcdpV5BnVzo7KjoaYIlRcyY/UldYSjgLA69vTlUwAQwWHgSBGhwXSjFGA0AGIx0pGw0KW/GSwSU2X1B/T4YcUWlYKG+yYKDvXz81mCIkAZieAQGSacqXXCY+YmSGc5I2yGFQKjwgHxctO2lGEBFupAQDFyoLGy0FYzEVARVCAAAAAgAA/4AGAAWAAFcAZwAAATQnLgInNC4BNTQ2MzIXIxYXNyYnLgEjIgYVFBceARceAx0BFgYjIicuBSMiDgEXFR4CMzI3NjcnDgEjIiY1NDYzMhYXHgczMjYTERQGIyEiJjURNDYzITIWBZjqIyQoCQQCMSQ2EQEUE10nCiFFM1B8AhBhZB0oMhsBUzthRhc5J0VPgFNltmoDBF2ubbpdFAs8KnJZc5ikaHB0LggjFikkNzhMKmuYaKl3/EB3qal3A8B3qQHkrUIKDSUcAg0LAiQvDw8kRzYKHRRzUAcQYFgdCA8cKRoFOkaQL5Vmd0gxcLhkAWy2cW4bGG1QSK51aahrdxVfOls5RCcbiwLl/EB3qal3A8B3qakAAAADAAAAAAgABQAADwAfADMAAAA0LgIiDgIUHgIyPgEkNC4CIyEWEhACByEyPgESEA4CIyEiLgIQPgIzITIeAQSAUYq90L2KUVGKvdC9igNRUYq9aP5+d4uLdwGCaL2K0War7YL9AILtq2Zmq+2CAwCC7asCGNC9ilFRir3QvYpRUYq90L2KUVr+9P7M/vRaUYoBp/787atmZqvtAQTtq2ZmqwAAAAIAAAAACAAFAAATACMAABgBPgIzITIeAhAOAiMhIi4BBDI+AjQuAiIOAhQeAWar7YIDAILtq2Zmq+2C/QCC7asEstC9ilFRir3QvYpRUYoB/gEE7atmZqvt/vztq2Zmq5FRir3QvYpRUYq90L2KAAAFAAAAAAkABQAADgASABgALABcAAABISImPwEmIyIGEBYzMjYnMyYnBQEhBxYXBBAmIyIHExYGBwYjIicDBhUUFiAAEAAgADU0NjcnAQYrAQ4BIyIAEAAzMhc3IyImNDYzIRUhJyMiJjQ2MyEyFwE2MzIC+v7GKCMYvEFIhLy8hHOwo7oSOQFxASD+IGNpFQUFvIQ8Pa4PChYPFSMSrl28AQgBPP75/o7++U9GQf6fEiHFF/youf75AQe5cmWJ4BomJhoBgAGzVd4aJiYaAQAhFAELW2W5AYBGIPsfvP74vJHvVT+UAYCEZ5XEAQi8GP78FzQOCx0BBF+ChLwB+f6O/vkBB7lhrT9i/isapNwBBwFyAQc3tyY0JoCAJjQmHP5wLAAABQAA/wAGAAYAAAcADwAfACsASwAAADQmIgYUFjIkNCYiBhQWMhMDLgEjISIGBwMGFjMhMjYCNCYjISIGFBYzITIBESMVFAYiJj0BIRUUBiImPQEjETQ3Ez4BJCAEFhcTFgGAS2pLS2oES0tqS0tqHUgFIxf8ahcjBUgFJh4EJh4m5xwU/YAUHBwUAoAUAayAS2pL/QBLakuAGWcJsQEbAVYBG7EJaRcBC2pLS2pLS2pLS2pLAgwBgBcdHRf+gB4uLgJuKBwcKBz9W/2lgDVLSzWAgDVLSzWAAltwbwHGTnY8PHZO/jpmAAMAAP+ICAAF+AALAC4AUgAAABQGIyEiJjQ2MyEyBTQnISImNTQ2MyEmJCMiBAIVFBchMhYVFAYjIRYEMzI+AgEUBisBFhUUAgYEIyIAJyMiJjU0NjsBJjU0EjYkMzIAFzMyFgW3MiT9QiQyMiQCviQBCBf8KiQyMiQDjFj+2q2x/tOvFwPWJDIyJPx0WAEnrYTyrmgBczIkgxGD3P7Pp/b+a2O9JDIyJIQRg9wBMaj1AZVjvCQyAuNGMzNGM1ZWVDIjJDKPqK/+1LFWVDIjJDKPqGev8QGEIzJVVaf+z92DAQrZMiQjMlVVpwEx3YP+9tkyAAAGAAv/AAT1BgAABwAPABsALAB1AKMAAAEDFxI1NCMiARYXNjcuAgEUEzYzMhcDJiMiBgMUHgEzMjY1NCcuAyMiBgMUFx4BMzI3NhE0LgEnJiQjIgcGFRQeBDcyMzIXFhcGBwYHDgEVFBYVBwYVJicGIxYVFAYjIiY1NDcWFxYzMjY1NCYjIgYHNDY3JjU0NjMyFwI1NDYzMhMWFz4FMzIWFRQDHgMVFAIOASMiJyYCA7lydaUmOf6MHgMlIgwqI/7NnxIfDzx5SzATFE9nhCIOFyANJjlCHRQznhk7+Z3jm5gCFRQ4/slzJQwMK0RXWFIdEAcYEA8EHEQ9IEBZJQMEiQkIIQJRNlKpITQITTgMHa8dKzZyVV4cej0dKaNSToPCBgIGLilDPk8lR1KfPU8mDl6q/JhvcJXaBIb+uBUBw0M4/HBQCCoZAgcHA4Vi/lkKBQFf3CP89SSmjBoOGE4gUGJANv6dKT+RpKqpAQIrMEwSMTULBR4iNBwTBAQCExMkHBoWGC6IRR9zHgwMAgrOAgcONUmcUSIhQAxoEQwi3lk3ZXwaSh4+eg8BzmlQZf27EQYQf26RZUhiSWz+Rg8+Xl1Alv78vm4qOQENAAAAAAQAAP+ACAAFgAAaADYAWwBfAAABMw4BIyImNTQ2MzIWFyMuASMiBhUUHgIzMiUzDgEjIiY1NDYzMhYXIy4BIyIGFRQeAjMyNiU0JicuAicmISAHDgIHDgEVFBYXHgIXFgQhIDc+Ajc+ARMRIREDEc8OqYKiubqMlKgNywU9Mzk/Cho2J18C1s4OqIKiubqMlKgNzAQ+Mjk/Cho1JzE3AW0fLQYPHAJW/Z39j1UFGREGLR4eLQYSFwYsAYcBEwJiVwUYEQUuHsD4AAIQnrXoyMLrrqBARnl1MEhDJIuetejIwuuuoEBGeXUwSEMkTLbPyD0IDBICPz8EDw0IPMfR0Mc9CA4OBSEgQQQODgk8xgPL+gAGAAAAAAACAAAAAAVgBYAAHQA7AAABERQGKwEiJjURNCYjIREUBisBIiY1ETQ2MyEyHgEBERQOASMhIiY1ETQ2OwEyFhURITI2NRE0NjsBMhYD4BIOoA4SoHD+8BIOoA4SEg4B0IfkhQGAheSH/jAOEhIOoA4SARBwoBIOoA4SA5D+EA4SEg4B8HCg+4AOEhIOBUAOEoXkAUn8kIfkhRIOA8AOEhIO/QCgcANwDhISAAAABAAA/4AGAAWAAA8APgBTAGMAAAEVFAYrASImPQE0NjsBMhYFNTQmKwEiByYrASIGHQEUOwEyPQE0NjsBMhYdARQ7ATI9ATQ2OwEyFh0BFDsBMiU1NCYjISIGFREUOwEyPQEWOwEyNhMRFAYjISImNRE0NjMhMhYFHxsYyhgcHBjKGBv+FkE1hUQcHESCNUEVNxYbGV4YHBU2FhwYYRgbFjcVAk1CNf74NUIWNxUfP781Qn6IYPvQYIiIYAQwYIgCtnIYHBwYchgcHP76NUE0NEE1+hYW5hgcHBjmFhbmGBwcGOYWdpo1QUE1/mYVFbQqQQKd+9BgiIhgBDBgiIgAAAEAAAAEAIO7JMQUXw889QALBwAAAAAA0CJkLQAAAADQImQt////AAkABgAAAAAIAAIAAAAAAAAAAQAABgD+3QAACQD/////CQAAAQAAAAAAAAAAAAAAAAAAAf4DgABwAAAAAAJVAAABwAAAAcAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAAMAAAAGAQAAAwAAAAYBAAACAAAAAYAAAAEAAAABAAAAAMAAAAEzAAAAVQAAATMAAAGAAAAHAAAABwAAAAcAAAAB9AAABwAAXQYAAAAGgAAABwAAAAcAAAAGgAAABoAAAAWAAAAHgAAABoAAAAcAAAAHAAAABwAAeQWAAG4GgAAABoAAAAYAAAAHAAAABgAAAAWAAAAGgAAaBgAAAAYAAAAHgAAyBoAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAcAAAAEgAAABwAAQAaAAAADAAAABIAAAAaAAAAFgAAABwAAAAYAAAAHgAAABoAACgUAAAAGgAAAB4AAAAaAAAAFgAAABAAAAAcAAAAGAAAABwAAAAcAAAAHAAAABwAAAAcAAAAHAAAABwAAAAcAAAAHgAAABgAAAAQAAAAGAAAABAAAAAcAAAAGgAAABoAAAAcAAAAEAAAABwAAAAaAAHoFgAAABgAAAAYAAAAGgAAABwAAAAQAAAAGAgABBQAAmgUAAFoGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAQAYAAAAGgAA1BoAANQcAAAAGAAAABgAADQWAAAAFgAAABoAAegYAAAAGAAAABwAAAAWAAAAHAAAABwAAAAcAABAFgAAABoAAAAcAAAAHAAAABgAAAAcAAFoHAABaB4AAAAaAAAAGgAAAB4AAAAMAAEAHAAAACAAAAAYAAAAGAAAABwAAAAcAAAAHgAAABwAAAAYAAAAGAAAAA4AAAAcAAAAGgAAABgAAAASAAAAHAAAABgAAAAaAAAAGAAAABoAAAAYAAAAFgAAABYAAAAUAAAAGAAAABoAALAQAAF8GAAAABoAAAAeAAAAFgAAABgAAAAcAAAAHAABABgAAAgcAAAAHAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAaAABUHAAAABYAABQcAAAAGAAAAB4AAAAaAABAHgAAABoAAcwcAAAEHAAAABYAABAYAAAAGAAAABgAAAAcAAAAHAAAPBwAAAAYAAAAGgAAABoAAGwcAAEAGAAAABgAAAAYAAAAGgAAgB4AAAAQAAAAEAAAAAoAAQAKAAAAGgAAABAAAAAQAAAAEAAAABwAAAAYAAAAGAAAABwAAKAcAAAAHAAAABwAAAAOAAAEHAAAABoAAAAcAAAAEAAAABwAAAAeAAAAHgAAABYAAAAWAAAAHAAAABwAAQAeAAAAFgAAABgAAAAWAAAAFgAAAB4AAQAcAAAAHgAAABoAAQAYAAAAGAAAABAAALQQAAA0EgABNBIAATQKAAC0CgAANBIAATQSAAE0HgAAAB4AAAASAAAADAAAABgAAAAaAAAAGgAAABiAAAAYAAAAHAAAABoAAAAaAAAAHgAAABwAAAAcAAAAGAAAABgAAAAYAAAAHgAAAB4AAAAcAAEAHAABABoAADQeAAC0HAAAABoAAAgWAAAIGgAAABAAAAAaAAAAEAABgAoAAAAKAAGIGAAAFBgAABQeAAAEGgAAABIAAAAWAAA0FAAAABoAAAAWAAAMGgAAkBwAAAAYAAAAGAAAABgAAAAYAAAAFgAAABwAADAcAAAAEgAAABgAAAAWAAAABgAAABgAAAAYAAAAHAAA2BgAAAAWAAAAEAAADBAAAAwYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABAAAAAQAAAAEAAA0A4IAAAQDAAQFAAAABwAAAAUAADgGAAAABgAAAAaAACIGgAAiBwAAIgcAACIGAAAiBgAAIgaAAAAGgAAABgAAAAYAABsFgAAFBgAAAAcAAAAHAABABYAAAAYAAAAGAAAABgAAAAWAAAAGAAAABAAARAYAAAADAAADAwAAAwcAAEAHAAAABYAAAAaAAAAFgAAABgAACwYAAAAGAAAABQAALAYAAAAFAAAABAAAAAYAAAAHAAAsBgAAAAcAAEAGgAAgB4D//wcAAAAGAAAABYAAAAUAABUGAAAABgAAAAYAAAAGAAAABoAAAAYAAAAEgAAABYAAAAiAAAAGgAAABgAAAAcAAAAHAAAACAAAAAkAAAAGAABtBQAAbwfAAAAGAAAABgAAAAeAAAAGAAAACAAAAAYAAAAH9gApBgAAAAYAAAAGAAAABwAAAAYAAAAFAABABoAAAAMAAEAHAAAACQAAAAgAAAAGAAAABwAAAAYAAAAHAAAQCAAAAAgAAAAGAAAgBgAAAAYAAAAJAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAACcHAAAACAAAAAcAAAAHAAAABwAAEwcAAAAGAAAABwAARAYAAAAFAAA5BwAAEggAAAAHAAAABwAAAAYAAAAGAAAABwAAPgUAABgGAAAABgAAAAYAAAAHAAAABwAAAAcAAAAHAAAABwAAAAcAABkHAABkBgAAWQgAAAAIAAAqBwAAAAcAAEwHAAB3CQAAAAkAAAAJAAAACQAAAAkAAAAJAAAACAAADggAAA4FgAAABgAAAAYAAAAHAAAABwAAAAcAAAAIAAAABwAAAAgAAAAHAAAABgAAAAgAAAAIAAAACQAAAAYAAAAIAAAABQAACwgAAAAGAAAABgAAAAcAAAAAAAAAAAAAFgAWABYAFgAWABYAFgAWABYAFgAWABYAFgAWABYAFgAWABYAFgAWABYAFgAWABYAFgAWABYAHgBQAJIA1AFCAXABrgIAAjwDJAOCBEgEzgT6BTwFpgX8BlQGxAdmB/wIVAiSCOAJSAmoCf4KUgqQCtoLLAuaDEQMeAzKDTYNXA2kDkQOqA8WD0wPphBYEIoQ4hEqEaISKBKAEzIUAhReFLoVFBVuFhgWihb8FzAXfBfAF+4YGhhiGNoZWBnCGioaWhqgGtAa7BsgGz4bbhu0G+QcFhxAHGocthzqHUQdhh3wHkgeyB8uH4IfxB/8IDQgbiCoIOwhPCGMIcIh3iI2IoIi7CNeI6gj/iSGJNYlLCXmJoImwicmJ1AneifoKEAoZCiqKOApFilGKaYp2io+KqYsBix8LRItrC3SLiouiC7YLyAvfi/cMEQxFjF6MgQyeDKqMuozZDOyM9Y0VDSONNA1NDWYNe42TjbEN1Q38jiCOR45bDm4OgQ6Uj1gPbA+Dj44PoI+9D96QA5APEB2QVRBukIaQoRCokLmQ1BD/ESQRThGFEZ2RuZHVEfASFhI7ElISWZJhEmiScBJ8komSkRKYkq6SwJLVEvwTG5M0E1kTZ5ODk6STuxPbk++UBBQZFDqUVhRlFHeUhZSdFLwVIpVxlZQVrhXClc2V4JXzlgaWGZYslj+WShZUll8WaZZ7lo8Wnpawlr0W1BbrFwUXDJcdlz0XTZdoF2gXaBeDl58XtpfPGAeYJxhQGGAYehiSmKYYsJjFmOEZFRkrGTuZSJljGX0ZiRmrmb+Z3BnqGgMaHpoymj4aThpeGm6afpqKmpQasprAmtka6hr6mxYbI5s5G0WbV5tkG3Abf5uVG6YbupvLG92b8BwCnCScOpxbHHEciZydHMYc5RzwHQqdKZ1IHWgdiB2nnccd6J4Jnk2ei56dHrOex57ZHuwfAx8QHxyfRZ9vn30fjx+Zn6Qfrp+5H88f2R/6oK4g1iD2oRGhJCE5oUqhWqF4IYwhnSG3oekiHaIsIlGiXyJ0oooinSKsosMi4KL5IxGjMCNQo2ujm6OpI7uj0yPhpAOkOSRipHmki6SYJKskxCUXpUeldCW1JfQmWSZopoYmkCagJr8m2Kb0pw6nK6dTJ2wniCecJ7qn3KgsqEUoeaiZqLmo1CjpqQmpLqlJqW+phKmdKbwp1anlKgoqSip2Kp4qrKrIKu2rECseqy8rSqtYK4SrlSuwq8Ar06v/LBgsVqxtLHssoayurNks8i0QrT8tXa2CLaWuDC5DrrevE69Kr2Ovgq+jL76v4y/1MAYwPDBDsE+wXjB/MKKwtzDFMOmxBrElMV8xgjGXsbext7G3sbeAAAAAQAAAgACGQAUAAAAAAACAAAAAQABAAAAQAAAAAAAAAAAAA4ArgADAAEECQAAAF4AAAADAAEECQABABYAXgADAAEECQACAA4AdAADAAEECQADAC4AggADAAEECQAEACYAsAADAAEECQAFACQA1gADAAEECQAGABYA+gADAAEECQAHAKIBEAADAAEECQAIABgBsgADAAEECQAJABQBygADAAEECQALACoB3gADAAEECQAOADwCCAADAAEECQDIABYCRAADAAEECQDJADACWgBDAG8AcAB5AHIAaQBnAGgAdAAgAEQAYQB2AGUAIABHAGEAbgBkAHkAIAAyADAAMQA0AC4AIABBAGwAbAAgAHIAaQBnAGgAdABzACAAcgBlAHMAZQByAHYAZQBkAC4ARgBvAG4AdABBAHcAZQBzAG8AbQBlAFIAZQBnAHUAbABhAHIAcAB5AHIAcwA6ACAARgBvAG4AdABBAHcAZQBzAG8AbQBlADoAIAAyADAAMQAyAEYAbwBuAHQAQQB3AGUAcwBvAG0AZQAgAFIAZQBnAHUAbABhAHIAVgBlAHIAcwBpAG8AbgAgADQALgAyAC4AMAAgADIAMAAxADMARgBvAG4AdABBAHcAZQBzAG8AbQBlAFAAbABlAGEAcwBlACAAcgBlAGYAZQByACAAdABvACAAdABoAGUAIABDAG8AcAB5AHIAaQBnAGgAdAAgAHMAZQBjAHQAaQBvAG4AIABmAG8AcgAgAHQAaABlACAAZgBvAG4AdAAgAHQAcgBhAGQAZQBtAGEAcgBrACAAYQB0AHQAcgBpAGIAdQB0AGkAbwBuACAAbgBvAHQAaQBjAGUAcwAuAEYAbwByAHQAIABBAHcAZQBzAG8AbQBlAEQAYQB2AGUAIABHAGEAbgBkAHkAaAB0AHQAcAA6AC8ALwBmAG8AbgB0AGEAdwBlAHMAbwBtAGUALgBpAG8AaAB0AHQAcAA6AC8ALwBmAG8AbgB0AGEAdwBlAHMAbwBtAGUALgBpAG8ALwBsAGkAYwBlAG4AcwBlAC8AVwBlAGIAZgBvAG4AdAAgADEALgAwAFQAdQBlACAAQQB1AGcAIAAyADYAIAAxADIAOgAxADkAOgA1ADcAIAAyADAAMQA0AAIAAAAAAAD/egBaAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAEAAgADAQIAjgCLAIoAjQCQAJEBAwEEAQUBBgEHAQgBCQEKAQsBDAENAQ4BDwCMAJIAjwEQAREBEgETARQBFQEWARcBGAEZARoBGwEcAR0BHgEfASABIQEiASMBJAElASYBJwEoASkBKgErASwBLQEuAS8BMAExATIBMwE0ATUBNgE3ATgBOQE6ATsBPAE9AT4BPwFAAUEBQgFDAUQBRQFGAUcBSAFJAUoBSwFMAU0BTgFPAVABUQFSAVMBVAFVAVYBVwFYAVkBWgFbAVwBXQFeAV8BYAFhAWIBYwFkAWUBZgFnAWgBaQFqAWsBbAFtAW4BbwFwAXEADgDvAA0BcgFzAXQBdQF2AXcBeAF5AXoBewF8AX0BfgF/AYABgQGCAYMBhAGFAYYBhwGIAYkBigGLAYwBjQGOAY8BkAGRAZIBkwGUAZUBlgGXAZgBmQGaAZsBnAGdAZ4BnwGgAaEBogGjAaQBpQGmAacBqAGpAaoBqwGsAa0BrgGvAbABsQGyAbMBtAG1AbYBtwG4AbkBugG7AbwBvQG+Ab8BwAHBAcIBwwHEAcUBxgHHAcgByQHKAcsBzAHNAc4BzwHQAdEB0gHTAdQB1QHWAdcB2AHZAdoB2wHcAd0B3gHfAeAB4QHiAeMB5AHlAeYB5wHoAekB6gHrAewB7QHuAe8B8AHxAfIB8wH0AfUB9gH3AfgB+QH6AfsB/AH9Af4B/wIAAgECAgIDAgQCBQIGAgcCCAIJAgoCCwIMAg0CDgIPAhACEQISAhMCFAIVAhYCFwAiAhgCGQIaAhsCHAIdAh4CHwIgAiECIgIjAiQCJQImAicCKAIpAioCKwIsAi0CLgIvAjACMQIyAjMCNAI1AjYCNwI4AjkCOgI7AjwCPQI+Aj8CQAJBAkICQwJEAkUCRgJHAkgCSQJKAksCTAJNAk4CTwJQAlECUgJTAlQCVQJWAlcCWAJZAloCWwJcAl0CXgJfAmACYQJiANICYwJkAmUCZgJnAmgCaQJqAmsCbAJtAm4CbwJwAnECcgJzAnQCdQJ2AncCeAJ5AnoCewJ8An0CfgJ/AoACgQKCAoMChAKFAoYChwKIAokCigKLAowCjQKOAo8CkAKRApICkwKUApUClgKXApgCmQKaApsCnAKdAp4CnwKgAqECogKjAqQCpQKmAqcCqAKpAqoCqwKsAq0CrgKvArACsQKyArMCtAK1ArYCtwK4ArkCugK7ArwCvQK+Ar8CwALBAsICwwLEAsUCxgLHAsgCyQLKAssCzALNAs4CzwLQAtEC0gLTAtQC1QLWAtcC2ALZAtoC2wLcAt0C3gLfAuAC4QLiAuMC5ALlAuYC5wLoAukC6gLrAuwC7QLuAJQHdW5pMDBBMAd1bmkyMDAwB3VuaTIwMDEHdW5pMjAwMgd1bmkyMDAzB3VuaTIwMDQHdW5pMjAwNQd1bmkyMDA2B3VuaTIwMDcHdW5pMjAwOAd1bmkyMDA5B3VuaTIwMEEHdW5pMjAyRgd1bmkyMDVGB3VuaTI1RkMFZ2xhc3MFbXVzaWMGc2VhcmNoCGVudmVsb3BlBWhlYXJ0BHN0YXIKc3Rhcl9lbXB0eQR1c2VyBGZpbG0IdGhfbGFyZ2UCdGgHdGhfbGlzdAJvawZyZW1vdmUHem9vbV9pbgh6b29tX291dANvZmYGc2lnbmFsA2NvZwV0cmFzaARob21lCGZpbGVfYWx0BHRpbWUEcm9hZAxkb3dubG9hZF9hbHQIZG93bmxvYWQGdXBsb2FkBWluYm94C3BsYXlfY2lyY2xlBnJlcGVhdAdyZWZyZXNoCGxpc3RfYWx0BGxvY2sEZmxhZwpoZWFkcGhvbmVzCnZvbHVtZV9vZmYLdm9sdW1lX2Rvd24Jdm9sdW1lX3VwBnFyY29kZQdiYXJjb2RlA3RhZwR0YWdzBGJvb2sIYm9va21hcmsFcHJpbnQGY2FtZXJhBGZvbnQEYm9sZAZpdGFsaWMLdGV4dF9oZWlnaHQKdGV4dF93aWR0aAphbGlnbl9sZWZ0DGFsaWduX2NlbnRlcgthbGlnbl9yaWdodA1hbGlnbl9qdXN0aWZ5BGxpc3QLaW5kZW50X2xlZnQMaW5kZW50X3JpZ2h0DmZhY2V0aW1lX3ZpZGVvB3BpY3R1cmUGcGVuY2lsCm1hcF9tYXJrZXIGYWRqdXN0BHRpbnQEZWRpdAVzaGFyZQVjaGVjawRtb3ZlDXN0ZXBfYmFja3dhcmQNZmFzdF9iYWNrd2FyZAhiYWNrd2FyZARwbGF5BXBhdXNlBHN0b3AHZm9yd2FyZAxmYXN0X2ZvcndhcmQMc3RlcF9mb3J3YXJkBWVqZWN0DGNoZXZyb25fbGVmdA1jaGV2cm9uX3JpZ2h0CXBsdXNfc2lnbgptaW51c19zaWduC3JlbW92ZV9zaWduB29rX3NpZ24NcXVlc3Rpb25fc2lnbglpbmZvX3NpZ24Kc2NyZWVuc2hvdA1yZW1vdmVfY2lyY2xlCW9rX2NpcmNsZQpiYW5fY2lyY2xlCmFycm93X2xlZnQLYXJyb3dfcmlnaHQIYXJyb3dfdXAKYXJyb3dfZG93bglzaGFyZV9hbHQLcmVzaXplX2Z1bGwMcmVzaXplX3NtYWxsEGV4Y2xhbWF0aW9uX3NpZ24EZ2lmdARsZWFmBGZpcmUIZXllX29wZW4JZXllX2Nsb3NlDHdhcm5pbmdfc2lnbgVwbGFuZQhjYWxlbmRhcgZyYW5kb20HY29tbWVudAZtYWduZXQKY2hldnJvbl91cAxjaGV2cm9uX2Rvd24HcmV0d2VldA1zaG9wcGluZ19jYXJ0DGZvbGRlcl9jbG9zZQtmb2xkZXJfb3Blbg9yZXNpemVfdmVydGljYWwRcmVzaXplX2hvcml6b250YWwJYmFyX2NoYXJ0DHR3aXR0ZXJfc2lnbg1mYWNlYm9va19zaWduDGNhbWVyYV9yZXRybwNrZXkEY29ncwhjb21tZW50cw10aHVtYnNfdXBfYWx0D3RodW1ic19kb3duX2FsdAlzdGFyX2hhbGYLaGVhcnRfZW1wdHkHc2lnbm91dA1saW5rZWRpbl9zaWduB3B1c2hwaW4NZXh0ZXJuYWxfbGluawZzaWduaW4GdHJvcGh5C2dpdGh1Yl9zaWduCnVwbG9hZF9hbHQFbGVtb24FcGhvbmULY2hlY2tfZW1wdHkOYm9va21hcmtfZW1wdHkKcGhvbmVfc2lnbgd0d2l0dGVyCGZhY2Vib29rBmdpdGh1YgZ1bmxvY2sLY3JlZGl0X2NhcmQDcnNzA2hkZAhidWxsaG9ybgRiZWxsC2NlcnRpZmljYXRlCmhhbmRfcmlnaHQJaGFuZF9sZWZ0B2hhbmRfdXAJaGFuZF9kb3duEWNpcmNsZV9hcnJvd19sZWZ0EmNpcmNsZV9hcnJvd19yaWdodA9jaXJjbGVfYXJyb3dfdXARY2lyY2xlX2Fycm93X2Rvd24FZ2xvYmUGd3JlbmNoBXRhc2tzBmZpbHRlcglicmllZmNhc2UKZnVsbHNjcmVlbgVncm91cARsaW5rBWNsb3VkBmJlYWtlcgNjdXQEY29weQpwYXBlcl9jbGlwBHNhdmUKc2lnbl9ibGFuawdyZW9yZGVyAnVsAm9sDXN0cmlrZXRocm91Z2gJdW5kZXJsaW5lBXRhYmxlBW1hZ2ljBXRydWNrCXBpbnRlcmVzdA5waW50ZXJlc3Rfc2lnbhBnb29nbGVfcGx1c19zaWduC2dvb2dsZV9wbHVzBW1vbmV5CmNhcmV0X2Rvd24IY2FyZXRfdXAKY2FyZXRfbGVmdAtjYXJldF9yaWdodAdjb2x1bW5zBHNvcnQJc29ydF9kb3duB3NvcnRfdXAMZW52ZWxvcGVfYWx0CGxpbmtlZGluBHVuZG8FbGVnYWwJZGFzaGJvYXJkC2NvbW1lbnRfYWx0DGNvbW1lbnRzX2FsdARib2x0B3NpdGVtYXAIdW1icmVsbGEFcGFzdGUKbGlnaHRfYnVsYghleGNoYW5nZQ5jbG91ZF9kb3dubG9hZAxjbG91ZF91cGxvYWQHdXNlcl9tZAtzdGV0aG9zY29wZQhzdWl0Y2FzZQhiZWxsX2FsdAZjb2ZmZWUEZm9vZA1maWxlX3RleHRfYWx0CGJ1aWxkaW5nCGhvc3BpdGFsCWFtYnVsYW5jZQZtZWRraXQLZmlnaHRlcl9qZXQEYmVlcgZoX3NpZ24EZjBmZRFkb3VibGVfYW5nbGVfbGVmdBJkb3VibGVfYW5nbGVfcmlnaHQPZG91YmxlX2FuZ2xlX3VwEWRvdWJsZV9hbmdsZV9kb3duCmFuZ2xlX2xlZnQLYW5nbGVfcmlnaHQIYW5nbGVfdXAKYW5nbGVfZG93bgdkZXNrdG9wBmxhcHRvcAZ0YWJsZXQMbW9iaWxlX3Bob25lDGNpcmNsZV9ibGFuawpxdW90ZV9sZWZ0C3F1b3RlX3JpZ2h0B3NwaW5uZXIGY2lyY2xlBXJlcGx5CmdpdGh1Yl9hbHQQZm9sZGVyX2Nsb3NlX2FsdA9mb2xkZXJfb3Blbl9hbHQKZXhwYW5kX2FsdAxjb2xsYXBzZV9hbHQFc21pbGUFZnJvd24DbWVoB2dhbWVwYWQIa2V5Ym9hcmQIZmxhZ19hbHQOZmxhZ19jaGVja2VyZWQIdGVybWluYWwEY29kZQlyZXBseV9hbGwPc3Rhcl9oYWxmX2VtcHR5DmxvY2F0aW9uX2Fycm93BGNyb3AJY29kZV9mb3JrBnVubGluawRfMjc5C2V4Y2xhbWF0aW9uC3N1cGVyc2NyaXB0CXN1YnNjcmlwdARfMjgzDHB1enpsZV9waWVjZQptaWNyb3Bob25lDm1pY3JvcGhvbmVfb2ZmBnNoaWVsZA5jYWxlbmRhcl9lbXB0eRFmaXJlX2V4dGluZ3Vpc2hlcgZyb2NrZXQGbWF4Y2RuEWNoZXZyb25fc2lnbl9sZWZ0EmNoZXZyb25fc2lnbl9yaWdodA9jaGV2cm9uX3NpZ25fdXARY2hldnJvbl9zaWduX2Rvd24FaHRtbDUEY3NzMwZhbmNob3IKdW5sb2NrX2FsdAhidWxsc2V5ZRNlbGxpcHNpc19ob3Jpem9udGFsEWVsbGlwc2lzX3ZlcnRpY2FsBF8zMDMJcGxheV9zaWduBnRpY2tldA5taW51c19zaWduX2FsdAtjaGVja19taW51cwhsZXZlbF91cApsZXZlbF9kb3duCmNoZWNrX3NpZ24JZWRpdF9zaWduBF8zMTIKc2hhcmVfc2lnbgdjb21wYXNzCGNvbGxhcHNlDGNvbGxhcHNlX3RvcARfMzE3A2V1cgNnYnADdXNkA2lucgNqcHkDcnViA2tydwNidGMEZmlsZQlmaWxlX3RleHQQc29ydF9ieV9hbHBoYWJldARfMzI5EnNvcnRfYnlfYXR0cmlidXRlcxZzb3J0X2J5X2F0dHJpYnV0ZXNfYWx0DXNvcnRfYnlfb3JkZXIRc29ydF9ieV9vcmRlcl9hbHQEXzMzNARfMzM1DHlvdXR1YmVfc2lnbgd5b3V0dWJlBHhpbmcJeGluZ19zaWduDHlvdXR1YmVfcGxheQdkcm9wYm94DXN0YWNrZXhjaGFuZ2UJaW5zdGFncmFtBmZsaWNrcgNhZG4EZjE3MQ5iaXRidWNrZXRfc2lnbgZ0dW1ibHILdHVtYmxyX3NpZ24PbG9uZ19hcnJvd19kb3duDWxvbmdfYXJyb3dfdXAPbG9uZ19hcnJvd19sZWZ0EGxvbmdfYXJyb3dfcmlnaHQHd2luZG93cwdhbmRyb2lkBWxpbnV4B2RyaWJibGUFc2t5cGUKZm91cnNxdWFyZQZ0cmVsbG8GZmVtYWxlBG1hbGUGZ2l0dGlwA3N1bgRfMzY2B2FyY2hpdmUDYnVnAnZrBXdlaWJvBnJlbnJlbgRfMzcyDnN0YWNrX2V4Y2hhbmdlBF8zNzQVYXJyb3dfY2lyY2xlX2FsdF9sZWZ0BF8zNzYOZG90X2NpcmNsZV9hbHQEXzM3OAx2aW1lb19zcXVhcmUEXzM4MA1wbHVzX3NxdWFyZV9vBF8zODIEXzM4MwRfMzg0BF8zODUEXzM4NgRfMzg3BF8zODgEXzM4OQd1bmlGMUEwBGYxYTEEXzM5MgRfMzkzBGYxYTQEXzM5NQRfMzk2BF8zOTcEXzM5OARfMzk5BF80MDAEZjFhYgRfNDAyBF80MDMEXzQwNAd1bmlGMUIxBF80MDYEXzQwNwRfNDA4BF80MDkEXzQxMARfNDExBF80MTIEXzQxMwRfNDE0BF80MTUEXzQxNgRfNDE3BF80MTgEXzQxOQd1bmlGMUMwB3VuaUYxQzEEXzQyMgRfNDIzBF80MjQEXzQyNQRfNDI2BF80MjcEXzQyOARfNDI5BF80MzAEXzQzMQRfNDMyBF80MzMEXzQzNAd1bmlGMUQwB3VuaUYxRDEHdW5pRjFEMgRfNDM4BF80MzkHdW5pRjFENQd1bmlGMUQ2B3VuaUYxRDcEXzQ0MwRfNDQ0BF80NDUEXzQ0NgRfNDQ3BF80NDgEXzQ0OQd1bmlGMUUwBF80NTEEXzQ1MgRfNDUzBF80NTQEXzQ1NQRfNDU2BF80NTcEXzQ1OARfNDU5BF80NjAEXzQ2MQRfNDYyBF80NjMEXzQ2NAd1bmlGMUYwBF80NjYEXzQ2NwRmMWYzBF80NjkEXzQ3MARfNDcxBF80NzIEXzQ3MwRfNDc0BF80NzUEXzQ3NgRmMWZjBF80NzgEXzQ3OQRfNDgwBF80ODEEXzQ4MgRfNDgzBF80ODQEXzQ4NQRfNDg2BF80ODcEXzQ4OARfNDg5BF80OTAEXzQ5MQRfNDkyBF80OTMEXzQ5NAAAAAFT/LOtAAA=";
-
-/***/ },
-/* 187 */,
-/* 188 */,
-/* 189 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(190);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(9)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./panel.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./panel.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 190 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(3)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".hide {\r\n\tdisplay: none;\r\n}\r\n.bold{\r\n\tfont-weight: bold;\r\n}\r\n::-moz-selection {\r\n\tbackground: #b3d4fc;\r\n\ttext-shadow: none;\r\n}\r\n::selection {\r\n\tbackground: #b3d4fc;\r\n\ttext-shadow: none;\r\n}\r\nimg {\r\n\tvertical-align: middle;\r\n}\r\n/*ul {\r\n\tlist-style-type: none;\r\n}*/\r\n\r\n.edit-panel {\r\n\tposition: absolute;\r\n\tbox-sizing: border-box;\r\n\tborder-radius: 5px ;\r\n\tbox-shadow: 0 2px 6px 0 rgba(22, 45, 61, 0.55);\r\n\tbackground-color: #eeeeee;\r\n\tmax-width: 1024px;\r\n\t/*new*/\r\n\tmin-width: 460px;\r\n\tz-index: 999;\r\n\tdisplay: none;\r\n}\r\n.edit-panel-container{\r\n\tposition: relative;\r\n}\r\n.edit-panel-title {\r\n\tmin-height: 40px;\r\n\twidth: 100%;\r\n\tbackground-color: #4183c4;\r\n\tborder-top-left-radius: 5px ;\r\n\tborder-top-right-radius: 5px ;\r\n\tcolor: white;\r\n\tpadding: 10px 10px 10px 15px;\r\n\tcursor: move;\r\n}\r\n.edit-panel-close {\r\n\tfloat: right;\r\n\t/*width: 38px;\r\n\theight: 38px;*/\r\n\tdisplay: inline-block;\r\n\tborder: none;\r\n\tfont-size: 18px;\r\n\tcolor: #fff;\r\n\ttext-align: center;\r\n\t-webkit-transition: 0.3s;\r\n\ttransition: 0.3s;\r\n\tborder-radius: 50%;\r\n\tcursor: pointer;\r\n}\r\n\r\n.edit-text {\r\n\tmin-width: 300px;\r\n}\r\n.jquery-notebook.editor {\r\n\tmin-height: 150px;\r\n\tpadding:10px;\r\n}\r\n.jquery-notebook.bubble button {\r\n\tmargin-top: 11px;\r\n\theight: 20px;\r\n}\r\n\r\n\r\n\r\n/***  image upload  ***/\r\n.shadow {background:#000; opacity:0.3; position:absolute; left:0px; right:0px; top:0px; bottom:0px; z-index:1;}\r\n.panel-img-pop {width:300px; min-height:300px; box-shadow:0 0 5px 3px #E1E4E7; border-radius:15px; position:absolute; z-index:2;}\r\n.pop_title {background:#3899EC; height:24px; line-height:24px; padding:15px 20px; border-radius:15px 15px 0px 0px; color:#fff; position:relative;}\r\n.pop_title a {display:inline-block; background:#2B81CB; color:#fff; width:24px; height:24px; line-height:24px; cursor:pointer; text-align:center; border-radius:12px;}\r\n.pop_title a:first-child {position:absolute; right:55px; top:15px;}\r\n.pop_title a:last-child {position:absolute; right:20px; top:15px;}\r\n.pop_main {height:150px; position:relative; background:#EAF7FF url(" + __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../images/mainbg.png\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) + ") center bottom no-repeat; background-size:contain;}\r\n.main_editbg {height:60px; background:#3899EC; opacity:0.1; position:absolute; bottom:0px; left:0px; right:0px;}\r\n.pop_main p {width:100px; padding:7px 10px; text-align:center; border-radius:20px; float:left;}\r\n.pop_main p:nth-child(2) {position:absolute; left:20px; bottom:12px; background:#fff url(" + __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../images/change.png\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) + ") 10px 9px no-repeat;}\r\n.pop_main p:nth-child(3) {position:absolute; right:20px; bottom:12px; background:#fff url(" + __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../images/edit.png\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) + ") 10px 9px no-repeat;}\r\n.pop_content {height:130px; background:#fff; border-top:solid 1px #D9E1E8; padding:20px;}\r\n.pop_content p {color:#2B5672; font-size:14px; padding-bottom:20px; clear:both;}\r\n.content_list {float:left; width:55px; margin-right:13px; text-align:center;}\r\n.content_list span {display:inline-block; width:55px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#3899EC; font-size:14px; padding-top:10px;}\r\n.content_list a {display:inline-block; width:55px; height:50px; background:#EAF7FF; line-height:50px; border-radius:8px;}\r\n.content_list:last-child a {background:#3899EC;}\r\n.content_list:last-child {margin-right:0px;}\r\n.pop_footer {background:#F0F3F5; height:40px; line-height:40px; text-align:center; padding:0 20px; border-top:solid 1px #D9E1E8; color:#3C637E; border-radius:0px 0px 15px 15px;}\r\n/** end **/", ""]);
-
-	// exports
-
-
-/***/ },
-/* 191 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	__webpack_require__(192);
-
-	var React = __webpack_require__(17);
-	var $ = __webpack_require__(13);
-	__webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./jquery.notebook\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-
-	var EditBar = React.createClass({
-	    displayName: "EditBar",
-
-	    initialOptions: {
-	        _dot: ".",
-	        _id: "#",
-	        panelId: "j-edit-panel",
-	        barId: "j-edit-bar",
-	        txtPanle: "j-panel-text",
-	        imgPanel: "j-panel-img",
-	        panelText: "edit-panel-text",
-	        gridBlockClass: "j-grid-block",
-	        hideClass: "hide",
-	        dataPanelIndex: "data-panel-index",
-	        dataBarIndex: "data-bar-index",
-	        placeHolder: "Type your text here...",
-	        myGridContainer: "j-grid-container",
-	        modifiersOpts: ['bold', 'italic', 'underline', 'h1', 'h2', 'ol', 'ul']
-
-	    },
-	    showPanelFn: function showPanelFn(event) {
-	        var _dateBarIndex = $(this.initialOptions._id + this.initialOptions.barId).attr(this.initialOptions.dataBarIndex),
-	            $li = $(this.initialOptions._dot + this.initialOptions.gridBlockClass).eq(_dateBarIndex);
-	        var $myDiv = $li.find(this.initialOptions._dot + this.initialOptions.myGridContainer);
-	        if ($myDiv.length < 1) {
-	            var $div = $("<div>", {
-	                class: this.initialOptions.myGridContainer
-	            });
-	            $li.append($div);
-	        }
-	        var $offset = $li.offset(),
-	            _top = $offset.top,
-	            _left = $offset.left + 100;
-	        var $panel = $(this.initialOptions._id + this.initialOptions.panelId);
-	        $panel.find(this.initialOptions._dot + this.initialOptions.txtPanle).addClass(this.initialOptions.hideClass);
-	        $panel.find(this.initialOptions._dot + this.initialOptions.imgPanel).addClass(this.initialOptions.hideClass);
-	        $panel.hide("fast");
-	        $panel.css({ "top": _top - 23, "left": _left }).attr(this.initialOptions.dataPanelIndex, _dateBarIndex).fadeIn();
-
-	        return {
-	            _panel: $panel,
-	            _li: $li
-	        };
-	    },
-	    txtEditOpenFn: function txtEditOpenFn($panel, $li) {
-	        var arr = this.showPanelFn();
-
-	        arr._panel.find(this.initialOptions._dot + this.initialOptions.txtPanle).removeClass(this.initialOptions.hideClass);
-
-	        $(this.initialOptions._dot + this.initialOptions.panelText).empty().notebook({
-	            autoFocus: true,
-	            placeholder: this.initialOptions.placeHolder,
-	            modifiers: this.initialOptions.modifiersOpts
-	        });
-
-	        var $textContainer = arr._li.find(this.initialOptions._dot + this.initialOptions.myGridContainer),
-	            $exitTextChild = $textContainer.children(),
-	            _textHtml = $textContainer.html(),
-	            $panelEditor = $(this.initialOptions._dot + this.initialOptions.panelText);
-	        if ($exitTextChild.length > 0) {
-	            $panelEditor.empty().append(_textHtml);
-	        }
-	    },
-	    imgEditOpenFn: function imgEditOpenFn($panel, $li) {
-	        var arr = this.showPanelFn();
-	        arr._panel.find(this.initialOptions._dot + this.initialOptions.imgPanel).removeClass(this.initialOptions.hideClass);
-	    },
-	    render: function render() {
-	        return React.createElement(
-	            "div",
-	            { id: "j-edit-bar", className: "edit-bar hide" },
-	            React.createElement(
-	                "div",
-	                { className: "model-0" },
-	                React.createElement(
-	                    "div",
-	                    { className: "float-btn-group" },
-	                    React.createElement(
-	                        "button",
-	                        { className: "btn-float btn-triger pink" },
-	                        React.createElement("i", { className: "icon-bars" })
-	                    ),
-	                    React.createElement(
-	                        "div",
-	                        { className: "btn-list" },
-	                        React.createElement(
-	                            "a",
-	                            { href: "javascript:void(0);", className: "btn-float blue", onClick: this.txtEditOpenFn },
-	                            React.createElement("i", { className: "fa fa-pencil" })
-	                        ),
-	                        React.createElement(
-	                            "a",
-	                            { href: "javascript:void(0);", className: "btn-float blue", onClick: this.imgEditOpenFn },
-	                            React.createElement(
-	                                "i",
-	                                { className: "fa fa-file-image-o" },
-	                                " "
-	                            )
-	                        ),
-	                        React.createElement(
-	                            "a",
-	                            { href: "javascript:void(0);", className: "btn-float blue", "data-edit": "act" },
-	                            React.createElement(
-	                                "i",
-	                                { className: "fa fa-cloud-upload" },
-	                                "   "
-	                            )
-	                        ),
-	                        React.createElement(
-	                            "a",
-	                            { href: "javascript:void(0);", className: "btn-float blue", "data-edit": "del" },
-	                            React.createElement(
-	                                "i",
-	                                { className: "fa fa-trash-o fa-fw" },
-	                                " "
-	                            )
-	                        )
-	                    )
-	                )
-	            )
-	        );
-	    }
-	});
-	module.exports = EditBar;
-
-/***/ },
-/* 192 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(193);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(9)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./editbar.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./editbar.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 193 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(3)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".hide {\r\n\tdisplay: none;\r\n}\r\n\r\n\r\n/**  edit button **/\r\n*, *:after, *:before {\r\n\tbox-sizing: border-box;\r\n}\r\n.edit-bar{\r\n\twidth: 250px;\r\n\tbackground-color: transparent;\r\n\tposition: absolute;\r\n\tdisplay: none;\r\n}\r\n\r\n.btn-float {\r\n\twidth: 38px;\r\n\theight: 38px;\r\n\tline-height: 38px;\r\n\tdisplay: inline-block;\r\n\tborder: none;\r\n\tfont-size: 12px;\r\n\tcolor: #fff;\r\n\ttext-align: center;\r\n\tposition: relative;\r\n\t-webkit-transition: 0.3s;\r\n\ttransition: 0.3s;\r\n\tborder-radius: 50%;\r\n\tcursor: pointer;\r\n\tbox-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.11);\r\n}\r\n.btn-float:hover {\r\n\ttext-decoration: none;\r\n\tbox-shadow: 0 5px 10px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(0, 0, 0, 0.13);\r\n}\r\n.btn-float:active, .btn-float:focus {\r\n\toutline: none;\r\n}\r\n.btn-float + .btn-float {\r\n\tmargin-left: 5px;\r\n}\r\n\r\n.yellow {\r\n\tbackground: #ffa000;\r\n}\r\n\r\n.blue {\r\n\tbackground: #40c4ff;\r\n}\r\n\r\n.green {\r\n\tbackground: #00e676;\r\n}\r\n\r\n.purple {\r\n\tbackground: #8e24aa;\r\n}\r\n\r\n.pink {\r\n\tbackground: #e91e63;\r\n}\r\n\r\n.icon-bars {\r\n\tbackground: #fff;\r\n\theight: 1px;\r\n\twidth: 22px;\r\n\tmargin: auto;\r\n\tdisplay: block;\r\n\tposition: relative;\r\n\t-moz-transition: 0.3s 0.3s;\r\n\t-o-transition: 0.3s 0.3s;\r\n\t-webkit-transition: 0.3s;\r\n\t-webkit-transition-delay: 0.3s;\r\n\t-webkit-transition: 0.3s 0.3s;\r\n\ttransition: 0.3s 0.3s;\r\n}\r\n.icon-bars:after {\r\n\tcontent: '';\r\n\tposition: absolute;\r\n\theight: 22px;\r\n\twidth: 1px;\r\n\tbackground: #fff;\r\n\ttop: -10px;\r\n}\r\n\r\n.float-btn-group {\r\n\tposition: relative;\r\n\tfloat: right;\r\n\t-webkit-transition: 0.3s;\r\n\ttransition: 0.3s;\r\n}\r\n.float-btn-group .btn-triger {\r\n\tz-index: 15;\r\n\tfloat: right;\r\n}\r\n.float-btn-group .btn-list {\r\n\tposition: absolute;\r\n\tright: 0;\r\n\t-webkit-transition: 0.3s;\r\n\ttransition: 0.3s;\r\n}\r\n.float-btn-group .btn-list li {\r\n\tdisplay: inline-block;\r\n}\r\n.float-btn-group.open .icon-bars {\r\n\t-ms-transform: rotate(45deg);\r\n\t-webkit-transform: rotate(45deg);\r\n\ttransform: rotate(45deg);\r\n}\r\n\r\n.model-0 .float-btn-group {\r\n\twidth: 38px;\r\n\tpadding-left: 0px;\r\n\tmin-height: 65px;\r\n\toverflow: hidden;\r\n}\r\n.model-0 .float-btn-group .btn-list {\r\n\topacity: 0;\r\n\twidth: 215px;\r\n}\r\n.model-0 .float-btn-group.open {\r\n\twidth: 216px;\r\n}\r\n.model-0 .float-btn-group.open .btn-list {\r\n\topacity: 1;\r\n}\r\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -31373,8 +32996,8 @@
 	/**
 	 * Created by Liuhan on 2015/12/8.
 	 */
-	var React = __webpack_require__(17);
-	var $ = __webpack_require__(13);
+	var React = __webpack_require__(18);
+	var $ = __webpack_require__(11);
 
 	/**
 	 * Params:
@@ -31460,6 +33083,143 @@
 	});
 
 	module.exports = AxisLines;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+	var $ = __webpack_require__(11);
+
+	/**
+	var EditPanel = require("../panel/EditorPanel.jsx");
+	<GridLayout width={this.state.width} height={this.state.height} contentHeight={this.state.contentHeight}
+	            contentWidth={this.state.contentWidth}
+	            doubleScreen={this.state.doubleScreen}/>
+	*/
+	var GridLayout = React.createClass({
+	    displayName: "GridLayout",
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            oneScreenGrids: [],
+	            multiScreen: {
+	                model: 1,
+	                grids: []
+	            },
+	            minHeight: 768,
+	            zoom: 1,
+	            doubleScreen: 0,
+	            showHeader: true,
+	            showFooter: true,
+	            theme: "default"
+	        };
+	    },
+
+	    componentDidMount: function componentDidMount() {
+	        this.initGridster();
+	    },
+
+	    initGridster: function initGridster() {
+	        var rhtml = $(".gridster").html();
+	        $(".gridster ul").remove();
+	        $(".gridster").append(rhtml);
+
+	        if (this.props.doubleScreen) {
+	            if (this.props.expandMode === 2) {
+	                var contentHeight = this.props.height;
+	                if (this.props.showHeader) {
+	                    contentHeight -= this.props.headerHeight;
+	                }
+	                if (this.props.showFooter) {
+	                    contentHeight -= this.props.footerHeight;
+	                }
+	                var contentWidth = this.props.width * 2 - this.props.padding[1] - this.props.padding[3];
+	                $(".gridster ul").css("min-height", contentHeight);
+	                $(".gridster ul").css("margin-left", this.props.padding[3]);
+
+	                $(".gridster ul").gridster({
+	                    widget_margins: [1, 1],
+	                    widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
+	                    min_cols: 12,
+	                    min_rows: 10,
+	                    resize: {
+	                        enabled: true
+	                    }
+	                });
+	                $(".extraGrid").hide();
+	            }
+	        } else {
+	            var contentHeight = this.props.height;
+	            if (this.props.showHeader) {
+	                contentHeight -= this.props.headerHeight;
+	            }
+	            if (this.props.showFooter) {
+	                contentHeight -= this.props.footerHeight;
+	            }
+	            var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
+	            $(".gridster ul").css("min-height", contentHeight);
+	            $(".gridster ul").css("margin-left", this.props.padding[3]);
+
+	            $(".gridster ul").gridster({
+	                widget_margins: [1, 1],
+	                widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
+	                min_cols: 12,
+	                min_rows: 10,
+	                resize: {
+	                    enabled: true
+	                }
+	            });
+	            $(".extraGrid").hide();
+	        }
+
+	        var col = 12;
+	        if (this.props.expandMode === 2) {
+	            col = col * 2;
+	        }
+
+	        //EditPanel.init();
+	    },
+
+	    componentDidUpdate: function componentDidUpdate() {
+	        this.initGridster();
+	    },
+
+	    addBlock: function addBlock() {
+	        var gridster = $(".gridster ul").gridster().data('gridster');
+	        gridster.add_widget("<li class='j-grid-block player-revert'></li>", 12, 2, 1, 100);
+	        //EditPanel.init();
+	    },
+
+	    saveGridInfo: function saveGridInfo() {},
+
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            null,
+	            React.createElement(
+	                "div",
+	                { className: "gridster" },
+	                React.createElement(
+	                    "ul",
+	                    null,
+	                    React.createElement("li", { "data-row": "1", "data-col": "1", "data-sizex": "12", "data-sizey": "4",
+	                        className: "j-grid-block player-revert" })
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { className: "extraGrid" },
+	                React.createElement("ul", null)
+	            )
+	        );
+	    }
+
+	});
+
+	module.exports = GridLayout;
 
 /***/ }
 /******/ ]);
