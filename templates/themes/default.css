@@ -223,12 +223,12 @@ h6 {
 	min-height:100px;
 	position:relative;
 }
-.A-head {color:#333; background:url(../images/default/insets_04.png) right top no-repeat; padding:15px 0 0px 0px;font-size:1.4em;}
+.A-head {color:#333; background:url(images/insets_04.png) right top no-repeat; padding:15px 0 0px 0px;font-size:1.4em;}
 .A-head span {display:inline-block;}
-.A-head .A-head-bold {font-size:1.6em; font-weight:bold; margin-right:10px; padding-left:50px; background:url(../images/default/insets_02.png) left 3px no-repeat; height:30px; line-height:30px;}
-.site-header .A-head-line {background:url(../images/default/insets_01.png) left top no-repeat; width:62px; height:3px; display:inline-block; vertical-align:3px;}
+.A-head .A-head-bold {font-size:1.6em; font-weight:bold; margin-right:10px; padding-left:50px; background:url(images/insets_02.png) left 3px no-repeat; height:30px; line-height:30px;}
+.site-header .A-head-line {background:url(images/insets_01.png) left top no-repeat; width:62px; height:3px; display:inline-block; vertical-align:3px;}
 .site-header .A-head-bor {display:inline-block;height:3px;border: 0;border-top:3px solid #236096;width:70%;}
-.B-head {background:url(../images/default/insets_05.jpg) left top no-repeat; padding-left:51px; margin-top:5px; margin-left:15px;}
+.B-head {background:url(images/insets_05.jpg) left top no-repeat; padding-left:51px; margin-top:5px; margin-left:15px;}
 .B-head span {
 	display:inline-block;
 	position:relative;
@@ -242,7 +242,7 @@ h6 {
 	font-size: 1.4em;
 	color: #feffff;
 }
-.B-head em {display:inline-block; background:url(../images/default/insets_06.png) left top no-repeat; position:absolute; right:0px; bottom:0px; width:10px; height:10px;}
+.B-head em {display:inline-block; background:url(images/insets_06.png) left top no-repeat; position:absolute; right:0px; bottom:0px; width:10px; height:10px;}
 
 .container {font-size: 1.4em;}
 .container p {line-height:1.6em;}

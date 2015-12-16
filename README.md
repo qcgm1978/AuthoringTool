@@ -1,4 +1,4 @@
-## AuthoringTool
+﻿## AuthoringTool
 
 新版本课件制作工具平台，包含adtools支持1.1版本协议的实现
 
@@ -26,8 +26,8 @@
  > webpack --progress --colors --watch
 
 2. 安装reactjs
- > 安装babel loader: npm install babel-loader babel-core babel-preset-es2015 --save-dev
- > 安装react  npm install --save react react-dom babelify babel-loader babel-preset-react
+ > 安装babel loader: npm install babel-loader babel-core babel-preset-es2015 babelify --save-dev
+ > 安装react  npm install --save react react-dom babel-loader babel-preset-react
 
 
 
