@@ -110,11 +110,11 @@ var ThemeScreen = React.createClass({
         /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
 
         return (
-            <div className="screen" style={{
+            <div className="screen" >
+                <div className="display" style={{
                         width:  swidth,
-                        minHeight: this.props.minHeight
+                        minHeight: this.props.height
                     }}>
-                <div className="display">
                     <div className="styles"></div>
                     <div className="header" style={{
                         width: headerWidth
@@ -130,9 +130,11 @@ var ThemeScreen = React.createClass({
                         width: headerWidth
                     }}></div>
                 </div>
-                <AxisLines width={this.props.width} height={this.props.height} headerHeight={this.state.headerHeight}
-                           contentWidth={contentWidth}
-                           doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}/>
+                <AxisLines width={this.props.width} height={this.props.height}
+                           showHeader={this.props.showHeader} showFooter={this.props.showFooter}
+                           doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}
+                           headerHeight={this.state.headerHeight} footerHeight={this.state.footerHeight}
+                           padding={this.state.padding}/>
             </div>
         );
     }

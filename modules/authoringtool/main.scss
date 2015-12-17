@@ -38,10 +38,10 @@ body {
   -webkit-transform-origin: 0 0;
   margin-top: 70px;
   margin-left: 70px;
-  background-color: #fff;
 
   .display {
     position: relative;
+    background-color: #fff;
   }
  // background-color: #2c3e50;
 }
@@ -67,19 +67,16 @@ svg.gridLines {
   pointer-events: none;
 
   line.frontLine {
-    stroke: #000000;
+    stroke: #5CB85C;
     stroke-dasharray: 5 5;
   }
   line {
     stroke-width: 1;
   }
-
 }
 
 .default {
   p {
 
   }
-
-
 }

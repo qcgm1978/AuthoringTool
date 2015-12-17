@@ -12928,7 +12928,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px;\n  background-color: #fff; }\n  .screen .display {\n    position: relative; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #000000;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n", ""]);
 
 	// exports
 
@@ -32957,13 +32957,13 @@
 
 	        return React.createElement(
 	            "div",
-	            { className: "screen", style: {
-	                    width: swidth,
-	                    minHeight: this.props.minHeight
-	                } },
+	            { className: "screen" },
 	            React.createElement(
 	                "div",
-	                { className: "display" },
+	                { className: "display", style: {
+	                        width: swidth,
+	                        minHeight: this.props.height
+	                    } },
 	                React.createElement("div", { className: "styles" }),
 	                React.createElement("div", { className: "header", style: {
 	                        width: headerWidth
@@ -32978,9 +32978,11 @@
 	                        width: headerWidth
 	                    } })
 	            ),
-	            React.createElement(AxisLines, { width: this.props.width, height: this.props.height, headerHeight: this.state.headerHeight,
-	                contentWidth: contentWidth,
-	                doubleScreen: this.props.doubleScreen, expandMode: this.props.expandMode })
+	            React.createElement(AxisLines, { width: this.props.width, height: this.props.height,
+	                showHeader: this.props.showHeader, showFooter: this.props.showFooter,
+	                doubleScreen: this.props.doubleScreen, expandMode: this.props.expandMode,
+	                headerHeight: this.state.headerHeight, footerHeight: this.state.footerHeight,
+	                padding: this.state.padding })
 	        );
 	    }
 	});
@@ -32999,60 +33001,41 @@
 	var React = __webpack_require__(18);
 	var $ = __webpack_require__(11);
 
-	/**
-	 * Params:
-	<AxisLines
-	    width={this.state.width}
-	    height={this.state.height}
-	    contentHeight={this.state.contentHeight}
-	    contentWidth={this.state.contentWidth}
-	    doubleScreen={this.state.doubleScreen}/>
-	*/
-
-	var AxisLines = React.createClass({
-	    displayName: "AxisLines",
+	var GridLines = React.createClass({
+	    displayName: "GridLines",
 
 	    getInitialState: function getInitialState() {
 	        return { lines: [] };
 	    },
 
 	    render: function render() {
-
-	        this.state.lines = [];
-
-	        this.state.lines.push({
-	            key: "t1",
-	            x1: 0,
-	            y1: 70 + this.props.headerHeight,
-	            x2: "100%",
-	            y2: 70 + this.props.headerHeight
-	        });
-
-	        this.state.lines.push({
-	            key: "t2",
-	            x1: 0,
-	            y1: 70 + this.props.height,
-	            x2: "100%",
-	            y2: 70 + this.props.height
-	        });
-
-	        this.state.lines.push({
+	        var w_width = $(window).innerWidth();
+	        this.state.lines = [{
 	            key: "l1",
 	            x1: 70,
 	            y1: 0,
 	            x2: 70,
 	            y2: "100%"
-	        });
-
-	        this.state.lines.push({
+	        }, {
 	            key: "l2",
 	            x1: 70 + this.props.width,
 	            y1: 0,
 	            x2: 70 + this.props.width,
 	            y2: "100%"
-	        });
+	        }, {
+	            key: "t1",
+	            x1: 0,
+	            y1: 70,
+	            x2: "100%",
+	            y2: 70
+	        }, {
+	            key: "t2",
+	            x1: 0,
+	            y1: 70 + this.props.height,
+	            x2: "100%",
+	            y2: 70 + this.props.height
+	        }];
 
-	        var w_width = $(window).width();
 	        var svgWidth = 140 + this.props.width;
 	        if (svgWidth < w_width) {
 	            svgWidth = w_width;
@@ -33067,7 +33050,6 @@
 	            });
 	            svgWidth = (this.props.width + 70) * 2;
 	        }
-
 	        var lines = this.state.lines.map(function (line) {
 	            return React.createElement("line", { key: line.key, x1: line.x1, y1: line.y1, x2: line.x2, y2: line.y2, className: "frontLine" });
 	        });
@@ -33082,7 +33064,7 @@
 	    }
 	});
 
-	module.exports = AxisLines;
+	module.exports = GridLines;
 
 /***/ },
 /* 179 */
@@ -33123,11 +33105,20 @@
 	    },
 
 	    initGridster: function initGridster() {
-	        var rhtml = $(".gridster").html();
-	        $(".gridster ul").remove();
-	        $(".gridster").append(rhtml);
+	        var mHtml = $(".mainGrid>ul").html();
+	        var eHtml = $(".extraGrid>ul").html();
+
+	        $(".gs-resize-handle").remove();
+
+	        $(".footer").css("position", "initial");
 
 	        if (this.props.doubleScreen) {
+	            $(".mainGrid").empty();
+	            $(".mainGrid").append("<ul>" + mHtml + "</ul>");
+
+	            $(".extraGrid").empty();
+	            $(".extraGrid").append("<ul>" + eHtml + "</ul>");
+
 	            if (this.props.expandMode === 2) {
 	                var contentHeight = this.props.height;
 	                if (this.props.showHeader) {
@@ -33137,10 +33128,10 @@
 	                    contentHeight -= this.props.footerHeight;
 	                }
 	                var contentWidth = this.props.width * 2 - this.props.padding[1] - this.props.padding[3];
-	                $(".gridster ul").css("min-height", contentHeight);
-	                $(".gridster ul").css("margin-left", this.props.padding[3]);
+	                $(".mainGrid ul").css("min-height", contentHeight);
+	                $(".mainGrid ul").css("margin-left", this.props.padding[3]);
 
-	                $(".gridster ul").gridster({
+	                $(".mainGrid ul").gridster({
 	                    widget_margins: [1, 1],
 	                    widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
 	                    min_cols: 12,
@@ -33151,7 +33142,90 @@
 	                });
 	                $(".extraGrid").hide();
 	            }
+
+	            if (this.props.expandMode === 1) {
+	                //portrait cut model
+	                $(".footer").css("position", "absolute").css("bottom", 0).css("right", 0);
+	                var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
+
+	                var extraHeight = this.props.height;
+	                if (this.props.showFooter) {
+	                    extraHeight -= this.props.footerHeight;
+	                }
+	                extraHeight -= this.props.padding[0];
+	                $(".extraGrid").css("position", "absolute").css("top", this.props.padding[0]).css("right", this.props.padding[1]).show();
+	                $(".extraGrid ul").gridster({
+	                    widget_margins: [1, 1],
+	                    widget_base_dimensions: [contentWidth / 12 - 2, extraHeight / 10 - 2],
+	                    min_cols: 12,
+	                    min_rows: 10,
+
+	                    resize: {
+	                        enabled: true
+	                    }
+	                });
+
+	                var contentHeight = this.props.height;
+	                if (this.props.showHeader) {
+	                    contentHeight -= this.props.headerHeight;
+	                }
+	                contentHeight -= this.props.padding[2];
+
+	                $(".mainGrid ul").css("min-height", contentHeight);
+	                $(".mainGrid ul").css("margin-left", this.props.padding[3]);
+
+	                $(".mainGrid ul").gridster({
+	                    widget_margins: [1, 1],
+	                    widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
+	                    min_cols: 12,
+	                    min_rows: 10,
+	                    max_rows: 10,
+	                    max_cols: 12,
+	                    resize: {
+	                        enabled: true
+	                    }
+	                });
+	            }
+
+	            if (this.props.expandMode === 3) {
+	                //extra mode
+	                $(".extraGrid").css("position", "absolute").css("top", 0).css("right", 0).css("width", this.props.width).show();
+	                $(".extraGrid ul").gridster({
+	                    widget_margins: [1, 1],
+	                    widget_base_dimensions: [this.props.width / 12 - 2, this.props.height / 10 - 2],
+	                    min_cols: 12,
+	                    min_rows: 10,
+	                    resize: {
+	                        enabled: true
+	                    }
+	                });
+
+	                var contentHeight = this.props.height;
+	                if (this.props.showHeader) {
+	                    contentHeight -= this.props.headerHeight;
+	                }
+	                if (this.props.showFooter) {
+	                    contentHeight -= this.props.footerHeight;
+	                }
+	                var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
+	                $(".mainGrid ul").css("min-height", contentHeight);
+	                $(".mainGrid ul").css("margin-left", this.props.padding[3]);
+
+	                $(".mainGrid ul").gridster({
+	                    widget_margins: [1, 1],
+	                    widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
+	                    min_cols: 12,
+	                    min_rows: 10,
+	                    resize: {
+	                        enabled: true
+	                    }
+	                });
+	            }
 	        } else {
+	            $(".mainGrid").empty();
+	            $(".mainGrid").append("<ul>" + mHtml + "</ul>");
+	            //$(".mainGrid ul").append(eHtml);
+
 	            var contentHeight = this.props.height;
 	            if (this.props.showHeader) {
 	                contentHeight -= this.props.headerHeight;
@@ -33160,10 +33234,10 @@
 	                contentHeight -= this.props.footerHeight;
 	            }
 	            var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
-	            $(".gridster ul").css("min-height", contentHeight);
-	            $(".gridster ul").css("margin-left", this.props.padding[3]);
+	            $(".mainGrid ul").css("min-height", contentHeight);
+	            $(".mainGrid ul").css("margin-left", this.props.padding[3]);
 
-	            $(".gridster ul").gridster({
+	            $(".mainGrid ul").gridster({
 	                widget_margins: [1, 1],
 	                widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
 	                min_cols: 12,
@@ -33179,7 +33253,6 @@
 	        if (this.props.expandMode === 2) {
 	            col = col * 2;
 	        }
-
 	        //EditPanel.init();
 	    },
 
@@ -33188,7 +33261,7 @@
 	    },
 
 	    addBlock: function addBlock() {
-	        var gridster = $(".gridster ul").gridster().data('gridster');
+	        var gridster = $(".mainGrid ul").gridster().data('gridster');
 	        gridster.add_widget("<li class='j-grid-block player-revert'></li>", 12, 2, 1, 100);
 	        //EditPanel.init();
 	    },
@@ -33201,7 +33274,7 @@
 	            null,
 	            React.createElement(
 	                "div",
-	                { className: "gridster" },
+	                { className: "gridster mainGrid" },
 	                React.createElement(
 	                    "ul",
 	                    null,
@@ -33211,12 +33284,16 @@
 	            ),
 	            React.createElement(
 	                "div",
-	                { className: "extraGrid" },
-	                React.createElement("ul", null)
+	                { className: "gridster extraGrid" },
+	                React.createElement(
+	                    "ul",
+	                    null,
+	                    React.createElement("li", { "data-row": "1", "data-col": "1", "data-sizex": "12", "data-sizey": "4",
+	                        className: "j-grid-block player-revert" })
+	                )
 	            )
 	        );
 	    }
-
 	});
 
 	module.exports = GridLayout;
