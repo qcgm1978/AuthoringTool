@@ -1,7 +1,8 @@
-require("../rtfeditor/mytexteditor");
+
 require("./panel.css");
 var React = require('react');
 var $ = require("jquery");
+require("../rtfeditor/mytexteditor");
 
 var EditPanel = React.createClass({
     initialOptions : {
