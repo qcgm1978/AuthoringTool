@@ -3,7 +3,7 @@
 
   "default": {
     "html": "preview.html",
-    "paddings": [
+    "padding": [
         20, 20, 20, 20
     ],
 

@@ -1,7 +1,7 @@
 var React = require('react');
 var $ = require("jquery");
 
-var GridLines = require("./GridLines.jsx");
+var AxisLines = require("./AxisLines.jsx");
 var GridLayout = require("./GridLayout.jsx");
 
 /**
@@ -11,11 +11,13 @@ var GridLayout = require("./GridLayout.jsx");
  */
 var ThemeScreen = React.createClass({
 
+    themeConfig: null,
+
     getInitialState: function () {
       return {
-          width: this.props.width,
-          minHeight: this.props.minHeight,
-          doubleScreen: this.props.doubleScreen
+          headerHeight: 0,
+          footerHeight: 0,
+          padding: [0,0,0,0]
       }
     },
 
@@ -40,6 +42,9 @@ var ThemeScreen = React.createClass({
         });
     },
 
+    moreGrid: function() {
+        this.refs["layout"].addBlock();
+    },
 
     /**
      * 这个方法会在页面加载header和footer， 根据设置计算好他们所占的高度，
@@ -47,29 +52,23 @@ var ThemeScreen = React.createClass({
      * @param html
      */
     handleTemplateLoaded: function(html) {
-        var props = this.props;
         $(".styles").empty();
         $(".header").empty().append($(html).filter("header"));
         $(".footer").empty().append($(html).filter("footer"));
         $(html).filter("link").each(function() {
-            $(".styles").append('<link rel="stylesheet" href="templates/default/'
-                + $(this).attr("href") + '">');
+            $('<link>').attr('rel','stylesheet')
+                .attr('type','text/css')
+                .attr('href',"templates/default/" + $(this).attr("href"))
+                .appendTo('.styles');
         });
+        setTimeout(this.updateSize, 300);
+    },
 
-        var contentHeight = props.minHeight;
-        if (props.showHeader) {
-            contentHeight -= $(".header").height();
-        }
-        if (props.showFooter) {
-            contentHeight -= $(".footer").height();
-        }
-        if(contentHeight===props.minHeight) {
-            contentHeight -= themeConfig.default.padding[0];
-            contentHeight -= themeConfig.default.padding[2];
-        }
-        console.log(contentHeight);
+    updateSize: function( ) {
         this.setState({
-            minHeight: contentHeight
+            headerHeight: $(".header").height(),
+            footerHeight: $(".footer").height(),
+            padding: this.themeConfig.default.padding
         });
     },
 
@@ -77,24 +76,63 @@ var ThemeScreen = React.createClass({
         this.loadTheme();
     },
 
+    componentWillReceiveProps: function(nextProps) {
+        if (nextProps.theme!=this.props.theme) {
+            this.loadTheme();
+        }
+    },
+
     render: function () {
         var swidth = this.props.width;
-
         if (this.props.doubleScreen) {
             swidth = swidth * 2;
         }
+
+        var headerWidth = "100%";
+        if (this.props.doubleScreen) {
+            if (this.props.expandMode===3||this.props.expandMode===1) {
+                headerWidth = "50%";
+            }
+        }
+
+        var contentHeight = this.props.height;
+        var contentWidth = this.props.width;
+        if (this.props.showHeader) {
+            contentHeight -= this.state.headerHeight;
+        }
+        if (this.props.showFooter) {
+            contentHeight -= this.state.footerHeight;
+        }
+        if(contentHeight===this.props.height && this.themeConfig) {
+            contentHeight -= this.themeConfig.default.padding[0];
+            contentHeight -= this.themeConfig.default.padding[2];
+        }
         /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
+
         return (
             <div className="screen" style={{
-                            width:  swidth,
-                            minHeight: this.props.minHeight
-                        }}>
-                <div className="styles"></div>
-                <div className="header"></div>
+                        width:  swidth,
+                        minHeight: this.props.minHeight
+                    }}>
+                <div className="display">
+                    <div className="styles"></div>
+                    <div className="header" style={{
+                        width: headerWidth
+                    }}></div>
 
-                <GridLayout width={this.state.width} minHeight={this.state.minHeight} doubleScreen={this.state.doubleScreen}/>
-                <GridLines width={this.state.width} minHeight={this.state.minHeight} doubleScreen={this.state.doubleScreen}/>
-                <div className="footer"></div>
+                    <GridLayout width={this.props.width} height={this.props.height}
+                                showHeader={this.props.showHeader} showFooter={this.props.showFooter}
+                                doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}
+                                headerHeight={this.state.headerHeight} footerHeight={this.state.footerHeight}
+                                padding={this.state.padding}
+                                ref="layout"/>
+                    <div className="footer" style={{
+                        width: headerWidth
+                    }}></div>
+                </div>
+                <AxisLines width={this.props.width} height={this.props.height} headerHeight={this.state.headerHeight}
+                           contentWidth={contentWidth}
+                           doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}/>
             </div>
         );
     }
