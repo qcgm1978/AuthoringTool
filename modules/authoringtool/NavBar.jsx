@@ -7,7 +7,7 @@ var React = require('react');
 var NavBar = React.createClass({
 
     SCREEN_MODEL_PORTRAIT: "Portrait Mode",
-    SCREEN_MODEL_EXPAND: "Expanded Mode",
+    SCREEN_MODEL_EXPAND: "Landscape Mode",
     SCREEN_MODEL_EXTRA: "Extra Mode",
 
     setState: function(state) {
@@ -74,17 +74,20 @@ var NavBar = React.createClass({
     zoomChange: function (event) {
         this.setState({zoom: event.target.value});
     },
+    /**
+     * <li>
+     //    <button type="button" className="btn btn-success navbar-btn" onClick={this.addGridClick}>
+     //        Add Block
+     //    </button>
+     //</li>
 
+     * @returns {XML}
+     */
     render: function() {
         return (
             <nav className="navbar navbar-default navbar-fixed-top">
                 <a className="navbar-brand" href="#">Authoring Tool</a>
                 <ul className="nav navbar-nav navbar-right">
-                    <li>
-                        <button type="button" className="btn btn-success navbar-btn" onClick={this.addGridClick}>
-                            Add Block
-                        </button>
-                    </li>
 
                     <li className="dropdown">
                         <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -108,10 +111,9 @@ var NavBar = React.createClass({
                         </ul>
                     </li>
 
-                    <li>
-                        <input type="checkbox" onClick={this.toggleScreen}/>
+                    <li className="dropdown">
+                        <input type="checkbox" onClick={this.toggleScreen}/>Double Screen
                     </li>
-
 
                     <li className="dropdown">
                         <a href="#" className="dropdown-toggle" id="expandType" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

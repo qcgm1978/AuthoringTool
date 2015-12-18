@@ -24,6 +24,8 @@
 - webpack
 1. 即时打包
  > webpack --progress --colors --watch
+ > 压缩打包 webpack --progress -p
+
 
 2. 安装reactjs
  > 安装babel loader: npm install babel-loader babel-core babel-preset-es2015 babelify --save-dev
