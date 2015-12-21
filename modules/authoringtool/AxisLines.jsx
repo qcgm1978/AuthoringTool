@@ -2,7 +2,6 @@
  * Created by Liuhan on 2015/12/8.
  */
 var React = require('react');
-var $ = require("jquery");
 
 var GridLines = React.createClass({
 

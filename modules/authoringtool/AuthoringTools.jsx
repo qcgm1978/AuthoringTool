@@ -5,8 +5,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var $ = require("jquery");
-
 var NavBar = require("./NavBar.jsx");
 var ThemeScreen = require("./ThemeScreen.jsx");
 

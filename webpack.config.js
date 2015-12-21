@@ -34,5 +34,10 @@ module.exports = {
                 loader: 'url-loader'//?limit=30000&name=[name]-[hash].[ext]'
             }
         ]
+    },
+    externals: {
+        // require("jquery") is external and available
+        //  on the global var jQuery
+        "jquery": "jQuery"
     }
 };

@@ -1,5 +1,4 @@
 var React = require('react');
-var $ = require("jquery");
 
 var AxisLines = require("./AxisLines.jsx");
 var GridLayout = require("./GridLayout.jsx");

@@ -1,5 +1,4 @@
 var React = require('react');
-var $ = require("jquery");
 
 //require("tinymce");
 
@@ -44,6 +43,8 @@ var GridLayout = React.createClass({
                 toolbar: 'undo redo|mybutton formatselect bold italic underline strikethrough bullist numlist'
             });
             return;
+        } else {
+            tinymce.execCommand('mceRemoveControl', true, '.gridster li .content');
         }
 
         if ($("#main-grid>ul").data("gridster")) {

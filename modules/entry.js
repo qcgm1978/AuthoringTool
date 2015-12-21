@@ -8,4 +8,3 @@ require("../modules/gridster/jquery.gridster.css");
 require("../modules/gridster/jquery.gridster");
 require("./authoringtool/main.scss");
 require("./authoringtool/AuthoringTools.jsx");
-

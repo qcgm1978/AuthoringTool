@@ -17,13 +17,14 @@
 
 1. 安装babel
  > npm install --global babel-cli
+
  > npm install babel-preset-react
 2. 启动watcher
  > babel --presets react src --watch --out-dir build
 
 - webpack
 1. 即时打包
- > webpack --progress --colors --watch
+ > webpack --progress --colors --watch --display-modules
  > 压缩打包 webpack --progress -p
 
 
