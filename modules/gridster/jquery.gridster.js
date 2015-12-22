@@ -3618,7 +3618,6 @@
 
         cols = Math.min(max_cols, Math.max(cols, this.options.min_cols));
         this.container_width = cols * this.min_widget_width;
-        console.log(this.min_widget_width);
         this.$el.css('width', this.container_width);
         return this;
     };

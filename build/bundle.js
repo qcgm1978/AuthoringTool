@@ -2654,7 +2654,7 @@
 
 
 	// module
-	exports.push([module.id, ".gridster {\n    position:relative;\n}\n\n.gridster > * {\n    -webkit-transition: height .4s, width .4s;\n    -moz-transition: height .4s, width .4s;\n    -o-transition: height .4s, width .4s;\n    -ms-transition: height .4s, width .4s;\n    transition: height .4s, width .4s;\n    margin: 0;\n}\n\n.gridster .gs-w {\n    z-index: 2;\n    position: absolute;\n}\n\n.ready .gs-w:not(.preview-holder) {\n    -webkit-transition: opacity .3s, left .3s, top .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s;\n    -o-transition: opacity .3s, left .3s, top .3s;\n    transition: opacity .3s, left .3s, top .3s;\n}\n\n.ready .gs-w:not(.preview-holder),\n.ready .resize-preview-holder {\n    -webkit-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -o-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n}\n\n.gridster .preview-holder {\n    z-index: 1;\n    position: absolute;\n    background-color: #fff;\n    border-color: #fff;\n    opacity: 0.3;\n}\n\n.gridster .player-revert {\n    z-index: 10!important;\n    -webkit-transition: left .3s, top .3s!important;\n    -moz-transition: left .3s, top .3s!important;\n    -o-transition: left .3s, top .3s!important;\n    transition:  left .3s, top .3s!important;\n}\n\n.gridster .dragging,\n.gridster .resizing {\n    z-index: 10!important;\n    -webkit-transition: all 0s !important;\n    -moz-transition: all 0s !important;\n    -o-transition: all 0s !important;\n    transition: all 0s !important;\n}\n\n\n.gs-resize-handle {\n    position: absolute;\n    z-index: 1;\n}\n\n.gs-resize-handle-both {\n    width: 20px;\n    height: 20px;\n    bottom: -8px;\n    right: -8px;\n    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=');\n    background-position: top left;\n    background-repeat: no-repeat;\n    cursor: se-resize;\n    z-index: 20;\n}\n\n.gs-resize-handle-x {\n    top: 0;\n    bottom: 13px;\n    right: -5px;\n    width: 10px;\n    cursor: e-resize;\n}\n\n.gs-resize-handle-y {\n    left: 0;\n    right: 13px;\n    bottom: -5px;\n    height: 10px;\n    cursor: s-resize;\n}\n\n.gs-w:hover .gs-resize-handle,\n.resizing .gs-resize-handle {\n    opacity: 1;\n}\n\n.gs-resize-handle,\n.gs-w.dragging .gs-resize-handle {\n    opacity: 0;\n}\n\n.gs-resize-disabled .gs-resize-handle {\n    display: none!important;\n}\n\n[data-max-sizex=\"1\"] .gs-resize-handle-x,\n[data-max-sizey=\"1\"] .gs-resize-handle-y,\n[data-max-sizey=\"1\"][data-max-sizex=\"1\"] .gs-resize-handle {\n    display: none !important;\n}\n\n.gridster li {\n    list-style: none;\n}\n\n.gridster .gs-w {\n    background: #FFF;\n    cursor: pointer;\n    border: 1px solid #bbb;\n}\n\n.gridster .player {\n    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n}\n\n.gridster .gs-w.try {\n    background-repeat: no-repeat;\n    background-position: 37px -169px;\n\n}\n\n.gridster .preview-holder {\n    border: none!important;\n    border-radius: 0!important;\n    background: rgba(255,255,255,.2)!important;\n}\n\n\n\n/* Uncomment this if you set helper : \"clone\" in draggable options */\n/*.gridster .player {\n  opacity:0;\n}\n*/", ""]);
+	exports.push([module.id, ".gridster {\n    position:relative;\n}\n\n.gridster > * {\n    -webkit-transition: height .4s, width .4s;\n    -moz-transition: height .4s, width .4s;\n    -o-transition: height .4s, width .4s;\n    -ms-transition: height .4s, width .4s;\n    transition: height .4s, width .4s;\n    margin: 0;\n}\n\n.gridster .gs-w {\n    z-index: 2;\n    position: absolute;\n}\n\n.ready .gs-w:not(.preview-holder) {\n    -webkit-transition: opacity .3s, left .3s, top .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s;\n    -o-transition: opacity .3s, left .3s, top .3s;\n    transition: opacity .3s, left .3s, top .3s;\n}\n\n.ready .gs-w:not(.preview-holder),\n.ready .resize-preview-holder {\n    -webkit-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -moz-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    -o-transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n    transition: opacity .3s, left .3s, top .3s, width .3s, height .3s;\n}\n\n.gridster .preview-holder {\n    z-index: 1;\n    position: absolute;\n    background-color: #fff;\n    border-color: #fff;\n    opacity: 0.3;\n}\n\n.gridster .player-revert {\n    z-index: 10!important;\n    -webkit-transition: left .3s, top .3s!important;\n    -moz-transition: left .3s, top .3s!important;\n    -o-transition: left .3s, top .3s!important;\n    transition:  left .3s, top .3s!important;\n}\n\n.gridster .dragging,\n.gridster .resizing {\n    z-index: 10!important;\n    -webkit-transition: all 0s !important;\n    -moz-transition: all 0s !important;\n    -o-transition: all 0s !important;\n    transition: all 0s !important;\n}\n\n\n.gs-resize-handle {\n    position: absolute;\n    z-index: 1;\n}\n\n.gs-resize-handle-both {\n    width: 20px;\n    height: 20px;\n    bottom: -8px;\n    right: -8px;\n    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=');\n    background-position: top left;\n    background-repeat: no-repeat;\n    cursor: se-resize;\n    z-index: 20;\n}\n\n.gs-resize-handle-x {\n    top: 0;\n    bottom: 13px;\n    right: -5px;\n    width: 10px;\n    cursor: e-resize;\n}\n\n.gs-resize-handle-y {\n    left: 0;\n    right: 13px;\n    bottom: -5px;\n    height: 10px;\n    cursor: s-resize;\n}\n\n.gs-w:hover .gs-resize-handle,\n.resizing .gs-resize-handle {\n    opacity: 1;\n}\n\n.gs-resize-handle,\n.gs-w.dragging .gs-resize-handle {\n    opacity: 0;\n}\n\n.gs-resize-disabled .gs-resize-handle {\n    display: none!important;\n}\n\n[data-max-sizex=\"1\"] .gs-resize-handle-x,\n[data-max-sizey=\"1\"] .gs-resize-handle-y,\n[data-max-sizey=\"1\"][data-max-sizex=\"1\"] .gs-resize-handle {\n    display: none !important;\n}\n\n.gridster li {\n    list-style: none;\n}\n\n.gridster .gs-w {\n    background: #FFF;\n    cursor: pointer;\n    border: 1px solid #bbb;\n}\n\n.gridster .player {\n    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);\n}\n\n.gridster .gs-w.try {\n    background-repeat: no-repeat;\n    background-position: 37px -169px;\n\n}\n\n.gridster .preview-holder {\n    border: none!important;\n    border-radius: 0!important;\n    background: rgba(255,255,255,.2)!important;\n}\n", ""]);
 
 	// exports
 
@@ -2665,16 +2665,16 @@
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
 	* http://gridster.net/
-         * Copyright (c) 2014 ducksboard; Licensed MIT */
-        (function (root, factory) {
-            if (true) {
-                !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_0__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))
-            } else {
-                root.GridsterCoords = factory(root.$ || root.jQuery)
-            }
-        })(undefined, function ($) {
-            /**
-             * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
+		 * Copyright (c) 2014 ducksboard; Licensed MIT */
+		(function (root, factory) {
+			if (true) {
+				!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_0__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))
+			} else {
+				root.GridsterCoords = factory(root.$ || root.jQuery)
+			}
+		})(undefined, function ($) {
+			/**
+			 * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
 	    * to simulate DOM elements on the screen.
 	    * Coords is used by Gridster to create a faux grid with any DOM element can
 	    * collide.
@@ -2685,26 +2685,8 @@
 	    * @return {Object} Coords instance.
 	    * @constructor
 	    */function Coords(obj){if(obj[0]&&$.isPlainObject(obj[0])){this.data=obj[0]}else {this.el=obj}this.isCoords=true;this.coords={};this.init();return this}var fn=Coords.prototype;fn.init=function(){this.set();this.original_coords=this.get()};fn.set=function(update,not_update_offsets){var el=this.el;if(el&&!update){this.data=el.offset();this.data.width=el.width();this.data.height=el.height()}if(el&&update&&!not_update_offsets){var offset=el.offset();this.data.top=offset.top;this.data.left=offset.left}var d=this.data;typeof d.left==='undefined'&&(d.left=d.x1);typeof d.top==='undefined'&&(d.top=d.y1);this.coords.x1=d.left;this.coords.y1=d.top;this.coords.x2=d.left+d.width;this.coords.y2=d.top+d.height;this.coords.cx=d.left+d.width/2;this.coords.cy=d.top+d.height/2;this.coords.width=d.width;this.coords.height=d.height;this.coords.el=el||false;return this};fn.update=function(data){if(!data&&!this.el){return this}if(data){var new_data=$.extend({},this.data,data);this.data=new_data;return this.set(true,true)}this.set(true);return this};fn.get=function(){return this.coords};fn.destroy=function(){this.el.removeData('coords');delete this.el}; //jQuery adapter
-            $.fn.coords = function () {
-                if (this.data('coords')) {
-                    return this.data('coords')
-                }
-                var ins = new Coords(this, arguments[0]);
-                this.data('coords', ins);
-                return ins
-            };
-            return Coords
-        });
-        (function (root, factory) {
-            if (true) {
-                !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14), __WEBPACK_LOCAL_MODULE_0__], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_1__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))
-            } else {
-                root.GridsterCollision = factory(root.$ || root.jQuery, root.GridsterCoords)
-            }
-        })(undefined, function ($, Coords) {
-            var defaults = {
-                colliders_context: document.body, overlapping_region: 'C' // ,on_overlap: function(collider_data){},
-                // on_overlap_start : function(collider_data){},
+	$.fn.coords=function(){if(this.data('coords')){return this.data('coords')}var ins=new Coords(this,arguments[0]);this.data('coords',ins);return ins};return Coords});(function(root,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14),__WEBPACK_LOCAL_MODULE_0__], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_1__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))}else {root.GridsterCollision=factory(root.$||root.jQuery,root.GridsterCoords)}})(undefined,function($,Coords){var defaults={colliders_context:document.body,overlapping_region:'C' // ,on_overlap: function(collider_data){},
+	// on_overlap_start : function(collider_data){},
 	// on_overlap_stop : function(collider_data){}
 	}; /**
 	    * Detects collisions between a DOM element against other DOM elements or
@@ -2732,13 +2714,8 @@
 	if(region===overlapping_region||overlapping_region==='all'){var area_coords=self.calculate_overlapped_area_coords(player_coords,collider_coords);var area=self.calculate_overlapped_area(area_coords);var collider_data={area:area,area_coords:area_coords,region:region,coords:collider_coords,player_coords:player_coords,el:$collider};if(self.options.on_overlap){self.options.on_overlap.call(this,collider_data)}colliders_coords.push($collider_coords_ins);colliders_data.push(collider_data)}}if(self.options.on_overlap_stop||self.options.on_overlap_start){this.manage_colliders_start_stop(colliders_coords,self.options.on_overlap_start,self.options.on_overlap_stop)}this.last_colliders_coords=colliders_coords;return colliders_data};fn.get_closest_colliders=function(player_data_coords){var colliders=this.find_collisions(player_data_coords);colliders.sort(function(a,b){ /* if colliders are being overlapped by the "C" (center) region,
 	             * we have to set a lower index in the array to which they are placed
 	             * above in the grid. */if(a.region==='C'&&b.region==='C'){if(a.coords.y1<b.coords.y1||a.coords.x1<b.coords.x1){return -1}else {return 1}}if(a.area<b.area){return 1}return 1});return colliders};fn.set_colliders=function(colliders){if(typeof colliders==='string'||colliders instanceof $){this.$colliders=$(colliders,this.options.colliders_context).not(this.$element)}else {this.colliders=$(colliders)}}; //jQuery adapter
-            $.fn.collision = function (collider, options) {
-                return new Collision(this, collider, options)
-            };
-            return Collision
-        });
-        (function (window, undefined) { /* Delay, debounce and throttle functions taken from underscore.js
-         *
+	$.fn.collision=function(collider,options){return new Collision(this,collider,options)};return Collision});(function(window,undefined){ /* Delay, debounce and throttle functions taken from underscore.js
+	     *
 	     * Copyright (c) 2009-2013 Jeremy Ashkenas, DocumentCloud and
 	     * Investigative Reporters & Editors
 	     *
@@ -2762,66 +2739,8 @@
 	     * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 	     * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 	     * OTHER DEALINGS IN THE SOFTWARE.
-         */
-            window.delay = function (func, wait) {
-                var args = Array.prototype.slice.call(arguments, 2);
-                return setTimeout(function () {
-                    return func.apply(null, args)
-                }, wait)
-            };
-            window.debounce = function (func, wait, immediate) {
-                var timeout;
-                return function () {
-                    var context = this, args = arguments;
-                    var later = function later() {
-                        timeout = null;
-                        if (!immediate)func.apply(context, args)
-                    };
-                    if (immediate && !timeout)func.apply(context, args);
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait)
-                }
-            };
-            window.throttle = function (func, wait) {
-                var context, args, timeout, throttling, more, result;
-                var whenDone = debounce(function () {
-                    more = throttling = false
-                }, wait);
-                return function () {
-                    context = this;
-                    args = arguments;
-                    var later = function later() {
-                        timeout = null;
-                        if (more)func.apply(context, args);
-                        whenDone()
-                    };
-                    if (!timeout)timeout = setTimeout(later, wait);
-                    if (throttling) {
-                        more = true
-                    } else {
-                        result = func.apply(context, args)
-                    }
-                    whenDone();
-                    throttling = true;
-                    return result
-                }
-            }
-        })(window);
-        (function (root, factory) {
-            if (true) {
-                !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_2__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))
-            } else {
-                root.GridsterDraggable = factory(root.$ || root.jQuery)
-            }
-        })(undefined, function ($) {
-            var defaults = {
-                items: 'li',
-                distance: 1,
-                limit: true,
-                offset_left: 0,
-                autoscroll: true,
-                ignore_dragging: ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'], // or function
-                handle:null,container_width:0, // 0 == auto
+	     */window.delay=function(func,wait){var args=Array.prototype.slice.call(arguments,2);return setTimeout(function(){return func.apply(null,args)},wait)};window.debounce=function(func,wait,immediate){var timeout;return function(){var context=this,args=arguments;var later=function later(){timeout=null;if(!immediate)func.apply(context,args)};if(immediate&&!timeout)func.apply(context,args);clearTimeout(timeout);timeout=setTimeout(later,wait)}};window.throttle=function(func,wait){var context,args,timeout,throttling,more,result;var whenDone=debounce(function(){more=throttling=false},wait);return function(){context=this;args=arguments;var later=function later(){timeout=null;if(more)func.apply(context,args);whenDone()};if(!timeout)timeout=setTimeout(later,wait);if(throttling){more=true}else {result=func.apply(context,args)}whenDone();throttling=true;return result}}})(window);(function(root,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_2__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__))}else {root.GridsterDraggable=factory(root.$||root.jQuery)}})(undefined,function($){var defaults={items:'li',distance:1,limit:true,offset_left:0,autoscroll:true,ignore_dragging:['INPUT','TEXTAREA','SELECT','BUTTON'], // or function
+	handle:null,container_width:0, // 0 == auto
 	move_element:true,helper:false, // or 'clone'
 	remove_helper:true // drag: function(e) {},
 	// start : function(e, ui) {},
@@ -2858,49 +2777,8 @@
 	var mouse_prev_zone=min_window_pos+area_size; // up/left
 	var abs_mouse_pos=min_window_pos+data.pointer[dir_prop];var max_player_pos=doc_size-window_size+player_size;if(abs_mouse_pos>=mouse_next_zone){next_scroll=scroll_offset+scroll_inc;if(next_scroll<max_player_pos){$window['scroll'+capitalize(dir_prop)](next_scroll);this['scroll_offset_'+axis]+=scroll_inc}}if(abs_mouse_pos<=mouse_prev_zone){next_scroll=scroll_offset-scroll_inc;if(next_scroll>0){$window['scroll'+capitalize(dir_prop)](next_scroll);this['scroll_offset_'+axis]-=scroll_inc}}return this};fn.manage_scroll=function(data){this.scroll_in('x',data);this.scroll_in('y',data)};fn.calculate_dimensions=function(e){this.window_height=$window.height();this.window_width=$window.width()};fn.drag_handler=function(e){var node=e.target.nodeName; // skip if drag is disabled, or click was not done with the mouse primary button
 	if(this.disabled||e.which!==1&&!isTouch){return}if(this.ignore_drag(e)){return}var self=this;var first=true;this.$player=$(e.currentTarget);this.el_init_pos=this.get_actual_pos(this.$player);this.mouse_init_pos=this.get_mouse_pos(e);this.offsetY=this.mouse_init_pos.top-this.el_init_pos.top;this.$document.on(this.pointer_events.move,function(mme){var mouse_actual_pos=self.get_mouse_pos(mme);var diff_x=Math.abs(mouse_actual_pos.left-self.mouse_init_pos.left);var diff_y=Math.abs(mouse_actual_pos.top-self.mouse_init_pos.top);if(!(diff_x>self.options.distance||diff_y>self.options.distance)){return false}if(first){first=false;self.on_dragstart.call(self,mme);return false}if(self.is_dragging===true){self.on_dragmove.call(self,mme)}return false});if(!isTouch){return false}};fn.on_dragstart=function(e){e.preventDefault();if(this.is_dragging){return this}this.drag_start=this.is_dragging=true;var offset=this.$container.offset();this.baseX=Math.round(offset.left);this.baseY=Math.round(offset.top);this.initial_container_width=this.options.container_width||this.$container.width();if(this.options.helper==='clone'){this.$helper=this.$player.clone().appendTo(this.$container).addClass('helper');this.helper=true}else {this.helper=false}this.win_offset_y=$(window).scrollTop();this.win_offset_x=$(window).scrollLeft();this.scroll_offset_y=0;this.scroll_offset_x=0;this.el_init_offset=this.$player.offset();this.player_width=this.$player.width();this.player_height=this.$player.height();this.set_limits(this.options.container_width);if(this.options.start){this.options.start.call(this.$player,e,this.get_drag_data(e))}return false};fn.on_dragmove=function(e){var data=this.get_drag_data(e);this.options.autoscroll&&this.manage_scroll(data);if(this.options.move_element){(this.helper?this.$helper:this.$player).css({'position':'absolute','left':data.position.left,'top':data.position.top})}var last_position=this.last_position||data.position;data.prev_position=last_position;if(this.options.drag){this.options.drag.call(this.$player,e,data)}this.last_position=data.position;return false};fn.on_dragstop=function(e){var data=this.get_drag_data(e);this.drag_start=false;if(this.options.stop){this.options.stop.call(this.$player,e,data)}if(this.helper&&this.options.remove_helper){this.$helper.remove()}return false};fn.on_select_start=function(e){if(this.disabled){return}if(this.ignore_drag(e)){return}return false};fn.enable=function(){this.disabled=false};fn.disable=function(){this.disabled=true};fn.destroy=function(){this.disable();this.$container.off(this.ns);this.$document.off(this.ns);$(window).off(this.ns);$.removeData(this.$container,'drag')};fn.ignore_drag=function(event){if(this.options.handle){return !$(event.target).is(this.options.handle)}if($.isFunction(this.options.ignore_dragging)){return this.options.ignore_dragging(event)}return $(event.target).is(this.options.ignore_dragging.join(', '))}; //jQuery adapter
-            $.fn.drag = function (options) {
-                return new Draggable(this, options)
-            };
-            return Draggable
-        });
-        (function (root, factory) {
-            if (true) {
-                !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14), __WEBPACK_LOCAL_MODULE_2__, __WEBPACK_LOCAL_MODULE_1__], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
-            } else {
-                root.Gridster = factory(root.$ || root.jQuery, root.GridsterDraggable, root.GridsterCollision)
-            }
-        })(undefined, function ($, Draggable, Collision) {
-            var defaults = {
-                namespace: '',
-                widget_selector: 'li',
-                widget_margins: [10, 10],
-                widget_base_dimensions: [400, 225],
-                extra_rows: 0,
-                extra_cols: 0,
-                min_cols: 1,
-                max_cols: Infinity,
-                min_rows: 15,
-                max_size_x: false,
-                autogrow_cols: false,
-                autogenerate_stylesheet: true,
-                avoid_overlapped_widgets: true,
-                auto_init: true,
-                serialize_params: function serialize_params($w, wgd) {
-                    return {col: wgd.col, row: wgd.row, size_x: wgd.size_x, size_y: wgd.size_y}
-                },
-                collision: {},
-                draggable: {items: '.gs-w', distance: 4, ignore_dragging: Draggable.defaults.ignore_dragging.slice(0)},
-                resize: {
-                    enabled: false,
-                    axes: ['both'],
-                    handle_append_to: '',
-                    handle_class: 'gs-resize-handle',
-                    max_size: [Infinity, Infinity],
-                    min_size: [1, 1]
-                }
-            };
-            /**
-             * @class Gridster
+	$.fn.drag=function(options){return new Draggable(this,options)};return Draggable});(function(root,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14),__WEBPACK_LOCAL_MODULE_2__,__WEBPACK_LOCAL_MODULE_1__], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))}else {root.Gridster=factory(root.$||root.jQuery,root.GridsterDraggable,root.GridsterCollision)}})(undefined,function($,Draggable,Collision){var defaults={namespace:'',widget_selector:'li',widget_margins:[10,10],widget_base_dimensions:[400,225],extra_rows:0,extra_cols:0,min_cols:1,max_cols:Infinity,min_rows:15,max_size_x:false,autogrow_cols:false,autogenerate_stylesheet:true,avoid_overlapped_widgets:true,auto_init:true,serialize_params:function serialize_params($w,wgd){return {col:wgd.col,row:wgd.row,size_x:wgd.size_x,size_y:wgd.size_y}},collision:{},draggable:{items:'.gs-w',distance:4,ignore_dragging:Draggable.defaults.ignore_dragging.slice(0)},resize:{enabled:false,axes:['both'],handle_append_to:'',handle_class:'gs-resize-handle',max_size:[Infinity,Infinity],min_size:[1,1]}}; /**
+	    * @class Gridster
 	    * @uses Draggable
 	    * @uses Collision
 	    * @param {HTMLElement} el The HTMLelement that contains all the widgets.
@@ -3599,7 +3477,7 @@
 	    *
 	    * @method set_dom_grid_width
 	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.set_dom_grid_width=function(cols){if(typeof cols==='undefined'){cols=this.get_highest_occupied_cell().col}var max_cols=this.options.autogrow_cols?this.options.max_cols:this.cols;cols=Math.min(max_cols,Math.max(cols,this.options.min_cols));this.container_width=cols*this.min_widget_width;console.log(this.min_widget_width);this.$el.css('width',this.container_width);return this}; /**
+	    */fn.set_dom_grid_width=function(cols){if(typeof cols==='undefined'){cols=this.get_highest_occupied_cell().col}var max_cols=this.options.autogrow_cols?this.options.max_cols:this.cols;cols=Math.min(max_cols,Math.max(cols,this.options.min_cols));this.container_width=cols*this.min_widget_width;this.$el.css('width',this.container_width);return this}; /**
 	    * It generates the neccessary styles to position the widgets.
 	    *
 	    * @method generate_stylesheet
@@ -3715,7 +3593,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n    .screen .display > div .editToggle {\n      position: absolute;\n      left: -40px;\n      top: 0; }\n      .screen .display > div .editToggle span {\n        font-size: 24px;\n        display: block;\n        width: 40px;\n        line-height: 40px;\n        text-align: center;\n        background-color: #5CB85C;\n        color: #fff;\n        cursor: pointer; }\n    .screen .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .screen .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .screen .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .screen .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n    .screen .display > div .leftMenu {\n      position: absolute;\n      left: -40px;\n      top: 0; }\n      .screen .display > div .leftMenu span.glyphicon {\n        font-size: 18px;\n        display: block;\n        width: 40px;\n        line-height: 40px;\n        text-align: center;\n        background-color: #F5F5F5;\n        color: #5CB85C;\n        cursor: pointer; }\n        .screen .display > div .leftMenu span.glyphicon.active {\n          background-color: #5CB85C;\n          color: #fff; }\n      .screen .display > div .leftMenu .blockType {\n        box-shadow: 4px 0 6px 0 rgba(22, 45, 61, 0.36);\n        position: fixed;\n        top: 70px;\n        height: 400px;\n        width: 400px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100; }\n        .screen .display > div .leftMenu .blockType ul.category-list {\n          background-image: linear-gradient(360deg, rgba(6, 49, 85, 0.2), rgba(56, 153, 236, 0));\n          background-color: #5CB85C;\n          display: inline-block;\n          height: 100%;\n          padding: 14px 0;\n          vertical-align: top; }\n          .screen .display > div .leftMenu .blockType ul.category-list li.category {\n            text-align: center;\n            color: #fff;\n            cursor: pointer;\n            font-size: 14px;\n            margin-bottom: 2px;\n            max-height: 30px;\n            min-height: 14px;\n            padding: 0 10px 0 3px;\n            position: relative; }\n            .screen .display > div .leftMenu .blockType ul.category-list li.category span {\n              border-radius: 20px;\n              display: inline-block;\n              height: 100%;\n              overflow: hidden;\n              padding: 0 14px;\n              position: relative; }\n              .screen .display > div .leftMenu .blockType ul.category-list li.category span.current {\n                background-color: rgba(0, 0, 0, 0.2);\n                box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n    .screen .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .screen .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .screen .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .screen .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n", ""]);
 
 	// exports
 
@@ -3736,12 +3614,8 @@
 	var NavBar = __webpack_require__(176);
 	var ThemeScreen = __webpack_require__(177);
 
-	/*
-	var EditPanel = require("../panel/EditorPanel.jsx");
-	var EditBar = require("../editorbar/EditorBar.jsx");
-	*/
-	var PageEditor = React.createClass({
-	    displayName: 'PageEditor',
+	var AuthoringTool = React.createClass({
+	    displayName: 'AuthoringTool',
 
 	    getInitialState: function getInitialState() {
 	        return {
@@ -3783,7 +3657,7 @@
 	    }
 	});
 
-	ReactDOM.render(React.createElement(PageEditor, null), document.getElementById('AuthoringTool'));
+	ReactDOM.render(React.createElement(AuthoringTool, null), document.getElementById('AuthoringTool'));
 
 /***/ },
 /* 18 */
@@ -23391,36 +23265,34 @@
 	    SCREEN_MODEL_EXPAND: "Landscape Mode",
 	    SCREEN_MODEL_EXTRA: "Extra Mode",
 
-	    setState: function setState(state) {
+	    changeProp: function changeProp(state) {
 	        this.props.onChange(state);
+	        this.setState(state);
 	    },
 
-	    ratioChange: function ratioChange(event) {
-	        var ratio = event.target.value;
-	        if (ratio === "1920x1080(16:9)") {
-	            this.setState({ width: 1920, minHeight: 1080 });
-	        } else if (ratio === "x1610") {
-	            this.setState({ width: 1280, minHeight: 800 });
-	        } else if (ratio === "x43") {
-	            this.setState({ width: 1024, minHeight: 768 });
-	        }
+	    getInitialState: function getInitialState() {
+	        return {
+	            doubleScreen: false
+	        };
 	    },
 
 	    resolution: function resolution(event) {
 	        var value = $(event.target).html();
 	        if (value === "1920x1080(16:9)") {
-	            this.setState({ width: 1920, minHeight: 1080 });
+	            this.props.onChange({ width: 1920, minHeight: 1080 });
 	        } else if (value === "1200x800(16:10)") {
-	            this.setState({ width: 1280, minHeight: 800 });
+	            this.props.onChange({ width: 1280, minHeight: 800 });
 	        } else if (value === "1024x768(4:3)") {
-	            this.setState({ width: 1024, minHeight: 768 });
+	            this.props.onChange({ width: 1024, minHeight: 768 });
 	        }
+	        $("resolute-value").html(value);
 	    },
 
 	    toggleScreen: function toggleScreen(event) {
-	        this.setState({
-	            doubleScreen: event.target.checked
+	        this.props.onChange({
+	            doubleScreen: !this.state.doubleScreen
 	        });
+	        this.state.doubleScreen = !this.state.doubleScreen;
 	    },
 
 	    screenModel: function screenModel(event) {
@@ -23437,13 +23309,13 @@
 	        if (value === this.SCREEN_MODEL_EXTRA) {
 	            mode = 3;
 	        }
-	        this.setState({
+	        this.props.onChange({
 	            expandMode: mode
 	        });
 	    },
 
 	    selectTheme: function selectTheme(event) {
-	        this.setState({
+	        this.props.onChange({
 	            themeName: event.target.value
 	        });
 	    },
@@ -23453,7 +23325,7 @@
 	    },
 
 	    zoomChange: function zoomChange(event) {
-	        this.setState({ zoom: event.target.value });
+	        this.props.onChange({ zoom: event.target.value });
 	    },
 	    /**
 	     * <li>
@@ -23474,6 +23346,37 @@
 	            ),
 	            React.createElement(
 	                "ul",
+	                { className: "nav navbar-nav navbar-left" },
+	                React.createElement(
+	                    "li",
+	                    null,
+	                    React.createElement(
+	                        "a",
+	                        { onClick: this.resolution },
+	                        "New"
+	                    )
+	                ),
+	                React.createElement(
+	                    "li",
+	                    null,
+	                    React.createElement(
+	                        "a",
+	                        { onClick: this.resolution },
+	                        "Open"
+	                    )
+	                ),
+	                React.createElement(
+	                    "li",
+	                    { role: "presentation" },
+	                    React.createElement(
+	                        "a",
+	                        { href: "#" },
+	                        "Save"
+	                    )
+	                )
+	            ),
+	            React.createElement(
+	                "ul",
 	                { className: "nav navbar-nav navbar-right" },
 	                React.createElement(
 	                    "li",
@@ -23481,7 +23384,11 @@
 	                    React.createElement(
 	                        "a",
 	                        { href: "#", className: "dropdown-toggle", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
-	                        "Screen Resolution",
+	                        React.createElement(
+	                            "span",
+	                            { className: "resolute-value" },
+	                            "1024x768(4:3)"
+	                        ),
 	                        React.createElement("span", { className: "caret" })
 	                    ),
 	                    React.createElement(
@@ -23542,19 +23449,27 @@
 	                React.createElement(
 	                    "li",
 	                    { className: "dropdown" },
-	                    React.createElement("input", { type: "checkbox", onClick: this.toggleScreen }),
-	                    "Double Screen"
+	                    React.createElement(
+	                        "a",
+	                        { onClick: this.toggleScreen, style: {
+	                                fontSize: "20px",
+	                                color: "#000"
+	                            } },
+	                        React.createElement("span", { className: this.state.doubleScreen ? "glyphicon glyphicon-blackboard" : "glyphicon glyphicon-sound-stereo" })
+	                    )
 	                ),
 	                React.createElement(
 	                    "li",
-	                    { className: "dropdown" },
+	                    { className: "dropdown", style: {
+	                            display: this.state.doubleScreen ? "inherit" : "none"
+	                        } },
 	                    React.createElement(
 	                        "a",
 	                        { href: "#", className: "dropdown-toggle", id: "expandType", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
 	                        React.createElement(
 	                            "span",
 	                            { className: "value" },
-	                            "Screen Model"
+	                            this.SCREEN_MODEL_PORTRAIT
 	                        ),
 	                        React.createElement("span", { className: "caret" })
 	                    ),
@@ -23592,28 +23507,15 @@
 	                ),
 	                React.createElement(
 	                    "li",
-	                    null,
+	                    { className: "save" },
 	                    React.createElement(
-	                        "a",
-	                        { href: "#" },
+	                        "button",
+	                        { type: "button", href: "#", className: "btn btn-success" },
 	                        "Save"
-	                    )
-	                ),
-	                React.createElement(
-	                    "li",
-	                    null,
+	                    ),
 	                    React.createElement(
-	                        "a",
-	                        { href: "#" },
-	                        "Preview"
-	                    )
-	                ),
-	                React.createElement(
-	                    "li",
-	                    null,
-	                    React.createElement(
-	                        "a",
-	                        { href: "#" },
+	                        "button",
+	                        { type: "button", href: "#", className: "btn btn-primary" },
 	                        "Export"
 	                    )
 	                )
@@ -23852,9 +23754,11 @@
 /* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var React = __webpack_require__(18);
+
+	var LeftMenu = __webpack_require__(180);
 
 	//require("tinymce");
 
@@ -23865,7 +23769,7 @@
 	            doubleScreen={this.state.doubleScreen}/>
 	*/
 	var GridLayout = React.createClass({
-	    displayName: 'GridLayout',
+	    displayName: "GridLayout",
 
 	    getInitialState: function getInitialState() {
 	        return {
@@ -24021,9 +23925,7 @@
 	                }
 	                var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
 
-	                $("#main-grid").css("width", contentWidth).css("margin-left", this.props.padding[3]);
-
-	                $("#main-grid ul").css("min-height", contentHeight);
+	                $("#main-grid ul").css("width", contentWidth).css("margin-left", this.props.padding[3]).css("min-height", contentHeight);
 
 	                $("#main-grid ul").gridster({
 	                    namespace: '#main-grid',
@@ -24071,9 +23973,15 @@
 	    },
 
 	    addBlock: function addBlock() {
+	        $("#btn-add-block").popover({
+	            title: "Add Block with type",
+	            content: "Wanta To add New Blocks?"
+	        });
+	        /*
 	        var gridster = $("#main-grid ul").gridster().data('gridster');
 	        gridster.add_widget(this.GRID_TEMPLATE, 12, 2, 1, 100);
-	        //EditPanel.init();
+	        */
+	        //EditPanel.init()g;
 	    },
 
 	    disableLayout: function disableLayout() {
@@ -24095,124 +24003,24 @@
 
 	    render: function render() {
 	        return React.createElement(
-	            'div',
+	            "div",
 	            { className: this.state.layoutable ? "layoutable" : "editable" },
+	            React.createElement(LeftMenu, { layoutable: this.state.layoutable, addBlock: this.addBlock, disableLayout: this.disableLayout,
+	                enableLayout: this.enableLayout }),
 	            React.createElement(
-	                'div',
-	                { className: 'editToggle' },
-	                this.state.layoutable ? React.createElement(
-	                    'div',
+	                "div",
+	                { className: "gridster", id: "main-grid" },
+	                React.createElement(
+	                    "ul",
 	                    null,
-	                    React.createElement('span', { className: 'glyphicon glyphicon-plus', onClick: this.addBlock }),
-	                    React.createElement('span', { className: 'glyphicon glyphicon-edit', onClick: this.disableLayout })
-	                ) : React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement('span', { className: 'glyphicon glyphicon-resize-small', onClick: this.enableLayout })
+	                    React.createElement("li", { "data-row": "1", "data-col": "1", "data-sizex": "12", "data-sizey": "1",
+	                        className: "j-grid-block player-revert" })
 	                )
 	            ),
 	            React.createElement(
-	                'div',
-	                { className: 'gridster', id: 'main-grid' },
-	                React.createElement(
-	                    'ul',
-	                    null,
-	                    React.createElement(
-	                        'li',
-	                        { 'data-row': '1', 'data-col': '1', 'data-sizex': '12', 'data-sizey': '1',
-	                            className: 'j-grid-block player-revert' },
-	                        React.createElement(
-	                            'div',
-	                            { className: 'content' },
-	                            React.createElement(
-	                                'h2',
-	                                null,
-	                                'Usage'
-	                            )
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'li',
-	                        { 'data-row': '2', 'data-col': '1', 'data-sizex': '6', 'data-sizey': '4',
-	                            className: 'j-grid-block player-revert' },
-	                        React.createElement(
-	                            'div',
-	                            { className: 'content' },
-	                            React.createElement(
-	                                'h3',
-	                                null,
-	                                'Toolsbar'
-	                            ),
-	                            React.createElement(
-	                                'ol',
-	                                null,
-	                                React.createElement(
-	                                    'li',
-	                                    null,
-	                                    '1 Screen Resolution 改变分辨率预览'
-	                                ),
-	                                React.createElement(
-	                                    'li',
-	                                    null,
-	                                    '2 Theme选择主题。目前只是套上了一个，还不可更换'
-	                                ),
-	                                React.createElement(
-	                                    'li',
-	                                    null,
-	                                    '3 checkbox 切换单屏和双屏'
-	                                ),
-	                                React.createElement(
-	                                    'li',
-	                                    null,
-	                                    '4 Screen Model 选择实现了3种多屏模式 (这块我们可以再讨论，是否需要，或者每种是什么, 目前实现的是3种模式：1 横向拉伸扩展 2 纵向扩展 3 右侧全屏'
-	                                )
-	                            )
-	                        )
-	                    ),
-	                    React.createElement(
-	                        'li',
-	                        { 'data-row': '4', 'data-col': '7', 'data-sizex': '6', 'data-sizey': '4',
-	                            className: 'j-grid-block player-revert' },
-	                        React.createElement(
-	                            'div',
-	                            { className: 'content' },
-	                            React.createElement(
-	                                'h3',
-	                                null,
-	                                'Left Green Btns'
-	                            ),
-	                            React.createElement(
-	                                'ol',
-	                                null,
-	                                React.createElement(
-	                                    'li',
-	                                    null,
-	                                    '默认是布局模式，可以进行布局，可以增加布局块，定位、调整大小'
-	                                ),
-	                                React.createElement(
-	                                    'li',
-	                                    null,
-	                                    '点击+按钮，增加布局块'
-	                                ),
-	                                React.createElement(
-	                                    'li',
-	                                    null,
-	                                    '点击编辑按钮，进入内容编辑模式'
-	                                )
-	                            )
-	                        )
-	                    )
-	                )
-	            ),
-	            React.createElement(
-	                'div',
-	                { className: 'gridster', id: 'extra-grid' },
-	                React.createElement(
-	                    'ul',
-	                    null,
-	                    React.createElement('li', { 'data-row': '1', 'data-col': '1', 'data-sizex': '12', 'data-sizey': '4',
-	                        className: 'j-grid-block player-revert' })
-	                )
+	                "div",
+	                { className: "gridster", id: "extra-grid" },
+	                React.createElement("ul", null)
 	            )
 	        );
 	    }
@@ -24240,6 +24048,126 @@
 	});
 
 	module.exports = GridLayout;
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+
+	var BlockTypeMenu = __webpack_require__(181);
+
+	var LeftMenu = React.createClass({
+	    displayName: "LeftMenu",
+
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+
+	    componentDidMount: function componentDidMount() {},
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: "leftMenu" },
+	            this.props.layoutable ? React.createElement(
+	                "div",
+	                null,
+	                React.createElement("span", { className: "glyphicon glyphicon-plus", id: "btn-add-block", onClick: this.props.addBlock }),
+	                React.createElement("span", { className: "glyphicon glyphicon-edit", onClick: this.props.disableLayout })
+	            ) : React.createElement(
+	                "div",
+	                null,
+	                React.createElement("span", { className: "glyphicon glyphicon-resize-small", onClick: this.props.enableLayout })
+	            ),
+	            React.createElement(BlockTypeMenu, null)
+	        );
+	    }
+	});
+
+	module.exports = LeftMenu;
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+
+	var BlockTypeMenu = React.createClass({
+	    displayName: "BlockTypeMenu",
+
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+
+	    componentDidMount: function componentDidMount() {},
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: "blockType" },
+	            React.createElement(
+	                "ul",
+	                { className: "category-list" },
+	                React.createElement(
+	                    "li",
+	                    { className: "category" },
+	                    React.createElement(
+	                        "span",
+	                        null,
+	                        "Text"
+	                    )
+	                ),
+	                React.createElement(
+	                    "li",
+	                    { className: "category" },
+	                    React.createElement(
+	                        "span",
+	                        null,
+	                        "Image"
+	                    )
+	                ),
+	                React.createElement(
+	                    "li",
+	                    { className: "category" },
+	                    React.createElement(
+	                        "span",
+	                        null,
+	                        "Video"
+	                    )
+	                ),
+	                React.createElement(
+	                    "li",
+	                    { className: "category" },
+	                    React.createElement(
+	                        "span",
+	                        null,
+	                        "Audio"
+	                    )
+	                ),
+	                React.createElement(
+	                    "li",
+	                    { className: "category" },
+	                    React.createElement(
+	                        "span",
+	                        null,
+	                        "Activity"
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = BlockTypeMenu;
 
 /***/ }
 /******/ ]);

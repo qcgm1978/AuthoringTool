@@ -8,11 +8,8 @@ var ReactDOM = require('react-dom');
 var NavBar = require("./NavBar.jsx");
 var ThemeScreen = require("./ThemeScreen.jsx");
 
-/*
-var EditPanel = require("../panel/EditorPanel.jsx");
-var EditBar = require("../editorbar/EditorBar.jsx");
-*/
-var PageEditor = React.createClass({
+
+var AuthoringTool = React.createClass({
 
     getInitialState: function () {
         return {
@@ -53,13 +50,12 @@ var PageEditor = React.createClass({
                              width={this.state.width} height={this.state.minHeight}
                              showHeader={this.state.showHeader} showFooter={this.state.showFooter} showGrid={this.state.showGrid}
                              ref="themescreen"/>
-
             </div>
         );
     }
 });
 
 ReactDOM.render(
-    <PageEditor />,
+    <AuthoringTool />,
     document.getElementById('AuthoringTool')
 );

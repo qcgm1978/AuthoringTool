@@ -1,5 +1,7 @@
 var React = require('react');
 
+var LeftMenu = require("./LeftMenu.jsx");
+
 //require("tinymce");
 
 /**
@@ -59,7 +61,6 @@ var GridLayout = React.createClass({
 
         var mHtml = $("#main-grid>ul").html();
         var eHtml = $("#extra-grid>ul").html();
-
 
         $(".footer").css("position", "initial");
 
@@ -163,9 +164,8 @@ var GridLayout = React.createClass({
                 }
                 var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
 
-                $("#main-grid").css("width", contentWidth).css("margin-left", this.props.padding[3]);
-
-                $("#main-grid ul").css("min-height", contentHeight);
+                $("#main-grid ul").css("width", contentWidth).css("margin-left", this.props.padding[3])
+                    .css("min-height", contentHeight);
 
                 $("#main-grid ul").gridster({
                     namespace: '#main-grid',
@@ -213,9 +213,15 @@ var GridLayout = React.createClass({
     },
 
     addBlock: function () {
+        $("#btn-add-block").popover({
+            title: "Add Block with type",
+            content: "Wanta To add New Blocks?"
+        });
+        /*
         var gridster = $("#main-grid ul").gridster().data('gridster');
         gridster.add_widget(this.GRID_TEMPLATE, 12, 2, 1, 100);
-        //EditPanel.init();
+        */
+        //EditPanel.init()g;
     },
 
     disableLayout: function() {
@@ -240,56 +246,19 @@ var GridLayout = React.createClass({
     render: function () {
         return (
             <div className={this.state.layoutable?"layoutable":"editable"}>
-                <div className="editToggle">
-                    {this.state.layoutable?
-                        <div>
-                            <span className="glyphicon glyphicon-plus" onClick={this.addBlock}></span>
-                            <span className="glyphicon glyphicon-edit" onClick={this.disableLayout}></span>
-                        </div>
-                    :
-                        <div>
-                            <span className="glyphicon glyphicon-resize-small" onClick={this.enableLayout}></span>
-                        </div>
-                    }
-                </div>
+                <LeftMenu layoutable={this.state.layoutable} addBlock={this.addBlock} disableLayout={this.disableLayout}
+                    enableLayout={this.enableLayout}/>
+
                 <div className="gridster" id="main-grid">
                     <ul>
                         <li data-row="1" data-col="1" data-sizex="12" data-sizey="1"
                             className="j-grid-block player-revert">
-                            <div className="content">
-                                <h2>Usage</h2>
-                            </div>
-                        </li>
-                        <li data-row="2" data-col="1" data-sizex="6" data-sizey="4"
-                            className="j-grid-block player-revert">
-                            <div className="content">
-                                <h3>Toolsbar</h3>
-                                <ol>
-                                    <li>1 Screen Resolution 改变分辨率预览</li>
-                                    <li>2 Theme选择主题。目前只是套上了一个，还不可更换</li>
-                                    <li>3 checkbox 切换单屏和双屏</li>
-                                    <li>4 Screen Model 选择实现了3种多屏模式 (这块我们可以再讨论，是否需要，或者每种是什么, 目前实现的是3种模式：1 横向拉伸扩展 2 纵向扩展 3 右侧全屏</li>
-                                </ol>
-
-                            </div>
-                        </li>
-                        <li data-row="4" data-col="7" data-sizex="6" data-sizey="4"
-                            className="j-grid-block player-revert">
-                            <div className="content">
-                                <h3>Left Green Btns</h3>
-                                <ol>
-                                    <li>默认是布局模式，可以进行布局，可以增加布局块，定位、调整大小</li>
-                                    <li>点击+按钮，增加布局块</li>
-                                    <li>点击编辑按钮，进入内容编辑模式</li>
-                                </ol>
-                            </div>
                         </li>
                     </ul>
                 </div>
                 <div className="gridster" id="extra-grid">
                     <ul>
-                        <li data-row="1" data-col="1" data-sizex="12" data-sizey="4"
-                            className="j-grid-block player-revert"></li>
+
                     </ul>
                 </div>
             </div>

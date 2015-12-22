@@ -10,36 +10,35 @@ var NavBar = React.createClass({
     SCREEN_MODEL_EXPAND: "Landscape Mode",
     SCREEN_MODEL_EXTRA: "Extra Mode",
 
-    setState: function(state) {
+    changeProp: function(state) {
         this.props.onChange(state);
+        this.setState(state);
     },
 
-    ratioChange: function (event) {
-        var ratio = event.target.value;
-        if (ratio === "1920x1080(16:9)") {
-            this.setState({width: 1920, minHeight: 1080});
-        } else if (ratio === "x1610") {
-            this.setState({width: 1280, minHeight: 800});
-        } else if (ratio === "x43") {
-            this.setState({width: 1024, minHeight: 768});
-        }
+    getInitialState: function () {
+        return {
+            doubleScreen: false
+        };
     },
+
 
     resolution: function(event) {
         var value = $(event.target).html();
         if (value === "1920x1080(16:9)") {
-            this.setState({width: 1920, minHeight: 1080});
+            this.props.onChange({width: 1920, minHeight: 1080});
         } else if (value === "1200x800(16:10)") {
-            this.setState({width: 1280, minHeight: 800});
+            this.props.onChange({width: 1280, minHeight: 800});
         } else if (value === "1024x768(4:3)") {
-            this.setState({width: 1024, minHeight: 768});
+            this.props.onChange({width: 1024, minHeight: 768});
         }
+        $("resolute-value").html(value);
     },
 
     toggleScreen: function (event) {
-        this.setState({
-            doubleScreen: event.target.checked
+        this.props.onChange({
+            doubleScreen: !this.state.doubleScreen
         });
+        this.state.doubleScreen = !this.state.doubleScreen;
     },
 
     screenModel: function(event) {
@@ -56,13 +55,13 @@ var NavBar = React.createClass({
         if (value===this.SCREEN_MODEL_EXTRA) {
             mode = 3;
         }
-        this.setState({
+        this.props.onChange({
            expandMode: mode
         });
     },
 
     selectTheme: function (event) {
-        this.setState({
+        this.props.onChange({
             themeName: event.target.value
         });
     },
@@ -72,7 +71,7 @@ var NavBar = React.createClass({
     },
 
     zoomChange: function (event) {
-        this.setState({zoom: event.target.value});
+        this.props.onChange({zoom: event.target.value});
     },
     /**
      * <li>
@@ -87,11 +86,17 @@ var NavBar = React.createClass({
         return (
             <nav className="navbar navbar-default navbar-fixed-top">
                 <a className="navbar-brand" href="#">Authoring Tool</a>
-                <ul className="nav navbar-nav navbar-right">
 
+                <ul className="nav navbar-nav navbar-left">
+                    <li><a onClick={this.resolution}>New</a></li>
+                    <li><a onClick={this.resolution}>Open</a></li>
+                    <li role="presentation" ><a href="#">Save</a></li>
+                </ul>
+
+                <ul className="nav navbar-nav navbar-right">
                     <li className="dropdown">
                         <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            Screen Resolution
+                            <span className="resolute-value">1024x768(4:3)</span>
                             <span className="caret"></span>
                         </a>
                         <ul className="dropdown-menu" aria-labelledby="Resolution">
@@ -112,12 +117,19 @@ var NavBar = React.createClass({
                     </li>
 
                     <li className="dropdown">
-                        <input type="checkbox" onClick={this.toggleScreen}/>Double Screen
+                        <a onClick={this.toggleScreen} style={{
+                            fontSize: "20px",
+                            color: "#000"
+                        }}>
+                        <span  className={this.state.doubleScreen?"glyphicon glyphicon-blackboard":"glyphicon glyphicon-sound-stereo"}></span>
+                            </a>
                     </li>
 
-                    <li className="dropdown">
+                    <li className="dropdown" style={{
+                        display:this.state.doubleScreen?"inherit": "none"
+                    }}>
                         <a href="#" className="dropdown-toggle" id="expandType" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span className="value">Screen Model</span>
+                            <span className="value">{this.SCREEN_MODEL_PORTRAIT}</span>
                             <span className="caret"></span>
                         </a>
                         <ul className="dropdown-menu" aria-labelledby="screenMenu">
@@ -127,9 +139,9 @@ var NavBar = React.createClass({
                         </ul>
                     </li>
 
-                    <li><a href="#">Save</a></li>
-                    <li><a href="#">Preview</a></li>
-                    <li><a href="#">Export</a></li>
+                    <li className="save">
+                        <button type="button" href="#" className="btn btn-success" >Save</button>
+                        <button type="button" href="#"  className="btn btn-primary" >Export</button></li>
                 </ul>
             </nav>
         );
