@@ -3003,7 +3003,9 @@
 	    * @param {Function} callback Function executed when the widget is removed.
 	    * @return {Class} Returns the instance of the Gridster Class.
 	    */fn.remove_widget=function(el,silent,callback){var $el=el instanceof $?el:$(el);var wgd=$el.coords().grid; // if silent is a function assume it's a callback
-	if($.isFunction(silent)){callback=silent;silent=false}this.cells_occupied_by_placeholder={};this.$widgets=this.$widgets.not($el);var $nexts=this.widgets_below($el);this.remove_from_gridmap(wgd);$el.fadeOut($.proxy(function(){$el.remove();if(!silent){$nexts.each($.proxy(function(i,widget){this.move_widget_up($(widget),wgd.size_y)},this))}this.set_dom_grid_height();if(callback){callback.call(this,el)}},this));return this}; /**
+	if($.isFunction(silent)){callback=silent;silent=false}this.cells_occupied_by_placeholder={};this.$widgets=this.$widgets.not($el);var $nexts=this.widgets_below($el);this.remove_from_gridmap(wgd); //$el.fadeOut(
+	$.proxy(function(){$el.remove();if(!silent){$nexts.each($.proxy(function(i,widget){this.move_widget_up($(widget),wgd.size_y)},this))}this.set_dom_grid_height();if(callback){callback.call(this,el)}},this)(); //);
+	return this}; /**
 	    * Remove all widgets from the grid.
 	    *
 	    * @method remove_all_widgets
@@ -3594,7 +3596,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n    .screen .display > div .leftMenu {\n      position: absolute;\n      left: -40px;\n      top: 0; }\n      .screen .display > div .leftMenu span.glyphicon {\n        font-size: 18px;\n        display: block;\n        width: 40px;\n        line-height: 40px;\n        text-align: center;\n        background-color: #F5F5F5;\n        color: #5CB85C;\n        cursor: pointer; }\n        .screen .display > div .leftMenu span.glyphicon[data-clicked='true'] {\n          background-color: #5CB85C;\n          color: #fff; }\n      .screen .display > div .leftMenu .blockType {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 400px;\n        width: 400px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100; }\n        .screen .display > div .leftMenu .blockType ul.category-list {\n          background-image: linear-gradient(360deg, rgba(6, 49, 85, 0.2), rgba(56, 153, 236, 0));\n          background-color: #5CB85C;\n          display: inline-block;\n          height: 100%;\n          padding: 14px 0;\n          vertical-align: top; }\n          .screen .display > div .leftMenu .blockType ul.category-list li.category {\n            text-align: center;\n            color: #fff;\n            cursor: pointer;\n            font-size: 14px;\n            margin-bottom: 2px;\n            max-height: 30px;\n            min-height: 14px;\n            padding: 0 10px 0 3px;\n            position: relative; }\n            .screen .display > div .leftMenu .blockType ul.category-list li.category span {\n              border-radius: 20px;\n              display: inline-block;\n              height: 100%;\n              overflow: hidden;\n              padding: 0 14px;\n              position: relative; }\n              .screen .display > div .leftMenu .blockType ul.category-list li.category span.current {\n                background-color: rgba(0, 0, 0, 0.2);\n                box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n        .screen .display > div .leftMenu .blockType .blockTypedLists {\n          display: inline-block;\n          padding: 10px;\n          width: 310px; }\n          .screen .display > div .leftMenu .blockType .blockTypedLists > div {\n            margin: 5px;\n            display: block;\n            padding: 0 5px;\n            border-radius: 5px; }\n    .screen .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .screen .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .screen .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .screen .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n    .screen .display > div .leftMenu {\n      position: absolute;\n      left: -40px;\n      top: 0; }\n      .screen .display > div .leftMenu span.glyphicon {\n        font-size: 18px;\n        display: block;\n        width: 40px;\n        line-height: 40px;\n        text-align: center;\n        background-color: #F5F5F5;\n        color: #5CB85C;\n        cursor: pointer; }\n        .screen .display > div .leftMenu span.glyphicon.ratio {\n          line-height: 16px;\n          font-size: 12px;\n          padding: 5px 0; }\n        .screen .display > div .leftMenu span.glyphicon[data-clicked='true'] {\n          background-color: #5CB85C;\n          color: #fff; }\n      .screen .display > div .leftMenu .blockType {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 400px;\n        width: 400px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100; }\n        .screen .display > div .leftMenu .blockType ul.category-list {\n          background-image: linear-gradient(360deg, rgba(6, 49, 85, 0.2), rgba(56, 153, 236, 0));\n          background-color: #5CB85C;\n          display: inline-block;\n          height: 100%;\n          padding: 14px 0;\n          vertical-align: top; }\n          .screen .display > div .leftMenu .blockType ul.category-list li.category {\n            text-align: center;\n            color: #fff;\n            cursor: pointer;\n            font-size: 14px;\n            margin-bottom: 2px;\n            max-height: 30px;\n            min-height: 14px;\n            padding: 0 10px 0 3px;\n            position: relative; }\n            .screen .display > div .leftMenu .blockType ul.category-list li.category span {\n              border-radius: 20px;\n              display: inline-block;\n              height: 100%;\n              overflow: hidden;\n              padding: 0 14px;\n              position: relative; }\n              .screen .display > div .leftMenu .blockType ul.category-list li.category span.current {\n                background-color: rgba(0, 0, 0, 0.2);\n                box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n        .screen .display > div .leftMenu .blockType .blockTypedLists {\n          display: inline-block;\n          padding: 10px;\n          width: 310px; }\n          .screen .display > div .leftMenu .blockType .blockTypedLists > div {\n            margin: 5px;\n            display: block;\n            padding: 0 5px;\n            border-radius: 5px; }\n      .screen .display > div .leftMenu .pageConfig {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 300px;\n        width: 300px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100;\n        padding: 10px; }\n        .screen .display > div .leftMenu .pageConfig > div {\n          padding: 5px; }\n    .screen .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .screen .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .screen .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .screen .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n", ""]);
 
 	// exports
 
@@ -3640,8 +3642,15 @@
 	        this.refs["themescreen"].moreGrid();
 	    },
 
-	    updateState: function updateState(state) {
+	    configurationChanged: function configurationChanged(state) {
+	        console.log(state);
 	        this.setState(state);
+	    },
+
+	    setDoubleScreen: function setDoubleScreen(d) {
+	        this.setState({
+	            doubleScreen: d
+	        });
 	    },
 
 	    render: function render() {
@@ -3649,7 +3658,9 @@
 	            'div',
 	            null,
 	            React.createElement(NavBar, { onChange: this.updateState, onAddGrid: this.addGrid }),
-	            React.createElement(ThemeScreen, { theme: this.state.theme, resize: this.themeInitialize, doubleScreen: this.state.doubleScreen,
+	            React.createElement(ThemeScreen, {
+	                configurationChange: this.configurationChanged,
+	                theme: this.state.theme, resize: this.themeInitialize, doubleScreen: this.state.doubleScreen,
 	                expandMode: this.state.expandMode,
 	                width: this.state.width, height: this.state.minHeight,
 	                showHeader: this.state.showHeader, showFooter: this.state.showFooter, showGrid: this.state.showGrid,
@@ -23365,147 +23376,11 @@
 	                        { onClick: this.resolution },
 	                        "Open"
 	                    )
-	                ),
-	                React.createElement(
-	                    "li",
-	                    { role: "presentation" },
-	                    React.createElement(
-	                        "a",
-	                        { href: "#" },
-	                        "Save"
-	                    )
 	                )
 	            ),
 	            React.createElement(
 	                "ul",
 	                { className: "nav navbar-nav navbar-right" },
-	                React.createElement(
-	                    "li",
-	                    { className: "dropdown" },
-	                    React.createElement(
-	                        "a",
-	                        { href: "#", className: "dropdown-toggle", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
-	                        React.createElement(
-	                            "span",
-	                            { className: "resolute-value" },
-	                            "1024x768(4:3)"
-	                        ),
-	                        React.createElement("span", { className: "caret" })
-	                    ),
-	                    React.createElement(
-	                        "ul",
-	                        { className: "dropdown-menu", "aria-labelledby": "Resolution" },
-	                        React.createElement(
-	                            "li",
-	                            null,
-	                            React.createElement(
-	                                "a",
-	                                { onClick: this.resolution },
-	                                "1024x768(4:3)"
-	                            )
-	                        ),
-	                        React.createElement(
-	                            "li",
-	                            null,
-	                            React.createElement(
-	                                "a",
-	                                { onClick: this.resolution },
-	                                "1200x800(16:10)"
-	                            )
-	                        ),
-	                        React.createElement(
-	                            "li",
-	                            null,
-	                            React.createElement(
-	                                "a",
-	                                { onClick: this.resolution },
-	                                "1920x1080(16:9)"
-	                            )
-	                        )
-	                    )
-	                ),
-	                React.createElement(
-	                    "li",
-	                    { className: "dropdown" },
-	                    React.createElement(
-	                        "a",
-	                        { href: "#", className: "dropdown-toggle", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
-	                        "Theme",
-	                        React.createElement("span", { className: "caret" })
-	                    ),
-	                    React.createElement(
-	                        "ul",
-	                        { className: "dropdown-menu", "aria-labelledby": "themeMenu" },
-	                        React.createElement(
-	                            "li",
-	                            null,
-	                            React.createElement(
-	                                "a",
-	                                { href: "#" },
-	                                "Default"
-	                            )
-	                        )
-	                    )
-	                ),
-	                React.createElement(
-	                    "li",
-	                    { className: "dropdown" },
-	                    React.createElement(
-	                        "a",
-	                        { onClick: this.toggleScreen, style: {
-	                                fontSize: "20px",
-	                                color: "#000"
-	                            } },
-	                        React.createElement("span", { className: this.state.doubleScreen ? "glyphicon glyphicon-blackboard" : "glyphicon glyphicon-sound-stereo" })
-	                    )
-	                ),
-	                React.createElement(
-	                    "li",
-	                    { className: "dropdown", style: {
-	                            display: this.state.doubleScreen ? "inherit" : "none"
-	                        } },
-	                    React.createElement(
-	                        "a",
-	                        { href: "#", className: "dropdown-toggle", id: "expandType", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
-	                        React.createElement(
-	                            "span",
-	                            { className: "value" },
-	                            this.SCREEN_MODEL_PORTRAIT
-	                        ),
-	                        React.createElement("span", { className: "caret" })
-	                    ),
-	                    React.createElement(
-	                        "ul",
-	                        { className: "dropdown-menu", "aria-labelledby": "screenMenu" },
-	                        React.createElement(
-	                            "li",
-	                            null,
-	                            React.createElement(
-	                                "a",
-	                                { onClick: this.screenModel },
-	                                this.SCREEN_MODEL_PORTRAIT
-	                            )
-	                        ),
-	                        React.createElement(
-	                            "li",
-	                            null,
-	                            React.createElement(
-	                                "a",
-	                                { onClick: this.screenModel },
-	                                this.SCREEN_MODEL_EXPAND
-	                            )
-	                        ),
-	                        React.createElement(
-	                            "li",
-	                            null,
-	                            React.createElement(
-	                                "a",
-	                                { onClick: this.screenModel },
-	                                this.SCREEN_MODEL_EXTRA
-	                            )
-	                        )
-	                    )
-	                ),
 	                React.createElement(
 	                    "li",
 	                    { className: "save" },
@@ -23659,6 +23534,7 @@
 	                    doubleScreen: this.props.doubleScreen, expandMode: this.props.expandMode,
 	                    headerHeight: this.state.headerHeight, footerHeight: this.state.footerHeight,
 	                    padding: this.state.padding,
+	                    configurationChange: this.props.configurationChange,
 	                    ref: "layout" }),
 	                React.createElement("div", { className: "footer", style: {
 	                        width: headerWidth
@@ -23917,6 +23793,17 @@
 	                    min_rows: 10,
 	                    resize: {
 	                        enabled: true
+	                    },
+	                    draggable: {
+	                        stop: function stop(event, ui) {
+	                            /**
+	                             * When on double screen and the expand mode is 'extra' or 'portrait',
+	                             * Move the widget from left to right
+	                             * */
+	                            if (ui.pointer.left <= gridlayout.props.width - 200) {
+	                                gridlayout.moveBlock(ui.$player, false);
+	                            }
+	                        }
 	                    }
 	                });
 
@@ -23942,16 +23829,12 @@
 	                    },
 	                    draggable: {
 	                        stop: function stop(event, ui) {
-	                            console.log(gridlayout.props);
 	                            /**
 	                             * When on double screen and the expand mode is 'extra' or 'portrait',
 	                             * Move the widget from left to right
 	                             * */
 	                            if (ui.pointer.left >= gridlayout.props.width + 70) {
-	                                console.log("remove widget...");
-	                                console.log(ui.$player);
-	                                var mainGridster = $("#main-grid>ul").gridster().data('gridster');
-	                                mainGridster.remove_widget(ui.$player);
+	                                gridlayout.moveBlock(ui.$player, true);
 	                            }
 	                        }
 	                    }
@@ -24014,14 +23897,35 @@
 	        //$(".gridster ul").gridster().data('gridster').enable().enable_resize();
 	    },
 
+	    moveBlock: function moveBlock(li, direction) {
+	        var src, target;
+
+	        if (direction) {
+	            src = $("#main-grid>ul").gridster().data('gridster');
+	            target = $("#extra-grid>ul").gridster().data('gridster');
+	        } else {
+	            target = $("#main-grid>ul").gridster().data('gridster');
+	            src = $("#extra-grid>ul").gridster().data('gridster');
+	        }
+
+	        target.add_widget("<li>" + li.find(">div").prop("outerHTML") + "</li>", li.data("sizex"), li.data("sizey"), 1, 100);
+	        src.remove_widget(li);
+	    },
+
+	    closeSetting: function closeSetting() {},
+
 	    saveGridInfo: function saveGridInfo() {},
 
 	    render: function render() {
 	        return React.createElement(
 	            "div",
 	            { className: this.state.layoutable ? "layoutable" : "editable" },
-	            React.createElement(LeftMenu, { layoutable: this.state.layoutable, addBlock: this.addBlock, disableLayout: this.disableLayout,
-	                enableLayout: this.enableLayout, ref: "leftmenu" }),
+	            React.createElement(LeftMenu, { configurationChange: this.props.configurationChange,
+	                doubleScreen: this.props.doubleScreen,
+	                addBlock: this.addBlock,
+	                layoutable: this.state.layoutable, disableLayout: this.disableLayout,
+	                enableLayout: this.enableLayout, ref: "leftmenu", closeSetting: this.closeSetting,
+	                width: this.props.width }),
 	            React.createElement(
 	                "div",
 	                { className: "gridster", id: "main-grid", style: {
@@ -24075,23 +23979,61 @@
 	var React = __webpack_require__(18);
 
 	var BlockTypeMenu = __webpack_require__(181);
+	var PageConfigMenu = __webpack_require__(182);
 
 	var LeftMenu = React.createClass({
 	    displayName: "LeftMenu",
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            showBlockTypes: false
+	            showBlockTypes: false,
+	            showConfigMenu: false
 	        };
 	    },
 
 	    componentDidMount: function componentDidMount() {},
 
+	    resolution: function resolution(value) {
+	        if (value === "1920x1080") {
+	            this.props.configurationChange({ width: 1920, minHeight: 1080 });
+	        } else if (value === "1280x800") {
+	            this.props.configurationChange({ width: 1280, minHeight: 800 });
+	        } else if (value === "1024x768") {
+	            this.props.configurationChange({ width: 1024, minHeight: 768 });
+	        }
+	    },
+
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    clearState: function clearState() {
+	        this.setState({
+	            showBlockTypes: false,
+	            showConfigMenu: false
+	        });
+	    },
 
 	    showBlockTypes: function showBlockTypes() {
 	        this.setState({
-	            showBlockTypes: !this.state.showBlockTypes
+	            showBlockTypes: !this.state.showBlockTypes,
+	            showConfigMenu: false
+	        });
+	    },
+
+	    showConfigMenu: function showConfigMenu() {
+	        this.setState({
+	            showConfigMenu: !this.state.showConfigMenu,
+	            showBlockTypes: false
+	        });
+	    },
+
+	    editContent: function editContent() {
+	        this.clearState();
+	        this.props.disableLayout();
+	    },
+
+	    toggleDoubleScreen: function toggleDoubleScreen() {
+	        this.props.configurationChange({
+	            doubleScreen: !this.props.doubleScreen
 	        });
 	    },
 
@@ -24103,13 +24045,45 @@
 	                "div",
 	                null,
 	                React.createElement("span", { className: "glyphicon glyphicon-plus", "data-clicked": this.state.showBlockTypes, id: "btn-add-block", onClick: this.showBlockTypes }),
-	                React.createElement("span", { className: "glyphicon glyphicon-edit", onClick: this.props.disableLayout })
+	                React.createElement("span", { className: "glyphicon glyphicon-edit", onClick: this.editContent }),
+	                React.createElement("span", { className: "glyphicon glyphicon-cog", "data-clicked": this.state.showConfigMenu, onClick: this.showConfigMenu })
 	            ) : React.createElement(
 	                "div",
 	                null,
 	                React.createElement("span", { className: "glyphicon glyphicon-arrow-left", "data-clicked": "true", onClick: this.props.enableLayout })
 	            ),
-	            React.createElement(BlockTypeMenu, { addBlock: this.props.addBlock, show: this.state.showBlockTypes })
+	            React.createElement(
+	                "div",
+	                { className: "screenRatios",
+	                    style: {
+	                        marginTop: "160px",
+	                        display: this.props.layoutable ? "inherit" : "none"
+	                    } },
+	                React.createElement("span", { className: "glyphicon glyphicon-blackboard", "data-clicked": this.props.doubleScreen, onClick: this.toggleDoubleScreen }),
+	                React.createElement(
+	                    "span",
+	                    { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1024x768"), "data-clicked": this.props.width === 1024 },
+	                    "1024",
+	                    React.createElement("br", null),
+	                    "768"
+	                ),
+	                React.createElement(
+	                    "span",
+	                    { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1280x800"), "data-clicked": this.props.width === 1280 },
+	                    "1280",
+	                    React.createElement("br", null),
+	                    "800"
+	                ),
+	                React.createElement(
+	                    "span",
+	                    { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1920x1080"), "data-clicked": this.props.width === 1920 },
+	                    "1920",
+	                    React.createElement("br", null),
+	                    "1080"
+	                )
+	            ),
+	            React.createElement(BlockTypeMenu, { addBlock: this.props.addBlock, show: this.state.showBlockTypes }),
+	            React.createElement(PageConfigMenu, { configurationChange: this.props.configurationChange, show: this.state.showConfigMenu, closeSetting: this.props.closeSetting })
 	        );
 	    }
 	});
@@ -24217,6 +24191,140 @@
 	});
 
 	module.exports = BlockTypeMenu;
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+
+	var PageConfigMenu = React.createClass({
+	    displayName: "PageConfigMenu",
+
+	    SCREEN_MODEL_PORTRAIT: "Portrait Mode",
+	    SCREEN_MODEL_EXPAND: "Landscape Mode",
+	    SCREEN_MODEL_EXTRA: "Extra Mode",
+
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+
+	    screenModel: function screenModel(event) {
+	        var value = $(event.target).val();
+	        var mode = 1;
+	        if (value === this.SCREEN_MODEL_PORTRAIT) {
+	            mode = 1;
+	        }
+	        if (value === this.SCREEN_MODEL_EXPAND) {
+	            mode = 2;
+	        }
+	        if (value === this.SCREEN_MODEL_EXTRA) {
+	            mode = 3;
+	        }
+	        this.props.configurationChange({
+	            expandMode: mode
+	        });
+	    },
+
+	    resolution: function resolution(event) {
+	        var value = $(event.target).val();
+	        console.log("resolution " + value);
+	        if (value === "1920x1080(16:9)") {
+	            this.props.configurationChange({ width: 1920, minHeight: 1080 });
+	        } else if (value === "1200x800(16:10)") {
+	            this.props.configurationChange({ width: 1280, minHeight: 800 });
+	        } else if (value === "1024x768(4:3)") {
+	            this.props.configurationChange({ width: 1024, minHeight: 768 });
+	        }
+	    },
+
+	    componentDidMount: function componentDidMount() {},
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: "pageConfig", style: {
+	                    display: this.props.show ? "inherit" : "none"
+	                } },
+	            React.createElement(
+	                "div",
+	                null,
+	                " ",
+	                React.createElement("input", { type: "checkbox" }),
+	                " ",
+	                React.createElement(
+	                    "span",
+	                    null,
+	                    "Show Header"
+	                ),
+	                " "
+	            ),
+	            React.createElement(
+	                "div",
+	                null,
+	                " ",
+	                React.createElement("input", { type: "checkbox" }),
+	                " ",
+	                React.createElement(
+	                    "span",
+	                    null,
+	                    "Show Footer"
+	                ),
+	                " "
+	            ),
+	            React.createElement(
+	                "div",
+	                null,
+	                " ",
+	                React.createElement(
+	                    "span",
+	                    null,
+	                    "Double Screen"
+	                ),
+	                React.createElement(
+	                    "select",
+	                    { onChange: this.screenModel },
+	                    React.createElement(
+	                        "option",
+	                        null,
+	                        this.SCREEN_MODEL_PORTRAIT
+	                    ),
+	                    React.createElement(
+	                        "option",
+	                        null,
+	                        this.SCREEN_MODEL_EXPAND
+	                    ),
+	                    React.createElement(
+	                        "option",
+	                        null,
+	                        this.SCREEN_MODEL_EXTRA
+	                    )
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                null,
+	                " Theme ",
+	                React.createElement(
+	                    "select",
+	                    null,
+	                    React.createElement(
+	                        "option",
+	                        null,
+	                        "Default"
+	                    )
+	                ),
+	                " "
+	            )
+	        );
+	    }
+	});
+
+	module.exports = PageConfigMenu;
 
 /***/ }
 /******/ ]);

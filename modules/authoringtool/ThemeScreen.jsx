@@ -124,6 +124,7 @@ var ThemeScreen = React.createClass({
                                 doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}
                                 headerHeight={this.state.headerHeight} footerHeight={this.state.footerHeight}
                                 padding={this.state.padding}
+                                configurationChange={this.props.configurationChange}
                                 ref="layout"/>
                     <div className="footer" style={{
                         width: headerWidth

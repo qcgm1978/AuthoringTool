@@ -155,6 +155,17 @@ var GridLayout = React.createClass({
                     min_rows: 10,
                     resize: {
                         enabled: true
+                    },
+                    draggable: {
+                        stop: function(event, ui) {
+                            /**
+                             * When on double screen and the expand mode is 'extra' or 'portrait',
+                             * Move the widget from left to right
+                             * */
+                            if (ui.pointer.left<=gridlayout.props.width-200) {
+                                gridlayout.moveBlock(ui.$player, false);
+                            }
+                        }
                     }
                 });
 
@@ -181,16 +192,12 @@ var GridLayout = React.createClass({
                     },
                     draggable: {
                         stop: function(event, ui) {
-                            console.log(gridlayout.props);
                             /**
                              * When on double screen and the expand mode is 'extra' or 'portrait',
                              * Move the widget from left to right
                              * */
                             if (ui.pointer.left>=gridlayout.props.width+70) {
-                                console.log("remove widget...");
-                                console.log(ui.$player);
-                                var mainGridster = $("#main-grid>ul").gridster().data('gridster');
-                                mainGridster.remove_widget(ui.$player);
+                                gridlayout.moveBlock(ui.$player, true);
                             }
                         }
                     }
@@ -253,6 +260,27 @@ var GridLayout = React.createClass({
         //$(".gridster ul").gridster().data('gridster').enable().enable_resize();
     },
 
+    moveBlock: function(li, direction) {
+        var src,target;
+
+        if (direction) {
+            src = $("#main-grid>ul").gridster().data('gridster');
+            target = $("#extra-grid>ul").gridster().data('gridster');
+        } else {
+            target = $("#main-grid>ul").gridster().data('gridster');
+            src = $("#extra-grid>ul").gridster().data('gridster');
+        }
+
+        target.add_widget("<li>"+ li.find(">div").prop("outerHTML") + "</li>",
+            li.data("sizex"), li.data("sizey"), 1, 100);
+        src.remove_widget(li);
+    },
+
+    closeSetting: function() {
+
+    },
+
+
     saveGridInfo: function () {
 
     },
@@ -260,8 +288,12 @@ var GridLayout = React.createClass({
     render: function () {
         return (
             <div className={this.state.layoutable?"layoutable":"editable"}>
-                <LeftMenu layoutable={this.state.layoutable} addBlock={this.addBlock} disableLayout={this.disableLayout}
-                    enableLayout={this.enableLayout} ref="leftmenu"/>
+                <LeftMenu configurationChange={this.props.configurationChange}
+                          doubleScreen={this.props.doubleScreen}
+                          addBlock={this.addBlock}
+                          layoutable={this.state.layoutable} disableLayout={this.disableLayout}
+                          enableLayout={this.enableLayout} ref="leftmenu" closeSetting={this.closeSetting}
+                            width={this.props.width}/>
 
                 <div className="gridster" id="main-grid" style={{
                     width: (this.props.doubleScreen&&this.props.expandMode===2)? this.props.width*2: this.props.width

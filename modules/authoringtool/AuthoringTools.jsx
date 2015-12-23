@@ -37,19 +37,28 @@ var AuthoringTool = React.createClass({
         this.refs["themescreen"].moreGrid();
     },
 
-    updateState: function(state) {
+    configurationChanged: function(state) {
+        console.log(state);
         this.setState(state);
+    },
+
+    setDoubleScreen: function(d) {
+        this.setState({
+            doubleScreen: d
+        });
     },
 
     render: function () {
         return (
             <div>
                 <NavBar onChange={this.updateState} onAddGrid={this.addGrid}/>
-                <ThemeScreen theme={this.state.theme} resize={this.themeInitialize} doubleScreen={this.state.doubleScreen}
-                             expandMode={this.state.expandMode}
-                             width={this.state.width} height={this.state.minHeight}
-                             showHeader={this.state.showHeader} showFooter={this.state.showFooter} showGrid={this.state.showGrid}
-                             ref="themescreen"/>
+                <ThemeScreen
+                            configurationChange={this.configurationChanged}
+                            theme={this.state.theme} resize={this.themeInitialize} doubleScreen={this.state.doubleScreen}
+                            expandMode={this.state.expandMode}
+                            width={this.state.width} height={this.state.minHeight}
+                            showHeader={this.state.showHeader} showFooter={this.state.showFooter} showGrid={this.state.showGrid}
+                            ref="themescreen"/>
             </div>
         );
     }
