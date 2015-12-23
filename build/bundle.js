@@ -2663,7 +2663,7 @@
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
 	* http://gridster.net/
 		 * Copyright (c) 2014 ducksboard; Licensed MIT */
 		(function (root, factory) {
@@ -3074,7 +3074,8 @@
 	    * @uses Draggable
 	    * @method draggable
 	    * @return {Class} Returns the instance of the Gridster Class.
-	    */fn.draggable=function(){var self=this;var draggable_options=$.extend(true,{},this.options.draggable,{offset_left:this.options.widget_margins[0],offset_top:this.options.widget_margins[1],container_width:this.cols*this.min_widget_width,limit:true,start:function start(event,ui){self.$widgets.filter('.player-revert').removeClass('player-revert');self.$player=$(this);self.$helper=$(ui.$helper);self.helper=!self.$helper.is(self.$player);self.on_start_drag.call(self,event,ui);self.$el.trigger('gridster:dragstart')},stop:function stop(event,ui){self.on_stop_drag.call(self,event,ui);self.$el.trigger('gridster:dragstop')},drag:throttle(function(event,ui){self.on_drag.call(self,event,ui);self.$el.trigger('gridster:drag')},60)});this.drag_api=this.$el.drag(draggable_options);return this}; /**
+	    */fn.draggable=function(){var self=this;var draggable_options=$.extend(true,{},this.options.draggable,{offset_left:this.options.widget_margins[0],offset_top:this.options.widget_margins[1],container_width:this.cols*this.min_widget_width, //TODO  changeed by liuhan:  TO make widget be dragged outside container
+	limit:false,start:function start(event,ui){self.$widgets.filter('.player-revert').removeClass('player-revert');self.$player=$(this);self.$helper=$(ui.$helper);self.helper=!self.$helper.is(self.$player);self.on_start_drag.call(self,event,ui);self.$el.trigger('gridster:dragstart')},stop:function stop(event,ui){self.on_stop_drag.call(self,event,ui);self.$el.trigger('gridster:dragstop')},drag:throttle(function(event,ui){self.on_drag.call(self,event,ui);self.$el.trigger('gridster:drag')},60)});this.drag_api=this.$el.drag(draggable_options);return this}; /**
 	    * Bind resize events to get resize working.
 	    *
 	    * @method resizable
@@ -3593,7 +3594,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n    .screen .display > div .leftMenu {\n      position: absolute;\n      left: -40px;\n      top: 0; }\n      .screen .display > div .leftMenu span.glyphicon {\n        font-size: 18px;\n        display: block;\n        width: 40px;\n        line-height: 40px;\n        text-align: center;\n        background-color: #F5F5F5;\n        color: #5CB85C;\n        cursor: pointer; }\n        .screen .display > div .leftMenu span.glyphicon.active {\n          background-color: #5CB85C;\n          color: #fff; }\n      .screen .display > div .leftMenu .blockType {\n        box-shadow: 4px 0 6px 0 rgba(22, 45, 61, 0.36);\n        position: fixed;\n        top: 70px;\n        height: 400px;\n        width: 400px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100; }\n        .screen .display > div .leftMenu .blockType ul.category-list {\n          background-image: linear-gradient(360deg, rgba(6, 49, 85, 0.2), rgba(56, 153, 236, 0));\n          background-color: #5CB85C;\n          display: inline-block;\n          height: 100%;\n          padding: 14px 0;\n          vertical-align: top; }\n          .screen .display > div .leftMenu .blockType ul.category-list li.category {\n            text-align: center;\n            color: #fff;\n            cursor: pointer;\n            font-size: 14px;\n            margin-bottom: 2px;\n            max-height: 30px;\n            min-height: 14px;\n            padding: 0 10px 0 3px;\n            position: relative; }\n            .screen .display > div .leftMenu .blockType ul.category-list li.category span {\n              border-radius: 20px;\n              display: inline-block;\n              height: 100%;\n              overflow: hidden;\n              padding: 0 14px;\n              position: relative; }\n              .screen .display > div .leftMenu .blockType ul.category-list li.category span.current {\n                background-color: rgba(0, 0, 0, 0.2);\n                box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n    .screen .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .screen .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .screen .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .screen .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n    .screen .display > div .leftMenu {\n      position: absolute;\n      left: -40px;\n      top: 0; }\n      .screen .display > div .leftMenu span.glyphicon {\n        font-size: 18px;\n        display: block;\n        width: 40px;\n        line-height: 40px;\n        text-align: center;\n        background-color: #F5F5F5;\n        color: #5CB85C;\n        cursor: pointer; }\n        .screen .display > div .leftMenu span.glyphicon[data-clicked='true'] {\n          background-color: #5CB85C;\n          color: #fff; }\n      .screen .display > div .leftMenu .blockType {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 400px;\n        width: 400px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100; }\n        .screen .display > div .leftMenu .blockType ul.category-list {\n          background-image: linear-gradient(360deg, rgba(6, 49, 85, 0.2), rgba(56, 153, 236, 0));\n          background-color: #5CB85C;\n          display: inline-block;\n          height: 100%;\n          padding: 14px 0;\n          vertical-align: top; }\n          .screen .display > div .leftMenu .blockType ul.category-list li.category {\n            text-align: center;\n            color: #fff;\n            cursor: pointer;\n            font-size: 14px;\n            margin-bottom: 2px;\n            max-height: 30px;\n            min-height: 14px;\n            padding: 0 10px 0 3px;\n            position: relative; }\n            .screen .display > div .leftMenu .blockType ul.category-list li.category span {\n              border-radius: 20px;\n              display: inline-block;\n              height: 100%;\n              overflow: hidden;\n              padding: 0 14px;\n              position: relative; }\n              .screen .display > div .leftMenu .blockType ul.category-list li.category span.current {\n                background-color: rgba(0, 0, 0, 0.2);\n                box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n        .screen .display > div .leftMenu .blockType .blockTypedLists {\n          display: inline-block;\n          padding: 10px;\n          width: 310px; }\n          .screen .display > div .leftMenu .blockType .blockTypedLists > div {\n            margin: 5px;\n            display: block;\n            padding: 0 5px;\n            border-radius: 5px; }\n    .screen .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .screen .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .screen .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .screen .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n", ""]);
 
 	// exports
 
@@ -23788,17 +23789,20 @@
 	        };
 	    },
 
-	    GRID_TEMPLATE: '<li><div class="content"><span>Change it in edit mode</span></spahn></div></li>',
+	    GRID_TEMPLATE: '<li><div class="content"><span>Change it in edit mode</span></div></li>',
 
 	    componentDidMount: function componentDidMount() {
 	        this.initGridster();
 	    },
 
 	    initGridster: function initGridster() {
+
+	        var gridlayout = this;
+
 	        if (!this.state.layoutable) {
 	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
 	            tinymce.init({
-	                selector: '.gridster li .content',
+	                selector: '.gridster li .rtf',
 	                inline: true,
 	                menubar: false,
 	                toolbar: 'undo redo|mybutton formatselect bold italic underline strikethrough bullist numlist'
@@ -23841,10 +23845,10 @@
 	                    contentHeight -= this.props.footerHeight;
 	                }
 	                var contentWidth = this.props.width * 2 - this.props.padding[1] - this.props.padding[3];
-	                $("#main-grid ul").css("min-height", contentHeight);
-	                $("#main-grid ul").css("margin-left", this.props.padding[3]);
+	                $("#main-grid>ul").css("min-height", contentHeight);
+	                $("#main-grid>ul").css("margin-left", this.props.padding[3]);
 
-	                $("#main-grid ul").gridster({
+	                $("#main-grid>ul").gridster({
 	                    namespace: '#main-grid',
 	                    widget_margins: [1, 1],
 	                    widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
@@ -23868,7 +23872,7 @@
 	                }
 	                extraHeight -= this.props.padding[0];
 	                $("#extra-grid").css("position", "absolute").css("top", this.props.padding[0]).css("right", this.props.padding[1]).css("width", contentWidth).show();
-	                $("#extra-grid ul").gridster({
+	                $("#extra-grid>ul").gridster({
 	                    namespace: '#extra-grid',
 	                    widget_margins: [1, 1],
 	                    widget_base_dimensions: [contentWidth / 12 - 2, extraHeight / 10 - 2],
@@ -23885,10 +23889,10 @@
 	                }
 	                contentHeight -= this.props.padding[2];
 
-	                $("#main-grid ul").css("min-height", contentHeight);
-	                $("#main-grid ul").css("margin-left", this.props.padding[3]);
+	                $("#main-grid>ul").css("min-height", contentHeight);
+	                $("#main-grid>ul").css("margin-left", this.props.padding[3]);
 
-	                $("#main-grid ul").gridster({
+	                $("#main-grid>ul").gridster({
 	                    namespace: '#main-grid',
 	                    widget_margins: [1, 1],
 	                    widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
@@ -23905,7 +23909,7 @@
 	            if (this.props.expandMode === 3) {
 	                //extra mode
 	                $("#extra-grid").css("position", "absolute").css("top", 0).css("right", 0).css("width", this.props.width).show();
-	                $("#extra-grid ul").gridster({
+	                $("#extra-grid>ul").gridster({
 	                    namespace: '#extra-grid',
 	                    widget_margins: [1, 1],
 	                    widget_base_dimensions: [this.props.width / 12 - 2, this.props.height / 10 - 2],
@@ -23925,9 +23929,9 @@
 	                }
 	                var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
 
-	                $("#main-grid ul").css("width", contentWidth).css("margin-left", this.props.padding[3]).css("min-height", contentHeight);
+	                $("#main-grid>ul").css("width", contentWidth).css("margin-left", this.props.padding[3]).css("min-height", contentHeight);
 
-	                $("#main-grid ul").gridster({
+	                $("#main-grid>ul").gridster({
 	                    namespace: '#main-grid',
 	                    widget_margins: [1, 1],
 	                    widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
@@ -23935,6 +23939,21 @@
 	                    min_rows: 10,
 	                    resize: {
 	                        enabled: true
+	                    },
+	                    draggable: {
+	                        stop: function stop(event, ui) {
+	                            console.log(gridlayout.props);
+	                            /**
+	                             * When on double screen and the expand mode is 'extra' or 'portrait',
+	                             * Move the widget from left to right
+	                             * */
+	                            if (ui.pointer.left >= gridlayout.props.width + 70) {
+	                                console.log("remove widget...");
+	                                console.log(ui.$player);
+	                                var mainGridster = $("#main-grid>ul").gridster().data('gridster');
+	                                mainGridster.remove_widget(ui.$player);
+	                            }
+	                        }
 	                    }
 	                });
 	            }
@@ -23951,10 +23970,10 @@
 	                contentHeight -= this.props.footerHeight;
 	            }
 	            var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
-	            $("#main-grid ul").css("min-height", contentHeight);
-	            $("#main-grid ul").css("margin-left", this.props.padding[3]);
+	            $("#main-grid>ul").css("min-height", contentHeight);
+	            $("#main-grid>ul").css("margin-left", this.props.padding[3]);
 
-	            $("#main-grid ul").gridster({
+	            $("#main-grid>ul").gridster({
 	                namespace: '#main-grid',
 	                widget_margins: [1, 1],
 	                widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
@@ -23964,6 +23983,7 @@
 	                    enabled: true
 	                }
 	            });
+
 	            $("#extra-grid").hide();
 	        }
 	    },
@@ -23972,16 +23992,11 @@
 	        this.initGridster();
 	    },
 
-	    addBlock: function addBlock() {
-	        $("#btn-add-block").popover({
-	            title: "Add Block with type",
-	            content: "Wanta To add New Blocks?"
-	        });
-	        /*
+	    addBlock: function addBlock(event) {
+	        var template = $(event.target).removeAttr("data-reactid").prop('outerHTML');
 	        var gridster = $("#main-grid ul").gridster().data('gridster');
-	        gridster.add_widget(this.GRID_TEMPLATE, 12, 2, 1, 100);
-	        */
-	        //EditPanel.init()g;
+	        gridster.add_widget("<li>" + template + "</li>", 12, 2, 1, 100);
+	        this.refs["leftmenu"].setState({ showBlockTypes: false });
 	    },
 
 	    disableLayout: function disableLayout() {
@@ -24006,10 +24021,12 @@
 	            "div",
 	            { className: this.state.layoutable ? "layoutable" : "editable" },
 	            React.createElement(LeftMenu, { layoutable: this.state.layoutable, addBlock: this.addBlock, disableLayout: this.disableLayout,
-	                enableLayout: this.enableLayout }),
+	                enableLayout: this.enableLayout, ref: "leftmenu" }),
 	            React.createElement(
 	                "div",
-	                { className: "gridster", id: "main-grid" },
+	                { className: "gridster", id: "main-grid", style: {
+	                        width: this.props.doubleScreen && this.props.expandMode === 2 ? this.props.width * 2 : this.props.width
+	                    } },
 	                React.createElement(
 	                    "ul",
 	                    null,
@@ -24063,12 +24080,20 @@
 	    displayName: "LeftMenu",
 
 	    getInitialState: function getInitialState() {
-	        return {};
+	        return {
+	            showBlockTypes: false
+	        };
 	    },
 
 	    componentDidMount: function componentDidMount() {},
 
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    showBlockTypes: function showBlockTypes() {
+	        this.setState({
+	            showBlockTypes: !this.state.showBlockTypes
+	        });
+	    },
 
 	    render: function render() {
 	        return React.createElement(
@@ -24077,14 +24102,14 @@
 	            this.props.layoutable ? React.createElement(
 	                "div",
 	                null,
-	                React.createElement("span", { className: "glyphicon glyphicon-plus", id: "btn-add-block", onClick: this.props.addBlock }),
+	                React.createElement("span", { className: "glyphicon glyphicon-plus", "data-clicked": this.state.showBlockTypes, id: "btn-add-block", onClick: this.showBlockTypes }),
 	                React.createElement("span", { className: "glyphicon glyphicon-edit", onClick: this.props.disableLayout })
 	            ) : React.createElement(
 	                "div",
 	                null,
-	                React.createElement("span", { className: "glyphicon glyphicon-resize-small", onClick: this.props.enableLayout })
+	                React.createElement("span", { className: "glyphicon glyphicon-arrow-left", "data-clicked": "true", onClick: this.props.enableLayout })
 	            ),
-	            React.createElement(BlockTypeMenu, null)
+	            React.createElement(BlockTypeMenu, { addBlock: this.props.addBlock, show: this.state.showBlockTypes })
 	        );
 	    }
 	});
@@ -24113,7 +24138,9 @@
 	    render: function render() {
 	        return React.createElement(
 	            "div",
-	            { className: "blockType" },
+	            { className: "blockType", style: {
+	                    display: this.props.show ? "inherit" : "none"
+	                } },
 	            React.createElement(
 	                "ul",
 	                { className: "category-list" },
@@ -24160,6 +24187,28 @@
 	                        "span",
 	                        null,
 	                        "Activity"
+	                    )
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { className: "blockTypedLists" },
+	                React.createElement(
+	                    "div",
+	                    { onClick: this.props.addBlock },
+	                    React.createElement(
+	                        "div",
+	                        { className: "rtf" },
+	                        "sample paragraphs"
+	                    )
+	                ),
+	                React.createElement(
+	                    "div",
+	                    null,
+	                    React.createElement(
+	                        "h2",
+	                        { className: "rtf" },
+	                        "Titles"
 	                    )
 	                )
 	            )

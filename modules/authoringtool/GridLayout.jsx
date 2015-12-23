@@ -29,17 +29,20 @@ var GridLayout = React.createClass({
         };
     },
 
-    GRID_TEMPLATE: '<li><div class="content"><span>Change it in edit mode</span></spahn></div></li>',
+    GRID_TEMPLATE: '<li><div class="content"><span>Change it in edit mode</span></div></li>',
 
     componentDidMount: function () {
        this.initGridster();
     },
 
     initGridster: function() {
+
+        var gridlayout = this;
+
         if(!this.state.layoutable) {
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
             tinymce.init({
-                selector: '.gridster li .content',
+                selector: '.gridster li .rtf',
                 inline: true,
                 menubar: false,
                 toolbar: 'undo redo|mybutton formatselect bold italic underline strikethrough bullist numlist'
@@ -81,10 +84,10 @@ var GridLayout = React.createClass({
                     contentHeight -= this.props.footerHeight;
                 }
                 var contentWidth = this.props.width*2 - this.props.padding[1] - this.props.padding[3];
-                $("#main-grid ul").css("min-height", contentHeight);
-                $("#main-grid ul").css("margin-left", this.props.padding[3]);
+                $("#main-grid>ul").css("min-height", contentHeight);
+                $("#main-grid>ul").css("margin-left", this.props.padding[3]);
 
-                $("#main-grid ul").gridster({
+                $("#main-grid>ul").gridster({
                     namespace: '#main-grid',
                     widget_margins: [1, 1],
                     widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
@@ -108,7 +111,7 @@ var GridLayout = React.createClass({
                 extraHeight -= this.props.padding[0];
                 $("#extra-grid").css("position", "absolute").css("top", this.props.padding[0]).css("right", this.props.padding[1]).
                     css("width", contentWidth).show();
-                $("#extra-grid ul").gridster({
+                $("#extra-grid>ul").gridster({
                     namespace: '#extra-grid',
                     widget_margins: [1, 1],
                     widget_base_dimensions: [(contentWidth) / 12 - 2, (extraHeight) / 10 - 2],
@@ -125,10 +128,10 @@ var GridLayout = React.createClass({
                 }
                 contentHeight -= this.props.padding[2];
 
-                $("#main-grid ul").css("min-height", contentHeight);
-                $("#main-grid ul").css("margin-left", this.props.padding[3]);
+                $("#main-grid>ul").css("min-height", contentHeight);
+                $("#main-grid>ul").css("margin-left", this.props.padding[3]);
 
-                $("#main-grid ul").gridster({
+                $("#main-grid>ul").gridster({
                     namespace: '#main-grid',
                     widget_margins: [1, 1],
                     widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
@@ -144,7 +147,7 @@ var GridLayout = React.createClass({
 
             if (this.props.expandMode===3) {  //extra mode
                 $("#extra-grid").css("position", "absolute").css("top", 0).css("right", 0).css("width", this.props.width).show();
-                $("#extra-grid ul").gridster({
+                $("#extra-grid>ul").gridster({
                     namespace: '#extra-grid',
                     widget_margins: [1, 1],
                     widget_base_dimensions: [(this.props.width) / 12 - 2, (this.props.height) / 10 - 2],
@@ -164,10 +167,10 @@ var GridLayout = React.createClass({
                 }
                 var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
 
-                $("#main-grid ul").css("width", contentWidth).css("margin-left", this.props.padding[3])
+                $("#main-grid>ul").css("width", contentWidth).css("margin-left", this.props.padding[3])
                     .css("min-height", contentHeight);
 
-                $("#main-grid ul").gridster({
+                $("#main-grid>ul").gridster({
                     namespace: '#main-grid',
                     widget_margins: [1, 1],
                     widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
@@ -175,6 +178,21 @@ var GridLayout = React.createClass({
                     min_rows: 10,
                     resize: {
                         enabled: true
+                    },
+                    draggable: {
+                        stop: function(event, ui) {
+                            console.log(gridlayout.props);
+                            /**
+                             * When on double screen and the expand mode is 'extra' or 'portrait',
+                             * Move the widget from left to right
+                             * */
+                            if (ui.pointer.left>=gridlayout.props.width+70) {
+                                console.log("remove widget...");
+                                console.log(ui.$player);
+                                var mainGridster = $("#main-grid>ul").gridster().data('gridster');
+                                mainGridster.remove_widget(ui.$player);
+                            }
+                        }
                     }
                 });
             }
@@ -191,10 +209,10 @@ var GridLayout = React.createClass({
                 contentHeight -= this.props.footerHeight;
             }
             var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
-            $("#main-grid ul").css("min-height", contentHeight);
-            $("#main-grid ul").css("margin-left", this.props.padding[3]);
+            $("#main-grid>ul").css("min-height", contentHeight);
+            $("#main-grid>ul").css("margin-left", this.props.padding[3]);
 
-            $("#main-grid ul").gridster({
+            $("#main-grid>ul").gridster({
                 namespace: '#main-grid',
                 widget_margins: [1, 1],
                 widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
@@ -204,6 +222,7 @@ var GridLayout = React.createClass({
                     enabled: true
                 }
             });
+
             $("#extra-grid").hide();
         }
     },
@@ -212,16 +231,11 @@ var GridLayout = React.createClass({
        this.initGridster();
     },
 
-    addBlock: function () {
-        $("#btn-add-block").popover({
-            title: "Add Block with type",
-            content: "Wanta To add New Blocks?"
-        });
-        /*
+    addBlock: function (event) {
+        var template = $(event.target).removeAttr("data-reactid").prop('outerHTML');
         var gridster = $("#main-grid ul").gridster().data('gridster');
-        gridster.add_widget(this.GRID_TEMPLATE, 12, 2, 1, 100);
-        */
-        //EditPanel.init()g;
+        gridster.add_widget("<li>" + template + "</li>", 12, 2, 1, 100);
+        this.refs["leftmenu"].setState({showBlockTypes: false});
     },
 
     disableLayout: function() {
@@ -247,9 +261,11 @@ var GridLayout = React.createClass({
         return (
             <div className={this.state.layoutable?"layoutable":"editable"}>
                 <LeftMenu layoutable={this.state.layoutable} addBlock={this.addBlock} disableLayout={this.disableLayout}
-                    enableLayout={this.enableLayout}/>
+                    enableLayout={this.enableLayout} ref="leftmenu"/>
 
-                <div className="gridster" id="main-grid">
+                <div className="gridster" id="main-grid" style={{
+                    width: (this.props.doubleScreen&&this.props.expandMode===2)? this.props.width*2: this.props.width
+                }}>
                     <ul>
                         <li data-row="1" data-col="1" data-sizex="12" data-sizey="1"
                             className="j-grid-block player-revert">

@@ -1791,7 +1791,8 @@
             offset_left: this.options.widget_margins[0],
             offset_top: this.options.widget_margins[1],
             container_width: this.cols * this.min_widget_width,
-            limit: true,
+            //TODO  changeed by liuhan:  TO make widget be dragged outside container
+            limit: false,
             start: function(event, ui) {
                 self.$widgets.filter('.player-revert')
                     .removeClass('player-revert');

@@ -58,14 +58,14 @@ body {
           background-color: #F5F5F5;
           color: #5CB85C;
           cursor: pointer;
-          &.active {
+          &[data-clicked='true']{
             background-color: #5CB85C;
             color: #fff;
           }
         }
 
         .blockType {
-          box-shadow: 4px 0 6px 0 rgba(22, 45, 61, 0.36);
+          border: 1px solid #ccc;
           position: fixed;
           top: 70px;
           height: 400px;
@@ -110,6 +110,21 @@ body {
               }
             }
           }
+
+          .blockTypedLists {
+            display: inline-block;
+            padding: 10px;
+            width: 310px;
+
+            >div {
+              //border: 1px dashed #666;
+              margin: 5px;
+              display: block;
+              padding: 0 5px;
+              border-radius: 5px;
+            }
+          }
+
         }
       }
 

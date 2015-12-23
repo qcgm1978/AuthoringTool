@@ -3,7 +3,7 @@
 *.iml
 
 node_modules
-electron
+
 
 #Log Files
 *.log

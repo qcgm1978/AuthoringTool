@@ -8,15 +8,17 @@ var BlockTypeMenu = React.createClass({
     },
 
     componentDidMount: function () {
+
     },
 
     componentWillReceiveProps: function(nextProps) {
-
     },
 
     render: function () {
         return (
-            <div className="blockType">
+            <div className="blockType" style={{
+                    display: this.props.show? "inherit":"none"
+            }}>
                 <ul className="category-list">
                     <li className="category">
                         <span>Text</span>
@@ -34,6 +36,11 @@ var BlockTypeMenu = React.createClass({
                         <span>Activity</span>
                     </li>
                 </ul>
+
+                <div className="blockTypedLists">
+                    <div onClick={this.props.addBlock}><div className="rtf" >sample paragraphs</div></div>
+                    <div ><h2 className="rtf">Titles</h2></div>
+                </div>
             </div>
         );
     }

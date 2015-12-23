@@ -135,8 +135,9 @@ th.mce-item-selected {
   background-color: #3399ff !important;
 }
 .mce-edit-focus {
-  outline: 1px dotted #333;
+  outline: none;
 }
+
 .mce-content-body *[contentEditable=false] *[contentEditable=true]:focus {
   outline: 2px solid #2d8ac7;
 }
