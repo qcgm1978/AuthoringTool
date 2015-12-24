@@ -116,7 +116,8 @@ var ThemeScreen = React.createClass({
                     }}>
                     <div className="styles"></div>
                     <div className="header" style={{
-                        width: headerWidth
+                        width: headerWidth,
+                        display: this.props.showHeader?"inherit": "none"
                     }}></div>
 
                     <GridLayout width={this.props.width} height={this.props.height}
@@ -127,7 +128,8 @@ var ThemeScreen = React.createClass({
                                 configurationChange={this.props.configurationChange}
                                 ref="layout"/>
                     <div className="footer" style={{
-                        width: headerWidth
+                        width: headerWidth,
+                        display: this.props.showFooter?"inherit": "none"
                     }}></div>
                 </div>
                 <AxisLines width={this.props.width} height={this.props.height}

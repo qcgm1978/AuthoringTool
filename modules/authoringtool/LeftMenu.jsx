@@ -90,7 +90,10 @@ var LeftMenu = React.createClass({
                 </div>
 
                 <BlockTypeMenu addBlock={this.props.addBlock}  show={this.state.showBlockTypes}/>
-                <PageConfigMenu configurationChange={this.props.configurationChange} show={this.state.showConfigMenu} closeSetting={this.props.closeSetting}/>
+                <PageConfigMenu configurationChange={this.props.configurationChange}
+                                showConfigMenu={this.showConfigMenu}
+                                showHeader={this.props.showHeader} showFooter={this.props.showFooter}
+                                show={this.state.showConfigMenu} closeSetting={this.props.closeSetting}/>
             </div>
         );
     }

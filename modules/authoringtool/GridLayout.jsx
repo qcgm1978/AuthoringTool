@@ -2,24 +2,11 @@ var React = require('react');
 
 var LeftMenu = require("./LeftMenu.jsx");
 
-//require("tinymce");
-
-/**
-var EditPanel = require("../panel/EditorPanel.jsx");
-<GridLayout width={this.state.width} height={this.state.height} contentHeight={this.state.contentHeight}
-            contentWidth={this.state.contentWidth}
-            doubleScreen={this.state.doubleScreen}/>
-*/
 var GridLayout = React.createClass({
 
     getInitialState: function () {
         return {
             layoutable: true,
-            oneScreenGrids: [],
-            multiScreen: {
-              model: 1,
-              grids: []
-            },
             minHeight: 768,
             zoom: 1,
             doubleScreen: 0,
@@ -35,10 +22,27 @@ var GridLayout = React.createClass({
        this.initGridster();
     },
 
+    componentWillUpdate : function(nextProps, nextState) {
+        /**
+         * 当用户切换单双屏幕时进行处理
+         */
+        if (nextProps.doubleScreen!=this.props.doubleScreen) {
+
+            if (nextProps.doubleScreen) {  //单屏到双屏时
+                this.singleScreenHtml = $("#main-grid>ul").html();
+            } else {
+                this.doubleMainHtml = $("#main-grid>ul").html();
+                this.doubleExtraHtml = $("#extra-grid>ul").html();
+            }
+        }
+    },
+
+    singleScreenHtml: null,
+    doubleMainHtml: null,
+    doubleExtraHtml: null,
+
     initGridster: function() {
-
         var gridlayout = this;
-
         if(!this.state.layoutable) {
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
             tinymce.init({
@@ -49,6 +53,8 @@ var GridLayout = React.createClass({
             });
             return;
         } else {
+            $(".mce-content-body").removeClass("mce-content-body").removeAttr("id contenteditable spellcheck");
+            $(".mce-edit-focus").removeClass("mce-edit-focus");
             tinymce.execCommand('mceRemoveControl', true, '.gridster li .content');
         }
 
@@ -58,9 +64,9 @@ var GridLayout = React.createClass({
         if ($("#extra-grid>ul").data("gridster")) {
             $("#extra-grid>ul").data("gridster").remove_style_tags();
         }
-
         $(".gs-resize-handle").remove();
         $(".gridster ul li").removeAttr("style");
+
 
         var mHtml = $("#main-grid>ul").html();
         var eHtml = $("#extra-grid>ul").html();
@@ -69,6 +75,13 @@ var GridLayout = React.createClass({
 
         if (this.props.doubleScreen) {
 
+            if (this.doubleMainHtml!=null) {
+                mHtml = this.doubleMainHtml;
+            }
+            if (this.doubleExtraHtml!=null) {
+                eHtml = this.doubleExtraHtml;
+            }
+
             $("#main-grid").empty();
             $("#main-grid").append("<ul>" + mHtml + "</ul>");
 
@@ -76,6 +89,8 @@ var GridLayout = React.createClass({
             $("#extra-grid").append("<ul>" + eHtml + "</ul>");
 
             if (this.props.expandMode===2) {  //expand mode
+
+
                 var contentHeight = this.props.height;
                 if (this.props.showHeader) {
                     contentHeight -= this.props.headerHeight;
@@ -119,6 +134,13 @@ var GridLayout = React.createClass({
                     min_rows: 10,
                     resize: {
                         enabled: true
+                    },
+                    draggable: {
+                        stop: function(event, ui) {
+                            if (ui.pointer.left<=gridlayout.props.width-200) {
+                                gridlayout.moveBlock(ui.$player, false);
+                            }
+                        }
                     }
                 });
 
@@ -141,6 +163,13 @@ var GridLayout = React.createClass({
                     max_cols: 12,
                     resize: {
                         enabled: true
+                    },
+                    draggable: {
+                        stop: function(event, ui) {
+                            if (ui.pointer.left>=gridlayout.props.width+70) {
+                                gridlayout.moveBlock(ui.$player, true);
+                            }
+                        }
                     }
                 });
             }
@@ -205,6 +234,9 @@ var GridLayout = React.createClass({
             }
         } else {
             $("#main-grid").empty();
+            if (this.singleScreenHtml!=null) {
+                mHtml = this.singleScreenHtml;
+            }
             $("#main-grid").append("<ul>" + mHtml + "</ul>");
             //$("#main-grid ul").append(eHtml);
 
@@ -293,6 +325,7 @@ var GridLayout = React.createClass({
                           addBlock={this.addBlock}
                           layoutable={this.state.layoutable} disableLayout={this.disableLayout}
                           enableLayout={this.enableLayout} ref="leftmenu" closeSetting={this.closeSetting}
+                          showHeader={this.props.showHeader} showFooter={this.props.showFooter}
                             width={this.props.width}/>
 
                 <div className="gridster" id="main-grid" style={{

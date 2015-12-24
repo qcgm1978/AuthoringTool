@@ -2,7 +2,6 @@ var React = require('react');
 
 var PageConfigMenu = React.createClass({
 
-
     SCREEN_MODEL_PORTRAIT: "Portrait Mode",
     SCREEN_MODEL_EXPAND: "Landscape Mode",
     SCREEN_MODEL_EXTRA: "Extra Mode",
@@ -31,27 +30,28 @@ var PageConfigMenu = React.createClass({
         });
     },
 
-
-
-    resolution: function(event) {
-        var value = $(event.target).val();
-        console.log("resolution " + value);
-        if (value === "1920x1080(16:9)") {
-            this.props.configurationChange({width: 1920, minHeight: 1080});
-        } else if (value === "1200x800(16:10)") {
-            this.props.configurationChange({width: 1280, minHeight: 800});
-        } else if (value === "1024x768(4:3)") {
-            this.props.configurationChange({width: 1024, minHeight: 768});
-        }
+    toggleHeader: function(event) {
+        this.props.configurationChange({
+            showHeader: event.target.checked
+        });
     },
 
-
+    toggleFooter: function(event) {
+        this.props.configurationChange({
+            showFooter: event.target.checked
+        });
+    },
 
     componentDidMount: function () {
 
     },
 
     componentWillReceiveProps: function(nextProps) {
+
+    },
+
+    closeMe: function() {
+        this.props.showConfigMenu(false);
     },
 
     render: function () {
@@ -59,8 +59,9 @@ var PageConfigMenu = React.createClass({
             <div className="pageConfig" style={{
                     display: this.props.show? "inherit":"none"
             }}>
-                <div> <input type="checkbox"/> <span>Show Header</span> </div>
-                <div> <input type="checkbox"/> <span>Show Footer</span> </div>
+                <div className="close glyphicon glyphicon-remove" onClick={this.closeMe}/>
+                <div><input checked={this.props.showHeader} type="checkbox" onChange={this.toggleHeader}/><span>Show Header</span></div>
+                <div><input checked={this.props.showFooter} type="checkbox" onChange={this.toggleFooter}/><span>Show Footer</span></div>
                 <div> <span>Double Screen</span>
                     <select onChange={this.screenModel}>
                         <option>{this.SCREEN_MODEL_PORTRAIT}</option>

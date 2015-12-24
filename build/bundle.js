@@ -10487,7 +10487,7 @@
 	      _x = outerNode;
 	      _x2 = innerNode.parentNode;
 	      _again = true;
-
+	      continue;
 	    } else if (outerNode.contains) {
 	      return outerNode.contains(innerNode);
 	    } else if (outerNode.compareDocumentPosition) {
@@ -23527,7 +23527,8 @@
 	                    } },
 	                React.createElement("div", { className: "styles" }),
 	                React.createElement("div", { className: "header", style: {
-	                        width: headerWidth
+	                        width: headerWidth,
+	                        display: this.props.showHeader ? "inherit" : "none"
 	                    } }),
 	                React.createElement(GridLayout, { width: this.props.width, height: this.props.height,
 	                    showHeader: this.props.showHeader, showFooter: this.props.showFooter,
@@ -23537,7 +23538,8 @@
 	                    configurationChange: this.props.configurationChange,
 	                    ref: "layout" }),
 	                React.createElement("div", { className: "footer", style: {
-	                        width: headerWidth
+	                        width: headerWidth,
+	                        display: this.props.showFooter ? "inherit" : "none"
 	                    } })
 	            ),
 	            React.createElement(AxisLines, { width: this.props.width, height: this.props.height,
@@ -23637,25 +23639,12 @@
 
 	var LeftMenu = __webpack_require__(180);
 
-	//require("tinymce");
-
-	/**
-	var EditPanel = require("../panel/EditorPanel.jsx");
-	<GridLayout width={this.state.width} height={this.state.height} contentHeight={this.state.contentHeight}
-	            contentWidth={this.state.contentWidth}
-	            doubleScreen={this.state.doubleScreen}/>
-	*/
 	var GridLayout = React.createClass({
 	    displayName: "GridLayout",
 
 	    getInitialState: function getInitialState() {
 	        return {
 	            layoutable: true,
-	            oneScreenGrids: [],
-	            multiScreen: {
-	                model: 1,
-	                grids: []
-	            },
 	            minHeight: 768,
 	            zoom: 1,
 	            doubleScreen: 0,
@@ -23671,10 +23660,28 @@
 	        this.initGridster();
 	    },
 
+	    componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
+	        /**
+	         * 当用户切换单双屏幕时进行处理
+	         */
+	        if (nextProps.doubleScreen != this.props.doubleScreen) {
+
+	            if (nextProps.doubleScreen) {
+	                //单屏到双屏时
+	                this.singleScreenHtml = $("#main-grid>ul").html();
+	            } else {
+	                this.doubleMainHtml = $("#main-grid>ul").html();
+	                this.doubleExtraHtml = $("#extra-grid>ul").html();
+	            }
+	        }
+	    },
+
+	    singleScreenHtml: null,
+	    doubleMainHtml: null,
+	    doubleExtraHtml: null,
+
 	    initGridster: function initGridster() {
-
 	        var gridlayout = this;
-
 	        if (!this.state.layoutable) {
 	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
 	            tinymce.init({
@@ -23685,6 +23692,8 @@
 	            });
 	            return;
 	        } else {
+	            $(".mce-content-body").removeClass("mce-content-body").removeAttr("id contenteditable spellcheck");
+	            $(".mce-edit-focus").removeClass("mce-edit-focus");
 	            tinymce.execCommand('mceRemoveControl', true, '.gridster li .content');
 	        }
 
@@ -23694,7 +23703,6 @@
 	        if ($("#extra-grid>ul").data("gridster")) {
 	            $("#extra-grid>ul").data("gridster").remove_style_tags();
 	        }
-
 	        $(".gs-resize-handle").remove();
 	        $(".gridster ul li").removeAttr("style");
 
@@ -23705,6 +23713,13 @@
 
 	        if (this.props.doubleScreen) {
 
+	            if (this.doubleMainHtml != null) {
+	                mHtml = this.doubleMainHtml;
+	            }
+	            if (this.doubleExtraHtml != null) {
+	                eHtml = this.doubleExtraHtml;
+	            }
+
 	            $("#main-grid").empty();
 	            $("#main-grid").append("<ul>" + mHtml + "</ul>");
 
@@ -23713,6 +23728,7 @@
 
 	            if (this.props.expandMode === 2) {
 	                //expand mode
+
 	                var contentHeight = this.props.height;
 	                if (this.props.showHeader) {
 	                    contentHeight -= this.props.headerHeight;
@@ -23756,6 +23772,13 @@
 	                    min_rows: 10,
 	                    resize: {
 	                        enabled: true
+	                    },
+	                    draggable: {
+	                        stop: function stop(event, ui) {
+	                            if (ui.pointer.left <= gridlayout.props.width - 200) {
+	                                gridlayout.moveBlock(ui.$player, false);
+	                            }
+	                        }
 	                    }
 	                });
 
@@ -23778,6 +23801,13 @@
 	                    max_cols: 12,
 	                    resize: {
 	                        enabled: true
+	                    },
+	                    draggable: {
+	                        stop: function stop(event, ui) {
+	                            if (ui.pointer.left >= gridlayout.props.width + 70) {
+	                                gridlayout.moveBlock(ui.$player, true);
+	                            }
+	                        }
 	                    }
 	                });
 	            }
@@ -23842,6 +23872,9 @@
 	            }
 	        } else {
 	            $("#main-grid").empty();
+	            if (this.singleScreenHtml != null) {
+	                mHtml = this.singleScreenHtml;
+	            }
 	            $("#main-grid").append("<ul>" + mHtml + "</ul>");
 	            //$("#main-grid ul").append(eHtml);
 
@@ -23925,6 +23958,7 @@
 	                addBlock: this.addBlock,
 	                layoutable: this.state.layoutable, disableLayout: this.disableLayout,
 	                enableLayout: this.enableLayout, ref: "leftmenu", closeSetting: this.closeSetting,
+	                showHeader: this.props.showHeader, showFooter: this.props.showFooter,
 	                width: this.props.width }),
 	            React.createElement(
 	                "div",
@@ -24083,7 +24117,10 @@
 	                )
 	            ),
 	            React.createElement(BlockTypeMenu, { addBlock: this.props.addBlock, show: this.state.showBlockTypes }),
-	            React.createElement(PageConfigMenu, { configurationChange: this.props.configurationChange, show: this.state.showConfigMenu, closeSetting: this.props.closeSetting })
+	            React.createElement(PageConfigMenu, { configurationChange: this.props.configurationChange,
+	                showConfigMenu: this.showConfigMenu,
+	                showHeader: this.props.showHeader, showFooter: this.props.showFooter,
+	                show: this.state.showConfigMenu, closeSetting: this.props.closeSetting })
 	        );
 	    }
 	});
@@ -24228,21 +24265,25 @@
 	        });
 	    },
 
-	    resolution: function resolution(event) {
-	        var value = $(event.target).val();
-	        console.log("resolution " + value);
-	        if (value === "1920x1080(16:9)") {
-	            this.props.configurationChange({ width: 1920, minHeight: 1080 });
-	        } else if (value === "1200x800(16:10)") {
-	            this.props.configurationChange({ width: 1280, minHeight: 800 });
-	        } else if (value === "1024x768(4:3)") {
-	            this.props.configurationChange({ width: 1024, minHeight: 768 });
-	        }
+	    toggleHeader: function toggleHeader(event) {
+	        this.props.configurationChange({
+	            showHeader: event.target.checked
+	        });
+	    },
+
+	    toggleFooter: function toggleFooter(event) {
+	        this.props.configurationChange({
+	            showFooter: event.target.checked
+	        });
 	    },
 
 	    componentDidMount: function componentDidMount() {},
 
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    closeMe: function closeMe() {
+	        this.props.showConfigMenu(false);
+	    },
 
 	    render: function render() {
 	        return React.createElement(
@@ -24250,31 +24291,26 @@
 	            { className: "pageConfig", style: {
 	                    display: this.props.show ? "inherit" : "none"
 	                } },
+	            React.createElement("div", { className: "close glyphicon glyphicon-remove", onClick: this.closeMe }),
 	            React.createElement(
 	                "div",
 	                null,
-	                " ",
-	                React.createElement("input", { type: "checkbox" }),
-	                " ",
+	                React.createElement("input", { checked: this.props.showHeader, type: "checkbox", onChange: this.toggleHeader }),
 	                React.createElement(
 	                    "span",
 	                    null,
 	                    "Show Header"
-	                ),
-	                " "
+	                )
 	            ),
 	            React.createElement(
 	                "div",
 	                null,
-	                " ",
-	                React.createElement("input", { type: "checkbox" }),
-	                " ",
+	                React.createElement("input", { checked: this.props.showFooter, type: "checkbox", onChange: this.toggleFooter }),
 	                React.createElement(
 	                    "span",
 	                    null,
 	                    "Show Footer"
-	                ),
-	                " "
+	                )
 	            ),
 	            React.createElement(
 	                "div",
