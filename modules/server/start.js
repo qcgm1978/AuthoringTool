@@ -4,6 +4,7 @@ var app = express();
 app.use(express.static('.'));
 
 var templateService = require("./TemplateService")(app);
+var attachmentService = require("./AttachmentService")(app);
 var authoringService = require("./AuthoringService")(app, templateService);
 
 var server = app.listen(80, function () {

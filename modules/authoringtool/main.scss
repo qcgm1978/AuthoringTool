@@ -76,7 +76,6 @@ body {
           position: fixed;
           top: 70px;
           height: 400px;
-          width: 400px;
           left: 70px;
           box-sizing: border-box;
           border-radius: 0 8px 8px 0;
@@ -118,7 +117,7 @@ body {
             }
           }
 
-          .blockTypedLists {
+          .textTemplateLists {
             display: inline-block;
             padding: 10px;
             width: 310px;
@@ -130,6 +129,16 @@ body {
               padding: 0 5px;
               border-radius: 5px;
             }
+          }
+
+          .chooseImage {
+            display: inline-block;
+            margin: 10px;
+            width: 500px;
+          }
+
+          [data-show='false'] {
+            display: none;
           }
         }
 

@@ -2663,7 +2663,7 @@
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
 	* http://gridster.net/
 		 * Copyright (c) 2014 ducksboard; Licensed MIT */
 		(function (root, factory) {
@@ -3596,7 +3596,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n    .screen .display > div .leftMenu {\n      position: absolute;\n      left: -40px;\n      top: 0; }\n      .screen .display > div .leftMenu span.glyphicon {\n        font-size: 18px;\n        display: block;\n        width: 40px;\n        line-height: 40px;\n        text-align: center;\n        background-color: #F5F5F5;\n        color: #5CB85C;\n        cursor: pointer; }\n        .screen .display > div .leftMenu span.glyphicon.ratio {\n          line-height: 16px;\n          font-size: 12px;\n          padding: 5px 0; }\n        .screen .display > div .leftMenu span.glyphicon[data-clicked='true'] {\n          background-color: #5CB85C;\n          color: #fff; }\n      .screen .display > div .leftMenu .blockType {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 400px;\n        width: 400px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100; }\n        .screen .display > div .leftMenu .blockType ul.category-list {\n          background-image: linear-gradient(360deg, rgba(6, 49, 85, 0.2), rgba(56, 153, 236, 0));\n          background-color: #5CB85C;\n          display: inline-block;\n          height: 100%;\n          padding: 14px 0;\n          vertical-align: top; }\n          .screen .display > div .leftMenu .blockType ul.category-list li.category {\n            text-align: center;\n            color: #fff;\n            cursor: pointer;\n            font-size: 14px;\n            margin-bottom: 2px;\n            max-height: 30px;\n            min-height: 14px;\n            padding: 0 10px 0 3px;\n            position: relative; }\n            .screen .display > div .leftMenu .blockType ul.category-list li.category span {\n              border-radius: 20px;\n              display: inline-block;\n              height: 100%;\n              overflow: hidden;\n              padding: 0 14px;\n              position: relative; }\n              .screen .display > div .leftMenu .blockType ul.category-list li.category span.current {\n                background-color: rgba(0, 0, 0, 0.2);\n                box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n        .screen .display > div .leftMenu .blockType .blockTypedLists {\n          display: inline-block;\n          padding: 10px;\n          width: 310px; }\n          .screen .display > div .leftMenu .blockType .blockTypedLists > div {\n            margin: 5px;\n            display: block;\n            padding: 0 5px;\n            border-radius: 5px; }\n      .screen .display > div .leftMenu .pageConfig {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 300px;\n        width: 300px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100;\n        padding: 10px; }\n        .screen .display > div .leftMenu .pageConfig > div {\n          padding: 5px; }\n    .screen .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .screen .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .screen .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .screen .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n    .screen .display > div .leftMenu {\n      position: absolute;\n      left: -40px;\n      top: 0; }\n      .screen .display > div .leftMenu span.glyphicon {\n        font-size: 18px;\n        display: block;\n        width: 40px;\n        line-height: 40px;\n        text-align: center;\n        background-color: #F5F5F5;\n        color: #5CB85C;\n        cursor: pointer; }\n        .screen .display > div .leftMenu span.glyphicon.ratio {\n          line-height: 16px;\n          font-size: 12px;\n          padding: 5px 0; }\n        .screen .display > div .leftMenu span.glyphicon[data-clicked='true'] {\n          background-color: #5CB85C;\n          color: #fff; }\n      .screen .display > div .leftMenu .blockType {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 400px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100; }\n        .screen .display > div .leftMenu .blockType ul.category-list {\n          background-image: linear-gradient(360deg, rgba(6, 49, 85, 0.2), rgba(56, 153, 236, 0));\n          background-color: #5CB85C;\n          display: inline-block;\n          height: 100%;\n          padding: 14px 0;\n          vertical-align: top; }\n          .screen .display > div .leftMenu .blockType ul.category-list li.category {\n            text-align: center;\n            color: #fff;\n            cursor: pointer;\n            font-size: 14px;\n            margin-bottom: 2px;\n            max-height: 30px;\n            min-height: 14px;\n            padding: 0 10px 0 3px;\n            position: relative; }\n            .screen .display > div .leftMenu .blockType ul.category-list li.category span {\n              border-radius: 20px;\n              display: inline-block;\n              height: 100%;\n              overflow: hidden;\n              padding: 0 14px;\n              position: relative; }\n              .screen .display > div .leftMenu .blockType ul.category-list li.category span.current {\n                background-color: rgba(0, 0, 0, 0.2);\n                box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n        .screen .display > div .leftMenu .blockType .textTemplateLists {\n          display: inline-block;\n          padding: 10px;\n          width: 310px; }\n          .screen .display > div .leftMenu .blockType .textTemplateLists > div {\n            margin: 5px;\n            display: block;\n            padding: 0 5px;\n            border-radius: 5px; }\n        .screen .display > div .leftMenu .blockType .chooseImage {\n          display: inline-block;\n          margin: 10px;\n          width: 500px; }\n        .screen .display > div .leftMenu .blockType [data-show='false'] {\n          display: none; }\n      .screen .display > div .leftMenu .pageConfig {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 300px;\n        width: 300px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100;\n        padding: 10px; }\n        .screen .display > div .leftMenu .pageConfig > div {\n          padding: 5px; }\n    .screen .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .screen .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .screen .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .screen .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n", ""]);
 
 	// exports
 
@@ -10472,29 +10472,29 @@
 	function containsNode(_x, _x2) {
 	  var _again = true;
 
-	  while (_again) {
-		  var outerNode = _x,
-			  innerNode = _x2;
-		  _again = false;
+	  _function: while (_again) {
+	    var outerNode = _x,
+	        innerNode = _x2;
+	    _again = false;
 
-		  if (!outerNode || !innerNode) {
-			  return false;
-		  } else if (outerNode === innerNode) {
-			  return true;
-		  } else if (isTextNode(outerNode)) {
-			  return false;
-		  } else if (isTextNode(innerNode)) {
-			  _x = outerNode;
-			  _x2 = innerNode.parentNode;
-			  _again = true;
-			  continue;
-		  } else if (outerNode.contains) {
-			  return outerNode.contains(innerNode);
-		  } else if (outerNode.compareDocumentPosition) {
-			  return !!(outerNode.compareDocumentPosition(innerNode) & 16);
-		  } else {
-			  return false;
-		  }
+	    if (!outerNode || !innerNode) {
+	      return false;
+	    } else if (outerNode === innerNode) {
+	      return true;
+	    } else if (isTextNode(outerNode)) {
+	      return false;
+	    } else if (isTextNode(innerNode)) {
+	      _x = outerNode;
+	      _x2 = innerNode.parentNode;
+	      _again = true;
+
+	    } else if (outerNode.contains) {
+	      return outerNode.contains(innerNode);
+	    } else if (outerNode.compareDocumentPosition) {
+	      return !!(outerNode.compareDocumentPosition(innerNode) & 16);
+	    } else {
+	      return false;
+	    }
 	  }
 	}
 
@@ -24013,7 +24013,7 @@
 	var React = __webpack_require__(18);
 
 	var BlockTypeMenu = __webpack_require__(181);
-	var PageConfigMenu = __webpack_require__(182);
+	var PageConfigMenu = __webpack_require__(189);
 
 	var LeftMenu = React.createClass({
 	    displayName: "LeftMenu",
@@ -24134,17 +24134,33 @@
 	"use strict";
 
 	var React = __webpack_require__(18);
+	var ChooseImageMenu = __webpack_require__(182);
+	var AddTextMenu = __webpack_require__(188);
 
 	var BlockTypeMenu = React.createClass({
 	    displayName: "BlockTypeMenu",
 
 	    getInitialState: function getInitialState() {
-	        return {};
+	        return {
+	            page: "addText"
+	        };
 	    },
 
 	    componentDidMount: function componentDidMount() {},
 
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    showAddText: function showAddText() {
+	        this.setState({
+	            page: "addText"
+	        });
+	    },
+
+	    showAddImage: function showAddImage() {
+	        this.setState({
+	            page: "chooseImage"
+	        });
+	    },
 
 	    render: function render() {
 	        return React.createElement(
@@ -24160,7 +24176,7 @@
 	                    { className: "category" },
 	                    React.createElement(
 	                        "span",
-	                        null,
+	                        { className: this.state.page === "addText" ? "current" : "", onClick: this.showAddText },
 	                        "Text"
 	                    )
 	                ),
@@ -24169,7 +24185,7 @@
 	                    { className: "category" },
 	                    React.createElement(
 	                        "span",
-	                        null,
+	                        { className: this.state.page === "chooseImage" ? "current" : "", onClick: this.showAddImage },
 	                        "Image"
 	                    )
 	                ),
@@ -24201,28 +24217,8 @@
 	                    )
 	                )
 	            ),
-	            React.createElement(
-	                "div",
-	                { className: "blockTypedLists" },
-	                React.createElement(
-	                    "div",
-	                    { onClick: this.props.addBlock },
-	                    React.createElement(
-	                        "div",
-	                        { className: "rtf" },
-	                        "sample paragraphs"
-	                    )
-	                ),
-	                React.createElement(
-	                    "div",
-	                    null,
-	                    React.createElement(
-	                        "h2",
-	                        { className: "rtf" },
-	                        "Titles"
-	                    )
-	                )
-	            )
+	            React.createElement(AddTextMenu, { show: this.state.page === "addText", addBlock: this.props.addBlock }),
+	            React.createElement(ChooseImageMenu, { show: this.state.page === "chooseImage", addBlock: this.props.addBlock })
 	        );
 	    }
 	});
@@ -24231,6 +24227,1797 @@
 
 /***/ },
 /* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(18);
+	var Dropzone = __webpack_require__(183);
+
+	var request = __webpack_require__(185);
+
+	var ChooseImageMenu = React.createClass({
+	    displayName: 'ChooseImageMenu',
+
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+
+	    componentDidMount: function componentDidMount() {},
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    onDrop: function onDrop(files) {
+	        console.log('Received files: ', files);
+
+	        request.post('/attach/upload').attach(files[0].name, files[0]).end(function (err, res) {});
+	    },
+
+	    handleFile: function handleFile(file) {},
+
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'chooseImage', 'data-show': this.props.show },
+	            React.createElement(
+	                Dropzone,
+	                { onDrop: this.onDrop, multiple: false },
+	                React.createElement(
+	                    'div',
+	                    null,
+	                    'Try dropping some files here, or click to select files to upload.'
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = ChooseImageMenu;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _attrAccept = __webpack_require__(184);
+
+	var _attrAccept2 = _interopRequireDefault(_attrAccept);
+
+	var _react = __webpack_require__(18);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var supportMultiple = typeof document !== 'undefined' && document && document.createElement ? 'multiple' in document.createElement('input') : true;
+
+	var Dropzone = (function (_React$Component) {
+	  _inherits(Dropzone, _React$Component);
+
+	  function Dropzone(props, context) {
+	    _classCallCheck(this, Dropzone);
+
+	    _React$Component.call(this, props, context);
+	    this.onClick = this.onClick.bind(this);
+	    this.onDragEnter = this.onDragEnter.bind(this);
+	    this.onDragLeave = this.onDragLeave.bind(this);
+	    this.onDragOver = this.onDragOver.bind(this);
+	    this.onDrop = this.onDrop.bind(this);
+
+	    this.state = {
+	      isDragActive: false
+	    };
+	  }
+
+	  Dropzone.prototype.componentDidMount = function componentDidMount() {
+	    this.enterCounter = 0;
+	  };
+
+	  Dropzone.prototype.onDragEnter = function onDragEnter(e) {
+	    e.preventDefault();
+
+	    // Count the dropzone and any children that are entered.
+	    ++this.enterCounter;
+
+	    // This is tricky. During the drag even the dataTransfer.files is null
+	    // But Chrome implements some drag store, which is accesible via dataTransfer.items
+	    var dataTransferItems = e.dataTransfer && e.dataTransfer.items ? e.dataTransfer.items : [];
+
+	    // Now we need to convert the DataTransferList to Array
+	    var allFilesAccepted = this.allFilesAccepted(Array.prototype.slice.call(dataTransferItems));
+
+	    this.setState({
+	      isDragActive: allFilesAccepted,
+	      isDragReject: !allFilesAccepted
+	    });
+
+	    if (this.props.onDragEnter) {
+	      this.props.onDragEnter.call(this, e);
+	    }
+	  };
+
+	  Dropzone.prototype.onDragOver = function onDragOver(e) {
+	    e.preventDefault();
+	    e.stopPropagation();
+	    return false;
+	  };
+
+	  Dropzone.prototype.onDragLeave = function onDragLeave(e) {
+	    e.preventDefault();
+
+	    // Only deactivate once the dropzone and all children was left.
+	    if (--this.enterCounter > 0) {
+	      return;
+	    }
+
+	    this.setState({
+	      isDragActive: false,
+	      isDragReject: false
+	    });
+
+	    if (this.props.onDragLeave) {
+	      this.props.onDragLeave.call(this, e);
+	    }
+	  };
+
+	  Dropzone.prototype.onDrop = function onDrop(e) {
+	    e.preventDefault();
+
+	    // Reset the counter along with the drag on a drop.
+	    this.enterCounter = 0;
+
+	    this.setState({
+	      isDragActive: false,
+	      isDragReject: false
+	    });
+
+	    var droppedFiles = e.dataTransfer ? e.dataTransfer.files : e.target.files;
+	    var max = this.props.multiple ? droppedFiles.length : 1;
+	    var files = [];
+
+	    for (var i = 0; i < max; i++) {
+	      var file = droppedFiles[i];
+	      // We might want to disable the preview creation to support big files
+	      if (!this.props.disablePreview) {
+	        file.preview = window.URL.createObjectURL(file);
+	      }
+	      files.push(file);
+	    }
+
+	    if (this.props.onDrop) {
+	      this.props.onDrop.call(this, files, e);
+	    }
+
+	    if (this.allFilesAccepted(files)) {
+	      if (this.props.onDropAccepted) {
+	        this.props.onDropAccepted.call(this, files, e);
+	      }
+	    } else {
+	      if (this.props.onDropRejected) {
+	        this.props.onDropRejected.call(this, files, e);
+	      }
+	    }
+	  };
+
+	  Dropzone.prototype.onClick = function onClick() {
+	    if (!this.props.disableClick) {
+	      this.open();
+	    }
+	  };
+
+	  Dropzone.prototype.allFilesAccepted = function allFilesAccepted(files) {
+	    var _this = this;
+
+	    return files.every(function (file) {
+	      return _attrAccept2['default'](file, _this.props.accept);
+	    });
+	  };
+
+	  Dropzone.prototype.open = function open() {
+	    this.fileInputEl.value = null;
+	    this.fileInputEl.click();
+	  };
+
+	  Dropzone.prototype.render = function render() {
+	    var _this2 = this;
+
+	    var _props = this.props;
+	    var accept = _props.accept;
+	    var activeClassName = _props.activeClassName;
+	    var inputProps = _props.inputProps;
+	    var multiple = _props.multiple;
+	    var name = _props.name;
+	    var rejectClassName = _props.rejectClassName;
+
+	    var rest = _objectWithoutProperties(_props, ['accept', 'activeClassName', 'inputProps', 'multiple', 'name', 'rejectClassName']);
+
+	    var activeStyle = // eslint-disable-line prefer-const
+	    rest.activeStyle;
+	    var className = rest.className;
+	    var rejectStyle = rest.rejectStyle;
+	    var style = rest.style;
+
+	    var props = _objectWithoutProperties(rest, ['activeStyle', 'className', 'rejectStyle', 'style']);
+
+	    var _state = this.state;
+	    var isDragActive = _state.isDragActive;
+	    var isDragReject = _state.isDragReject;
+
+	    className = className || '';
+
+	    if (isDragActive && activeClassName) {
+	      className += ' ' + activeClassName;
+	    }
+	    if (isDragReject && rejectClassName) {
+	      className += ' ' + rejectClassName;
+	    }
+
+	    if (!className && !style && !activeStyle && !rejectStyle) {
+	      style = {
+	        width: 200,
+	        height: 200,
+	        borderWidth: 2,
+	        borderColor: '#666',
+	        borderStyle: 'dashed',
+	        borderRadius: 5
+	      };
+	      activeStyle = {
+	        borderStyle: 'solid',
+	        backgroundColor: '#eee'
+	      };
+	      rejectStyle = {
+	        borderStyle: 'solid',
+	        backgroundColor: '#ffdddd'
+	      };
+	    }
+
+	    var appliedStyle = undefined;
+	    if (activeStyle && isDragActive) {
+	      appliedStyle = _extends({}, style, activeStyle);
+	    } else if (rejectStyle && isDragReject) {
+	      appliedStyle = _extends({}, style, rejectStyle);
+	    } else {
+	      appliedStyle = _extends({}, style);
+	    }
+
+	    var inputAttributes = {
+	      accept: accept,
+	      type: 'file',
+	      style: { display: 'none' },
+	      multiple: supportMultiple && multiple,
+	      ref: function ref(el) {
+	        return _this2.fileInputEl = el;
+	      },
+	      onChange: this.onDrop
+	    };
+
+	    if (name && name.length) {
+	      inputAttributes.name = name;
+	    }
+
+	    return _react2['default'].createElement(
+	      'div',
+	      _extends({
+	        className: className,
+	        style: appliedStyle
+	      }, props, /* expand user provided props first so event handlers are never overridden */{
+	        onClick: this.onClick,
+	        onDragEnter: this.onDragEnter,
+	        onDragOver: this.onDragOver,
+	        onDragLeave: this.onDragLeave,
+	        onDrop: this.onDrop
+	      }),
+	      this.props.children,
+	      _react2['default'].createElement('input', _extends({}, inputProps, /* expand user provided inputProps first so inputAttributes override them */inputAttributes))
+	    );
+	  };
+
+	  return Dropzone;
+	})(_react2['default'].Component);
+
+	Dropzone.defaultProps = {
+	  disablePreview: false,
+	  disableClick: false,
+	  multiple: true
+	};
+
+	Dropzone.propTypes = {
+	  onDrop: _react2['default'].PropTypes.func,
+	  onDropAccepted: _react2['default'].PropTypes.func,
+	  onDropRejected: _react2['default'].PropTypes.func,
+	  onDragEnter: _react2['default'].PropTypes.func,
+	  onDragLeave: _react2['default'].PropTypes.func,
+
+	  children: _react2['default'].PropTypes.element,
+	  style: _react2['default'].PropTypes.object,
+	  activeStyle: _react2['default'].PropTypes.object,
+	  rejectStyle: _react2['default'].PropTypes.object,
+	  className: _react2['default'].PropTypes.string,
+	  activeClassName: _react2['default'].PropTypes.string,
+	  rejectClassName: _react2['default'].PropTypes.string,
+
+	  disablePreview: _react2['default'].PropTypes.bool,
+	  disableClick: _react2['default'].PropTypes.bool,
+
+	  inputProps: _react2['default'].PropTypes.object,
+	  multiple: _react2['default'].PropTypes.bool,
+	  accept: _react2['default'].PropTypes.string,
+	  name: _react2['default'].PropTypes.string
+	};
+
+	exports['default'] = Dropzone;
+	module.exports = exports['default'];
+
+
+/***/ },
+/* 184 */
+/***/ function(module, exports) {
+
+	module.exports=function(t){function n(e){if(r[e])return r[e].exports;var o=r[e]={exports:{},id:e,loaded:!1};return t[e].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var r={};return n.m=t,n.c=r,n.p="",n(0)}([function(t,n,r){"use strict";n.__esModule=!0,r(8),r(9),n["default"]=function(t,n){if(t&&n){var r=function(){var r=n.split(","),e=t.name||"",o=t.type||"",i=o.replace(/\/.*$/,"");return{v:r.some(function(t){var n=t.trim();return"."===n.charAt(0)?e.toLowerCase().endsWith(n.toLowerCase()):/\/\*$/.test(n)?i===n.replace(/\/.*$/,""):o===n})}}();if("object"==typeof r)return r.v}return!0},t.exports=n["default"]},function(t,n){var r=t.exports={version:"1.2.2"};"number"==typeof __e&&(__e=r)},function(t,n){var r=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=r)},function(t,n,r){var e=r(2),o=r(1),i=r(4),u=r(19),c="prototype",f=function(t,n){return function(){return t.apply(n,arguments)}},s=function(t,n,r){var a,p,l,d,y=t&s.G,h=t&s.P,v=y?e:t&s.S?e[n]||(e[n]={}):(e[n]||{})[c],x=y?o:o[n]||(o[n]={});y&&(r=n);for(a in r)p=!(t&s.F)&&v&&a in v,l=(p?v:r)[a],d=t&s.B&&p?f(l,e):h&&"function"==typeof l?f(Function.call,l):l,v&&!p&&u(v,a,l),x[a]!=l&&i(x,a,d),h&&((x[c]||(x[c]={}))[a]=l)};e.core=o,s.F=1,s.G=2,s.S=4,s.P=8,s.B=16,s.W=32,t.exports=s},function(t,n,r){var e=r(5),o=r(18);t.exports=r(22)?function(t,n,r){return e.setDesc(t,n,o(1,r))}:function(t,n,r){return t[n]=r,t}},function(t,n){var r=Object;t.exports={create:r.create,getProto:r.getPrototypeOf,isEnum:{}.propertyIsEnumerable,getDesc:r.getOwnPropertyDescriptor,setDesc:r.defineProperty,setDescs:r.defineProperties,getKeys:r.keys,getNames:r.getOwnPropertyNames,getSymbols:r.getOwnPropertySymbols,each:[].forEach}},function(t,n){var r=0,e=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++r+e).toString(36))}},function(t,n,r){var e=r(20)("wks"),o=r(2).Symbol;t.exports=function(t){return e[t]||(e[t]=o&&o[t]||(o||r(6))("Symbol."+t))}},function(t,n,r){r(26),t.exports=r(1).Array.some},function(t,n,r){r(25),t.exports=r(1).String.endsWith},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){var r={}.toString;t.exports=function(t){return r.call(t).slice(8,-1)}},function(t,n,r){var e=r(10);t.exports=function(t,n,r){if(e(t),void 0===n)return t;switch(r){case 1:return function(r){return t.call(n,r)};case 2:return function(r,e){return t.call(n,r,e)};case 3:return function(r,e,o){return t.call(n,r,e,o)}}return function(){return t.apply(n,arguments)}}},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n,r){t.exports=function(t){var n=/./;try{"/./"[t](n)}catch(e){try{return n[r(7)("match")]=!1,!"/./"[t](n)}catch(o){}}return!0}},function(t,n){t.exports=function(t){try{return!!t()}catch(n){return!0}}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n,r){var e=r(16),o=r(11),i=r(7)("match");t.exports=function(t){var n;return e(t)&&(void 0!==(n=t[i])?!!n:"RegExp"==o(t))}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n,r){var e=r(2),o=r(4),i=r(6)("src"),u="toString",c=Function[u],f=(""+c).split(u);r(1).inspectSource=function(t){return c.call(t)},(t.exports=function(t,n,r,u){"function"==typeof r&&(o(r,i,t[n]?""+t[n]:f.join(String(n))),"name"in r||(r.name=n)),t===e?t[n]=r:(u||delete t[n],o(t,n,r))})(Function.prototype,u,function(){return"function"==typeof this&&this[i]||c.call(this)})},function(t,n,r){var e=r(2),o="__core-js_shared__",i=e[o]||(e[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n,r){var e=r(17),o=r(13);t.exports=function(t,n,r){if(e(n))throw TypeError("String#"+r+" doesn't accept regex!");return String(o(t))}},function(t,n,r){t.exports=!r(15)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n){var r=Math.ceil,e=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?e:r)(t)}},function(t,n,r){var e=r(23),o=Math.min;t.exports=function(t){return t>0?o(e(t),9007199254740991):0}},function(t,n,r){"use strict";var e=r(3),o=r(24),i=r(21),u="endsWith",c=""[u];e(e.P+e.F*r(14)(u),"String",{endsWith:function(t){var n=i(this,t,u),r=arguments,e=r.length>1?r[1]:void 0,f=o(n.length),s=void 0===e?f:Math.min(o(e),f),a=String(t);return c?c.call(n,a,s):n.slice(s-a.length,s)===a}})},function(t,n,r){var e=r(5),o=r(3),i=r(1).Array||Array,u={},c=function(t,n){e.each.call(t.split(","),function(t){void 0==n&&t in i?u[t]=i[t]:t in[]&&(u[t]=r(12)(Function.call,[][t],n))})};c("pop,reverse,shift,keys,values,entries",1),c("indexOf,every,some,forEach,map,filter,find,findIndex,includes",3),c("join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill"),o(o.S,"Array",u)}]);
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Module dependencies.
+	 */
+
+	var Emitter = __webpack_require__(186);
+	var reduce = __webpack_require__(187);
+
+	/**
+	 * Root reference for iframes.
+	 */
+
+	var root;
+	if (typeof window !== 'undefined') { // Browser window
+	  root = window;
+	} else if (typeof self !== 'undefined') { // Web Worker
+	  root = self;
+	} else { // Other environments
+	  root = this;
+	}
+
+	/**
+	 * Noop.
+	 */
+
+
+	function noop() {
+	}
+		/**
+	 * Check if `obj` is a host object,
+	 * we don't want to serialize these :)
+	 *
+	 * TODO: future proof, move to compoent land
+	 *
+	 * @param {Object} obj
+	 * @return {Boolean}
+	 * @api private
+	 */
+
+	function isHost(obj) {
+	  var str = {}.toString.call(obj);
+
+	  switch (str) {
+	    case '[object File]':
+	    case '[object Blob]':
+	    case '[object FormData]':
+	      return true;
+	    default:
+	      return false;
+	  }
+	}
+
+	/**
+	 * Determine XHR.
+	 */
+
+	request.getXHR = function () {
+	  if (root.XMLHttpRequest
+	      && (!root.location || 'file:' != root.location.protocol
+	          || !root.ActiveXObject)) {
+	    return new XMLHttpRequest;
+	  } else {
+	    try { return new ActiveXObject('Microsoft.XMLHTTP'); } catch(e) {}
+	    try { return new ActiveXObject('Msxml2.XMLHTTP.6.0'); } catch(e) {}
+	    try { return new ActiveXObject('Msxml2.XMLHTTP.3.0'); } catch(e) {}
+	    try { return new ActiveXObject('Msxml2.XMLHTTP'); } catch(e) {}
+	  }
+	  return false;
+	};
+
+	/**
+	 * Removes leading and trailing whitespace, added to support IE.
+	 *
+	 * @param {String} s
+	 * @return {String}
+	 * @api private
+	 */
+
+	var trim = ''.trim
+	  ? function(s) { return s.trim(); }
+	  : function(s) { return s.replace(/(^\s*|\s*$)/g, ''); };
+
+	/**
+	 * Check if `obj` is an object.
+	 *
+	 * @param {Object} obj
+	 * @return {Boolean}
+	 * @api private
+	 */
+
+	function isObject(obj) {
+	  return obj === Object(obj);
+	}
+
+	/**
+	 * Serialize the given `obj`.
+	 *
+	 * @param {Object} obj
+	 * @return {String}
+	 * @api private
+	 */
+
+	function serialize(obj) {
+	  if (!isObject(obj)) return obj;
+	  var pairs = [];
+	  for (var key in obj) {
+	    if (null != obj[key]) {
+	      pushEncodedKeyValuePair(pairs, key, obj[key]);
+	        }
+	      }
+	  return pairs.join('&');
+	}
+
+	/**
+	 * Helps 'serialize' with serializing arrays.
+	 * Mutates the pairs array.
+	 *
+	 * @param {Array} pairs
+	 * @param {String} key
+	 * @param {Mixed} val
+	 */
+
+	function pushEncodedKeyValuePair(pairs, key, val) {
+	  if (Array.isArray(val)) {
+	    return val.forEach(function(v) {
+	      pushEncodedKeyValuePair(pairs, key, v);
+	    });
+	  }
+	  pairs.push(encodeURIComponent(key)
+	    + '=' + encodeURIComponent(val));
+	}
+
+	/**
+	 * Expose serialization method.
+	 */
+
+	 request.serializeObject = serialize;
+
+	 /**
+	  * Parse the given x-www-form-urlencoded `str`.
+	  *
+	  * @param {String} str
+	  * @return {Object}
+	  * @api private
+	  */
+
+	function parseString(str) {
+	  var obj = {};
+	  var pairs = str.split('&');
+	  var parts;
+	  var pair;
+
+	  for (var i = 0, len = pairs.length; i < len; ++i) {
+	    pair = pairs[i];
+	    parts = pair.split('=');
+	    obj[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+	  }
+
+	  return obj;
+	}
+
+	/**
+	 * Expose parser.
+	 */
+
+	request.parseString = parseString;
+
+	/**
+	 * Default MIME type map.
+	 *
+	 *     superagent.types.xml = 'application/xml';
+	 *
+	 */
+
+	request.types = {
+	  html: 'text/html',
+	  json: 'application/json',
+	  xml: 'application/xml',
+	  urlencoded: 'application/x-www-form-urlencoded',
+	  'form': 'application/x-www-form-urlencoded',
+	  'form-data': 'application/x-www-form-urlencoded'
+	};
+
+	/**
+	 * Default serialization map.
+	 *
+	 *     superagent.serialize['application/xml'] = function(obj){
+	 *       return 'generated xml here';
+	 *     };
+	 *
+	 */
+
+	 request.serialize = {
+	   'application/x-www-form-urlencoded': serialize,
+	   'application/json': JSON.stringify
+	 };
+
+	 /**
+	  * Default parsers.
+	  *
+	  *     superagent.parse['application/xml'] = function(str){
+	  *       return { object parsed from str };
+	  *     };
+	  *
+	  */
+
+	request.parse = {
+	  'application/x-www-form-urlencoded': parseString,
+	  'application/json': JSON.parse
+	};
+
+	/**
+	 * Parse the given header `str` into
+	 * an object containing the mapped fields.
+	 *
+	 * @param {String} str
+	 * @return {Object}
+	 * @api private
+	 */
+
+	function parseHeader(str) {
+	  var lines = str.split(/\r?\n/);
+	  var fields = {};
+	  var index;
+	  var line;
+	  var field;
+	  var val;
+
+	  lines.pop(); // trailing CRLF
+
+	  for (var i = 0, len = lines.length; i < len; ++i) {
+	    line = lines[i];
+	    index = line.indexOf(':');
+	    field = line.slice(0, index).toLowerCase();
+	    val = trim(line.slice(index + 1));
+	    fields[field] = val;
+	  }
+
+	  return fields;
+	}
+
+	/**
+	 * Check if `mime` is json or has +json structured syntax suffix.
+	 *
+	 * @param {String} mime
+	 * @return {Boolean}
+	 * @api private
+	 */
+
+	function isJSON(mime) {
+	  return /[\/+]json\b/.test(mime);
+	}
+
+	/**
+	 * Return the mime type for the given `str`.
+	 *
+	 * @param {String} str
+	 * @return {String}
+	 * @api private
+	 */
+
+	function type(str){
+	  return str.split(/ *; */).shift();
+	}
+		/**
+	 * Return header field parameters.
+	 *
+	 * @param {String} str
+	 * @return {Object}
+	 * @api private
+	 */
+
+	function params(str){
+	  return reduce(str.split(/ *; */), function(obj, str){
+	    var parts = str.split(/ *= */)
+	      , key = parts.shift()
+	      , val = parts.shift();
+
+	    if (key && val) obj[key] = val;
+	    return obj;
+	  }, {});
+	}
+		/**
+	 * Initialize a new `Response` with the given `xhr`.
+	 *
+	 *  - set flags (.ok, .error, etc)
+	 *  - parse header
+	 *
+	 * Examples:
+	 *
+	 *  Aliasing `superagent` as `request` is nice:
+	 *
+	 *      request = superagent;
+	 *
+	 *  We can use the promise-like API, or pass callbacks:
+	 *
+	 *      request.get('/').end(function(res){});
+	 *      request.get('/', function(res){});
+	 *
+	 *  Sending data can be chained:
+	 *
+	 *      request
+	 *        .post('/user')
+	 *        .send({ name: 'tj' })
+	 *        .end(function(res){});
+	 *
+	 *  Or passed to `.send()`:
+	 *
+	 *      request
+	 *        .post('/user')
+	 *        .send({ name: 'tj' }, function(res){});
+	 *
+	 *  Or passed to `.post()`:
+	 *
+	 *      request
+	 *        .post('/user', { name: 'tj' })
+	 *        .end(function(res){});
+	 *
+	 * Or further reduced to a single call for simple cases:
+	 *
+	 *      request
+	 *        .post('/user', { name: 'tj' }, function(res){});
+	 *
+	 * @param {XMLHTTPRequest} xhr
+	 * @param {Object} options
+	 * @api private
+	 */
+
+	function Response(req, options) {
+	  options = options || {};
+	  this.req = req;
+	  this.xhr = this.req.xhr;
+	  // responseText is accessible only if responseType is '' or 'text' and on older browsers
+	  this.text = ((this.req.method !='HEAD' && (this.xhr.responseType === '' || this.xhr.responseType === 'text')) || typeof this.xhr.responseType === 'undefined')
+	     ? this.xhr.responseText
+	     : null;
+	  this.statusText = this.req.xhr.statusText;
+	  this.setStatusProperties(this.xhr.status);
+	  this.header = this.headers = parseHeader(this.xhr.getAllResponseHeaders());
+	  // getAllResponseHeaders sometimes falsely returns "" for CORS requests, but
+	  // getResponseHeader still works. so we get content-type even if getting
+	  // other headers fails.
+	  this.header['content-type'] = this.xhr.getResponseHeader('content-type');
+	  this.setHeaderProperties(this.header);
+	  this.body = this.req.method != 'HEAD'
+	    ? this.parseBody(this.text ? this.text : this.xhr.response)
+	    : null;
+	}
+
+	/**
+	 * Get case-insensitive `field` value.
+	 *
+	 * @param {String} field
+	 * @return {String}
+	 * @api public
+	 */
+
+	Response.prototype.get = function(field){
+	  return this.header[field.toLowerCase()];
+	};
+
+	/**
+	 * Set header related properties:
+	 *
+	 *   - `.type` the content type without params
+	 *
+	 * A response of "Content-Type: text/plain; charset=utf-8"
+	 * will provide you with a `.type` of "text/plain".
+	 *
+	 * @param {Object} header
+	 * @api private
+	 */
+
+	Response.prototype.setHeaderProperties = function(header){
+	  // content-type
+	  var ct = this.header['content-type'] || '';
+	  this.type = type(ct);
+
+	  // params
+	  var obj = params(ct);
+	  for (var key in obj) this[key] = obj[key];
+	};
+
+	/**
+	 * Parse the given body `str`.
+	 *
+	 * Used for auto-parsing of bodies. Parsers
+	 * are defined on the `superagent.parse` object.
+	 *
+	 * @param {String} str
+	 * @return {Mixed}
+	 * @api private
+	 */
+
+	Response.prototype.parseBody = function(str){
+	  var parse = request.parse[this.type];
+	  return parse && str && (str.length || str instanceof Object)
+	    ? parse(str)
+	    : null;
+	};
+
+	/**
+	 * Set flags such as `.ok` based on `status`.
+	 *
+	 * For example a 2xx response will give you a `.ok` of __true__
+	 * whereas 5xx will be __false__ and `.error` will be __true__. The
+	 * `.clientError` and `.serverError` are also available to be more
+	 * specific, and `.statusType` is the class of error ranging from 1..5
+	 * sometimes useful for mapping respond colors etc.
+	 *
+	 * "sugar" properties are also defined for common cases. Currently providing:
+	 *
+	 *   - .noContent
+	 *   - .badRequest
+	 *   - .unauthorized
+	 *   - .notAcceptable
+	 *   - .notFound
+	 *
+	 * @param {Number} status
+	 * @api private
+	 */
+
+	Response.prototype.setStatusProperties = function(status){
+	  // handle IE9 bug: http://stackoverflow.com/questions/10046972/msie-returns-status-code-of-1223-for-ajax-request
+	  if (status === 1223) {
+	    status = 204;
+	  }
+
+	  var type = status / 100 | 0;
+
+	  // status / class
+	  this.status = this.statusCode = status;
+	  this.statusType = type;
+
+	  // basics
+	  this.info = 1 == type;
+	  this.ok = 2 == type;
+	  this.clientError = 4 == type;
+	  this.serverError = 5 == type;
+	  this.error = (4 == type || 5 == type)
+	    ? this.toError()
+	    : false;
+
+	  // sugar
+	  this.accepted = 202 == status;
+	  this.noContent = 204 == status;
+	  this.badRequest = 400 == status;
+	  this.unauthorized = 401 == status;
+	  this.notAcceptable = 406 == status;
+	  this.notFound = 404 == status;
+	  this.forbidden = 403 == status;
+	};
+
+	/**
+	 * Return an `Error` representative of this response.
+	 *
+	 * @return {Error}
+	 * @api public
+	 */
+
+	Response.prototype.toError = function(){
+	  var req = this.req;
+	  var method = req.method;
+	  var url = req.url;
+
+	  var msg = 'cannot ' + method + ' ' + url + ' (' + this.status + ')';
+	  var err = new Error(msg);
+	  err.status = this.status;
+	  err.method = method;
+	  err.url = url;
+
+	  return err;
+	};
+
+	/**
+	 * Expose `Response`.
+	 */
+
+	request.Response = Response;
+
+	/**
+	 * Initialize a new `Request` with the given `method` and `url`.
+	 *
+	 * @param {String} method
+	 * @param {String} url
+	 * @api public
+	 */
+
+	function Request(method, url) {
+	  var self = this;
+	  Emitter.call(this);
+	  this._query = this._query || [];
+	  this.method = method;
+	  this.url = url;
+	  this.header = {};
+	  this._header = {};
+	  this.on('end', function(){
+	    var err = null;
+	    var res = null;
+
+	    try {
+	      res = new Response(self);
+	    } catch(e) {
+	      err = new Error('Parser is unable to parse the response');
+	      err.parse = true;
+	      err.original = e;
+	      // issue #675: return the raw response if the response parsing fails
+	      err.rawResponse = self.xhr && self.xhr.responseText ? self.xhr.responseText : null;
+	      return self.callback(err);
+	    }
+
+	    self.emit('response', res);
+
+	    if (err) {
+	      return self.callback(err, res);
+	    }
+
+	    if (res.status >= 200 && res.status < 300) {
+	      return self.callback(err, res);
+	    }
+
+	    var new_err = new Error(res.statusText || 'Unsuccessful HTTP response');
+	    new_err.original = err;
+	    new_err.response = res;
+	    new_err.status = res.status;
+
+	    self.callback(new_err, res);
+	  });
+	}
+
+	/**
+	 * Mixin `Emitter`.
+	 */
+
+	Emitter(Request.prototype);
+
+	/**
+	 * Allow for extension
+	 */
+
+	Request.prototype.use = function(fn) {
+	  fn(this);
+	  return this;
+	};
+
+	/**
+	 * Set timeout to `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.timeout = function(ms){
+	  this._timeout = ms;
+	  return this;
+	};
+
+	/**
+	 * Clear previous timeout.
+	 *
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.clearTimeout = function(){
+	  this._timeout = 0;
+	  clearTimeout(this._timer);
+	  return this;
+	};
+
+	/**
+	 * Abort the request, and clear potential timeout.
+	 *
+	 * @return {Request}
+	 * @api public
+	 */
+
+	Request.prototype.abort = function(){
+	  if (this.aborted) return;
+	  this.aborted = true;
+	  this.xhr.abort();
+	  this.clearTimeout();
+	  this.emit('abort');
+	  return this;
+	};
+
+	/**
+	 * Set header `field` to `val`, or multiple fields with one object.
+	 *
+	 * Examples:
+	 *
+	 *      req.get('/')
+	 *        .set('Accept', 'application/json')
+	 *        .set('X-API-Key', 'foobar')
+	 *        .end(callback);
+	 *
+	 *      req.get('/')
+	 *        .set({ Accept: 'application/json', 'X-API-Key': 'foobar' })
+	 *        .end(callback);
+	 *
+	 * @param {String|Object} field
+	 * @param {String} val
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.set = function(field, val){
+	  if (isObject(field)) {
+	    for (var key in field) {
+	      this.set(key, field[key]);
+	    }
+	    return this;
+	  }
+	  this._header[field.toLowerCase()] = val;
+	  this.header[field] = val;
+	  return this;
+	};
+
+	/**
+	 * Remove header `field`.
+	 *
+	 * Example:
+	 *
+	 *      req.get('/')
+	 *        .unset('User-Agent')
+	 *        .end(callback);
+	 *
+	 * @param {String} field
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.unset = function(field){
+	  delete this._header[field.toLowerCase()];
+	  delete this.header[field];
+	  return this;
+	};
+
+	/**
+	 * Get case-insensitive header `field` value.
+	 *
+	 * @param {String} field
+	 * @return {String}
+	 * @api private
+	 */
+
+	Request.prototype.getHeader = function(field){
+	  return this._header[field.toLowerCase()];
+	};
+
+	/**
+	 * Set Content-Type to `type`, mapping values from `request.types`.
+	 *
+	 * Examples:
+	 *
+	 *      superagent.types.xml = 'application/xml';
+	 *
+	 *      request.post('/')
+	 *        .type('xml')
+	 *        .send(xmlstring)
+	 *        .end(callback);
+	 *
+	 *      request.post('/')
+	 *        .type('application/xml')
+	 *        .send(xmlstring)
+	 *        .end(callback);
+	 *
+	 * @param {String} type
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.type = function(type){
+	  this.set('Content-Type', request.types[type] || type);
+	  return this;
+	};
+
+	/**
+	 * Force given parser
+	 *
+	 * Sets the body parser no matter type.
+	 *
+	 * @param {Function}
+	 * @api public
+	 */
+
+	Request.prototype.parse = function(fn){
+	  this._parser = fn;
+	  return this;
+	};
+
+	/**
+	 * Set Accept to `type`, mapping values from `request.types`.
+	 *
+	 * Examples:
+	 *
+	 *      superagent.types.json = 'application/json';
+	 *
+	 *      request.get('/agent')
+	 *        .accept('json')
+	 *        .end(callback);
+	 *
+	 *      request.get('/agent')
+	 *        .accept('application/json')
+	 *        .end(callback);
+	 *
+	 * @param {String} accept
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.accept = function(type){
+	  this.set('Accept', request.types[type] || type);
+	  return this;
+	};
+
+	/**
+	 * Set Authorization field value with `user` and `pass`.
+	 *
+	 * @param {String} user
+	 * @param {String} pass
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.auth = function(user, pass){
+	  var str = btoa(user + ':' + pass);
+	  this.set('Authorization', 'Basic ' + str);
+	  return this;
+	};
+
+	/**
+	* Add query-string `val`.
+	*
+	* Examples:
+	*
+	*   request.get('/shoes')
+	*     .query('size=10')
+	*     .query({ color: 'blue' })
+	*
+	* @param {Object|String} val
+	* @return {Request} for chaining
+	* @api public
+	*/
+
+	Request.prototype.query = function(val){
+	  if ('string' != typeof val) val = serialize(val);
+	  if (val) this._query.push(val);
+	  return this;
+	};
+
+	/**
+	 * Write the field `name` and `val` for "multipart/form-data"
+	 * request bodies.
+	 *
+	 * ``` js
+	 * request.post('/upload')
+	 *   .field('foo', 'bar')
+	 *   .end(callback);
+	 * ```
+	 *
+	 * @param {String} name
+	 * @param {String|Blob|File} val
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.field = function(name, val){
+	  if (!this._formData) this._formData = new root.FormData();
+	  this._formData.append(name, val);
+	  return this;
+	};
+
+	/**
+	 * Queue the given `file` as an attachment to the specified `field`,
+	 * with optional `filename`.
+	 *
+	 * ``` js
+	 * request.post('/upload')
+	 *   .attach(new Blob(['<a id="a"><b id="b">hey!</b></a>'], { type: "text/html"}))
+	 *   .end(callback);
+	 * ```
+	 *
+	 * @param {String} field
+	 * @param {Blob|File} file
+	 * @param {String} filename
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.attach = function(field, file, filename){
+	  if (!this._formData) this._formData = new root.FormData();
+	  this._formData.append(field, file, filename);
+	  return this;
+	};
+
+	/**
+	 * Send `data`, defaulting the `.type()` to "json" when
+	 * an object is given.
+	 *
+	 * Examples:
+	 *
+	 *       // querystring
+	 *       request.get('/search')
+	 *         .end(callback)
+	 *
+	 *       // multiple data "writes"
+	 *       request.get('/search')
+	 *         .send({ search: 'query' })
+	 *         .send({ range: '1..5' })
+	 *         .send({ order: 'desc' })
+	 *         .end(callback)
+	 *
+	 *       // manual json
+	 *       request.post('/user')
+	 *         .type('json')
+	 *         .send('{"name":"tj"}')
+	 *         .end(callback)
+	 *
+	 *       // auto json
+	 *       request.post('/user')
+	 *         .send({ name: 'tj' })
+	 *         .end(callback)
+	 *
+	 *       // manual x-www-form-urlencoded
+	 *       request.post('/user')
+	 *         .type('form')
+	 *         .send('name=tj')
+	 *         .end(callback)
+	 *
+	 *       // auto x-www-form-urlencoded
+	 *       request.post('/user')
+	 *         .type('form')
+	 *         .send({ name: 'tj' })
+	 *         .end(callback)
+	 *
+	 *       // defaults to x-www-form-urlencoded
+	  *      request.post('/user')
+	  *        .send('name=tobi')
+	  *        .send('species=ferret')
+	  *        .end(callback)
+	 *
+	 * @param {String|Object} data
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.send = function(data){
+	  var obj = isObject(data);
+	  var type = this.getHeader('Content-Type');
+
+	  // merge
+	  if (obj && isObject(this._data)) {
+	    for (var key in data) {
+	      this._data[key] = data[key];
+	    }
+	  } else if ('string' == typeof data) {
+	    if (!type) this.type('form');
+	    type = this.getHeader('Content-Type');
+	    if ('application/x-www-form-urlencoded' == type) {
+	      this._data = this._data
+	        ? this._data + '&' + data
+	        : data;
+	    } else {
+	      this._data = (this._data || '') + data;
+	    }
+	  } else {
+	    this._data = data;
+	  }
+
+	  if (!obj || isHost(data)) return this;
+	  if (!type) this.type('json');
+	  return this;
+	};
+
+	/**
+	 * Invoke the callback with `err` and `res`
+	 * and handle arity check.
+	 *
+	 * @param {Error} err
+	 * @param {Response} res
+	 * @api private
+	 */
+
+	Request.prototype.callback = function(err, res){
+	  var fn = this._callback;
+	  this.clearTimeout();
+	  fn(err, res);
+	};
+
+	/**
+	 * Invoke callback with x-domain error.
+	 *
+	 * @api private
+	 */
+
+	Request.prototype.crossDomainError = function(){
+	  var err = new Error('Request has been terminated\nPossible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.');
+	  err.crossDomain = true;
+
+	  err.status = this.status;
+	  err.method = this.method;
+	  err.url = this.url;
+
+	  this.callback(err);
+	};
+
+	/**
+	 * Invoke callback with timeout error.
+	 *
+	 * @api private
+	 */
+
+	Request.prototype.timeoutError = function(){
+	  var timeout = this._timeout;
+	  var err = new Error('timeout of ' + timeout + 'ms exceeded');
+	  err.timeout = timeout;
+	  this.callback(err);
+	};
+
+	/**
+	 * Enable transmission of cookies with x-domain requests.
+	 *
+	 * Note that for this to work the origin must not be
+	 * using "Access-Control-Allow-Origin" with a wildcard,
+	 * and also must set "Access-Control-Allow-Credentials"
+	 * to "true".
+	 *
+	 * @api public
+	 */
+
+	Request.prototype.withCredentials = function(){
+	  this._withCredentials = true;
+	  return this;
+	};
+
+	/**
+	 * Initiate request, invoking callback `fn(res)`
+	 * with an instanceof `Response`.
+	 *
+	 * @param {Function} fn
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.end = function(fn){
+	  var self = this;
+	  var xhr = this.xhr = request.getXHR();
+	  var query = this._query.join('&');
+	  var timeout = this._timeout;
+	  var data = this._formData || this._data;
+
+	  // store callback
+	  this._callback = fn || noop;
+
+	  // state change
+	  xhr.onreadystatechange = function(){
+	    if (4 != xhr.readyState) return;
+
+	    // In IE9, reads to any property (e.g. status) off of an aborted XHR will
+	    // result in the error "Could not complete the operation due to error c00c023f"
+	    var status;
+	    try { status = xhr.status } catch(e) { status = 0; }
+
+	    if (0 == status) {
+	      if (self.timedout) return self.timeoutError();
+	      if (self.aborted) return;
+	      return self.crossDomainError();
+	    }
+	    self.emit('end');
+	  };
+
+	  // progress
+	  var handleProgress = function(e){
+	    if (e.total > 0) {
+	      e.percent = e.loaded / e.total * 100;
+	    }
+	    self.emit('progress', e);
+	  };
+	  if (this.hasListeners('progress')) {
+	    xhr.onprogress = handleProgress;
+	  }
+	  try {
+	    if (xhr.upload && this.hasListeners('progress')) {
+	      xhr.upload.onprogress = handleProgress;
+	    }
+	  } catch(e) {
+	    // Accessing xhr.upload fails in IE from a web worker, so just pretend it doesn't exist.
+	    // Reported here:
+	    // https://connect.microsoft.com/IE/feedback/details/837245/xmlhttprequest-upload-throws-invalid-argument-when-used-from-web-worker-context
+	  }
+
+	  // timeout
+	  if (timeout && !this._timer) {
+	    this._timer = setTimeout(function(){
+	      self.timedout = true;
+	      self.abort();
+	    }, timeout);
+	  }
+
+	  // querystring
+	  if (query) {
+	    query = request.serializeObject(query);
+	    this.url += ~this.url.indexOf('?')
+	      ? '&' + query
+	      : '?' + query;
+	  }
+
+	  // initiate request
+	  xhr.open(this.method, this.url, true);
+
+	  // CORS
+	  if (this._withCredentials) xhr.withCredentials = true;
+
+	  // body
+	  if ('GET' != this.method && 'HEAD' != this.method && 'string' != typeof data && !isHost(data)) {
+	    // serialize stuff
+	    var contentType = this.getHeader('Content-Type');
+	    var serialize = this._parser || request.serialize[contentType ? contentType.split(';')[0] : ''];
+	    if (!serialize && isJSON(contentType)) serialize = request.serialize['application/json'];
+	    if (serialize) data = serialize(data);
+	  }
+
+	  // set header fields
+	  for (var field in this.header) {
+	    if (null == this.header[field]) continue;
+	    xhr.setRequestHeader(field, this.header[field]);
+	  }
+
+	  // send stuff
+	  this.emit('request', this);
+
+	  // IE11 xhr.send(undefined) sends 'undefined' string as POST payload (instead of nothing)
+	  // We need null here if data is undefined
+	  xhr.send(typeof data !== 'undefined' ? data : null);
+	  return this;
+	};
+
+	/**
+	 * Faux promise support
+	 *
+	 * @param {Function} fulfill
+	 * @param {Function} reject
+	 * @return {Request}
+	 */
+
+	Request.prototype.then = function (fulfill, reject) {
+	  return this.end(function(err, res) {
+	    err ? reject(err) : fulfill(res);
+	  });
+	};
+
+	/**
+	 * Expose `Request`.
+	 */
+
+	request.Request = Request;
+
+	/**
+	 * Issue a request:
+	 *
+	 * Examples:
+	 *
+	 *    request('GET', '/users').end(callback)
+	 *    request('/users').end(callback)
+	 *    request('/users', callback)
+	 *
+	 * @param {String} method
+	 * @param {String|Function} url or callback
+	 * @return {Request}
+	 * @api public
+	 */
+
+	function request(method, url) {
+	  // callback
+	  if ('function' == typeof url) {
+	    return new Request('GET', method).end(url);
+	  }
+
+	  // url first
+	  if (1 == arguments.length) {
+	    return new Request('GET', method);
+	  }
+
+	  return new Request(method, url);
+	}
+
+	/**
+	 * GET `url` with optional callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed|Function} data or fn
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.get = function(url, data, fn){
+	  var req = request('GET', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.query(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * HEAD `url` with optional callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed|Function} data or fn
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.head = function(url, data, fn){
+	  var req = request('HEAD', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * DELETE `url` with optional callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	function del(url, fn){
+	  var req = request('DELETE', url);
+	  if (fn) req.end(fn);
+	  return req;
+	}
+		request.del = del;
+	request.delete = del;
+
+	/**
+	 * PATCH `url` with optional `data` and callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed} data
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.patch = function(url, data, fn){
+	  var req = request('PATCH', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * POST `url` with optional `data` and callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed} data
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.post = function(url, data, fn){
+	  var req = request('POST', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * PUT `url` with optional `data` and callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed|Function} data or fn
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.put = function(url, data, fn){
+	  var req = request('PUT', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * Expose `request`.
+	 */
+
+	module.exports = request;
+
+
+/***/ },
+/* 186 */
+/***/ function(module, exports) {
+
+	
+	/**
+	 * Expose `Emitter`.
+	 */
+
+	module.exports = Emitter;
+
+	/**
+	 * Initialize a new `Emitter`.
+	 *
+	 * @api public
+	 */
+
+	function Emitter(obj) {
+	  if (obj) return mixin(obj);
+	}
+		/**
+	 * Mixin the emitter properties.
+	 *
+	 * @param {Object} obj
+	 * @return {Object}
+	 * @api private
+	 */
+
+	function mixin(obj) {
+	  for (var key in Emitter.prototype) {
+	    obj[key] = Emitter.prototype[key];
+	  }
+	  return obj;
+	}
+
+	/**
+	 * Listen on the given `event` with `fn`.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.on =
+	Emitter.prototype.addEventListener = function(event, fn){
+	  this._callbacks = this._callbacks || {};
+	  (this._callbacks[event] = this._callbacks[event] || [])
+	    .push(fn);
+	  return this;
+	};
+
+	/**
+	 * Adds an `event` listener that will be invoked a single
+	 * time then automatically removed.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.once = function(event, fn){
+	  var self = this;
+	  this._callbacks = this._callbacks || {};
+
+	  function on() {
+	    self.off(event, on);
+	    fn.apply(this, arguments);
+	  }
+
+	  on.fn = fn;
+	  this.on(event, on);
+	  return this;
+	};
+
+	/**
+	 * Remove the given callback for `event` or all
+	 * registered callbacks.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.off =
+	Emitter.prototype.removeListener =
+	Emitter.prototype.removeAllListeners =
+	Emitter.prototype.removeEventListener = function(event, fn){
+	  this._callbacks = this._callbacks || {};
+
+	  // all
+	  if (0 == arguments.length) {
+	    this._callbacks = {};
+	    return this;
+	  }
+
+	  // specific event
+	  var callbacks = this._callbacks[event];
+	  if (!callbacks) return this;
+
+	  // remove all handlers
+	  if (1 == arguments.length) {
+	    delete this._callbacks[event];
+	    return this;
+	  }
+
+	  // remove specific handler
+	  var cb;
+	  for (var i = 0; i < callbacks.length; i++) {
+	    cb = callbacks[i];
+	    if (cb === fn || cb.fn === fn) {
+	      callbacks.splice(i, 1);
+	      break;
+	    }
+	  }
+	  return this;
+	};
+
+	/**
+	 * Emit `event` with the given args.
+	 *
+	 * @param {String} event
+	 * @param {Mixed} ...
+	 * @return {Emitter}
+	 */
+
+	Emitter.prototype.emit = function(event){
+	  this._callbacks = this._callbacks || {};
+	  var args = [].slice.call(arguments, 1)
+	    , callbacks = this._callbacks[event];
+
+	  if (callbacks) {
+	    callbacks = callbacks.slice(0);
+	    for (var i = 0, len = callbacks.length; i < len; ++i) {
+	      callbacks[i].apply(this, args);
+	    }
+	  }
+
+	  return this;
+	};
+
+	/**
+	 * Return array of callbacks for `event`.
+	 *
+	 * @param {String} event
+	 * @return {Array}
+	 * @api public
+	 */
+
+	Emitter.prototype.listeners = function(event){
+	  this._callbacks = this._callbacks || {};
+	  return this._callbacks[event] || [];
+	};
+
+	/**
+	 * Check if this emitter has `event` handlers.
+	 *
+	 * @param {String} event
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	Emitter.prototype.hasListeners = function(event){
+	  return !! this.listeners(event).length;
+	};
+
+
+/***/ },
+/* 187 */
+/***/ function(module, exports) {
+
+	
+	/**
+	 * Reduce `arr` with `fn`.
+	 *
+	 * @param {Array} arr
+	 * @param {Function} fn
+	 * @param {Mixed} initial
+	 *
+	 * TODO: combatible error handling?
+	 */
+
+	module.exports = function(arr, fn, initial){  
+	  var idx = 0;
+	  var len = arr.length;
+	  var curr = arguments.length == 3
+	    ? initial
+	    : arr[idx++];
+
+	  while (idx < len) {
+	    curr = fn.call(null, curr, arr[idx], ++idx, arr);
+	  }
+	  
+	  return curr;
+	};
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+
+	var AddTextMenu = React.createClass({
+	    displayName: "AddTextMenu",
+
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+
+	    componentDidMount: function componentDidMount() {},
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: "textTemplateLists", "data-show": this.props.show },
+	            React.createElement(
+	                "div",
+	                { onClick: this.props.addBlock },
+	                React.createElement(
+	                    "div",
+	                    { className: "rtf" },
+	                    "sample paragraphs"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                null,
+	                React.createElement(
+	                    "h2",
+	                    { className: "rtf" },
+	                    "Titles"
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = AddTextMenu;
+
+/***/ },
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

@@ -1,9 +1,11 @@
 var React = require('react');
+var ChooseImageMenu = require("./ChooseImageMenu.jsx");
+var AddTextMenu = require("./AddTextMenu.jsx");
 
 var BlockTypeMenu = React.createClass({
     getInitialState: function () {
         return {
-
+            page: "addText"
         }
     },
 
@@ -14,6 +16,19 @@ var BlockTypeMenu = React.createClass({
     componentWillReceiveProps: function(nextProps) {
     },
 
+    showAddText: function() {
+        this.setState({
+            page: "addText"
+        });
+    },
+
+    showAddImage: function() {
+        this.setState({
+            page: "chooseImage"
+        });
+    },
+
+
     render: function () {
         return (
             <div className="blockType" style={{
@@ -21,10 +36,10 @@ var BlockTypeMenu = React.createClass({
             }}>
                 <ul className="category-list">
                     <li className="category">
-                        <span>Text</span>
+                        <span className={(this.state.page==="addText")?"current":""} onClick={this.showAddText}>Text</span>
                     </li>
                     <li className="category">
-                        <span>Image</span>
+                        <span className={(this.state.page==="chooseImage")?"current":""} onClick={this.showAddImage}>Image</span>
                     </li>
                     <li className="category">
                         <span>Video</span>
@@ -36,11 +51,8 @@ var BlockTypeMenu = React.createClass({
                         <span>Activity</span>
                     </li>
                 </ul>
-
-                <div className="blockTypedLists">
-                    <div onClick={this.props.addBlock}><div className="rtf" >sample paragraphs</div></div>
-                    <div ><h2 className="rtf">Titles</h2></div>
-                </div>
+                <AddTextMenu show={this.state.page==="addText"} addBlock={this.props.addBlock}/>
+                <ChooseImageMenu show={this.state.page==="chooseImage"} addBlock={this.props.addBlock}/>
             </div>
         );
     }
