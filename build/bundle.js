@@ -2663,7 +2663,7 @@
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
 	* http://gridster.net/
 		 * Copyright (c) 2014 ducksboard; Licensed MIT */
 		(function (root, factory) {
@@ -3596,7 +3596,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n    .screen .display > div .leftMenu {\n      position: absolute;\n      left: -40px;\n      top: 0; }\n      .screen .display > div .leftMenu span.glyphicon {\n        font-size: 18px;\n        display: block;\n        width: 40px;\n        line-height: 40px;\n        text-align: center;\n        background-color: #F5F5F5;\n        color: #5CB85C;\n        cursor: pointer; }\n        .screen .display > div .leftMenu span.glyphicon.ratio {\n          line-height: 16px;\n          font-size: 12px;\n          padding: 5px 0; }\n        .screen .display > div .leftMenu span.glyphicon[data-clicked='true'] {\n          background-color: #5CB85C;\n          color: #fff; }\n      .screen .display > div .leftMenu .blockType {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 400px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100; }\n        .screen .display > div .leftMenu .blockType ul.category-list {\n          background-image: linear-gradient(360deg, rgba(6, 49, 85, 0.2), rgba(56, 153, 236, 0));\n          background-color: #5CB85C;\n          display: inline-block;\n          height: 100%;\n          padding: 14px 0;\n          vertical-align: top; }\n          .screen .display > div .leftMenu .blockType ul.category-list li.category {\n            text-align: center;\n            color: #fff;\n            cursor: pointer;\n            font-size: 14px;\n            margin-bottom: 2px;\n            max-height: 30px;\n            min-height: 14px;\n            padding: 0 10px 0 3px;\n            position: relative; }\n            .screen .display > div .leftMenu .blockType ul.category-list li.category span {\n              border-radius: 20px;\n              display: inline-block;\n              height: 100%;\n              overflow: hidden;\n              padding: 0 14px;\n              position: relative; }\n              .screen .display > div .leftMenu .blockType ul.category-list li.category span.current {\n                background-color: rgba(0, 0, 0, 0.2);\n                box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n        .screen .display > div .leftMenu .blockType .textTemplateLists {\n          display: inline-block;\n          padding: 10px;\n          width: 310px; }\n          .screen .display > div .leftMenu .blockType .textTemplateLists > div {\n            margin: 5px;\n            display: block;\n            padding: 0 5px;\n            border-radius: 5px; }\n        .screen .display > div .leftMenu .blockType .chooseImage {\n          display: inline-block;\n          margin: 10px;\n          width: 500px; }\n        .screen .display > div .leftMenu .blockType [data-show='false'] {\n          display: none; }\n      .screen .display > div .leftMenu .pageConfig {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 300px;\n        width: 300px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100;\n        padding: 10px; }\n        .screen .display > div .leftMenu .pageConfig > div {\n          padding: 5px; }\n    .screen .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .screen .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .screen .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .screen .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.screen {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .screen .display {\n    position: relative;\n    background-color: #fff; }\n    .screen .display > div .leftMenu {\n      position: absolute;\n      left: -40px;\n      top: 0; }\n      .screen .display > div .leftMenu span.glyphicon {\n        font-size: 18px;\n        display: block;\n        width: 40px;\n        line-height: 40px;\n        text-align: center;\n        background-color: #F5F5F5;\n        color: #5CB85C;\n        cursor: pointer; }\n        .screen .display > div .leftMenu span.glyphicon.ratio {\n          line-height: 16px;\n          font-size: 12px;\n          padding: 5px 0; }\n        .screen .display > div .leftMenu span.glyphicon[data-disabled='true'] {\n          color: gray; }\n        .screen .display > div .leftMenu span.glyphicon[data-clicked='true'] {\n          background-color: #5CB85C;\n          color: #fff; }\n      .screen .display > div .leftMenu .blockType {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 400px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100; }\n        .screen .display > div .leftMenu .blockType ul.category-list {\n          background-image: linear-gradient(360deg, rgba(6, 49, 85, 0.2), rgba(56, 153, 236, 0));\n          background-color: #5CB85C;\n          display: inline-block;\n          height: 100%;\n          padding: 14px 0;\n          vertical-align: top; }\n          .screen .display > div .leftMenu .blockType ul.category-list li.category {\n            text-align: center;\n            color: #fff;\n            cursor: pointer;\n            font-size: 14px;\n            margin-bottom: 2px;\n            max-height: 30px;\n            min-height: 14px;\n            padding: 0 10px 0 3px;\n            position: relative; }\n            .screen .display > div .leftMenu .blockType ul.category-list li.category span {\n              border-radius: 20px;\n              display: inline-block;\n              height: 100%;\n              overflow: hidden;\n              padding: 0 14px;\n              position: relative; }\n              .screen .display > div .leftMenu .blockType ul.category-list li.category span.current {\n                background-color: rgba(0, 0, 0, 0.2);\n                box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n        .screen .display > div .leftMenu .blockType .textTemplateLists {\n          display: inline-block;\n          padding: 10px;\n          width: 310px; }\n          .screen .display > div .leftMenu .blockType .textTemplateLists > div {\n            margin: 5px;\n            display: block;\n            padding: 0 5px;\n            border-radius: 5px; }\n        .screen .display > div .leftMenu .blockType .chooseImage {\n          display: inline-block;\n          margin: 10px;\n          width: 500px; }\n        .screen .display > div .leftMenu .blockType [data-show='false'] {\n          display: none; }\n      .screen .display > div .leftMenu .pageConfig {\n        border: 1px solid #ccc;\n        position: fixed;\n        top: 70px;\n        height: 300px;\n        width: 300px;\n        left: 70px;\n        box-sizing: border-box;\n        border-radius: 0 8px 8px 0;\n        overflow: hidden;\n        background-color: #fff;\n        z-index: 1100;\n        padding: 10px; }\n        .screen .display > div .leftMenu .pageConfig > div {\n          padding: 5px; }\n    .screen .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .screen .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .screen .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .screen .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n", ""]);
 
 	// exports
 
@@ -3616,9 +3616,12 @@
 
 	var NavBar = __webpack_require__(176);
 	var ThemeScreen = __webpack_require__(177);
+	var FileNameDialog = __webpack_require__(190);
 
 	var AuthoringTool = React.createClass({
 	    displayName: 'AuthoringTool',
+
+	    NEW_NAME: "new",
 
 	    getInitialState: function getInitialState() {
 	        return {
@@ -3630,7 +3633,8 @@
 	            showFooter: true,
 	            theme: "default",
 	            expandMode: 1,
-	            showGrid: true
+	            showGrid: true,
+	            name: this.NEW_NAME
 	        };
 	    },
 
@@ -3638,13 +3642,13 @@
 
 	    themeInitialize: function themeInitialize() {},
 
-	    addGrid: function addGrid() {
-	        this.refs["themescreen"].moreGrid();
-	    },
-
 	    configurationChanged: function configurationChanged(state) {
 	        console.log(state);
 	        this.setState(state);
+	    },
+
+	    loadProject: function loadProject(project) {
+	        this.refs.themescreen.refs.layout.setLayoutData();
 	    },
 
 	    setDoubleScreen: function setDoubleScreen(d) {
@@ -3653,18 +3657,49 @@
 	        });
 	    },
 
+	    newProject: function newProject() {
+	        this.refs.newfile.showDialog();
+	    },
+
+	    listProjects: function listProjects() {},
+
+	    saveProject: function saveProject() {
+	        var tool = this;
+
+	        if (this.state.name === this.NEW_NAME) {
+	            this.newProject();
+	        } else {
+	            var layoutData = this.refs.themescreen.refs.layout.getLayoutData();
+
+	            $.post("/authoring/update", {
+	                name: tool.state.name,
+	                showHeader: tool.state.showHeader,
+	                showFooter: tool.state.showFooter,
+	                expandMode: tool.state.expandMode,
+	                theme: tool.state.theme,
+	                singleScreenHtml: layoutData.singleScreenHtml,
+	                doubleMainHtml: layoutData.doubleMainHtml,
+	                doubleExtraHtml: layoutData.doubleExtraHtml
+	            }, function () {});
+	        }
+	    },
+
 	    render: function render() {
 	        return React.createElement(
 	            'div',
 	            null,
-	            React.createElement(NavBar, { onChange: this.updateState, onAddGrid: this.addGrid }),
-	            React.createElement(ThemeScreen, {
-	                configurationChange: this.configurationChanged,
+	            React.createElement(NavBar, { onChange: this.updateState, onAddGrid: this.addGrid,
+	                saveProject: this.saveProject,
+	                listProjects: this.listProjects,
+	                newProject: this.newProject
+	            }),
+	            React.createElement(ThemeScreen, { configurationChange: this.configurationChanged,
 	                theme: this.state.theme, resize: this.themeInitialize, doubleScreen: this.state.doubleScreen,
 	                expandMode: this.state.expandMode,
 	                width: this.state.width, height: this.state.minHeight,
 	                showHeader: this.state.showHeader, showFooter: this.state.showFooter, showGrid: this.state.showGrid,
-	                ref: 'themescreen' })
+	                ref: 'themescreen' }),
+	            React.createElement(FileNameDialog, { configurationChange: this.configurationChanged, ref: 'newfile' })
 	        );
 	    }
 	});
@@ -23273,80 +23308,11 @@
 	var NavBar = React.createClass({
 	    displayName: "NavBar",
 
-	    SCREEN_MODEL_PORTRAIT: "Portrait Mode",
-	    SCREEN_MODEL_EXPAND: "Landscape Mode",
-	    SCREEN_MODEL_EXTRA: "Extra Mode",
-
 	    changeProp: function changeProp(state) {
 	        this.props.onChange(state);
 	        this.setState(state);
 	    },
 
-	    getInitialState: function getInitialState() {
-	        return {
-	            doubleScreen: false
-	        };
-	    },
-
-	    resolution: function resolution(event) {
-	        var value = $(event.target).html();
-	        if (value === "1920x1080(16:9)") {
-	            this.props.onChange({ width: 1920, minHeight: 1080 });
-	        } else if (value === "1200x800(16:10)") {
-	            this.props.onChange({ width: 1280, minHeight: 800 });
-	        } else if (value === "1024x768(4:3)") {
-	            this.props.onChange({ width: 1024, minHeight: 768 });
-	        }
-	        $("resolute-value").html(value);
-	    },
-
-	    toggleScreen: function toggleScreen(event) {
-	        this.props.onChange({
-	            doubleScreen: !this.state.doubleScreen
-	        });
-	        this.state.doubleScreen = !this.state.doubleScreen;
-	    },
-
-	    screenModel: function screenModel(event) {
-	        var value = $(event.target).html();
-	        $("#expandType span.value").html(value);
-
-	        var mode = 1;
-	        if (value === this.SCREEN_MODEL_PORTRAIT) {
-	            mode = 1;
-	        }
-	        if (value === this.SCREEN_MODEL_EXPAND) {
-	            mode = 2;
-	        }
-	        if (value === this.SCREEN_MODEL_EXTRA) {
-	            mode = 3;
-	        }
-	        this.props.onChange({
-	            expandMode: mode
-	        });
-	    },
-
-	    selectTheme: function selectTheme(event) {
-	        this.props.onChange({
-	            themeName: event.target.value
-	        });
-	    },
-
-	    addGridClick: function addGridClick() {
-	        this.props.onAddGrid();
-	    },
-
-	    zoomChange: function zoomChange(event) {
-	        this.props.onChange({ zoom: event.target.value });
-	    },
-	    /**
-	     * <li>
-	     //    <button type="button" className="btn btn-success navbar-btn" onClick={this.addGridClick}>
-	     //        Add Block
-	     //    </button>
-	     //</li>
-	       * @returns {XML}
-	     */
 	    render: function render() {
 	        return React.createElement(
 	            "nav",
@@ -23361,20 +23327,38 @@
 	                { className: "nav navbar-nav navbar-left" },
 	                React.createElement(
 	                    "li",
-	                    null,
+	                    { className: "dropdown" },
 	                    React.createElement(
 	                        "a",
-	                        { onClick: this.resolution },
-	                        "New"
-	                    )
-	                ),
-	                React.createElement(
-	                    "li",
-	                    null,
+	                        { href: "#", className: "dropdown-toggle", "data-toggle": "dropdown", role: "button", "aria-haspopup": "true", "aria-expanded": "false" },
+	                        React.createElement(
+	                            "span",
+	                            { className: "resolute-value" },
+	                            "Project"
+	                        ),
+	                        React.createElement("span", { className: "caret" })
+	                    ),
 	                    React.createElement(
-	                        "a",
-	                        { onClick: this.resolution },
-	                        "Open"
+	                        "ul",
+	                        { className: "dropdown-menu", "aria-labelledby": "Resolution" },
+	                        React.createElement(
+	                            "li",
+	                            null,
+	                            React.createElement(
+	                                "a",
+	                                { onClick: this.props.newProject },
+	                                "New"
+	                            )
+	                        ),
+	                        React.createElement(
+	                            "li",
+	                            null,
+	                            React.createElement(
+	                                "a",
+	                                { onClick: this.props.listProjects },
+	                                "Open"
+	                            )
+	                        )
 	                    )
 	                )
 	            ),
@@ -23386,7 +23370,7 @@
 	                    { className: "save" },
 	                    React.createElement(
 	                        "button",
-	                        { type: "button", href: "#", className: "btn btn-success" },
+	                        { type: "button", href: "#", onClick: this.props.saveProject, className: "btn btn-success" },
 	                        "Save"
 	                    ),
 	                    React.createElement(
@@ -23665,20 +23649,53 @@
 	         * 当用户切换单双屏幕时进行处理
 	         */
 	        if (nextProps.doubleScreen != this.props.doubleScreen) {
-
 	            if (nextProps.doubleScreen) {
 	                //单屏到双屏时
-	                this.singleScreenHtml = $("#main-grid>ul").html();
+	                this.singleScreenHtml = this.pured($("#main-grid>ul").html());
+	                if (this.doubleMainHtml === '') {
+	                    //如果双屏主html为空，表示第一次切换到双屏， 需要将单屏内容复制过来
+	                    this.doubleMainHtml = this.singleScreenHtml;
+	                }
 	            } else {
-	                this.doubleMainHtml = $("#main-grid>ul").html();
-	                this.doubleExtraHtml = $("#extra-grid>ul").html();
+	                this.doubleMainHtml = this.pured($("#main-grid>ul").html());
+	                this.doubleExtraHtml = this.pured($("#extra-grid>ul").html());
 	            }
 	        }
 	    },
 
-	    singleScreenHtml: null,
-	    doubleMainHtml: null,
-	    doubleExtraHtml: null,
+	    pured: function pured(html) {
+	        var z = $("<div>" + html + "</div>");
+	        z.find("span.gs-resize-handle").remove();
+	        z.find(".mce-content-body").removeClass("mce-content-body").removeAttr("id contenteditable spellcheck");
+	        z.find(".mce-edit-focus").removeClass("mce-edit-focus");
+	        return z.html();
+	    },
+
+	    setLayoutData: function setLayoutData(singleScreenHtml, doubleMainHtml, doubleExtraHtml) {
+	        this.singleScreenHtml = singleScreenHtml;
+	        this.doubleMainHtml = doubleMainHtml;
+	        this.doubleExtraHtml = doubleExtraHtml;
+	        this.initGridster();
+	    },
+
+	    getLayoutData: function getLayoutData() {
+	        if (this.props.doubleScreen) {
+	            this.doubleMainHtml = this.pured($("#main-grid>ul").html());
+	            this.doubleExtraHtml = this.pured($("#extra-grid>ul").html());
+	        } else {
+	            this.singleScreenHtml = this.pured($("#main-grid>ul").html());
+	        }
+
+	        return {
+	            'singleScreenHtml': this.singleScreenHtml,
+	            'doubleMainHtml': this.doubleMainHtml,
+	            'doubleExtraHtml': this.doubleExtraHtml
+	        };
+	    },
+
+	    singleScreenHtml: '',
+	    doubleMainHtml: '',
+	    doubleExtraHtml: '',
 
 	    initGridster: function initGridster() {
 	        var gridlayout = this;
@@ -23706,29 +23723,17 @@
 	        $(".gs-resize-handle").remove();
 	        $(".gridster ul li").removeAttr("style");
 
-	        var mHtml = $("#main-grid>ul").html();
-	        var eHtml = $("#extra-grid>ul").html();
-
 	        $(".footer").css("position", "initial");
 
 	        if (this.props.doubleScreen) {
-
-	            if (this.doubleMainHtml != null) {
-	                mHtml = this.doubleMainHtml;
-	            }
-	            if (this.doubleExtraHtml != null) {
-	                eHtml = this.doubleExtraHtml;
-	            }
-
 	            $("#main-grid").empty();
-	            $("#main-grid").append("<ul>" + mHtml + "</ul>");
+	            $("#main-grid").append("<ul>" + this.doubleMainHtml + "</ul>");
 
 	            $("#extra-grid").empty();
-	            $("#extra-grid").append("<ul>" + eHtml + "</ul>");
+	            $("#extra-grid").append("<ul>" + this.doubleExtraHtml + "</ul>");
 
 	            if (this.props.expandMode === 2) {
 	                //expand mode
-
 	                var contentHeight = this.props.height;
 	                if (this.props.showHeader) {
 	                    contentHeight -= this.props.headerHeight;
@@ -23872,11 +23877,8 @@
 	            }
 	        } else {
 	            $("#main-grid").empty();
-	            if (this.singleScreenHtml != null) {
-	                mHtml = this.singleScreenHtml;
-	            }
-	            $("#main-grid").append("<ul>" + mHtml + "</ul>");
-	            //$("#main-grid ul").append(eHtml);
+
+	            $("#main-grid").append("<ul>" + this.singleScreenHtml + "</ul>");
 
 	            var contentHeight = this.props.height;
 	            if (this.props.showHeader) {
@@ -23916,18 +23918,17 @@
 	    },
 
 	    disableLayout: function disableLayout() {
-	        $("nav li.dropdown").hide();
+	        this.getLayoutData();
 	        this.setState({
 	            layoutable: false
 	        });
 	    },
 
 	    enableLayout: function enableLayout() {
-	        $("nav li.dropdown").show();
+	        this.getLayoutData();
 	        this.setState({
 	            layoutable: true
 	        });
-	        //$(".gridster ul").gridster().data('gridster').enable().enable_resize();
 	    },
 
 	    moveBlock: function moveBlock(li, direction) {
@@ -23965,12 +23966,7 @@
 	                { className: "gridster", id: "main-grid", style: {
 	                        width: this.props.doubleScreen && this.props.expandMode === 2 ? this.props.width * 2 : this.props.width
 	                    } },
-	                React.createElement(
-	                    "ul",
-	                    null,
-	                    React.createElement("li", { "data-row": "1", "data-col": "1", "data-sizex": "12", "data-sizey": "1",
-	                        className: "j-grid-block player-revert" })
-	                )
+	                React.createElement("ul", null)
 	            ),
 	            React.createElement(
 	                "div",
@@ -24047,10 +24043,12 @@
 	    },
 
 	    showBlockTypes: function showBlockTypes() {
-	        this.setState({
-	            showBlockTypes: !this.state.showBlockTypes,
-	            showConfigMenu: false
-	        });
+	        if (!this.props.doubleScreen) {
+	            this.setState({
+	                showBlockTypes: !this.state.showBlockTypes,
+	                showConfigMenu: false
+	            });
+	        }
 	    },
 
 	    showConfigMenu: function showConfigMenu() {
@@ -24078,7 +24076,7 @@
 	            this.props.layoutable ? React.createElement(
 	                "div",
 	                null,
-	                React.createElement("span", { className: "glyphicon glyphicon-plus", "data-clicked": this.state.showBlockTypes, id: "btn-add-block", onClick: this.showBlockTypes }),
+	                React.createElement("span", { className: "glyphicon glyphicon-plus", "data-disabled": this.props.doubleScreen, "data-clicked": this.state.showBlockTypes, id: "btn-add-block", onClick: this.showBlockTypes }),
 	                React.createElement("span", { className: "glyphicon glyphicon-edit", onClick: this.editContent }),
 	                React.createElement("span", { className: "glyphicon glyphicon-cog", "data-clicked": this.state.showConfigMenu, onClick: this.showConfigMenu })
 	            ) : React.createElement(
@@ -26148,6 +26146,329 @@
 	});
 
 	module.exports = PageConfigMenu;
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(18);
+	var LinkedStateMixin = __webpack_require__(191);
+
+	var FileNameDialog = React.createClass({
+	    displayName: 'FileNameDialog',
+
+	    mixins: [LinkedStateMixin],
+	    getInitialState: function getInitialState() {
+	        return {
+	            name: ""
+	        };
+	    },
+
+	    componentDidMount: function componentDidMount() {},
+
+	    showDialog: function showDialog() {
+	        $('#save-file-name-dialog').modal('show');
+	    },
+
+	    saveDialog: function saveDialog() {
+	        if (this.state.name != "") {
+	            $('#save-file-name-dialog').modal('hide');
+	            this.props.configurationChange({ "name": this.state.name });
+	        }
+	    },
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'modal fade bs-example-modal-sm', id: 'save-file-name-dialog', role: 'dialog', 'aria-labelledby': 'mySmallModalLabel' },
+	            React.createElement(
+	                'div',
+	                { className: 'modal-dialog modal-sm' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'modal-content' },
+	                    React.createElement(
+	                        'div',
+	                        { className: 'modal-header' },
+	                        React.createElement(
+	                            'button',
+	                            { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+	                            React.createElement(
+	                                'span',
+	                                { 'aria-hidden': 'true' },
+	                                '×'
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'h4',
+	                            { className: 'modal-title' },
+	                            'New Project Name'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'modal-body' },
+	                        React.createElement(
+	                            'p',
+	                            null,
+	                            React.createElement('input', { type: 'text', className: 'form-control', valueLink: this.linkState('name') })
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'modal-footer' },
+	                        React.createElement(
+	                            'button',
+	                            { type: 'button', className: 'btn btn-default', 'data-dismiss': 'modal' },
+	                            'Close'
+	                        ),
+	                        React.createElement(
+	                            'button',
+	                            { type: 'button', onClick: this.saveDialog, className: 'btn btn-primary' },
+	                            'Confirm'
+	                        )
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = FileNameDialog;
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(192);
+
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule LinkedStateMixin
+	 * @typechecks static-only
+	 */
+
+	'use strict';
+
+	var ReactLink = __webpack_require__(193);
+	var ReactStateSetters = __webpack_require__(194);
+
+	/**
+	 * A simple mixin around ReactLink.forState().
+	 */
+	var LinkedStateMixin = {
+	  /**
+	   * Create a ReactLink that's linked to part of this component's state. The
+	   * ReactLink will have the current value of this.state[key] and will call
+	   * setState() when a change is requested.
+	   *
+	   * @param {string} key state key to update. Note: you may want to use keyOf()
+	   * if you're using Google Closure Compiler advanced mode.
+	   * @return {ReactLink} ReactLink instance linking to the state.
+	   */
+	  linkState: function (key) {
+	    return new ReactLink(this.state[key], ReactStateSetters.createStateKeySetter(this, key));
+	  }
+	};
+
+	module.exports = LinkedStateMixin;
+
+/***/ },
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactLink
+	 * @typechecks static-only
+	 */
+
+	'use strict';
+
+	/**
+	 * ReactLink encapsulates a common pattern in which a component wants to modify
+	 * a prop received from its parent. ReactLink allows the parent to pass down a
+	 * value coupled with a callback that, when invoked, expresses an intent to
+	 * modify that value. For example:
+	 *
+	 * React.createClass({
+	 *   getInitialState: function() {
+	 *     return {value: ''};
+	 *   },
+	 *   render: function() {
+	 *     var valueLink = new ReactLink(this.state.value, this._handleValueChange);
+	 *     return <input valueLink={valueLink} />;
+	 *   },
+	 *   _handleValueChange: function(newValue) {
+	 *     this.setState({value: newValue});
+	 *   }
+	 * });
+	 *
+	 * We have provided some sugary mixins to make the creation and
+	 * consumption of ReactLink easier; see LinkedValueUtils and LinkedStateMixin.
+	 */
+
+	var React = __webpack_require__(19);
+
+	/**
+	 * @param {*} value current value of the link
+	 * @param {function} requestChange callback to request a change
+	 */
+	function ReactLink(value, requestChange) {
+	  this.value = value;
+	  this.requestChange = requestChange;
+	}
+
+	/**
+	 * Creates a PropType that enforces the ReactLink API and optionally checks the
+	 * type of the value being passed inside the link. Example:
+	 *
+	 * MyComponent.propTypes = {
+	 *   tabIndexLink: ReactLink.PropTypes.link(React.PropTypes.number)
+	 * }
+	 */
+	function createLinkTypeChecker(linkType) {
+	  var shapes = {
+	    value: typeof linkType === 'undefined' ? React.PropTypes.any.isRequired : linkType.isRequired,
+	    requestChange: React.PropTypes.func.isRequired
+	  };
+	  return React.PropTypes.shape(shapes);
+	}
+
+	ReactLink.PropTypes = {
+	  link: createLinkTypeChecker
+	};
+
+	module.exports = ReactLink;
+
+/***/ },
+/* 194 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactStateSetters
+	 */
+
+	'use strict';
+
+	var ReactStateSetters = {
+	  /**
+	   * Returns a function that calls the provided function, and uses the result
+	   * of that to set the component's state.
+	   *
+	   * @param {ReactCompositeComponent} component
+	   * @param {function} funcReturningState Returned callback uses this to
+	   *                                      determine how to update state.
+	   * @return {function} callback that when invoked uses funcReturningState to
+	   *                    determined the object literal to setState.
+	   */
+	  createStateSetter: function (component, funcReturningState) {
+	    return function (a, b, c, d, e, f) {
+	      var partialState = funcReturningState.call(component, a, b, c, d, e, f);
+	      if (partialState) {
+	        component.setState(partialState);
+	      }
+	    };
+	  },
+
+	  /**
+	   * Returns a single-argument callback that can be used to update a single
+	   * key in the component's state.
+	   *
+	   * Note: this is memoized function, which makes it inexpensive to call.
+	   *
+	   * @param {ReactCompositeComponent} component
+	   * @param {string} key The key in the state that you should update.
+	   * @return {function} callback of 1 argument which calls setState() with
+	   *                    the provided keyName and callback argument.
+	   */
+	  createStateKeySetter: function (component, key) {
+	    // Memoize the setters.
+	    var cache = component.__keySetters || (component.__keySetters = {});
+	    return cache[key] || (cache[key] = createStateKeySetter(component, key));
+	  }
+	};
+
+	function createStateKeySetter(component, key) {
+	  // Partial state is allocated outside of the function closure so it can be
+	  // reused with every call, avoiding memory allocation when this function
+	  // is called.
+	  var partialState = {};
+	  return function stateKeySetter(value) {
+	    partialState[key] = value;
+	    component.setState(partialState);
+	  };
+	}
+
+	ReactStateSetters.Mixin = {
+	  /**
+	   * Returns a function that calls the provided function, and uses the result
+	   * of that to set the component's state.
+	   *
+	   * For example, these statements are equivalent:
+	   *
+	   *   this.setState({x: 1});
+	   *   this.createStateSetter(function(xValue) {
+	   *     return {x: xValue};
+	   *   })(1);
+	   *
+	   * @param {function} funcReturningState Returned callback uses this to
+	   *                                      determine how to update state.
+	   * @return {function} callback that when invoked uses funcReturningState to
+	   *                    determined the object literal to setState.
+	   */
+	  createStateSetter: function (funcReturningState) {
+	    return ReactStateSetters.createStateSetter(this, funcReturningState);
+	  },
+
+	  /**
+	   * Returns a single-argument callback that can be used to update a single
+	   * key in the component's state.
+	   *
+	   * For example, these statements are equivalent:
+	   *
+	   *   this.setState({x: 1});
+	   *   this.createStateKeySetter('x')(1);
+	   *
+	   * Note: this is memoized function, which makes it inexpensive to call.
+	   *
+	   * @param {string} key The key in the state that you should update.
+	   * @return {function} callback of 1 argument which calls setState() with
+	   *                    the provided keyName and callback argument.
+	   */
+	  createStateKeySetter: function (key) {
+	    return ReactStateSetters.createStateKeySetter(this, key);
+	  }
+	};
+
+	module.exports = ReactStateSetters;
 
 /***/ }
 /******/ ]);

@@ -65,6 +65,10 @@ body {
             padding: 5px 0;
           }
 
+          &[data-disabled='true'] {
+            color: gray;
+          }
+
           &[data-clicked='true']{
             background-color: #5CB85C;
             color: #fff;

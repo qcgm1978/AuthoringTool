@@ -27,19 +27,51 @@ var GridLayout = React.createClass({
          * 当用户切换单双屏幕时进行处理
          */
         if (nextProps.doubleScreen!=this.props.doubleScreen) {
-
             if (nextProps.doubleScreen) {  //单屏到双屏时
-                this.singleScreenHtml = $("#main-grid>ul").html();
+                this.singleScreenHtml = this.pured($("#main-grid>ul").html());
+                if (this.doubleMainHtml==='') {//如果双屏主html为空，表示第一次切换到双屏， 需要将单屏内容复制过来
+                    this.doubleMainHtml=this.singleScreenHtml;
+                }
             } else {
-                this.doubleMainHtml = $("#main-grid>ul").html();
-                this.doubleExtraHtml = $("#extra-grid>ul").html();
+                this.doubleMainHtml = this.pured($("#main-grid>ul").html());
+                this.doubleExtraHtml = this.pured($("#extra-grid>ul").html());
             }
         }
     },
 
-    singleScreenHtml: null,
-    doubleMainHtml: null,
-    doubleExtraHtml: null,
+    pured: function(html) {
+        var z = $("<div>" + html + "</div>");
+        z.find("span.gs-resize-handle").remove();
+        z.find(".mce-content-body").removeClass("mce-content-body").removeAttr("id contenteditable spellcheck");
+        z.find(".mce-edit-focus").removeClass("mce-edit-focus");
+        return z.html();
+    },
+
+    setLayoutData: function(singleScreenHtml, doubleMainHtml, doubleExtraHtml) {
+        this.singleScreenHtml = singleScreenHtml;
+        this.doubleMainHtml = doubleMainHtml;
+        this.doubleExtraHtml = doubleExtraHtml;
+        this.initGridster();
+    },
+
+    getLayoutData: function() {
+        if (this.props.doubleScreen) {
+            this.doubleMainHtml = this.pured($("#main-grid>ul").html());
+            this.doubleExtraHtml = this.pured($("#extra-grid>ul").html());
+        } else {
+            this.singleScreenHtml = this.pured($("#main-grid>ul").html());
+        }
+
+        return {
+            'singleScreenHtml': this.singleScreenHtml,
+            'doubleMainHtml': this.doubleMainHtml,
+            'doubleExtraHtml': this.doubleExtraHtml
+        }
+    },
+
+    singleScreenHtml: '',
+    doubleMainHtml: '',
+    doubleExtraHtml: '',
 
     initGridster: function() {
         var gridlayout = this;
@@ -67,30 +99,16 @@ var GridLayout = React.createClass({
         $(".gs-resize-handle").remove();
         $(".gridster ul li").removeAttr("style");
 
-
-        var mHtml = $("#main-grid>ul").html();
-        var eHtml = $("#extra-grid>ul").html();
-
         $(".footer").css("position", "initial");
 
         if (this.props.doubleScreen) {
-
-            if (this.doubleMainHtml!=null) {
-                mHtml = this.doubleMainHtml;
-            }
-            if (this.doubleExtraHtml!=null) {
-                eHtml = this.doubleExtraHtml;
-            }
-
             $("#main-grid").empty();
-            $("#main-grid").append("<ul>" + mHtml + "</ul>");
+            $("#main-grid").append("<ul>" + this.doubleMainHtml + "</ul>");
 
             $("#extra-grid").empty();
-            $("#extra-grid").append("<ul>" + eHtml + "</ul>");
+            $("#extra-grid").append("<ul>" + this.doubleExtraHtml + "</ul>");
 
             if (this.props.expandMode===2) {  //expand mode
-
-
                 var contentHeight = this.props.height;
                 if (this.props.showHeader) {
                     contentHeight -= this.props.headerHeight;
@@ -234,11 +252,8 @@ var GridLayout = React.createClass({
             }
         } else {
             $("#main-grid").empty();
-            if (this.singleScreenHtml!=null) {
-                mHtml = this.singleScreenHtml;
-            }
-            $("#main-grid").append("<ul>" + mHtml + "</ul>");
-            //$("#main-grid ul").append(eHtml);
+
+            $("#main-grid").append("<ul>" + this.singleScreenHtml + "</ul>");
 
             var contentHeight = this.props.height;
             if (this.props.showHeader) {
@@ -278,18 +293,17 @@ var GridLayout = React.createClass({
     },
 
     disableLayout: function() {
-        $("nav li.dropdown").hide();
+        this.getLayoutData();
         this.setState({
             layoutable: false
         });
     },
 
     enableLayout: function() {
-        $("nav li.dropdown").show();
+        this.getLayoutData();
         this.setState({
             layoutable: true
         });
-        //$(".gridster ul").gridster().data('gridster').enable().enable_resize();
     },
 
     moveBlock: function(li, direction) {
@@ -326,21 +340,15 @@ var GridLayout = React.createClass({
                           layoutable={this.state.layoutable} disableLayout={this.disableLayout}
                           enableLayout={this.enableLayout} ref="leftmenu" closeSetting={this.closeSetting}
                           showHeader={this.props.showHeader} showFooter={this.props.showFooter}
-                            width={this.props.width}/>
+                          width={this.props.width}/>
 
                 <div className="gridster" id="main-grid" style={{
                     width: (this.props.doubleScreen&&this.props.expandMode===2)? this.props.width*2: this.props.width
                 }}>
-                    <ul>
-                        <li data-row="1" data-col="1" data-sizex="12" data-sizey="1"
-                            className="j-grid-block player-revert">
-                        </li>
-                    </ul>
+                    <ul></ul>
                 </div>
                 <div className="gridster" id="extra-grid">
-                    <ul>
-
-                    </ul>
+                    <ul></ul>
                 </div>
             </div>
         );

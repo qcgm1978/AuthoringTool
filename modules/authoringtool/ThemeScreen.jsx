@@ -109,7 +109,7 @@ var ThemeScreen = React.createClass({
         /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
 
         return (
-            <div className="screen" >
+            <div className="screen">
                 <div className="display" style={{
                         width:  swidth,
                         minHeight: this.props.height

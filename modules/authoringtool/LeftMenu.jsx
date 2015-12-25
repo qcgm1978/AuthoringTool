@@ -39,10 +39,12 @@ var LeftMenu = React.createClass({
     },
 
     showBlockTypes: function() {
-      this.setState({
-          showBlockTypes: !this.state.showBlockTypes,
-          showConfigMenu: false
-      }) ;
+        if (!this.props.doubleScreen) {
+            this.setState({
+                showBlockTypes: !this.state.showBlockTypes,
+                showConfigMenu: false
+            }) ;
+        }
     },
 
     showConfigMenu: function() {
@@ -68,7 +70,7 @@ var LeftMenu = React.createClass({
             <div className="leftMenu">
                 {this.props.layoutable?
                     <div>
-                        <span className="glyphicon glyphicon-plus" data-clicked={this.state.showBlockTypes} id="btn-add-block" onClick={this.showBlockTypes}></span>
+                        <span className="glyphicon glyphicon-plus" data-disabled={this.props.doubleScreen} data-clicked={this.state.showBlockTypes} id="btn-add-block" onClick={this.showBlockTypes}></span>
                         <span className="glyphicon glyphicon-edit" onClick={this.editContent}></span>
                         <span className="glyphicon glyphicon-cog" data-clicked={this.state.showConfigMenu} onClick={this.showConfigMenu}></span>
                     </div>
