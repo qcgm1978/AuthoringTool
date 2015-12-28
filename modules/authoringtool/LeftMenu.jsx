@@ -13,6 +13,10 @@ var LeftMenu = React.createClass({
         }
     },
 
+    stateChange: function(newstate) {
+        this.setState(newstate);
+    },
+
     componentDidMount: function () {
 
     },
@@ -91,7 +95,7 @@ var LeftMenu = React.createClass({
                     <span className="glyphicon ratio" onClick={this.resolution.bind(this, "1920x1080")} data-clicked={this.props.width===1920}>1920<br/>1080</span>
                 </div>
 
-                <BlockTypeMenu addBlock={this.props.addBlock}  show={this.state.showBlockTypes}/>
+                <BlockTypeMenu addBlock={this.props.addBlock} show={this.state.showBlockTypes} parentStateChange={this.stateChange}/>
                 <PageConfigMenu configurationChange={this.props.configurationChange}
                                 showConfigMenu={this.showConfigMenu}
                                 showHeader={this.props.showHeader} showFooter={this.props.showFooter}

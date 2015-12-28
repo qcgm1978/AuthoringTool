@@ -24,7 +24,8 @@ var NavBar = React.createClass({
                             <span className="caret"></span>
                         </a>
                         <ul className="dropdown-menu" aria-labelledby="Resolution">
-                            <li><a onClick={this.props.newProject}>New</a></li>
+                            <li><a onClick={this.props.newProject}>New Page..</a></li>
+                            <li><a onClick={this.props.newHoneyComb}>New Honeycomb..</a></li>
                             <li><a onClick={this.props.listProjects}>Open</a></li>
                         </ul>
                     </li>

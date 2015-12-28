@@ -1,8 +1,11 @@
 var React = require('react');
 
 var LeftMenu = require("./LeftMenu.jsx");
+var _ = require("underscore");
 
 var GridLayout = React.createClass({
+
+    BLOCK_ID_PREFIX: "block_",
 
     getInitialState: function () {
         return {
@@ -16,65 +19,131 @@ var GridLayout = React.createClass({
         };
     },
 
-    GRID_TEMPLATE: '<li><div class="content"><span>Change it in edit mode</span></div></li>',
+    data: {
+        singleScreenWidgets: [],
+        doubleScreenLeftWidgets: [],
+        doubleScreenRightWidgets: [],
+        widgetContents: {}
+    },
+
+    /**
+     * Default gridster options
+     * */
+    defaultGridOptions: {
+        widget_margins: [1, 1],
+        min_cols: 12,
+        min_rows: 10,
+        resize: {
+            enabled: true
+        },
+        serialize_params: function ($w, wgd) {
+            var cli = $w.clone();
+            cli.find(".gs-resize-handle").remove();
+            cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
+            .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+
+            return {
+                content: cli.html(),
+                id: $w.data('id'),
+                col: wgd.col,
+                row: wgd.row,
+                size_x: wgd.size_x,
+                size_y: wgd.size_y,
+            };
+        }
+    },
 
     componentDidMount: function () {
        this.initGridster();
     },
 
     componentWillUpdate : function(nextProps, nextState) {
-        /**
-         * 当用户切换单双屏幕时进行处理
-         */
+        this.saveGridData();
         if (nextProps.doubleScreen!=this.props.doubleScreen) {
-            if (nextProps.doubleScreen) {  //单屏到双屏时
-                this.singleScreenHtml = this.pured($("#main-grid>ul").html());
-                if (this.doubleMainHtml==='') {//如果双屏主html为空，表示第一次切换到双屏， 需要将单屏内容复制过来
-                    this.doubleMainHtml=this.singleScreenHtml;
+            if (nextProps.doubleScreen) {  // Single -> Double
+                if (this.data.doubleScreenLeftWidgets.length===0 && this.data.doubleScreenRightWidgets.length===0) {
+                    this.data.doubleScreenLeftWidgets = this.data.singleScreenWidgets;
                 }
-            } else {
-                this.doubleMainHtml = this.pured($("#main-grid>ul").html());
-                this.doubleExtraHtml = this.pured($("#extra-grid>ul").html());
             }
         }
     },
 
-    pured: function(html) {
-        var z = $("<div>" + html + "</div>");
-        z.find("span.gs-resize-handle").remove();
-        z.find(".mce-content-body").removeClass("mce-content-body").removeAttr("id contenteditable spellcheck");
-        z.find(".mce-edit-focus").removeClass("mce-edit-focus");
-        return z.html();
-    },
+    saveGridData: function() {
+        var layout = this;
+        /**cache the state of grids by current screen(s) content*/
 
-    setLayoutData: function(singleScreenHtml, doubleMainHtml, doubleExtraHtml) {
-        this.singleScreenHtml = singleScreenHtml;
-        this.doubleMainHtml = doubleMainHtml;
-        this.doubleExtraHtml = doubleExtraHtml;
-        this.initGridster();
-    },
-
-    getLayoutData: function() {
-        if (this.props.doubleScreen) {
-            this.doubleMainHtml = this.pured($("#main-grid>ul").html());
-            this.doubleExtraHtml = this.pured($("#extra-grid>ul").html());
+        if (this.props.doubleScreen===true) {
+            //current double screen setting
+            this.data.doubleScreenLeftWidgets = pured("#main-grid>ul");
+            this.data.doubleScreenRightWidgets = pured("#extra-grid>ul");
         } else {
-            this.singleScreenHtml = this.pured($("#main-grid>ul").html());
+            //current single screeny setting
+            this.data.singleScreenWidgets = pured("#main-grid>ul");
         }
 
-        return {
-            'singleScreenHtml': this.singleScreenHtml,
-            'doubleMainHtml': this.doubleMainHtml,
-            'doubleExtraHtml': this.doubleExtraHtml
+        function pured(id) {
+            var wlist =  $(id).gridster().data('gridster').serialize();
+            $(wlist).each(function() {
+                layout.data.widgetContents[this.id] = this.content;
+                delete this.content;
+            });
+            return wlist;
+        }
+        console.log(this.data);
+        return this.data;
+    },
+
+    loadGridData: function() {
+        var layout = this;
+        if (layout.props.doubleScreen) {
+            foreachAddWidget("#main-grid > ul", layout.data.doubleScreenLeftWidgets);
+            foreachAddWidget("#extra-grid > ul", layout.data.doubleScreenRightWidgets);
+        } else {
+            foreachAddWidget("#main-grid > ul", layout.data.singleScreenWidgets);
+        }
+        function foreachAddWidget(selector, data) {
+            var gridster = $(selector).gridster().data('gridster');
+            $.each(data, function() {
+                var li = "<li data-id='" + this.id + "'>" + layout.data.widgetContents[this.id] + "</li>";
+                console.log("add li " , this, li);
+                gridster.add_widget(li, this.size_x, this.size_y, this.col, this.row);
+            });
         }
     },
 
-    singleScreenHtml: '',
-    doubleMainHtml: '',
-    doubleExtraHtml: '',
+    setData: function(data) {
+        this.data = data;
+    },
+
+    getData: function() {
+        this.saveGridData();
+        return this.data;
+    },
 
     initGridster: function() {
-        var gridlayout = this;
+        var layout = this;
+        $("#main-grid").empty();
+        $("#extra-grid").empty();
+        $("#main-grid").append("<ul></ul>");
+        $("#extra-grid").append("<ul></ul>");
+
+        $(".footer").css("position", "initial");
+        if (this.props.doubleScreen) {
+            if (this.props.expandMode===1) {  //portrait cut model
+                layout.initPortraitCutMode();
+            }
+            if (this.props.expandMode===2) {  //expand mode
+                this.initExpandMode();
+            }
+            if (this.props.expandMode===3) {  //extra mode
+                layout.initExtraMode();
+            }
+        } else {
+            layout.initSingleMode();
+        }
+
+        this.loadGridData();
+
         if(!this.state.layoutable) {
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
             tinymce.init({
@@ -83,224 +152,153 @@ var GridLayout = React.createClass({
                 menubar: false,
                 toolbar: 'undo redo|mybutton formatselect bold italic underline strikethrough bullist numlist'
             });
-            return;
-        } else {
-            $(".mce-content-body").removeClass("mce-content-body").removeAttr("id contenteditable spellcheck");
-            $(".mce-edit-focus").removeClass("mce-edit-focus");
-            tinymce.execCommand('mceRemoveControl', true, '.gridster li .content');
         }
+    },
 
-        if ($("#main-grid>ul").data("gridster")) {
-            $("#main-grid>ul").data("gridster").remove_style_tags();
+    initSingleMode: function(screenCount=1) {
+        var layout = this;
+        var contentHeight = this.props.height;
+        if (this.props.showHeader) {
+            contentHeight -= this.props.headerHeight;
         }
-        if ($("#extra-grid>ul").data("gridster")) {
-            $("#extra-grid>ul").data("gridster").remove_style_tags();
+        if (this.props.showFooter) {
+            contentHeight -= this.props.footerHeight;
         }
-        $(".gs-resize-handle").remove();
-        $(".gridster ul li").removeAttr("style");
+        var contentWidth = this.props.width*screenCount - this.props.padding[1] - this.props.padding[3];
+        $("#main-grid>ul").css("min-height", contentHeight);
+        $("#main-grid>ul").css("margin-left", this.props.padding[3]);
 
-        $(".footer").css("position", "initial");
-
-        if (this.props.doubleScreen) {
-            $("#main-grid").empty();
-            $("#main-grid").append("<ul>" + this.doubleMainHtml + "</ul>");
-
-            $("#extra-grid").empty();
-            $("#extra-grid").append("<ul>" + this.doubleExtraHtml + "</ul>");
-
-            if (this.props.expandMode===2) {  //expand mode
-                var contentHeight = this.props.height;
-                if (this.props.showHeader) {
-                    contentHeight -= this.props.headerHeight;
-                }
-                if (this.props.showFooter) {
-                    contentHeight -= this.props.footerHeight;
-                }
-                var contentWidth = this.props.width*2 - this.props.padding[1] - this.props.padding[3];
-                $("#main-grid>ul").css("min-height", contentHeight);
-                $("#main-grid>ul").css("margin-left", this.props.padding[3]);
-
-                $("#main-grid>ul").gridster({
-                    namespace: '#main-grid',
-                    widget_margins: [1, 1],
-                    widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
-                    min_cols: 12,
-                    min_rows: 10,
-                    resize: {
-                        enabled: true
+        $("#main-grid>ul").gridster(_.extend({
+            namespace: '#main-grid',
+            widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
+            draggable: {
+                stop: function(event, ui) {
+                    /**
+                     * When on double screen and the expand mode is 'extra' or 'portrait',
+                     * Move the widget from left to right
+                     * */
+                    if (layout.props.doubleScreen && (layout.props.expandMode===1||layout.props.expandMode===3)
+                        && ui.pointer.left>=layout.props.width+70) {
+                        layout.moveBlock(ui.$player, true);
                     }
-                });
-                $("#extra-grid").hide();
-            }
-
-            if (this.props.expandMode===1) {  //portrait cut model
-                $(".footer").css("position", "absolute").css("bottom", 0).css("right", 0);
-                var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
-
-                var extraHeight = this.props.height;
-                if (this.props.showFooter) {
-                    extraHeight -= this.props.footerHeight;
                 }
-                extraHeight -= this.props.padding[0];
-                $("#extra-grid").css("position", "absolute").css("top", this.props.padding[0]).css("right", this.props.padding[1]).
-                    css("width", contentWidth).show();
-                $("#extra-grid>ul").gridster({
-                    namespace: '#extra-grid',
-                    widget_margins: [1, 1],
-                    widget_base_dimensions: [(contentWidth) / 12 - 2, (extraHeight) / 10 - 2],
-                    min_cols: 12,
-                    min_rows: 10,
-                    resize: {
-                        enabled: true
-                    },
-                    draggable: {
-                        stop: function(event, ui) {
-                            if (ui.pointer.left<=gridlayout.props.width-200) {
-                                gridlayout.moveBlock(ui.$player, false);
-                            }
-                        }
+            }
+        }, this.defaultGridOptions));
+        $("#extra-grid").hide();
+    },
+
+    /***
+     * Expand Mode: expand the single screen(1024 width) to doubled width (2048 width)
+     */
+    initExpandMode: function() {
+        this.initSingleMode(2);
+    },
+
+
+    /**
+     * Extra Mode: the right screen is full screened for media plays(Movie) or full screen demonstration
+     */
+    initExtraMode: function() {
+        var layout = this;
+        layout.initSingleMode(1);
+        $("#extra-grid").show();
+
+        $("#extra-grid").css("position", "absolute").css("top", 0).css("right", 0).css("width", this.props.width).show();
+
+        $("#extra-grid>ul").gridster(_.extend({
+            namespace: '#extra-grid',
+            widget_base_dimensions: [(this.props.width) / 12 - 2, (this.props.height) / 10 - 2],
+            draggable: {
+                stop: function(event, ui) {
+                    /**
+                     * When on double screen and the expand mode is 'extra' or 'portrait',
+                     * Move the widget from left to right
+                     * */
+                    if (ui.pointer.left <= layout.props.width-200) {
+                        layout.moveBlock(ui.$player, false);
                     }
-                });
-
-                var contentHeight = this.props.height;
-                if (this.props.showHeader) {
-                    contentHeight -= this.props.headerHeight;
                 }
-                contentHeight -= this.props.padding[2];
-
-                $("#main-grid>ul").css("min-height", contentHeight);
-                $("#main-grid>ul").css("margin-left", this.props.padding[3]);
-
-                $("#main-grid>ul").gridster({
-                    namespace: '#main-grid',
-                    widget_margins: [1, 1],
-                    widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
-                    min_cols: 12,
-                    min_rows: 10,
-                    max_rows: 10,
-                    max_cols: 12,
-                    resize: {
-                        enabled: true
-                    },
-                    draggable: {
-                        stop: function(event, ui) {
-                            if (ui.pointer.left>=gridlayout.props.width+70) {
-                                gridlayout.moveBlock(ui.$player, true);
-                            }
-                        }
-                    }
-                });
             }
+        }, this.defaultGridOptions));
+    },
 
-            if (this.props.expandMode===3) {  //extra mode
-                $("#extra-grid").css("position", "absolute").css("top", 0).css("right", 0).css("width", this.props.width).show();
-                $("#extra-grid>ul").gridster({
-                    namespace: '#extra-grid',
-                    widget_margins: [1, 1],
-                    widget_base_dimensions: [(this.props.width) / 12 - 2, (this.props.height) / 10 - 2],
-                    min_cols: 12,
-                    min_rows: 10,
-                    resize: {
-                        enabled: true
-                    },
-                    draggable: {
-                        stop: function(event, ui) {
-                            /**
-                             * When on double screen and the expand mode is 'extra' or 'portrait',
-                             * Move the widget from left to right
-                             * */
-                            if (ui.pointer.left<=gridlayout.props.width-200) {
-                                gridlayout.moveBlock(ui.$player, false);
-                            }
-                        }
-                    }
-                });
+    initPortraitCutMode: function() {
+        var layout = this;
+        $(".footer").css("position", "absolute").css("bottom", 0).css("right", 0);
+        var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
 
-                var contentHeight = this.props.height;
-                if (this.props.showHeader) {
-                    contentHeight -= this.props.headerHeight;
-                }
-                if (this.props.showFooter) {
-                    contentHeight -= this.props.footerHeight;
-                }
-                var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
-
-                $("#main-grid>ul").css("width", contentWidth).css("margin-left", this.props.padding[3])
-                    .css("min-height", contentHeight);
-
-                $("#main-grid>ul").gridster({
-                    namespace: '#main-grid',
-                    widget_margins: [1, 1],
-                    widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
-                    min_cols: 12,
-                    min_rows: 10,
-                    resize: {
-                        enabled: true
-                    },
-                    draggable: {
-                        stop: function(event, ui) {
-                            /**
-                             * When on double screen and the expand mode is 'extra' or 'portrait',
-                             * Move the widget from left to right
-                             * */
-                            if (ui.pointer.left>=gridlayout.props.width+70) {
-                                gridlayout.moveBlock(ui.$player, true);
-                            }
-                        }
-                    }
-                });
-            }
-        } else {
-            $("#main-grid").empty();
-
-            $("#main-grid").append("<ul>" + this.singleScreenHtml + "</ul>");
-
-            var contentHeight = this.props.height;
-            if (this.props.showHeader) {
-                contentHeight -= this.props.headerHeight;
-            }
-            if (this.props.showFooter) {
-                contentHeight -= this.props.footerHeight;
-            }
-            var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
-            $("#main-grid>ul").css("min-height", contentHeight);
-            $("#main-grid>ul").css("margin-left", this.props.padding[3]);
-
-            $("#main-grid>ul").gridster({
-                namespace: '#main-grid',
-                widget_margins: [1, 1],
-                widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
-                min_cols: 12,
-                min_rows: 10,
-                resize: {
-                    enabled: true
-                }
-            });
-
-            $("#extra-grid").hide();
+        var extraHeight = this.props.height;
+        if (this.props.showFooter) {
+            extraHeight -= this.props.footerHeight;
         }
+        extraHeight -= this.props.padding[0];
+        $("#extra-grid").css("position", "absolute").css("top", this.props.padding[0]).css("right", this.props.padding[1]).
+            css("width", contentWidth).show();
+        $("#extra-grid>ul").gridster(_.extend({
+            namespace: '#extra-grid',
+            widget_base_dimensions: [(contentWidth) / 12 - 2, (extraHeight) / 10 - 2],
+            draggable: {
+                stop: function(event, ui) {
+                    if (ui.pointer.left <= layout.props.width-200) {
+                        layout.moveBlock(ui.$player, false);
+                    }
+                }
+            }
+        }, this.defaultGridOptions));
+
+        var contentHeight = this.props.height;
+        if (this.props.showHeader) {
+            contentHeight -= this.props.headerHeight;
+        }
+        contentHeight -= this.props.padding[2];
+
+        $("#main-grid>ul").css("min-height", contentHeight);
+        $("#main-grid>ul").css("margin-left", this.props.padding[3]);
+
+        $("#main-grid>ul").gridster(_.extend({
+            namespace: '#main-grid',
+            widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
+            draggable: {
+                stop: function(event, ui) {
+                    if (ui.pointer.left>=layout.props.width+70) {
+                        layout.moveBlock(ui.$player, true);
+                    }
+                }
+            }
+        },this.defaultGridOptions));
     },
 
     componentDidUpdate: function () {
        this.initGridster();
     },
 
-    addBlock: function (event) {
-        var template = $(event.target).removeAttr("data-reactid").prop('outerHTML');
+    addBlock: function (template, sizex, sizey) {
         var gridster = $("#main-grid ul").gridster().data('gridster');
-        gridster.add_widget("<li>" + template + "</li>", 12, 2, 1, 100);
-        this.refs["leftmenu"].setState({showBlockTypes: false});
+        if (!sizex) {
+            sizex = 12;
+        }
+        if (!sizey) {
+            sizey = 2;
+        }
+        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX)
+        gridster.add_widget("<li data-id='" + blockId + "'>" + template + "</li>", sizex, sizey, 1, 100);
+
+        this.data.doubleScreenLeftWidgets.push({
+            id: blockId,
+            col: 1,
+            row: 100,
+            size_x: sizex,
+            size_y: sizey
+        });
     },
 
     disableLayout: function() {
-        this.getLayoutData();
         this.setState({
             layoutable: false
         });
     },
 
     enableLayout: function() {
-        this.getLayoutData();
         this.setState({
             layoutable: true
         });
@@ -308,7 +306,6 @@ var GridLayout = React.createClass({
 
     moveBlock: function(li, direction) {
         var src,target;
-
         if (direction) {
             src = $("#main-grid>ul").gridster().data('gridster');
             target = $("#extra-grid>ul").gridster().data('gridster');
@@ -317,17 +314,16 @@ var GridLayout = React.createClass({
             src = $("#extra-grid>ul").gridster().data('gridster');
         }
 
-        target.add_widget("<li>"+ li.find(">div").prop("outerHTML") + "</li>",
+        var cli = li.clone();
+        cli.find(".gs-resize-handle").remove();
+        cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
+            .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+        target.add_widget("<li data-id='" + li.data("id") + "'>"+ li.html() + "</li>",
             li.data("sizex"), li.data("sizey"), 1, 100);
         src.remove_widget(li);
     },
 
     closeSetting: function() {
-
-    },
-
-
-    saveGridInfo: function () {
 
     },
 

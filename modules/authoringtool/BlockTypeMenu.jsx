@@ -51,7 +51,7 @@ var BlockTypeMenu = React.createClass({
                         <span>Activity</span>
                     </li>
                 </ul>
-                <AddTextMenu show={this.state.page==="addText"} addBlock={this.props.addBlock}/>
+                <AddTextMenu show={this.state.page==="addText"} addBlock={this.props.addBlock} parentStateChange={this.props.parentStateChange}/>
                 <ChooseImageMenu show={this.state.page==="chooseImage"} addBlock={this.props.addBlock}/>
             </div>
         );

@@ -25,6 +25,7 @@ var AuthoringTool = React.createClass({
             theme: "default",
             expandMode: 1,
             showGrid: true,
+            work : null,
             name: this.NEW_NAME
         };
     },
@@ -56,8 +57,13 @@ var AuthoringTool = React.createClass({
         });
     },
 
+
     newProject: function() {
         this.refs.newfile.showDialog();
+    },
+
+    newHoneyComb: function() {
+
     },
 
     listProjects: function() {
@@ -66,7 +72,6 @@ var AuthoringTool = React.createClass({
 
     saveProject: function() {
         var tool = this;
-
         if (this.state.name===this.NEW_NAME) {
             this.newProject();
         } else {
@@ -90,19 +95,26 @@ var AuthoringTool = React.createClass({
     },
 
     render: function () {
+
+        var workingspace = "<div/>";
+        if (this.state.work==="authoring") {
+            workingspace = <ThemeScreen configurationChange={this.configurationChanged} show={this.state.work==="authoring"}
+                                        theme={this.state.theme} resize={this.themeInitialize} doubleScreen={this.state.doubleScreen}
+                                        expandMode={this.state.expandMode}
+                                        width={this.state.width} height={this.state.minHeight}
+                                        showHeader={this.state.showHeader} showFooter={this.state.showFooter} showGrid={this.state.showGrid}
+                                        ref="themescreen"/>;
+        }
+
         return (
             <div>
                 <NavBar onChange={this.updateState} onAddGrid={this.addGrid}
                         saveProject={this.saveProject}
                         listProjects={this.listProjects}
                         newProject={this.newProject}
+                        newHoneyComb={this.newHoneyComb}
                 />
-                <ThemeScreen configurationChange={this.configurationChanged}
-                            theme={this.state.theme} resize={this.themeInitialize} doubleScreen={this.state.doubleScreen}
-                            expandMode={this.state.expandMode}
-                            width={this.state.width} height={this.state.minHeight}
-                            showHeader={this.state.showHeader} showFooter={this.state.showFooter} showGrid={this.state.showGrid}
-                            ref="themescreen"/>
+                {workingspace}
                 <FileNameDialog configurationChange={this.configurationChanged} ref="newfile"/>
             </div>
         );

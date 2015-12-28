@@ -22,7 +22,7 @@ var FileNameDialog = React.createClass({
     saveDialog: function() {
         if (this.state.name!="") {
             $('#save-file-name-dialog').modal('hide');
-            this.props.configurationChange({"name": this.state.name});
+            this.props.configurationChange({"name": this.state.name, "work":"authoring"});
         }
     },
 
