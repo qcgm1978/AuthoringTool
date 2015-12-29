@@ -75,7 +75,7 @@ var LeftMenu = React.createClass({
                 {this.props.layoutable?
                     <div>
                         <span className="glyphicon glyphicon-plus" data-disabled={this.props.doubleScreen} data-clicked={this.state.showBlockTypes} id="btn-add-block" onClick={this.showBlockTypes}></span>
-                        <span className="glyphicon glyphicon-edit" onClick={this.editContent}></span>
+                        <span className="glyphicon glyphicon-edit" data-disabled={this.props.doubleScreen} onClick={this.editContent}></span>
                         <span className="glyphicon glyphicon-cog" data-clicked={this.state.showConfigMenu} onClick={this.showConfigMenu}></span>
                     </div>
                     :

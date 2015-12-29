@@ -3,7 +3,7 @@ var busboy = require('connect-busboy');
 
 var AttachmentService = function(app) {
 
-    app.use(busboy());
+    //app.use(busboy());
 
     function initMapping(app) {
         app.post('/attach/upload', uploadFile);

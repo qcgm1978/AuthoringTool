@@ -54,6 +54,9 @@ var GridLayout = React.createClass({
     },
 
     componentDidMount: function () {
+        if (this.props.gdata) {
+            this.data = this.props.gdata;
+        }
        this.initGridster();
     },
 
@@ -105,7 +108,6 @@ var GridLayout = React.createClass({
             var gridster = $(selector).gridster().data('gridster');
             $.each(data, function() {
                 var li = "<li data-id='" + this.id + "'>" + layout.data.widgetContents[this.id] + "</li>";
-                console.log("add li " , this, li);
                 gridster.add_widget(li, this.size_x, this.size_y, this.col, this.row);
             });
         }
@@ -113,6 +115,7 @@ var GridLayout = React.createClass({
 
     setData: function(data) {
         this.data = data;
+        this.initGridster();
     },
 
     getData: function() {

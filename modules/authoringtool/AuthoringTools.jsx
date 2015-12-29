@@ -8,6 +8,8 @@ var ReactDOM = require('react-dom');
 var NavBar = require("./NavBar.jsx");
 var ThemeScreen = require("./ThemeScreen.jsx");
 var FileNameDialog = require("./FileNameDialog.jsx");
+var OpenPageDialog = require("./OpenPageDialog.jsx");
+
 
 
 var AuthoringTool = React.createClass({
@@ -39,16 +41,11 @@ var AuthoringTool = React.createClass({
     },
 
     configurationChanged: function(state) {
-        console.log(state);
         this.setState(state);
     },
 
-
-    loadProject: function(project) {
-        this.refs.themescreen.refs.layout.setLayoutData(
-
-        );
-
+    loadLayoutData: function(data) {
+        this.refs.themescreen.setData(data);
     },
 
     setDoubleScreen: function(d) {
@@ -67,7 +64,7 @@ var AuthoringTool = React.createClass({
     },
 
     listProjects: function() {
-
+        this.refs.openfile.showDialog();
     },
 
     saveProject: function() {
@@ -75,18 +72,16 @@ var AuthoringTool = React.createClass({
         if (this.state.name===this.NEW_NAME) {
             this.newProject();
         } else {
-            var layoutData = this.refs.themescreen.refs.layout.getLayoutData();
-
-            $.post("/authoring/update", {
-                    name: tool.state.name,
+            var layoutData = this.refs.themescreen.refs.layout.getData();
+            $.post("/authoring/update",
+                {name: tool.state.name,
                     showHeader: tool.state.showHeader,
                     showFooter: tool.state.showFooter,
                     expandMode: tool.state.expandMode,
                     theme: tool.state.theme,
-                    singleScreenHtml: layoutData.singleScreenHtml,
-                    doubleMainHtml: layoutData.doubleMainHtml,
-                    doubleExtraHtml: layoutData.doubleExtraHtml
+                    data: JSON.stringify(layoutData)
                 },
+
                 function() {
 
                 }
@@ -95,17 +90,16 @@ var AuthoringTool = React.createClass({
     },
 
     render: function () {
-
         var workingspace = "<div/>";
         if (this.state.work==="authoring") {
             workingspace = <ThemeScreen configurationChange={this.configurationChanged} show={this.state.work==="authoring"}
                                         theme={this.state.theme} resize={this.themeInitialize} doubleScreen={this.state.doubleScreen}
                                         expandMode={this.state.expandMode}
                                         width={this.state.width} height={this.state.minHeight}
+                                        gdata={this.state.gdata}
                                         showHeader={this.state.showHeader} showFooter={this.state.showFooter} showGrid={this.state.showGrid}
                                         ref="themescreen"/>;
         }
-
         return (
             <div>
                 <NavBar onChange={this.updateState} onAddGrid={this.addGrid}
@@ -116,6 +110,7 @@ var AuthoringTool = React.createClass({
                 />
                 {workingspace}
                 <FileNameDialog configurationChange={this.configurationChanged} ref="newfile"/>
+                <OpenPageDialog ref="openfile" configurationChange={this.configurationChanged} loadLayoutData={this.loadLayoutData} />
             </div>
         );
     }

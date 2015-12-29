@@ -126,6 +126,7 @@ var ThemeScreen = React.createClass({
                                 headerHeight={this.state.headerHeight} footerHeight={this.state.footerHeight}
                                 padding={this.state.padding}
                                 configurationChange={this.props.configurationChange}
+                                gdata={this.props.gdata}
                                 ref="layout"/>
                     <div className="footer" style={{
                         width: headerWidth,

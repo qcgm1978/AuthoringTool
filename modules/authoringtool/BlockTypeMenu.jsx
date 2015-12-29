@@ -14,6 +14,7 @@ var BlockTypeMenu = React.createClass({
     },
 
     componentWillReceiveProps: function(nextProps) {
+
     },
 
     showAddText: function() {
