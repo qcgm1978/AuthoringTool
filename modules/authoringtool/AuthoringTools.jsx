@@ -44,27 +44,24 @@ var AuthoringTool = React.createClass({
         this.setState(state);
     },
 
-    loadLayoutData: function(data) {
-        this.refs.themescreen.setData(data);
-    },
-
     setDoubleScreen: function(d) {
         this.setState({
             doubleScreen: d
         });
     },
 
-
     newProject: function() {
         this.refs.newfile.showDialog();
     },
 
-    newHoneyComb: function() {
-
-    },
 
     listProjects: function() {
         this.refs.openfile.showDialog();
+    },
+
+
+    newHoneyComb: function() {
+
     },
 
     saveProject: function() {

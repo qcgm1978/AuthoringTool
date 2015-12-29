@@ -54,7 +54,14 @@ var GridLayout = React.createClass({
     },
 
     componentDidMount: function () {
-        if (this.props.gdata) {
+        if (this.props.gdata===null) {
+            this.data = {
+                singleScreenWidgets: [],
+                doubleScreenLeftWidgets: [],
+                doubleScreenRightWidgets: [],
+                widgetContents: {}
+            };
+        } else {
             this.data = this.props.gdata;
         }
        this.initGridster();

@@ -3640,10 +3640,6 @@
 	        this.setState(state);
 	    },
 
-	    loadLayoutData: function loadLayoutData(data) {
-	        this.refs.themescreen.setData(data);
-	    },
-
 	    setDoubleScreen: function setDoubleScreen(d) {
 	        this.setState({
 	            doubleScreen: d
@@ -3654,11 +3650,11 @@
 	        this.refs.newfile.showDialog();
 	    },
 
-	    newHoneyComb: function newHoneyComb() {},
-
 	    listProjects: function listProjects() {
 	        this.refs.openfile.showDialog();
 	    },
+
+	    newHoneyComb: function newHoneyComb() {},
 
 	    saveProject: function saveProject() {
 	        var tool = this;
@@ -23684,7 +23680,14 @@
 	    },
 
 	    componentDidMount: function componentDidMount() {
-	        if (this.props.gdata) {
+	        if (this.props.gdata === null) {
+	            this.data = {
+	                singleScreenWidgets: [],
+	                doubleScreenLeftWidgets: [],
+	                doubleScreenRightWidgets: [],
+	                widgetContents: {}
+	            };
+	        } else {
 	            this.data = this.props.gdata;
 	        }
 	        this.initGridster();
@@ -27755,7 +27758,15 @@
 	    saveDialog: function saveDialog() {
 	        if (this.state.name != "") {
 	            $('#save-file-name-dialog').modal('hide');
-	            this.props.configurationChange({ "name": this.state.name, "work": "authoring" });
+	            this.props.configurationChange({
+	                "name": this.state.name,
+	                "work": "authoring",
+	                'expandMode': 1,
+	                'showFooter': true,
+	                'theme': "default",
+	                'showHeader': true,
+	                'gdata': null
+	            });
 	        }
 	    },
 
