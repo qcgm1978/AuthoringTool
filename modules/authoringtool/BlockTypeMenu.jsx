@@ -10,31 +10,28 @@ var BlockTypeMenu = React.createClass({
     },
 
     componentDidMount: function () {
-
     },
 
     componentWillReceiveProps: function(nextProps) {
-
     },
 
-    showAddText: function() {
+    showAddText: function(event) {
+        event.stopPropagation();
         this.setState({
             page: "addText"
         });
     },
 
-    showAddImage: function() {
+    showAddImage: function(event) {
+        event.stopPropagation();
         this.setState({
             page: "chooseImage"
         });
     },
 
-
     render: function () {
         return (
-            <div className="blockType" style={{
-                    display: this.props.show? "inherit":"none"
-            }}>
+            <div className={this.props.show?"blockType shown":"blockType"}>
                 <ul className="category-list">
                     <li className="category">
                         <span className={(this.state.page==="addText")?"current":""} onClick={this.showAddText}>Text</span>
@@ -43,10 +40,7 @@ var BlockTypeMenu = React.createClass({
                         <span className={(this.state.page==="chooseImage")?"current":""} onClick={this.showAddImage}>Image</span>
                     </li>
                     <li className="category">
-                        <span>Video</span>
-                    </li>
-                    <li className="category">
-                        <span>Audio</span>
+                        <span>Media</span>
                     </li>
                     <li className="category">
                         <span>Activity</span>

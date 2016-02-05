@@ -1,6 +1,5 @@
 var React = require('react');
 
-var LeftMenu = require("./LeftMenu.jsx");
 var _ = require("underscore");
 
 var GridLayout = React.createClass({
@@ -67,8 +66,12 @@ var GridLayout = React.createClass({
        this.initGridster();
     },
 
+
+    /**When propeties and states change */
     componentWillUpdate : function(nextProps, nextState) {
+        console.log("will update");
         this.saveGridData();
+        /**When screen mode is single to double, try to set/init the double screen widgets */
         if (nextProps.doubleScreen!=this.props.doubleScreen) {
             if (nextProps.doubleScreen) {  // Single -> Double
                 if (this.data.doubleScreenLeftWidgets.length===0 && this.data.doubleScreenRightWidgets.length===0) {
@@ -78,6 +81,7 @@ var GridLayout = React.createClass({
         }
     },
 
+    /**Extract n save grid data*/
     saveGridData: function() {
         var layout = this;
         /**cache the state of grids by current screen(s) content*/
@@ -99,10 +103,11 @@ var GridLayout = React.createClass({
             });
             return wlist;
         }
-        console.log(this.data);
         return this.data;
     },
 
+
+    /**Load gridster widgets from layout.data */
     loadGridData: function() {
         var layout = this;
         if (layout.props.doubleScreen) {
@@ -137,6 +142,7 @@ var GridLayout = React.createClass({
         $("#main-grid").append("<ul></ul>");
         $("#extra-grid").append("<ul></ul>");
 
+        /**Initialize the grid first*/
         $(".footer").css("position", "initial");
         if (this.props.doubleScreen) {
             if (this.props.expandMode===1) {  //portrait cut model
@@ -152,21 +158,27 @@ var GridLayout = React.createClass({
             layout.initSingleMode();
         }
 
+        /**Add blocks to gridster*/
         this.loadGridData();
+        this.initBlockEvents();
 
+        /**If it is in edit mode , disable gridster resize and movements, init the mce editor*/
         if(!this.state.layoutable) {
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
             tinymce.init({
                 selector: '.gridster li .rtf',
                 inline: true,
                 menubar: false,
-                toolbar: 'undo redo|mybutton formatselect bold italic underline strikethrough bullist numlist'
+                toolbar: 'undo redo| bold italic underline strikethrough'
             });
         }
     },
 
+    startDraging : false,
+
     initSingleMode: function(screenCount=1) {
         var layout = this;
+
         var contentHeight = this.props.height;
         if (this.props.showHeader) {
             contentHeight -= this.props.headerHeight;
@@ -182,6 +194,9 @@ var GridLayout = React.createClass({
             namespace: '#main-grid',
             widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
             draggable: {
+                start: function() {
+                    layout.startDraging = true;
+                },
                 stop: function(event, ui) {
                     /**
                      * When on double screen and the expand mode is 'extra' or 'portrait',
@@ -191,6 +206,13 @@ var GridLayout = React.createClass({
                         && ui.pointer.left>=layout.props.width+70) {
                         layout.moveBlock(ui.$player, true);
                     }
+                }
+            },
+            resize: {
+                start: function() {
+                    layout.startDraging = true;
+                },
+                stop: function() {
                 }
             }
         }, this.defaultGridOptions));
@@ -278,8 +300,17 @@ var GridLayout = React.createClass({
         },this.defaultGridOptions));
     },
 
-    componentDidUpdate: function () {
-       this.initGridster();
+    componentDidUpdate: function (prevProps, prevState) {
+        /**When the layout attributes changed, reset the gridster*/
+        if (this.props.doubleScreen!==prevProps.doubleScreen || this.props.width!==prevProps.width
+            || this.props.expandMode!==prevProps.expandMode
+            || this.props.headerHeight!==prevProps.headerHeight
+            || this.props.footerHeight!==prevProps.footerHeight
+            || this.props.padding!==prevProps.padding
+            || this.props.gdata!==prevProps.gdata
+        ) {
+          this.initGridster();
+        }
     },
 
     addBlock: function (template, sizex, sizey) {
@@ -290,8 +321,14 @@ var GridLayout = React.createClass({
         if (!sizey) {
             sizey = 2;
         }
+
+        console.log(template);
+
         var blockId = _.uniqueId(this.BLOCK_ID_PREFIX)
         gridster.add_widget("<li data-id='" + blockId + "'>" + template + "</li>", sizex, sizey, 1, 100);
+
+
+        this.initBlockEvents();
 
         this.data.doubleScreenLeftWidgets.push({
             id: blockId,
@@ -323,7 +360,6 @@ var GridLayout = React.createClass({
             target = $("#main-grid>ul").gridster().data('gridster');
             src = $("#extra-grid>ul").gridster().data('gridster');
         }
-
         var cli = li.clone();
         cli.find(".gs-resize-handle").remove();
         cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
@@ -331,23 +367,45 @@ var GridLayout = React.createClass({
         target.add_widget("<li data-id='" + li.data("id") + "'>"+ li.html() + "</li>",
             li.data("sizex"), li.data("sizey"), 1, 100);
         src.remove_widget(li);
+
     },
 
-    closeSetting: function() {
+    returnGridster: function() {
+        $(".gridster ul").gridster().data('gridster').enable().enable_resize();
+        $(".gridster ul li.current").removeClass("current");
+    },
+
+    initBlockEvents: function() {
+        var gridlayout = this;
+        $(".gridster li").unbind('click').bind("click", function(event) {
+            if (gridlayout.startDraging) {
+                gridlayout.startDraging = false;
+                return;
+            }
+
+            $(".gridster ul li.current").removeClass("current");
+            $(this).addClass("current");
+
+            gridlayout.props.editBlock();
+            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
+            event.stopPropagation();
+        });
+
+        tinymce.init({
+            selector: '.gridster li .rtf',
+            inline: true,
+            menubar: false,
+            toolbar: 'undo redo| bold italic underline strikethrough'
+        });
+    },
+
+    closeEditing: function() {
 
     },
 
     render: function () {
         return (
             <div className={this.state.layoutable?"layoutable":"editable"}>
-                <LeftMenu configurationChange={this.props.configurationChange}
-                          doubleScreen={this.props.doubleScreen}
-                          addBlock={this.addBlock}
-                          layoutable={this.state.layoutable} disableLayout={this.disableLayout}
-                          enableLayout={this.enableLayout} ref="leftmenu" closeSetting={this.closeSetting}
-                          showHeader={this.props.showHeader} showFooter={this.props.showFooter}
-                          width={this.props.width}/>
-
                 <div className="gridster" id="main-grid" style={{
                     width: (this.props.doubleScreen&&this.props.expandMode===2)? this.props.width*2: this.props.width
                 }}>

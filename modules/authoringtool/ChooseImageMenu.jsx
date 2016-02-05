@@ -33,7 +33,7 @@ var ChooseImageMenu = React.createClass({
     render: function () {
         return (
             <div className="chooseImage" data-show={this.props.show}>
-                <Dropzone onDrop={this.onDrop} multiple={false}>
+                <Dropzone className="zone" onDrop={this.onDrop} multiple={false}>
                     <div>Try dropping some files here, or click to select files to upload.</div>
                 </Dropzone>
             </div>

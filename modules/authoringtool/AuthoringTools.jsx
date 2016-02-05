@@ -10,8 +10,6 @@ var ThemeScreen = require("./ThemeScreen.jsx");
 var FileNameDialog = require("./FileNameDialog.jsx");
 var OpenPageDialog = require("./OpenPageDialog.jsx");
 
-
-
 var AuthoringTool = React.createClass({
 
     NEW_NAME: "new",

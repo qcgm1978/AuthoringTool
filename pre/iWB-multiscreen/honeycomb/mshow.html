@@ -95,9 +95,9 @@
 
     </style>
     <script>
-        var current = 1;
+        var current = 0;
         $(function() {
-            show1();
+            showNext();
         });
 
         function show1() {
@@ -118,10 +118,12 @@
             $(".l" + current + " .hexagon").addClass("zoomIn animated");
 
             $(".l" + current + " .hexagon").click(function() {
+                /*
                 showNext($(this));
                 if (current===8) {
                     testme();
                 }
+                */
             });
         }
 
@@ -191,7 +193,7 @@
     }
 </style>
 <div class="l1 level hidden">
-    <div class="hexagon l11" style=" background-image: url('img/L1.png');"><div class="hidden">CollegePre<br>Institute</div></div>
+    <div class="hexagon l11" ><div >CollegePre<br>Institute</div></div>
 </div>
 
 <div class="l2 level hidden">

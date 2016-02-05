@@ -6,7 +6,6 @@ var PageConfigMenu = React.createClass({
     SCREEN_MODEL_EXPAND: "Landscape Mode",
     SCREEN_MODEL_EXTRA: "Extra Mode",
 
-
     getInitialState: function () {
         return {
 

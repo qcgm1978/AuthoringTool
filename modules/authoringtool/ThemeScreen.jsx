@@ -3,6 +3,10 @@ var React = require('react');
 var AxisLines = require("./AxisLines.jsx");
 var GridLayout = require("./GridLayout.jsx");
 
+var RightPanel = require("./RightPanel.jsx");
+var LeftMenu = require("./LeftMenu.jsx");
+
+
 /**
  * 最终页面组件。 包括了Theme、footer、header等相关设置。
  * 包括虚线指示可布局区域。
@@ -16,6 +20,7 @@ var ThemeScreen = React.createClass({
       return {
           headerHeight: 0,
           footerHeight: 0,
+          showPanel: false,
           padding: [0,0,0,0]
       }
     },
@@ -81,6 +86,36 @@ var ThemeScreen = React.createClass({
         }
     },
 
+    onclick: function() {
+        this.refs["layout"].returnGridster();
+        this.setState({
+            showPanel: false
+        });
+        this.refs["leftmenu"].clearState();
+    },
+
+    editBlock: function() {
+        this.setState({
+            showPanel: true
+        });
+    },
+
+    /***
+     * Delegated methods
+     */
+    addBlock: function(template, sizex, sizey) {
+        this.refs["layout"].addBlock(template, sizex, sizey);
+    },
+    disableLayout: function() {
+        this.refs['layout'].disableLayout()
+    },
+    enableLayout: function() {
+        this.refs['layout'].enableLayout()
+    },
+    closeSetting: function() {
+        this.refs['layout'].closeSetting()
+    },
+
     render: function () {
         var swidth = this.props.width;
         if (this.props.doubleScreen) {
@@ -109,7 +144,16 @@ var ThemeScreen = React.createClass({
         /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
 
         return (
-            <div className="screen">
+            <div className="screen" onClick={this.onclick}>
+                <LeftMenu configurationChange={this.props.configurationChange}
+                          doubleScreen={this.props.doubleScreen}
+                          addBlock={this.addBlock}
+                          layoutable="true" disableLayout={this.disableLayout}
+                          enableLayout={this.enableLayout} ref="leftmenu" closeSetting={this.closeSetting}
+                          showHeader={this.props.showHeader} showFooter={this.props.showFooter}
+                          width={this.props.width}/>
+
+
                 <div className="display" style={{
                         width:  swidth,
                         minHeight: this.props.height
@@ -127,12 +171,15 @@ var ThemeScreen = React.createClass({
                                 padding={this.state.padding}
                                 configurationChange={this.props.configurationChange}
                                 gdata={this.props.gdata}
+                                editBlock={this.editBlock}
                                 ref="layout"/>
                     <div className="footer" style={{
                         width: headerWidth,
-                        display: this.props.showFooter?"inherit": "none"
+                        display: this .props.showFooter?"inherit": "none"
                     }}></div>
                 </div>
+
+                <RightPanel display={this.state.showPanel}/>
                 <AxisLines width={this.props.width} height={this.props.height}
                            showHeader={this.props.showHeader} showFooter={this.props.showFooter}
                            doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}
