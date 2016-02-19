@@ -1,0 +1,137 @@
+{
+    "post_class_id": "",
+    "type": "lesson",
+    "idc_version": "1.0.0",
+    "title": {
+        "en": "Homework",
+        "zh": "自学内容"
+    },
+    "author": [
+        "Cambridge University Press"
+    ],
+    "date_of_birth": "",
+    "publication_date": "",
+    "image": [],
+    "interface_language": [
+        "zh-CN",
+        "en-GB"
+    ],
+    "subject": {
+        "name": "English",
+        "sub_subject": {
+            "name": "Test Preparation",
+            "sub_subject": {
+                "name": "IELTS",
+                "sub_subject": {
+                    "name": "Reading",
+                    "sub_subject": ""
+                }
+            }
+        }
+    },
+    "version": "1.0",
+    "description": {
+        "en": "",
+        "zh": ""
+    },
+    "objective": {
+        "en": "",
+        "zh": ""
+    },
+    "tags": [
+        "English",
+        "IELTS",
+        "Reading",
+        "Education",
+        "Foundation",
+        "Homework"
+    ],
+    "level": [
+        {
+            "value": "4",
+            "standard": "CollegePre"
+        },
+        {
+            "value": "A",
+            "standard": "CEFR for Languages"
+        }
+    ],
+    "children": [
+      {
+        "order": "0",
+        "bundle_id": "",
+        "name": {
+          "en": "Exercise 1",
+          "zh": ""
+        },
+        "type": "leaf",
+        "bundle": {
+          "core": {
+            "order": "0",
+            "core_id": "",
+            "name": {
+              "en": "Ex.1 Activity",
+              "zh": ""
+            },
+            "type": "html",
+            "interactive": "yes",
+            "interactive_type": {
+              "type": "1104",
+              "name": "fill in the blanks"
+            },
+            "tags": [],
+            "data": "",
+            "address": "R9ASF/R9ASF_1/core.html"
+          },
+          "supports": [
+            {
+              "order": "1",
+              "support_id": "",
+              "name": {
+                "en": "Reading passage",
+                "zh": ""
+              },
+              "type": "html",
+              "interactive": "no",
+              "interactive_type": {
+                "type": "",
+                "name": ""
+              },
+              "tags": [],
+              "data": "",
+              "address": "R8BSF/R8BSF_5/core.html",
+              "knowledge_points": {
+                "name": {
+                  "en": "Knowledge Points",
+                  "zh": "知识点"
+                },
+                "subjects": []
+              },
+              "teaching_plan": {
+                "name": {
+                  "en": "Teaching Plan",
+                  "zh": "教案"
+                },
+                "contents": []
+              }
+            }
+          ]
+        }
+      }
+
+    ],
+    "knowledge_points": {
+        "name": {
+            "en": "Knowledge Points",
+            "zh": "知识点"
+        },
+        "subjects": []
+    },
+    "teaching_plan": {
+        "name": {
+            "en": "Teaching Plan",
+            "zh": "教案"
+        },
+        "contents": []
+    }
+}
