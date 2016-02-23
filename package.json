@@ -6,9 +6,17 @@
   "directories": {
     "doc": "doc"
   },
-  "devDependencies": {},
+  "devDependencies": {
+
+  },
   "dependencies": {
+    "postal": "^1.0.8",
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.1",
     "moment": "^2.10.6",
+    "react": "^0.14.7",
+    "react-dropzone": "^3.3.2",
+    "superagent": "^1.7.2",
     "underscore": "^1.8.3"
   },
   "scripts": {

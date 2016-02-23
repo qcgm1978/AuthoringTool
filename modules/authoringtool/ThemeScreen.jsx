@@ -106,6 +106,11 @@ var ThemeScreen = React.createClass({
     addBlock: function(template, sizex, sizey) {
         this.refs["layout"].addBlock(template, sizex, sizey);
     },
+
+    adddActivity: function(type) {
+        this.refs["layout"].adddActivity(type);
+    },
+
     disableLayout: function() {
         this.refs['layout'].disableLayout()
     },
@@ -148,6 +153,7 @@ var ThemeScreen = React.createClass({
                 <LeftMenu configurationChange={this.props.configurationChange}
                           doubleScreen={this.props.doubleScreen}
                           addBlock={this.addBlock}
+                          adddActivity={this.adddActivity}
                           layoutable="true" disableLayout={this.disableLayout}
                           enableLayout={this.enableLayout} ref="leftmenu" closeSetting={this.closeSetting}
                           showHeader={this.props.showHeader} showFooter={this.props.showFooter}

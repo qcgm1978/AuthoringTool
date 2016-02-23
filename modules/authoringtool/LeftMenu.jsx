@@ -102,7 +102,7 @@ var LeftMenu = React.createClass({
                 </div>
                 <div className="hidder">
                 </div>
-                <BlockTypeMenu addBlock={this.props.addBlock} show={this.state.showBlockTypes} parentStateChange={this.stateChange}/>
+                <BlockTypeMenu addBlock={this.props.addBlock} show={this.state.showBlockTypes} adddActivity={this.props.adddActivity} parentStateChange={this.stateChange}/>
 
                 <PageConfigMenu configurationChange={this.props.configurationChange}
                                 showConfigMenu={this.showConfigMenu}

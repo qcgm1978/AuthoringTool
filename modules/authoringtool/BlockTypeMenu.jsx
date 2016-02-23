@@ -37,6 +37,11 @@ var BlockTypeMenu = React.createClass({
         });
     },
 
+    adddActivity: function(prop) {
+        event.stopPropagation();
+        this.props.adddActivity(prop);
+    },
+
     stopPropagation: function(event) {
         event.stopPropagation();
     },
@@ -59,7 +64,7 @@ var BlockTypeMenu = React.createClass({
                 </ul>
                 <AddTextMenu show={this.state.page==="addText"} addBlock={this.props.addBlock} parentStateChange={this.props.parentStateChange}/>
                 <ChooseImageMenu show={this.state.page==="chooseImage"} addBlock={this.props.addBlock}/>
-                <AddActivityMenu show={this.state.page==="addActivity"} />
+                <AddActivityMenu addActivity={this.adddActivity} show={this.state.page==="addActivity"} />
 
             </div>
         );
