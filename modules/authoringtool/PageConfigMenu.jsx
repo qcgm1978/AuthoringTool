@@ -53,11 +53,15 @@ var PageConfigMenu = React.createClass({
         this.props.showConfigMenu(false);
     },
 
+    stopPropagation: function(event) {
+        event.stopPropagation();
+    },
+
     render: function () {
         return (
             <div className="pageConfig" style={{
                     display: this.props.show? "inherit":"none"
-            }}>
+            }} onClick={this.stopPropagation}>
                 <div className="close glyphicon glyphicon-remove" onClick={this.closeMe}/>
                 <div><input checked={this.props.showHeader} type="checkbox" onChange={this.toggleHeader}/><span>Show Header</span></div>
                 <div><input checked={this.props.showFooter} type="checkbox" onChange={this.toggleFooter}/><span>Show Footer</span></div>

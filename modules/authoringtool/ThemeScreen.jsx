@@ -3,7 +3,7 @@ var React = require('react');
 var AxisLines = require("./AxisLines.jsx");
 var GridLayout = require("./GridLayout.jsx");
 
-var RightPanel = require("./RightPanel.jsx");
+var RightPanel = require("./panels/RightPanel.jsx");
 var LeftMenu = require("./LeftMenu.jsx");
 
 
@@ -21,6 +21,7 @@ var ThemeScreen = React.createClass({
           headerHeight: 0,
           footerHeight: 0,
           showPanel: false,
+          panel: 'edit-text',
           padding: [0,0,0,0]
       }
     },
@@ -94,9 +95,11 @@ var ThemeScreen = React.createClass({
         this.refs["leftmenu"].clearState();
     },
 
-    editBlock: function() {
+    editBlock: function(blockType) {
+        console.log("edit type " + blockType);
         this.setState({
-            showPanel: true
+            showPanel: true,
+            panel: blockType
         });
     },
 
@@ -185,7 +188,7 @@ var ThemeScreen = React.createClass({
                     }}></div>
                 </div>
 
-                <RightPanel display={this.state.showPanel}/>
+                <RightPanel display={this.state.showPanel} panel={this.state.panel}/>
                 <AxisLines width={this.props.width} height={this.props.height}
                            showHeader={this.props.showHeader} showFooter={this.props.showFooter}
                            doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}

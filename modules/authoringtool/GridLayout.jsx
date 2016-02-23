@@ -33,9 +33,6 @@ var GridLayout = React.createClass({
         widget_margins: [1, 1],
         min_cols: 12,
         min_rows: 10,
-        resize: {
-            enabled: true
-        },
         serialize_params: function ($w, wgd) {
             var cli = $w.clone();
             cli.find(".gs-resize-handle").remove();
@@ -85,7 +82,6 @@ var GridLayout = React.createClass({
 
     /**When propeties and states change */
     componentWillUpdate : function(nextProps, nextState) {
-        console.log("will update");
         this.saveGridData();
         /**When screen mode is single to double, try to set/init the double screen widgets */
         if (nextProps.doubleScreen!=this.props.doubleScreen) {
@@ -225,9 +221,16 @@ var GridLayout = React.createClass({
                 }
             },
             resize: {
+                enabled: true,
                 start: function() {
                     layout.startDraging = true;
+                    console.log("start resizing");
                 },
+
+                resize: function() {
+                    console.log("resizing");
+                },
+
                 stop: function() {
                 }
             }
@@ -266,6 +269,9 @@ var GridLayout = React.createClass({
                         layout.moveBlock(ui.$player, false);
                     }
                 }
+            },
+            resize:  {
+                enabled: true
             }
         }, this.defaultGridOptions));
     },
@@ -291,6 +297,9 @@ var GridLayout = React.createClass({
                         layout.moveBlock(ui.$player, false);
                     }
                 }
+            },
+            resize:  {
+                enabled: true
             }
         }, this.defaultGridOptions));
 
@@ -312,6 +321,9 @@ var GridLayout = React.createClass({
                         layout.moveBlock(ui.$player, true);
                     }
                 }
+            },
+            resize:  {
+                enabled: true
             }
         },this.defaultGridOptions));
     },
@@ -346,7 +358,6 @@ var GridLayout = React.createClass({
         });
     },
 
-
     addBlock: function (template, sizex, sizey) {
         var gridster = $("#main-grid ul").gridster().data('gridster');
         if (!sizex) {
@@ -356,7 +367,7 @@ var GridLayout = React.createClass({
             sizey = 2;
         }
         var blockId = _.uniqueId(this.BLOCK_ID_PREFIX)
-        gridster.add_widget("<li data-id='" + blockId + "'>" + template + "</li>", sizex, sizey, 1, 100);
+        gridster.add_widget("<li data-id='" + blockId + "' data-btype='text-block'>" + template + "</li>", sizex, sizey, 1, 100);
 
         this.initBlockEvents();
 
@@ -380,8 +391,6 @@ var GridLayout = React.createClass({
             layoutable: true
         });
     },
-
-
 
     moveBlock: function(li, direction) {
         var src,target;
@@ -418,7 +427,7 @@ var GridLayout = React.createClass({
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
 
-            gridlayout.props.editBlock();
+            gridlayout.props.editBlock($(this).data("btype"));
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
             event.stopPropagation();
         });
