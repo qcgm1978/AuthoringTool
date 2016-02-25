@@ -6,7 +6,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var NavBar = require("./NavBar.jsx");
-var ThemeScreen = require("./ThemeScreen.jsx");
+var PageToolWorkspace = require("./PageToolWorkspace.jsx");
 var FileNameDialog = require("./FileNameDialog.jsx");
 var OpenPageDialog = require("./OpenPageDialog.jsx");
 
@@ -57,7 +57,6 @@ var AuthoringTool = React.createClass({
         this.refs.openfile.showDialog();
     },
 
-
     newHoneyComb: function() {
 
     },
@@ -76,7 +75,6 @@ var AuthoringTool = React.createClass({
                     theme: tool.state.theme,
                     data: JSON.stringify(layoutData)
                 },
-
                 function() {
 
                 }
@@ -85,15 +83,9 @@ var AuthoringTool = React.createClass({
     },
 
     render: function () {
-        var workingspace = "<div/>";
+        var pageWorkspace = "<div/>";
         if (this.state.work==="authoring") {
-            workingspace = <ThemeScreen configurationChange={this.configurationChanged} show={this.state.work==="authoring"}
-                                        theme={this.state.theme} resize={this.themeInitialize} doubleScreen={this.state.doubleScreen}
-                                        expandMode={this.state.expandMode}
-                                        width={this.state.width} height={this.state.minHeight}
-                                        gdata={this.state.gdata}
-                                        showHeader={this.state.showHeader} showFooter={this.state.showFooter} showGrid={this.state.showGrid}
-                                        ref="themescreen"/>;
+            pageWorkspace = <PageToolWorkspace data={this.state.gdata} ref="pageworkspace"/>;
         }
         return (
             <div>
@@ -103,7 +95,7 @@ var AuthoringTool = React.createClass({
                         newProject={this.newProject}
                         newHoneyComb={this.newHoneyComb}
                 />
-                {workingspace}
+                {pageWorkspace}
                 <FileNameDialog configurationChange={this.configurationChanged} ref="newfile"/>
                 <OpenPageDialog ref="openfile" configurationChange={this.configurationChanged} loadLayoutData={this.loadLayoutData} />
             </div>

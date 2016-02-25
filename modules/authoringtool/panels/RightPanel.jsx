@@ -1,9 +1,14 @@
 var React = require('react');
 
+var EditTextPanel = require("./EditTextPanel.jsx");
+var SingleChoicePanel = require("./SingleChoicePanel.jsx");
+
+
 var RightPanel = React.createClass({
 
     getInitialState: function () {
         return {
+            subpanel: 'edit-text'
         }
     },
 
@@ -20,7 +25,7 @@ var RightPanel = React.createClass({
     },
 
     close: function() {
-        alert(this);
+
     },
 
     preventUp: function(event) {
@@ -37,19 +42,8 @@ var RightPanel = React.createClass({
                     <span className="glyphicon glyphicon-remove btn-close" onClick={this.close}></span>
                 </div>
                 <div className="pn-body">
-                    <div className="block-setting text-content">
-                        <button type="button" className="btn btn-primary btn-lg btn-block">Edit Text</button>
-                    </div>
-                    <div className="common-config">
-                        <div className="form-group">
-                            <p className="label" >Horizontal</p>
-                            <div className="btn-group" role="group" aria-label="...">
-                                <button type="button" className="btn btn-default glyphicon glyphicon-align-left"></button>
-                                <button type="button" className="btn btn-default glyphicon glyphicon-align-center"></button>
-                                <button type="button" className="btn btn-default glyphicon glyphicon-align-right"></button>
-                            </div>
-                        </div>
-                    </div>
+                    <EditTextPanel display={this.props.subpanel==="edit-text"}/>
+                    <SingleChoicePanel display={this.props.subpanel==="edit-single-choice"}/>
                 </div>
             </div>
         );

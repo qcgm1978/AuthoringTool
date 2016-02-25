@@ -1,6 +1,7 @@
 var React = require('react');
 
 var _ = require("underscore");
+var postal = require("postal");
 
 var GridLayout = React.createClass({
 
@@ -32,9 +33,6 @@ var GridLayout = React.createClass({
         widget_margins: [1, 1],
         min_cols: 12,
         min_rows: 10,
-        resize: {
-            enabled: true
-        },
         serialize_params: function ($w, wgd) {
             var cli = $w.clone();
             cli.find(".gs-resize-handle").remove();
@@ -64,12 +62,26 @@ var GridLayout = React.createClass({
             this.data = this.props.gdata;
         }
        this.initGridster();
+
+        var layout = this;
+        var subscription = postal.subscribe({
+            channel: "activities",
+            topic: "single-choice",
+            callback: function(data, envelope) {
+                layout.addActivity("single-choice");
+                // `data` is the data published by the publisher.
+                // `envelope` is a wrapper around the data & contains
+                // metadata about the message like the channel, topic,
+                // timestamp and any other data which might have been
+                // added by the sender.
+            }
+        });
+
     },
 
 
     /**When propeties and states change */
     componentWillUpdate : function(nextProps, nextState) {
-        console.log("will update");
         this.saveGridData();
         /**When screen mode is single to double, try to set/init the double screen widgets */
         if (nextProps.doubleScreen!=this.props.doubleScreen) {
@@ -209,9 +221,16 @@ var GridLayout = React.createClass({
                 }
             },
             resize: {
+                enabled: true,
                 start: function() {
                     layout.startDraging = true;
+                    console.log("start resizing");
                 },
+
+                resize: function() {
+                    console.log("resizing");
+                },
+
                 stop: function() {
                 }
             }
@@ -250,6 +269,9 @@ var GridLayout = React.createClass({
                         layout.moveBlock(ui.$player, false);
                     }
                 }
+            },
+            resize:  {
+                enabled: true
             }
         }, this.defaultGridOptions));
     },
@@ -275,6 +297,9 @@ var GridLayout = React.createClass({
                         layout.moveBlock(ui.$player, false);
                     }
                 }
+            },
+            resize:  {
+                enabled: true
             }
         }, this.defaultGridOptions));
 
@@ -296,6 +321,9 @@ var GridLayout = React.createClass({
                         layout.moveBlock(ui.$player, true);
                     }
                 }
+            },
+            resize:  {
+                enabled: true
             }
         },this.defaultGridOptions));
     },
@@ -313,6 +341,23 @@ var GridLayout = React.createClass({
         }
     },
 
+    addActivity: function(type) {
+        var gridster = $("#main-grid ul").gridster().data('gridster');
+        var sizex = 12;
+        var sizey = 4;
+        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
+        gridster.add_widget("<li data-id='" + blockId + "'>" + type + "</li>", sizex, sizey, 1, 100);
+        this.initBlockEvents();
+
+        this.data.doubleScreenLeftWidgets.push({
+            id: blockId,
+            col: 1,
+            row: 100,
+            size_x: sizex,
+            size_y: sizey
+        });
+    },
+
     addBlock: function (template, sizex, sizey) {
         var gridster = $("#main-grid ul").gridster().data('gridster');
         if (!sizex) {
@@ -321,12 +366,8 @@ var GridLayout = React.createClass({
         if (!sizey) {
             sizey = 2;
         }
-
-        console.log(template);
-
         var blockId = _.uniqueId(this.BLOCK_ID_PREFIX)
-        gridster.add_widget("<li data-id='" + blockId + "'>" + template + "</li>", sizex, sizey, 1, 100);
-
+        gridster.add_widget("<li data-id='" + blockId + "' data-btype='text-block'>" + template + "</li>", sizex, sizey, 1, 100);
 
         this.initBlockEvents();
 
@@ -386,7 +427,7 @@ var GridLayout = React.createClass({
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
 
-            gridlayout.props.editBlock();
+            gridlayout.props.editBlock($(this).data("btype"));
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
             event.stopPropagation();
         });
