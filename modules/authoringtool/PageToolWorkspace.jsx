@@ -1,10 +1,11 @@
+require("./tool-workspace.scss");
+
 var React = require('react');
 
 var AxisLines = require("./AxisLines.jsx");
-var GridLayout = require("./GridLayout.jsx");
-
+var ThemedPage = require("./ThemedPage.jsx");
 var RightPanel = require("./panels/RightPanel.jsx");
-var LeftMenu = require("./LeftMenu.jsx");
+var LeftMenu = require("./menus/LeftMenu.jsx");
 
 
 /**
@@ -12,7 +13,7 @@ var LeftMenu = require("./LeftMenu.jsx");
  * 包括虚线指示可布局区域。
  * @type {*|Function}
  */
-var ThemeScreen = React.createClass({
+var PageToolWorkspace = React.createClass({
 
     themeConfig: null,
 
@@ -87,6 +88,9 @@ var ThemeScreen = React.createClass({
         }
     },
 
+    /**
+     * When clicked on the empaty space , hide the leftmenu opened and the panel. the grid draggable and resizable
+     * */
     onclick: function() {
         this.refs["layout"].returnGridster();
         this.setState({
@@ -152,7 +156,7 @@ var ThemeScreen = React.createClass({
         /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
 
         return (
-            <div className="screen" onClick={this.onclick}>
+            <div className="tool-workspace" onClick={this.onclick}>
                 <LeftMenu configurationChange={this.props.configurationChange}
                           doubleScreen={this.props.doubleScreen}
                           addBlock={this.addBlock}
@@ -161,34 +165,10 @@ var ThemeScreen = React.createClass({
                           enableLayout={this.enableLayout} ref="leftmenu" closeSetting={this.closeSetting}
                           showHeader={this.props.showHeader} showFooter={this.props.showFooter}
                           width={this.props.width}/>
-
-
-                <div className="display" style={{
-                        width:  swidth,
-                        minHeight: this.props.height
-                    }}>
-                    <div className="styles"></div>
-                    <div className="header" style={{
-                        width: headerWidth,
-                        display: this.props.showHeader?"inherit": "none"
-                    }}></div>
-
-                    <GridLayout width={this.props.width} height={this.props.height}
-                                showHeader={this.props.showHeader} showFooter={this.props.showFooter}
-                                doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}
-                                headerHeight={this.state.headerHeight} footerHeight={this.state.footerHeight}
-                                padding={this.state.padding}
-                                configurationChange={this.props.configurationChange}
-                                gdata={this.props.gdata}
-                                editBlock={this.editBlock}
-                                ref="layout"/>
-                    <div className="footer" style={{
-                        width: headerWidth,
-                        display: this .props.showFooter?"inherit": "none"
-                    }}></div>
-                </div>
+                <ThemedPage data={this.props.data}/>
 
                 <RightPanel display={this.state.showPanel} panel={this.state.panel}/>
+
                 <AxisLines width={this.props.width} height={this.props.height}
                            showHeader={this.props.showHeader} showFooter={this.props.showFooter}
                            doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}
@@ -200,4 +180,4 @@ var ThemeScreen = React.createClass({
 });
 
 
-module.exports = ThemeScreen;
+module.exports = PageToolWorkspace;

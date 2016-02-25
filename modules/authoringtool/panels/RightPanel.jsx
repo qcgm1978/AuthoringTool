@@ -1,6 +1,8 @@
 var React = require('react');
 
 var EditTextPanel = require("./EditTextPanel.jsx");
+var SingleChoicePanel = require("./SingleChoicePanel.jsx");
+
 
 var RightPanel = React.createClass({
 
@@ -40,7 +42,8 @@ var RightPanel = React.createClass({
                     <span className="glyphicon glyphicon-remove btn-close" onClick={this.close}></span>
                 </div>
                 <div className="pn-body">
-                    <EditTextPanel display={this.state.subpanel==="edit-text"}/>
+                    <EditTextPanel display={this.props.subpanel==="edit-text"}/>
+                    <SingleChoicePanel display={this.props.subpanel==="edit-single-choice"}/>
                 </div>
             </div>
         );
