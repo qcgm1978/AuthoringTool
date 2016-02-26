@@ -1,4 +1,3 @@
-require("./tool-workspace.scss");
 
 var React = require('react');
 
@@ -7,96 +6,49 @@ var ThemedPage = require("./ThemedPage.jsx");
 var RightPanel = require("./panels/RightPanel.jsx");
 var LeftMenu = require("./menus/LeftMenu.jsx");
 
+var postal = require("postal");
 
 /**
- * 最终页面组件。 包括了Theme、footer、header等相关设置。
+ * 页面设计工作区。 包括了Theme、footer、header等相关设置。
  * 包括虚线指示可布局区域。
  * @type {*|Function}
  */
 var PageToolWorkspace = React.createClass({
 
-    themeConfig: null,
-
     getInitialState: function () {
-      return {
-          headerHeight: 0,
-          footerHeight: 0,
-          showPanel: false,
-          panel: 'edit-text',
-          padding: [0,0,0,0]
-      }
-    },
-
-    getThemeConfig: function() {
-        var remote = $.ajax({
-            type: "GET",
-            url: "templates/" + this.props.theme +  "/config.json",
-            async: false
-        }).responseText;
-
-        this.themeConfig = JSON .parse(remote);
-        return this.themeConfig;
-    },
-
-    loadTheme: function() {
-        var themeConfig = this.getThemeConfig();
-        $.ajax({
-            type: "GET",
-            url: "templates/" + this.props.theme + "/" + themeConfig.default.html,
-            dataType : 'html',
-            success: this.handleTemplateLoaded
-        });
+        return {
+            themeName: "default",
+            pageSetting: {   /**the grid layout setting  it will effect the axisline so defined here*/
+                width: 1024,
+                height:768,
+                doubleScreen: false,
+                expandMode: 1,
+                showHeader: true,
+                showFooter: true
+            }
+        }
     },
 
     moreGrid: function() {
         this.refs["layout"].addBlock();
     },
 
-    /**
-     * 这个方法会在页面加载header和footer， 根据设置计算好他们所占的高度，
-     * 然后根据剩余高度更新state， 重绘Layout和参考线
-     * @param html
-     */
-    handleTemplateLoaded: function(html) {
-        $(".styles").empty();
-        $(".header").empty().append($(html).filter("header"));
-        $(".footer").empty().append($(html).filter("footer"));
-        $(html).filter("link").each(function() {
-            $('<link>').attr('rel','stylesheet')
-                .attr('type','text/css')
-                .attr('href',"templates/default/" + $(this).attr("href"))
-                .appendTo('.styles');
-        });
-        setTimeout(this.updateSize, 300);
-    },
-
-    updateSize: function( ) {
-        this.setState({
-            headerHeight: $(".header").height(),
-            footerHeight: $(".footer").height(),
-            padding: this.themeConfig.default.padding
-        });
-    },
-
     componentDidMount: function () {
-        this.loadTheme();
-    },
 
-    componentWillReceiveProps: function(nextProps) {
-        if (nextProps.theme!=this.props.theme) {
-            this.loadTheme();
-        }
     },
 
     /**
      * When clicked on the empaty space , hide the leftmenu opened and the panel. the grid draggable and resizable
      * */
     onclick: function() {
-        this.refs["layout"].returnGridster();
-        this.setState({
-            showPanel: false
+        postal.publish({
+            channel: "workspace",
+            topic: "empty.click"
         });
-        this.refs["leftmenu"].clearState();
+        /*
+        this.refs.page.returnGridster();
+        this.refs.leftmenu.clearState();
+        */
     },
 
     editBlock: function(blockType) {
@@ -111,7 +63,7 @@ var PageToolWorkspace = React.createClass({
      * Delegated methods
      */
     addBlock: function(template, sizex, sizey) {
-        this.refs["layout"].addBlock(template, sizex, sizey);
+        this.refs.page.refs["layout"].addBlock(template, sizex, sizey);
     },
 
     adddActivity: function(type) {
@@ -129,51 +81,24 @@ var PageToolWorkspace = React.createClass({
     },
 
     render: function () {
-        var swidth = this.props.width;
-        if (this.props.doubleScreen) {
-            swidth = swidth * 2;
-        }
-
-        var headerWidth = "100%";
-        if (this.props.doubleScreen) {
-            if (this.props.expandMode===3||this.props.expandMode===1) {
-                headerWidth = "50%";
-            }
-        }
-
-        var contentHeight = this.props.height;
-        var contentWidth = this.props.width;
-        if (this.props.showHeader) {
-            contentHeight -= this.state.headerHeight;
-        }
-        if (this.props.showFooter) {
-            contentHeight -= this.state.footerHeight;
-        }
-        if(contentHeight===this.props.height && this.themeConfig) {
-            contentHeight -= this.themeConfig.default.padding[0];
-            contentHeight -= this.themeConfig.default.padding[2];
-        }
-        /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
-
         return (
             <div className="tool-workspace" onClick={this.onclick}>
-                <LeftMenu configurationChange={this.props.configurationChange}
-                          doubleScreen={this.props.doubleScreen}
-                          addBlock={this.addBlock}
-                          adddActivity={this.adddActivity}
-                          layoutable="true" disableLayout={this.disableLayout}
-                          enableLayout={this.enableLayout} ref="leftmenu" closeSetting={this.closeSetting}
-                          showHeader={this.props.showHeader} showFooter={this.props.showFooter}
-                          width={this.props.width}/>
-                <ThemedPage data={this.props.data}/>
+                <LeftMenu ref="leftmenu"
+                        configurationChange={this.props.configurationChange}
+                        doubleScreen={this.state.pageSetting.doubleScreen}
+                        addBlock={this.addBlock}
+                        adddActivity={this.adddActivity}
+                        layoutable="true" disableLayout={this.disableLayout}
+                        enableLayout={this.enableLayout}  closeSetting={this.closeSetting}
+                        showHeader={this.state.pageSetting.doubleScreen.showHeader} showFooter={this.state.pageSetting.doubleScreen.showFooter}
+                        width={this.state.pageSetting.width}/>
+
+                <ThemedPage ref="page" data={this.props.data} themeName={this.state.themeName} pageSetting={this.state.pageSetting}/>
 
                 <RightPanel display={this.state.showPanel} panel={this.state.panel}/>
-
-                <AxisLines width={this.props.width} height={this.props.height}
-                           showHeader={this.props.showHeader} showFooter={this.props.showFooter}
-                           doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}
-                           headerHeight={this.state.headerHeight} footerHeight={this.state.footerHeight}
-                           padding={this.state.padding}/>
+                <AxisLines width={this.state.pageSetting.width} height={this.state.pageSetting.height}
+                           doubleScreen={this.state.pageSetting.doubleScreen} expandMode={this.state.pageSetting.expandMode}
+                           />
             </div>
         );
     }

@@ -16,15 +16,6 @@ var AuthoringTool = React.createClass({
 
     getInitialState: function () {
         return {
-            width: 1024,
-            minHeight: 768,
-            zoom: 1,
-            doubleScreen: false,
-            showHeader: true,
-            showFooter: true,
-            theme: "default",
-            expandMode: 1,
-            showGrid: true,
             work : null,
             name: this.NEW_NAME
         };
@@ -34,22 +25,19 @@ var AuthoringTool = React.createClass({
 
     },
 
-    themeInitialize: function() {
+    configurationChanged: function(config) {
 
-    },
-
-    configurationChanged: function(state) {
-        this.setState(state);
-    },
-
-    setDoubleScreen: function(d) {
-        this.setState({
-            doubleScreen: d
-        });
+        if(config.name!=="") {
+            this.setState({
+                work: "authoring",
+                name: config.name,
+                data: null
+            });
+        }
     },
 
     newProject: function() {
-        this.refs.newfile.showDialog();
+        this.refs.fndialog.show();
     },
 
 
@@ -85,7 +73,7 @@ var AuthoringTool = React.createClass({
     render: function () {
         var pageWorkspace = "<div/>";
         if (this.state.work==="authoring") {
-            pageWorkspace = <PageToolWorkspace data={this.state.gdata} ref="pageworkspace"/>;
+            pageWorkspace = <PageToolWorkspace data={this.state.data} ref="pageworkspace"/>;
         }
         return (
             <div>
@@ -96,7 +84,7 @@ var AuthoringTool = React.createClass({
                         newHoneyComb={this.newHoneyComb}
                 />
                 {pageWorkspace}
-                <FileNameDialog configurationChange={this.configurationChanged} ref="newfile"/>
+                <FileNameDialog configurationChange={this.configurationChanged} ref="fndialog"/>
                 <OpenPageDialog ref="openfile" configurationChange={this.configurationChanged} loadLayoutData={this.loadLayoutData} />
             </div>
         );
