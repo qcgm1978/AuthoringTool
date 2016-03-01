@@ -12,18 +12,14 @@ var ThemedPage = React.createClass({
 
     getInitialState: function () {
       return {
-          headerHeight: 0,
-          footerHeight: 0,
-          showPanel: false,
-          panel: 'edit-text',
-          padding: [0,0,0,0]
+          themeConfig: null
       }
     },
 
     getThemeConfig: function() {
         var remote = $.ajax({
             type: "GET",
-            url: "templates/" + this.props.data.theme +  "/config.json",
+            url: "templates/" + this.props.themeName +  "/config.json",
             async: false
         }).responseText;
 
@@ -35,7 +31,7 @@ var ThemedPage = React.createClass({
         var themeConfig = this.getThemeConfig();
         $.ajax({
             type: "GET",
-            url: "templates/" + this.props.data.theme + "/" + themeConfig.default.html,
+            url: "templates/" + this.props.themeName + "/" + themeConfig.default.html,
             dataType : 'html',
             success: this.handleTemplateLoaded
         });
@@ -51,6 +47,7 @@ var ThemedPage = React.createClass({
      * @param html
      */
     handleTemplateLoaded: function(html) {
+        console.log("template loaded" + html);
         $(".styles").empty();
         $(".header").empty().append($(html).filter("header"));
         $(".footer").empty().append($(html).filter("footer"));
@@ -60,15 +57,25 @@ var ThemedPage = React.createClass({
                 .attr('href',"templates/default/" + $(this).attr("href"))
                 .appendTo('.styles');
         });
-        setTimeout(this.updateSize, 300);
+        //this.themeReady();
+        setTimeout(this.themeReady, 300);
     },
 
-    updateSize: function( ) {
+    themeReady: function( ) {
+        this.setState({
+            themeConfig: {
+                headerHeight: $(".header").height(),
+                footerHeight: $(".footer").height(),
+                padding: this.themeConfig.default.padding
+            }
+        });
+        /*
         this.setState({
             headerHeight: $(".header").height(),
             footerHeight: $(".footer").height(),
             padding: this.themeConfig.default.padding
         });
+        */
     },
 
     componentDidMount: function () {
@@ -97,9 +104,6 @@ var ThemedPage = React.createClass({
         });
     },
 
-    /***
-     * Delegated methods
-     */
     addBlock: function(template, sizex, sizey) {
         this.refs["layout"].addBlock(template, sizex, sizey);
     },
@@ -119,29 +123,42 @@ var ThemedPage = React.createClass({
     },
 
     render: function () {
-        var swidth = this.props.width;
-        if (this.props.doubleScreen) {
+        var swidth = this.props.pageSetting.width;
+        if (this.props.pageSetting.doubleScreen) {
             swidth = swidth * 2;
         }
 
         var headerWidth = "100%";
-        if (this.props.doubleScreen) {
-            if (this.props.expandMode===3||this.props.expandMode===1) {
+        if (this.props.pageSetting.doubleScreen) {
+            if (this.props.pageSetting.expandMode===3||this.props.pageSetting.expandMode===1) {
                 headerWidth = "50%";
             }
         }
 
-        var contentHeight = this.props.height;
-        var contentWidth = this.props.width;
-        if (this.props.showHeader) {
-            contentHeight -= this.state.headerHeight;
-        }
-        if (this.props.showFooter) {
-            contentHeight -= this.state.footerHeight;
-        }
-        if(contentHeight===this.props.height && this.themeConfig) {
-            contentHeight -= this.themeConfig.default.padding[0];
-            contentHeight -= this.themeConfig.default.padding[2];
+        var contentHeight = this.props.pageSetting.height;
+        var contentWidth = this.props.pageSetting.width;
+
+        var layout = <div ref="layout"/>;
+        if (this.state.themeConfig) {
+            console.log("render after theme load ", this.state.themeConfig);
+
+            if (this.props.pageSetting.showHeader) {
+                contentHeight -= this.state.themeConfig.headerHeight;
+            }
+            if (this.props.showFooter) {
+                contentHeight -= this.state.themeConfig.footerHeight;
+            }
+            if(contentHeight=== this.props.pageSetting.height && this.themeConfig) {
+                contentHeight -= this.themeConfig.default.padding[0];
+                contentHeight -= this.themeConfig.default.padding[2];
+            }
+            layout = <GridLayout
+                pageSetting={this.props.pageSetting}
+                themeConfig={this.state.themeConfig}
+                configurationChange={this.props.configurationChange}
+                data={this.props.data}
+                editBlock={this.editBlock}
+                ref="layout"/>
         }
         /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
 
@@ -149,26 +166,17 @@ var ThemedPage = React.createClass({
             <div className="screen" onClick={this.onclick}>
                 <div className="display" style={{
                         width:  swidth,
-                        minHeight: this.props.height
+                        minHeight: this.props.pageSetting.height
                     }}>
                     <div className="styles"></div>
                     <div className="header" style={{
                         width: headerWidth,
-                        display: this.props.showHeader?"inherit": "none"
+                        display: this.props.pageSetting.showHeader?"inherit": "none"
                     }}></div>
-
-                    <GridLayout width={this.props.width} height={this.props.height}
-                                showHeader={this.props.showHeader} showFooter={this.props.showFooter}
-                                doubleScreen={this.props.doubleScreen} expandMode={this.props.expandMode}
-                                headerHeight={this.state.headerHeight} footerHeight={this.state.footerHeight}
-                                padding={this.state.padding}
-                                configurationChange={this.props.configurationChange}
-                                gdata={this.props.gdata}
-                                editBlock={this.editBlock}
-                                ref="layout"/>
+                    {layout}
                     <div className="footer" style={{
                         width: headerWidth,
-                        display: this .props.showFooter?"inherit": "none"
+                        display: this.props.pageSetting.showFooter?"inherit": "none"
                     }}></div>
                 </div>
             </div>

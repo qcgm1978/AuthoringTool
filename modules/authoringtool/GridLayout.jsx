@@ -51,7 +51,7 @@ var GridLayout = React.createClass({
     },
 
     componentDidMount: function () {
-        if (this.props.gdata===null) {
+        if (this.props.data===null) {
             this.data = {
                 singleScreenWidgets: [],
                 doubleScreenLeftWidgets: [],
@@ -59,12 +59,12 @@ var GridLayout = React.createClass({
                 widgetContents: {}
             };
         } else {
-            this.data = this.props.gdata;
+            this.data = this.props.data;
         }
-       this.initGridster();
+        this.initGridster();
 
         var layout = this;
-        var subscription = postal.subscribe({
+        postal.subscribe({
             channel: "activities",
             topic: "single-choice",
             callback: function(data, envelope) {
@@ -74,6 +74,15 @@ var GridLayout = React.createClass({
                 // metadata about the message like the channel, topic,
                 // timestamp and any other data which might have been
                 // added by the sender.
+            }
+        });
+
+        //gridster->enable
+        postal.subscribe({
+            channel: "gridster",
+            topic: "enable",
+            callback: function(data, envelope) {
+                layout.returnGridster();
             }
         });
 
@@ -110,7 +119,7 @@ var GridLayout = React.createClass({
         function pured(id) {
             var wlist =  $(id).gridster().data('gridster').serialize();
             $(wlist).each(function() {
-                layout.data.widgetContents[this.id] = this.content;
+                layout.data.widgetContents[this.id] = this.coiinntent;
                 delete this.content;
             });
             return wlist;
@@ -191,16 +200,18 @@ var GridLayout = React.createClass({
     initSingleMode: function(screenCount=1) {
         var layout = this;
 
-        var contentHeight = this.props.height;
-        if (this.props.showHeader) {
-            contentHeight -= this.props.headerHeight;
+        var contentHeight = this.props.pageSetting.height;
+        if (this.props.pageSetting.showHeader) {
+            contentHeight -= this.props.themeConfig.headerHeight;
         }
-        if (this.props.showFooter) {
-            contentHeight -= this.props.footerHeight;
+        if (this.props.pageSetting.showFooter) {
+            contentHeight -= this.props.themeConfig.footerHeight;
         }
-        var contentWidth = this.props.width*screenCount - this.props.padding[1] - this.props.padding[3];
+        var contentWidth =  this.props.pageSetting.width*screenCount
+            - this.props.themeConfig.padding[1] - this.props.themeConfig.padding[3];
+
         $("#main-grid>ul").css("min-height", contentHeight);
-        $("#main-grid>ul").css("margin-left", this.props.padding[3]);
+        $("#main-grid>ul").css("margin-left", this.props.themeConfig.padding[3]);
 
         $("#main-grid>ul").gridster(_.extend({
             namespace: '#main-grid',
@@ -214,8 +225,8 @@ var GridLayout = React.createClass({
                      * When on double screen and the expand mode is 'extra' or 'portrait',
                      * Move the widget from left to right
                      * */
-                    if (layout.props.doubleScreen && (layout.props.expandMode===1||layout.props.expandMode===3)
-                        && ui.pointer.left>=layout.props.width+70) {
+                    if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode===1||layout.props.pageSetting.expandMode===3)
+                        && ui.pointer.left>=layout.props.pageSetting.width+70) {
                         layout.moveBlock(ui.$player, true);
                     }
                 }
@@ -330,6 +341,9 @@ var GridLayout = React.createClass({
 
     componentDidUpdate: function (prevProps, prevState) {
         /**When the layout attributes changed, reset the gridster*/
+        this.initGridster();
+
+        /*
         if (this.props.doubleScreen!==prevProps.doubleScreen || this.props.width!==prevProps.width
             || this.props.expandMode!==prevProps.expandMode
             || this.props.headerHeight!==prevProps.headerHeight
@@ -337,8 +351,9 @@ var GridLayout = React.createClass({
             || this.props.padding!==prevProps.padding
             || this.props.gdata!==prevProps.gdata
         ) {
-          this.initGridster();
+
         }
+        */
     },
 
     addActivity: function(type) {
@@ -408,7 +423,6 @@ var GridLayout = React.createClass({
         target.add_widget("<li data-id='" + li.data("id") + "'>"+ li.html() + "</li>",
             li.data("sizex"), li.data("sizey"), 1, 100);
         src.remove_widget(li);
-
     },
 
     returnGridster: function() {
@@ -419,17 +433,16 @@ var GridLayout = React.createClass({
     initBlockEvents: function() {
         var gridlayout = this;
         $(".gridster li").unbind('click').bind("click", function(event) {
+            event.stopPropagation();
             if (gridlayout.startDraging) {
                 gridlayout.startDraging = false;
                 return;
             }
-
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
 
-            gridlayout.props.editBlock($(this).data("btype"));
+            //gridlayout.props.editBlock($(this).data("btype"));
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
-            event.stopPropagation();
         });
 
         tinymce.init({

@@ -15,7 +15,7 @@ var FileNameDialog = React.createClass({
 
     },
 
-    showDialog: function() {
+    show: function() {
         $('#save-file-name-dialog').modal('show');
     },
 
@@ -23,13 +23,7 @@ var FileNameDialog = React.createClass({
         if (this.state.name!="") {
             $('#save-file-name-dialog').modal('hide');
             this.props.configurationChange({
-                "name": this.state.name,
-                "work":"authoring",
-                'expandMode':1,
-                'showFooter': true,
-                'theme': "default",
-                'showHeader': true,
-                'gdata': null
+                "name": this.state.name
             });
         }
     },
