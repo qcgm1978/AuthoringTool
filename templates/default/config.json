@@ -4,7 +4,7 @@
   "default": {
     "html": "preview.html",
     "padding": [
-        20, 20, 20, 20
+        "20px", "20px", "20px", "20px"
     ],
 
     "styles" :["css/style.css"],

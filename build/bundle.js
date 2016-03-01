@@ -3596,8 +3596,8 @@
 
 	var NavBar = __webpack_require__(176);
 	var PageToolWorkspace = __webpack_require__(177);
-	var FileNameDialog = __webpack_require__(200);
-	var OpenPageDialog = __webpack_require__(205);
+	var FileNameDialog = __webpack_require__(198);
+	var OpenPageDialog = __webpack_require__(203);
 
 	var AuthoringTool = React.createClass({
 	    displayName: 'AuthoringTool',
@@ -23388,10 +23388,10 @@
 
 	var AxisLines = __webpack_require__(178);
 	var ThemedPage = __webpack_require__(179);
-	var RightPanel = __webpack_require__(186);
-	var LeftMenu = __webpack_require__(189);
+	var RightPanel = __webpack_require__(180);
+	var LeftMenu = __webpack_require__(183);
 
-	var postal = __webpack_require__(182);
+	var postal = __webpack_require__(193);
 
 	/**
 	 * ҳ�����ƹ������� ������Theme��footer��header���������á�
@@ -23428,12 +23428,8 @@
 	    onclick: function onclick() {
 	        postal.publish({
 	            channel: "workspace",
-	            topic: "empty.click"
+	            topic: "empty.clicked"
 	        });
-	        /*
-	        this.refs.page.returnGridster();
-	        this.refs.leftmenu.clearState();
-	        */
 	    },
 
 	    editBlock: function editBlock(blockType) {
@@ -23574,7 +23570,7 @@
 
 	var React = __webpack_require__(18);
 
-	var GridLayout = __webpack_require__(180);
+	var GridLayout = __webpack_require__(291);
 
 	/**
 	 * ����ҳ�������� ������Theme��footer��header���������á������ڲ��ֵ�Layout
@@ -23603,8 +23599,9 @@
 	        return this.themeConfig;
 	    },
 
+	    //create a new ajax request
 	    loadTheme: function loadTheme() {
-	        var themeConfig = this.getThemeConfig();
+	        var themeConfig = this.getThemeConfig(); //synchronize loading
 	        $.ajax({
 	            type: "GET",
 	            url: "templates/" + this.props.themeName + "/" + themeConfig.default.html,
@@ -23623,14 +23620,12 @@
 	     * @param html
 	     */
 	    handleTemplateLoaded: function handleTemplateLoaded(html) {
-	        console.log("template loaded" + html);
 	        $(".styles").empty();
 	        $(".header").empty().append($(html).filter("header"));
 	        $(".footer").empty().append($(html).filter("footer"));
 	        $(html).filter("link").each(function () {
 	            $('<link>').attr('rel', 'stylesheet').attr('type', 'text/css').attr('href', "templates/default/" + $(this).attr("href")).appendTo('.styles');
 	        });
-	        //this.themeReady();
 	        setTimeout(this.themeReady, 300);
 	    },
 
@@ -23642,13 +23637,6 @@
 	                padding: this.themeConfig.default.padding
 	            }
 	        });
-	        /*
-	        this.setState({
-	            headerHeight: $(".header").height(),
-	            footerHeight: $(".footer").height(),
-	            padding: this.themeConfig.default.padding
-	        });
-	        */
 	    },
 
 	    componentDidMount: function componentDidMount() {
@@ -23656,94 +23644,39 @@
 	    },
 
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        if (nextProps.data.theme != this.props.data.theme) {
+	        if (nextProps.data.themeName != this.props.data.themeName) {
 	            this.loadTheme();
 	        }
 	    },
 
-	    onclick: function onclick() {
-	        this.refs["layout"].returnGridster();
-	        this.setState({
-	            showPanel: false
-	        });
-	        this.refs["leftmenu"].clearState();
-	    },
-
-	    editBlock: function editBlock(blockType) {
-	        console.log("edit type " + blockType);
-	        this.setState({
-	            showPanel: true,
-	            panel: blockType
-	        });
-	    },
-
-	    addBlock: function addBlock(template, sizex, sizey) {
-	        this.refs["layout"].addBlock(template, sizex, sizey);
-	    },
-
-	    adddActivity: function adddActivity(type) {
-	        this.refs["layout"].adddActivity(type);
-	    },
-
-	    disableLayout: function disableLayout() {
-	        this.refs['layout'].disableLayout();
-	    },
-	    enableLayout: function enableLayout() {
-	        this.refs['layout'].enableLayout();
-	    },
-	    closeSetting: function closeSetting() {
-	        this.refs['layout'].closeSetting();
-	    },
-
 	    render: function render() {
-	        var swidth = this.props.pageSetting.width;
-	        if (this.props.pageSetting.doubleScreen) {
-	            swidth = swidth * 2;
-	        }
-
-	        var headerWidth = "100%";
-	        if (this.props.pageSetting.doubleScreen) {
-	            if (this.props.pageSetting.expandMode === 3 || this.props.pageSetting.expandMode === 1) {
-	                headerWidth = "50%";
-	            }
-	        }
-
-	        var contentHeight = this.props.pageSetting.height;
-	        var contentWidth = this.props.pageSetting.width;
-
 	        var layout = React.createElement("div", { ref: "layout" });
 	        if (this.state.themeConfig) {
+	            /*When theme config loaded�� reset the layout frame*/
 	            console.log("render after theme load ", this.state.themeConfig);
-
-	            if (this.props.pageSetting.showHeader) {
-	                contentHeight -= this.state.themeConfig.headerHeight;
-	            }
-	            if (this.props.showFooter) {
-	                contentHeight -= this.state.themeConfig.footerHeight;
-	            }
-	            if (contentHeight === this.props.pageSetting.height && this.themeConfig) {
-	                contentHeight -= this.themeConfig.default.padding[0];
-	                contentHeight -= this.themeConfig.default.padding[2];
-	            }
-	            layout = React.createElement(GridLayout, {
-	                pageSetting: this.props.pageSetting,
-	                themeConfig: this.state.themeConfig,
-	                configurationChange: this.props.configurationChange,
+	            layout = React.createElement(GridLayout, { height: this.props.pageSetting.height, width: this.props.pageSetting.width,
+	                padding: this.state.themeConfig.padding,
+	                double: this.props.pageSetting.doubleScreen,
+	                expandMode: this.props.pageSetting.expandMode,
 	                data: this.props.data,
-	                editBlock: this.editBlock,
 	                ref: "layout" });
 	        }
 	        /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
 
+	        var headerWidth = this.props.pageSetting.width;
+	        if (this.props.pageSetting.doubleScreen) {
+	            if (this.props.pageSetting.expandMode === 2) {
+	                headerWidth *= 2;
+	            }
+	            if (this.props.pageSetting.expandMode === 3) {}
+	        }
+
 	        return React.createElement(
 	            "div",
-	            { className: "screen", onClick: this.onclick },
+	            { className: "screen" },
 	            React.createElement(
 	                "div",
-	                { className: "display", style: {
-	                        width: swidth,
-	                        minHeight: this.props.pageSetting.height
-	                    } },
+	                { className: "display" },
 	                React.createElement("div", { className: "styles" }),
 	                React.createElement("div", { className: "header", style: {
 	                        width: headerWidth,
@@ -23769,2056 +23702,2366 @@
 
 	var React = __webpack_require__(18);
 
-	var _ = __webpack_require__(181);
-	var postal = __webpack_require__(182);
+	var EditTextPanel = __webpack_require__(181);
+	var SingleChoicePanel = __webpack_require__(182);
 
-	var GridLayout = React.createClass({
-	    displayName: "GridLayout",
+	var RightPanel = React.createClass({
+	    displayName: "RightPanel",
 
-
-	    BLOCK_ID_PREFIX: "block_",
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            layoutable: true,
-	            minHeight: 768,
-	            zoom: 1,
-	            doubleScreen: 0,
-	            showHeader: true,
-	            showFooter: true,
-	            theme: "default"
+	            subpanel: 'edit-text'
 	        };
 	    },
 
-	    data: {
-	        singleScreenWidgets: [],
-	        doubleScreenLeftWidgets: [],
-	        doubleScreenRightWidgets: [],
-	        widgetContents: {}
+	    stateChange: function stateChange(newstate) {
+	        this.setState(newstate);
 	    },
 
-	    /**
-	     * Default gridster options
-	     * */
-	    defaultGridOptions: {
-	        widget_margins: [1, 1],
-	        min_cols: 12,
-	        min_rows: 10,
-	        serialize_params: function serialize_params($w, wgd) {
-	            var cli = $w.clone();
-	            cli.find(".gs-resize-handle").remove();
-	            cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+	    componentDidMount: function componentDidMount() {},
 
-	            return {
-	                content: cli.html(),
-	                id: $w.data('id'),
-	                col: wgd.col,
-	                row: wgd.row,
-	                size_x: wgd.size_x,
-	                size_y: wgd.size_y
-	            };
-	        }
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    close: function close() {},
+
+	    preventUp: function preventUp(event) {
+	        event.stopPropagation();
 	    },
-
-	    componentDidMount: function componentDidMount() {
-	        if (this.props.data === null) {
-	            this.data = {
-	                singleScreenWidgets: [],
-	                doubleScreenLeftWidgets: [],
-	                doubleScreenRightWidgets: [],
-	                widgetContents: {}
-	            };
-	        } else {
-	            this.data = this.props.data;
-	        }
-	        this.initGridster();
-
-	        var layout = this;
-	        postal.subscribe({
-	            channel: "activities",
-	            topic: "single-choice",
-	            callback: function callback(data, envelope) {
-	                layout.addActivity("single-choice");
-	                // `data` is the data published by the publisher.
-	                // `envelope` is a wrapper around the data & contains
-	                // metadata about the message like the channel, topic,
-	                // timestamp and any other data which might have been
-	                // added by the sender.
-	            }
-	        });
-
-	        //gridster->enable
-	        postal.subscribe({
-	            channel: "gridster",
-	            topic: "enable",
-	            callback: function callback(data, envelope) {
-	                layout.returnGridster();
-	            }
-	        });
-	    },
-
-	    /**When propeties and states change */
-	    componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
-	        this.saveGridData();
-	        /**When screen mode is single to double, try to set/init the double screen widgets */
-	        if (nextProps.doubleScreen != this.props.doubleScreen) {
-	            if (nextProps.doubleScreen) {
-	                // Single -> Double
-	                if (this.data.doubleScreenLeftWidgets.length === 0 && this.data.doubleScreenRightWidgets.length === 0) {
-	                    this.data.doubleScreenLeftWidgets = this.data.singleScreenWidgets;
-	                }
-	            }
-	        }
-	    },
-
-	    /**Extract n save grid data*/
-	    saveGridData: function saveGridData() {
-	        var layout = this;
-	        /**cache the state of grids by current screen(s) content*/
-
-	        if (this.props.doubleScreen === true) {
-	            //current double screen setting
-	            this.data.doubleScreenLeftWidgets = pured("#main-grid>ul");
-	            this.data.doubleScreenRightWidgets = pured("#extra-grid>ul");
-	        } else {
-	            //current single screeny setting
-	            this.data.singleScreenWidgets = pured("#main-grid>ul");
-	        }
-
-	        function pured(id) {
-	            var wlist = $(id).gridster().data('gridster').serialize();
-	            $(wlist).each(function () {
-	                layout.data.widgetContents[this.id] = this.coiinntent;
-	                delete this.content;
-	            });
-	            return wlist;
-	        }
-	        return this.data;
-	    },
-
-	    /**Load gridster widgets from layout.data */
-	    loadGridData: function loadGridData() {
-	        var layout = this;
-	        if (layout.props.doubleScreen) {
-	            foreachAddWidget("#main-grid > ul", layout.data.doubleScreenLeftWidgets);
-	            foreachAddWidget("#extra-grid > ul", layout.data.doubleScreenRightWidgets);
-	        } else {
-	            foreachAddWidget("#main-grid > ul", layout.data.singleScreenWidgets);
-	        }
-	        function foreachAddWidget(selector, data) {
-	            var gridster = $(selector).gridster().data('gridster');
-	            $.each(data, function () {
-	                var li = "<li data-id='" + this.id + "'>" + layout.data.widgetContents[this.id] + "</li>";
-	                gridster.add_widget(li, this.size_x, this.size_y, this.col, this.row);
-	            });
-	        }
-	    },
-
-	    setData: function setData(data) {
-	        this.data = data;
-	        this.initGridster();
-	    },
-
-	    getData: function getData() {
-	        this.saveGridData();
-	        return this.data;
-	    },
-
-	    initGridster: function initGridster() {
-	        var layout = this;
-	        $("#main-grid").empty();
-	        $("#extra-grid").empty();
-	        $("#main-grid").append("<ul></ul>");
-	        $("#extra-grid").append("<ul></ul>");
-
-	        /**Initialize the grid first*/
-	        $(".footer").css("position", "initial");
-	        if (this.props.doubleScreen) {
-	            if (this.props.expandMode === 1) {
-	                //portrait cut model
-	                layout.initPortraitCutMode();
-	            }
-	            if (this.props.expandMode === 2) {
-	                //expand mode
-	                this.initExpandMode();
-	            }
-	            if (this.props.expandMode === 3) {
-	                //extra mode
-	                layout.initExtraMode();
-	            }
-	        } else {
-	            layout.initSingleMode();
-	        }
-
-	        /**Add blocks to gridster*/
-	        this.loadGridData();
-	        this.initBlockEvents();
-
-	        /**If it is in edit mode , disable gridster resize and movements, init the mce editor*/
-	        if (!this.state.layoutable) {
-	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
-	            tinymce.init({
-	                selector: '.gridster li .rtf',
-	                inline: true,
-	                menubar: false,
-	                toolbar: 'undo redo| bold italic underline strikethrough'
-	            });
-	        }
-	    },
-
-	    startDraging: false,
-
-	    initSingleMode: function initSingleMode() {
-	        var screenCount = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
-
-	        var layout = this;
-
-	        var contentHeight = this.props.pageSetting.height;
-	        if (this.props.pageSetting.showHeader) {
-	            contentHeight -= this.props.themeConfig.headerHeight;
-	        }
-	        if (this.props.pageSetting.showFooter) {
-	            contentHeight -= this.props.themeConfig.footerHeight;
-	        }
-	        var contentWidth = this.props.pageSetting.width * screenCount - this.props.themeConfig.padding[1] - this.props.themeConfig.padding[3];
-
-	        $("#main-grid>ul").css("min-height", contentHeight);
-	        $("#main-grid>ul").css("margin-left", this.props.themeConfig.padding[3]);
-
-	        $("#main-grid>ul").gridster(_.extend({
-	            namespace: '#main-grid',
-	            widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
-	            draggable: {
-	                start: function start() {
-	                    layout.startDraging = true;
-	                },
-	                stop: function stop(event, ui) {
-	                    /**
-	                     * When on double screen and the expand mode is 'extra' or 'portrait',
-	                     * Move the widget from left to right
-	                     * */
-	                    if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode === 1 || layout.props.pageSetting.expandMode === 3) && ui.pointer.left >= layout.props.pageSetting.width + 70) {
-	                        layout.moveBlock(ui.$player, true);
-	                    }
-	                }
-	            },
-	            resize: {
-	                enabled: true,
-	                start: function start() {
-	                    layout.startDraging = true;
-	                    console.log("start resizing");
-	                },
-
-	                resize: function resize() {
-	                    console.log("resizing");
-	                },
-
-	                stop: function stop() {}
-	            }
-	        }, this.defaultGridOptions));
-	        $("#extra-grid").hide();
-	    },
-
-	    /***
-	     * Expand Mode: expand the single screen(1024 width) to doubled width (2048 width)
-	     */
-	    initExpandMode: function initExpandMode() {
-	        this.initSingleMode(2);
-	    },
-
-	    /**
-	     * Extra Mode: the right screen is full screened for media plays(Movie) or full screen demonstration
-	     */
-	    initExtraMode: function initExtraMode() {
-	        var layout = this;
-	        layout.initSingleMode(1);
-	        $("#extra-grid").show();
-
-	        $("#extra-grid").css("position", "absolute").css("top", 0).css("right", 0).css("width", this.props.width).show();
-
-	        $("#extra-grid>ul").gridster(_.extend({
-	            namespace: '#extra-grid',
-	            widget_base_dimensions: [this.props.width / 12 - 2, this.props.height / 10 - 2],
-	            draggable: {
-	                stop: function stop(event, ui) {
-	                    /**
-	                     * When on double screen and the expand mode is 'extra' or 'portrait',
-	                     * Move the widget from left to right
-	                     * */
-	                    if (ui.pointer.left <= layout.props.width - 200) {
-	                        layout.moveBlock(ui.$player, false);
-	                    }
-	                }
-	            },
-	            resize: {
-	                enabled: true
-	            }
-	        }, this.defaultGridOptions));
-	    },
-
-	    initPortraitCutMode: function initPortraitCutMode() {
-	        var layout = this;
-	        $(".footer").css("position", "absolute").css("bottom", 0).css("right", 0);
-	        var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
-
-	        var extraHeight = this.props.height;
-	        if (this.props.showFooter) {
-	            extraHeight -= this.props.footerHeight;
-	        }
-	        extraHeight -= this.props.padding[0];
-	        $("#extra-grid").css("position", "absolute").css("top", this.props.padding[0]).css("right", this.props.padding[1]).css("width", contentWidth).show();
-	        $("#extra-grid>ul").gridster(_.extend({
-	            namespace: '#extra-grid',
-	            widget_base_dimensions: [contentWidth / 12 - 2, extraHeight / 10 - 2],
-	            draggable: {
-	                stop: function stop(event, ui) {
-	                    if (ui.pointer.left <= layout.props.width - 200) {
-	                        layout.moveBlock(ui.$player, false);
-	                    }
-	                }
-	            },
-	            resize: {
-	                enabled: true
-	            }
-	        }, this.defaultGridOptions));
-
-	        var contentHeight = this.props.height;
-	        if (this.props.showHeader) {
-	            contentHeight -= this.props.headerHeight;
-	        }
-	        contentHeight -= this.props.padding[2];
-
-	        $("#main-grid>ul").css("min-height", contentHeight);
-	        $("#main-grid>ul").css("margin-left", this.props.padding[3]);
-
-	        $("#main-grid>ul").gridster(_.extend({
-	            namespace: '#main-grid',
-	            widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
-	            draggable: {
-	                stop: function stop(event, ui) {
-	                    if (ui.pointer.left >= layout.props.width + 70) {
-	                        layout.moveBlock(ui.$player, true);
-	                    }
-	                }
-	            },
-	            resize: {
-	                enabled: true
-	            }
-	        }, this.defaultGridOptions));
-	    },
-
-	    componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
-	        /**When the layout attributes changed, reset the gridster*/
-	        this.initGridster();
-
-	        /*
-	        if (this.props.doubleScreen!==prevProps.doubleScreen || this.props.width!==prevProps.width
-	            || this.props.expandMode!==prevProps.expandMode
-	            || this.props.headerHeight!==prevProps.headerHeight
-	            || this.props.footerHeight!==prevProps.footerHeight
-	            || this.props.padding!==prevProps.padding
-	            || this.props.gdata!==prevProps.gdata
-	        ) {
-	         }
-	        */
-	    },
-
-	    addActivity: function addActivity(type) {
-	        var gridster = $("#main-grid ul").gridster().data('gridster');
-	        var sizex = 12;
-	        var sizey = 4;
-	        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
-	        gridster.add_widget("<li data-id='" + blockId + "'>" + type + "</li>", sizex, sizey, 1, 100);
-	        this.initBlockEvents();
-
-	        this.data.doubleScreenLeftWidgets.push({
-	            id: blockId,
-	            col: 1,
-	            row: 100,
-	            size_x: sizex,
-	            size_y: sizey
-	        });
-	    },
-
-	    addBlock: function addBlock(template, sizex, sizey) {
-	        var gridster = $("#main-grid ul").gridster().data('gridster');
-	        if (!sizex) {
-	            sizex = 12;
-	        }
-	        if (!sizey) {
-	            sizey = 2;
-	        }
-	        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
-	        gridster.add_widget("<li data-id='" + blockId + "' data-btype='text-block'>" + template + "</li>", sizex, sizey, 1, 100);
-
-	        this.initBlockEvents();
-
-	        this.data.doubleScreenLeftWidgets.push({
-	            id: blockId,
-	            col: 1,
-	            row: 100,
-	            size_x: sizex,
-	            size_y: sizey
-	        });
-	    },
-
-	    disableLayout: function disableLayout() {
-	        this.setState({
-	            layoutable: false
-	        });
-	    },
-
-	    enableLayout: function enableLayout() {
-	        this.setState({
-	            layoutable: true
-	        });
-	    },
-
-	    moveBlock: function moveBlock(li, direction) {
-	        var src, target;
-	        if (direction) {
-	            src = $("#main-grid>ul").gridster().data('gridster');
-	            target = $("#extra-grid>ul").gridster().data('gridster');
-	        } else {
-	            target = $("#main-grid>ul").gridster().data('gridster');
-	            src = $("#extra-grid>ul").gridster().data('gridster');
-	        }
-	        var cli = li.clone();
-	        cli.find(".gs-resize-handle").remove();
-	        cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
-	        target.add_widget("<li data-id='" + li.data("id") + "'>" + li.html() + "</li>", li.data("sizex"), li.data("sizey"), 1, 100);
-	        src.remove_widget(li);
-	    },
-
-	    returnGridster: function returnGridster() {
-	        $(".gridster ul").gridster().data('gridster').enable().enable_resize();
-	        $(".gridster ul li.current").removeClass("current");
-	    },
-
-	    initBlockEvents: function initBlockEvents() {
-	        var gridlayout = this;
-	        $(".gridster li").unbind('click').bind("click", function (event) {
-	            event.stopPropagation();
-	            if (gridlayout.startDraging) {
-	                gridlayout.startDraging = false;
-	                return;
-	            }
-	            $(".gridster ul li.current").removeClass("current");
-	            $(this).addClass("current");
-
-	            //gridlayout.props.editBlock($(this).data("btype"));
-	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
-	        });
-
-	        tinymce.init({
-	            selector: '.gridster li .rtf',
-	            inline: true,
-	            menubar: false,
-	            toolbar: 'undo redo| bold italic underline strikethrough'
-	        });
-	    },
-
-	    closeEditing: function closeEditing() {},
 
 	    render: function render() {
 	        return React.createElement(
 	            "div",
-	            { className: this.state.layoutable ? "layoutable" : "editable" },
+	            { className: "rightPanel", style: {
+	                    display: this.props.display ? "inherit" : "none"
+	                }, onClick: this.preventUp },
 	            React.createElement(
 	                "div",
-	                { className: "gridster", id: "main-grid", style: {
-	                        width: this.props.doubleScreen && this.props.expandMode === 2 ? this.props.width * 2 : this.props.width
-	                    } },
-	                React.createElement("ul", null)
+	                { className: "pn-header" },
+	                React.createElement(
+	                    "div",
+	                    { className: "pn-title" },
+	                    "Header"
+	                ),
+	                React.createElement("span", { className: "glyphicon glyphicon-remove btn-close", onClick: this.close })
 	            ),
 	            React.createElement(
 	                "div",
-	                { className: "gridster", id: "extra-grid" },
-	                React.createElement("ul", null)
+	                { className: "pn-body" },
+	                React.createElement(EditTextPanel, { display: this.props.subpanel === "edit-text" }),
+	                React.createElement(SingleChoicePanel, { display: this.props.subpanel === "edit-single-choice" })
 	            )
 	        );
 	    }
 	});
 
-	tinymce.PluginManager.add('stylebuttons', function (editor, url) {
-	    ['pre', 'p', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach(function (name) {
-	        editor.addButton("style-" + name, {
-	            tooltip: "Toggle " + name,
-	            text: name.toUpperCase(),
-	            onClick: function onClick() {
-	                editor.execCommand('mceToggleFormat', false, name);
-	            },
-	            onPostRender: function onPostRender() {
-	                var self = this,
-	                    setup = function setup() {
-	                    editor.formatter.formatChanged(name, function (state) {
-	                        self.active(state);
-	                    });
-	                };
-	                editor.formatter ? setup() : editor.on('init', setup);
-	            }
-	        });
-	    });
-	});
-
-	module.exports = GridLayout;
+	module.exports = RightPanel;
 
 /***/ },
 /* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
-	//     http://underscorejs.org
-	//     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
-	//     Underscore may be freely distributed under the MIT license.
+	"use strict";
 
-	(function() {
+	var React = __webpack_require__(18);
 
-	  // Baseline setup
-	  // --------------
+	var EditTextPanel = React.createClass({
+	    displayName: "EditTextPanel",
 
-	  // Establish the root object, `window` in the browser, or `exports` on the server.
-	  var root = this;
 
-	  // Save the previous value of the `_` variable.
-	  var previousUnderscore = root._;
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
 
-	  // Save bytes in the minified (but not gzipped) version:
-	  var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
+	    componentDidMount: function componentDidMount() {},
 
-	  // Create quick reference variables for speed access to core prototypes.
-	  var
-	    push             = ArrayProto.push,
-	    slice            = ArrayProto.slice,
-	    toString         = ObjProto.toString,
-	    hasOwnProperty   = ObjProto.hasOwnProperty;
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
 
-	  // All **ECMAScript 5** native function implementations that we hope to use
-	  // are declared here.
-	  var
-	    nativeIsArray      = Array.isArray,
-	    nativeKeys         = Object.keys,
-	    nativeBind         = FuncProto.bind,
-	    nativeCreate       = Object.create;
+	    preventUp: function preventUp(event) {
+	        event.stopPropagation();
+	    },
 
-	  // Naked function reference for surrogate-prototype-swapping.
-	  var Ctor = function(){};
-
-	  // Create a safe reference to the Underscore object for use below.
-	  var _ = function(obj) {
-	    if (obj instanceof _) return obj;
-	    if (!(this instanceof _)) return new _(obj);
-	    this._wrapped = obj;
-	  };
-
-	  // Export the Underscore object for **Node.js**, with
-	  // backwards-compatibility for the old `require()` API. If we're in
-	  // the browser, add `_` as a global object.
-	  if (true) {
-	    if (typeof module !== 'undefined' && module.exports) {
-	      exports = module.exports = _;
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: "editTextPanel", style: {
+	                    display: this.props.display ? "inherit" : "none"
+	                } },
+	            React.createElement(
+	                "div",
+	                { className: "form-group" },
+	                React.createElement(
+	                    "p",
+	                    { className: "label" },
+	                    "Horizontal Align"
+	                ),
+	                React.createElement(
+	                    "div",
+	                    { className: "btn-group", role: "group", "aria-label": "..." },
+	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-left" }),
+	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-center" }),
+	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-right" })
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { className: "form-group" },
+	                React.createElement(
+	                    "p",
+	                    { className: "label" },
+	                    "Vertical Align"
+	                ),
+	                React.createElement(
+	                    "div",
+	                    { className: "btn-group", role: "group", "aria-label": "..." },
+	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-left" }),
+	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-center" }),
+	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-right" })
+	                )
+	            )
+	        );
 	    }
-	    exports._ = _;
-	  } else {
-	    root._ = _;
-	  }
+	});
 
-	  // Current version.
-	  _.VERSION = '1.8.3';
-
-	  // Internal function that returns an efficient (for current engines) version
-	  // of the passed-in callback, to be repeatedly applied in other Underscore
-	  // functions.
-	  var optimizeCb = function(func, context, argCount) {
-	    if (context === void 0) return func;
-	    switch (argCount == null ? 3 : argCount) {
-	      case 1: return function(value) {
-	        return func.call(context, value);
-	      };
-	      case 2: return function(value, other) {
-	        return func.call(context, value, other);
-	      };
-	      case 3: return function(value, index, collection) {
-	        return func.call(context, value, index, collection);
-	      };
-	      case 4: return function(accumulator, value, index, collection) {
-	        return func.call(context, accumulator, value, index, collection);
-	      };
-	    }
-	    return function() {
-	      return func.apply(context, arguments);
-	    };
-	  };
-
-	  // A mostly-internal function to generate callbacks that can be applied
-	  // to each element in a collection, returning the desired result — either
-	  // identity, an arbitrary callback, a property matcher, or a property accessor.
-	  var cb = function(value, context, argCount) {
-	    if (value == null) return _.identity;
-	    if (_.isFunction(value)) return optimizeCb(value, context, argCount);
-	    if (_.isObject(value)) return _.matcher(value);
-	    return _.property(value);
-	  };
-	  _.iteratee = function(value, context) {
-	    return cb(value, context, Infinity);
-	  };
-
-	  // An internal function for creating assigner functions.
-	  var createAssigner = function(keysFunc, undefinedOnly) {
-	    return function(obj) {
-	      var length = arguments.length;
-	      if (length < 2 || obj == null) return obj;
-	      for (var index = 1; index < length; index++) {
-	        var source = arguments[index],
-	            keys = keysFunc(source),
-	            l = keys.length;
-	        for (var i = 0; i < l; i++) {
-	          var key = keys[i];
-	          if (!undefinedOnly || obj[key] === void 0) obj[key] = source[key];
-	        }
-	      }
-	      return obj;
-	    };
-	  };
-
-	  // An internal function for creating a new object that inherits from another.
-	  var baseCreate = function(prototype) {
-	    if (!_.isObject(prototype)) return {};
-	    if (nativeCreate) return nativeCreate(prototype);
-	    Ctor.prototype = prototype;
-	    var result = new Ctor;
-	    Ctor.prototype = null;
-	    return result;
-	  };
-
-	  var property = function(key) {
-	    return function(obj) {
-	      return obj == null ? void 0 : obj[key];
-	    };
-	  };
-
-	  // Helper for collection methods to determine whether a collection
-	  // should be iterated as an array or as an object
-	  // Related: http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
-	  // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
-	  var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
-	  var getLength = property('length');
-	  var isArrayLike = function(collection) {
-	    var length = getLength(collection);
-	    return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
-	  };
-
-	  // Collection Functions
-	  // --------------------
-
-	  // The cornerstone, an `each` implementation, aka `forEach`.
-	  // Handles raw objects in addition to array-likes. Treats all
-	  // sparse array-likes as if they were dense.
-	  _.each = _.forEach = function(obj, iteratee, context) {
-	    iteratee = optimizeCb(iteratee, context);
-	    var i, length;
-	    if (isArrayLike(obj)) {
-	      for (i = 0, length = obj.length; i < length; i++) {
-	        iteratee(obj[i], i, obj);
-	      }
-	    } else {
-	      var keys = _.keys(obj);
-	      for (i = 0, length = keys.length; i < length; i++) {
-	        iteratee(obj[keys[i]], keys[i], obj);
-	      }
-	    }
-	    return obj;
-	  };
-
-	  // Return the results of applying the iteratee to each element.
-	  _.map = _.collect = function(obj, iteratee, context) {
-	    iteratee = cb(iteratee, context);
-	    var keys = !isArrayLike(obj) && _.keys(obj),
-	        length = (keys || obj).length,
-	        results = Array(length);
-	    for (var index = 0; index < length; index++) {
-	      var currentKey = keys ? keys[index] : index;
-	      results[index] = iteratee(obj[currentKey], currentKey, obj);
-	    }
-	    return results;
-	  };
-
-	  // Create a reducing function iterating left or right.
-	  function createReduce(dir) {
-	    // Optimized iterator function as using arguments.length
-	    // in the main function will deoptimize the, see #1991.
-	    function iterator(obj, iteratee, memo, keys, index, length) {
-	      for (; index >= 0 && index < length; index += dir) {
-	        var currentKey = keys ? keys[index] : index;
-	        memo = iteratee(memo, obj[currentKey], currentKey, obj);
-	      }
-	      return memo;
-	    }
-
-	    return function(obj, iteratee, memo, context) {
-	      iteratee = optimizeCb(iteratee, context, 4);
-	      var keys = !isArrayLike(obj) && _.keys(obj),
-	          length = (keys || obj).length,
-	          index = dir > 0 ? 0 : length - 1;
-	      // Determine the initial value if none is provided.
-	      if (arguments.length < 3) {
-	        memo = obj[keys ? keys[index] : index];
-	        index += dir;
-	      }
-	      return iterator(obj, iteratee, memo, keys, index, length);
-	    };
-	  }
-
-	  // **Reduce** builds up a single result from a list of values, aka `inject`,
-	  // or `foldl`.
-	  _.reduce = _.foldl = _.inject = createReduce(1);
-
-	  // The right-associative version of reduce, also known as `foldr`.
-	  _.reduceRight = _.foldr = createReduce(-1);
-
-	  // Return the first value which passes a truth test. Aliased as `detect`.
-	  _.find = _.detect = function(obj, predicate, context) {
-	    var key;
-	    if (isArrayLike(obj)) {
-	      key = _.findIndex(obj, predicate, context);
-	    } else {
-	      key = _.findKey(obj, predicate, context);
-	    }
-	    if (key !== void 0 && key !== -1) return obj[key];
-	  };
-
-	  // Return all the elements that pass a truth test.
-	  // Aliased as `select`.
-	  _.filter = _.select = function(obj, predicate, context) {
-	    var results = [];
-	    predicate = cb(predicate, context);
-	    _.each(obj, function(value, index, list) {
-	      if (predicate(value, index, list)) results.push(value);
-	    });
-	    return results;
-	  };
-
-	  // Return all the elements for which a truth test fails.
-	  _.reject = function(obj, predicate, context) {
-	    return _.filter(obj, _.negate(cb(predicate)), context);
-	  };
-
-	  // Determine whether all of the elements match a truth test.
-	  // Aliased as `all`.
-	  _.every = _.all = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var keys = !isArrayLike(obj) && _.keys(obj),
-	        length = (keys || obj).length;
-	    for (var index = 0; index < length; index++) {
-	      var currentKey = keys ? keys[index] : index;
-	      if (!predicate(obj[currentKey], currentKey, obj)) return false;
-	    }
-	    return true;
-	  };
-
-	  // Determine if at least one element in the object matches a truth test.
-	  // Aliased as `any`.
-	  _.some = _.any = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var keys = !isArrayLike(obj) && _.keys(obj),
-	        length = (keys || obj).length;
-	    for (var index = 0; index < length; index++) {
-	      var currentKey = keys ? keys[index] : index;
-	      if (predicate(obj[currentKey], currentKey, obj)) return true;
-	    }
-	    return false;
-	  };
-
-	  // Determine if the array or object contains a given item (using `===`).
-	  // Aliased as `includes` and `include`.
-	  _.contains = _.includes = _.include = function(obj, item, fromIndex, guard) {
-	    if (!isArrayLike(obj)) obj = _.values(obj);
-	    if (typeof fromIndex != 'number' || guard) fromIndex = 0;
-	    return _.indexOf(obj, item, fromIndex) >= 0;
-	  };
-
-	  // Invoke a method (with arguments) on every item in a collection.
-	  _.invoke = function(obj, method) {
-	    var args = slice.call(arguments, 2);
-	    var isFunc = _.isFunction(method);
-	    return _.map(obj, function(value) {
-	      var func = isFunc ? method : value[method];
-	      return func == null ? func : func.apply(value, args);
-	    });
-	  };
-
-	  // Convenience version of a common use case of `map`: fetching a property.
-	  _.pluck = function(obj, key) {
-	    return _.map(obj, _.property(key));
-	  };
-
-	  // Convenience version of a common use case of `filter`: selecting only objects
-	  // containing specific `key:value` pairs.
-	  _.where = function(obj, attrs) {
-	    return _.filter(obj, _.matcher(attrs));
-	  };
-
-	  // Convenience version of a common use case of `find`: getting the first object
-	  // containing specific `key:value` pairs.
-	  _.findWhere = function(obj, attrs) {
-	    return _.find(obj, _.matcher(attrs));
-	  };
-
-	  // Return the maximum element (or element-based computation).
-	  _.max = function(obj, iteratee, context) {
-	    var result = -Infinity, lastComputed = -Infinity,
-	        value, computed;
-	    if (iteratee == null && obj != null) {
-	      obj = isArrayLike(obj) ? obj : _.values(obj);
-	      for (var i = 0, length = obj.length; i < length; i++) {
-	        value = obj[i];
-	        if (value > result) {
-	          result = value;
-	        }
-	      }
-	    } else {
-	      iteratee = cb(iteratee, context);
-	      _.each(obj, function(value, index, list) {
-	        computed = iteratee(value, index, list);
-	        if (computed > lastComputed || computed === -Infinity && result === -Infinity) {
-	          result = value;
-	          lastComputed = computed;
-	        }
-	      });
-	    }
-	    return result;
-	  };
-
-	  // Return the minimum element (or element-based computation).
-	  _.min = function(obj, iteratee, context) {
-	    var result = Infinity, lastComputed = Infinity,
-	        value, computed;
-	    if (iteratee == null && obj != null) {
-	      obj = isArrayLike(obj) ? obj : _.values(obj);
-	      for (var i = 0, length = obj.length; i < length; i++) {
-	        value = obj[i];
-	        if (value < result) {
-	          result = value;
-	        }
-	      }
-	    } else {
-	      iteratee = cb(iteratee, context);
-	      _.each(obj, function(value, index, list) {
-	        computed = iteratee(value, index, list);
-	        if (computed < lastComputed || computed === Infinity && result === Infinity) {
-	          result = value;
-	          lastComputed = computed;
-	        }
-	      });
-	    }
-	    return result;
-	  };
-
-	  // Shuffle a collection, using the modern version of the
-	  // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
-	  _.shuffle = function(obj) {
-	    var set = isArrayLike(obj) ? obj : _.values(obj);
-	    var length = set.length;
-	    var shuffled = Array(length);
-	    for (var index = 0, rand; index < length; index++) {
-	      rand = _.random(0, index);
-	      if (rand !== index) shuffled[index] = shuffled[rand];
-	      shuffled[rand] = set[index];
-	    }
-	    return shuffled;
-	  };
-
-	  // Sample **n** random values from a collection.
-	  // If **n** is not specified, returns a single random element.
-	  // The internal `guard` argument allows it to work with `map`.
-	  _.sample = function(obj, n, guard) {
-	    if (n == null || guard) {
-	      if (!isArrayLike(obj)) obj = _.values(obj);
-	      return obj[_.random(obj.length - 1)];
-	    }
-	    return _.shuffle(obj).slice(0, Math.max(0, n));
-	  };
-
-	  // Sort the object's values by a criterion produced by an iteratee.
-	  _.sortBy = function(obj, iteratee, context) {
-	    iteratee = cb(iteratee, context);
-	    return _.pluck(_.map(obj, function(value, index, list) {
-	      return {
-	        value: value,
-	        index: index,
-	        criteria: iteratee(value, index, list)
-	      };
-	    }).sort(function(left, right) {
-	      var a = left.criteria;
-	      var b = right.criteria;
-	      if (a !== b) {
-	        if (a > b || a === void 0) return 1;
-	        if (a < b || b === void 0) return -1;
-	      }
-	      return left.index - right.index;
-	    }), 'value');
-	  };
-
-	  // An internal function used for aggregate "group by" operations.
-	  var group = function(behavior) {
-	    return function(obj, iteratee, context) {
-	      var result = {};
-	      iteratee = cb(iteratee, context);
-	      _.each(obj, function(value, index) {
-	        var key = iteratee(value, index, obj);
-	        behavior(result, value, key);
-	      });
-	      return result;
-	    };
-	  };
-
-	  // Groups the object's values by a criterion. Pass either a string attribute
-	  // to group by, or a function that returns the criterion.
-	  _.groupBy = group(function(result, value, key) {
-	    if (_.has(result, key)) result[key].push(value); else result[key] = [value];
-	  });
-
-	  // Indexes the object's values by a criterion, similar to `groupBy`, but for
-	  // when you know that your index values will be unique.
-	  _.indexBy = group(function(result, value, key) {
-	    result[key] = value;
-	  });
-
-	  // Counts instances of an object that group by a certain criterion. Pass
-	  // either a string attribute to count by, or a function that returns the
-	  // criterion.
-	  _.countBy = group(function(result, value, key) {
-	    if (_.has(result, key)) result[key]++; else result[key] = 1;
-	  });
-
-	  // Safely create a real, live array from anything iterable.
-	  _.toArray = function(obj) {
-	    if (!obj) return [];
-	    if (_.isArray(obj)) return slice.call(obj);
-	    if (isArrayLike(obj)) return _.map(obj, _.identity);
-	    return _.values(obj);
-	  };
-
-	  // Return the number of elements in an object.
-	  _.size = function(obj) {
-	    if (obj == null) return 0;
-	    return isArrayLike(obj) ? obj.length : _.keys(obj).length;
-	  };
-
-	  // Split a collection into two arrays: one whose elements all satisfy the given
-	  // predicate, and one whose elements all do not satisfy the predicate.
-	  _.partition = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var pass = [], fail = [];
-	    _.each(obj, function(value, key, obj) {
-	      (predicate(value, key, obj) ? pass : fail).push(value);
-	    });
-	    return [pass, fail];
-	  };
-
-	  // Array Functions
-	  // ---------------
-
-	  // Get the first element of an array. Passing **n** will return the first N
-	  // values in the array. Aliased as `head` and `take`. The **guard** check
-	  // allows it to work with `_.map`.
-	  _.first = _.head = _.take = function(array, n, guard) {
-	    if (array == null) return void 0;
-	    if (n == null || guard) return array[0];
-	    return _.initial(array, array.length - n);
-	  };
-
-	  // Returns everything but the last entry of the array. Especially useful on
-	  // the arguments object. Passing **n** will return all the values in
-	  // the array, excluding the last N.
-	  _.initial = function(array, n, guard) {
-	    return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
-	  };
-
-	  // Get the last element of an array. Passing **n** will return the last N
-	  // values in the array.
-	  _.last = function(array, n, guard) {
-	    if (array == null) return void 0;
-	    if (n == null || guard) return array[array.length - 1];
-	    return _.rest(array, Math.max(0, array.length - n));
-	  };
-
-	  // Returns everything but the first entry of the array. Aliased as `tail` and `drop`.
-	  // Especially useful on the arguments object. Passing an **n** will return
-	  // the rest N values in the array.
-	  _.rest = _.tail = _.drop = function(array, n, guard) {
-	    return slice.call(array, n == null || guard ? 1 : n);
-	  };
-
-	  // Trim out all falsy values from an array.
-	  _.compact = function(array) {
-	    return _.filter(array, _.identity);
-	  };
-
-	  // Internal implementation of a recursive `flatten` function.
-	  var flatten = function(input, shallow, strict, startIndex) {
-	    var output = [], idx = 0;
-	    for (var i = startIndex || 0, length = getLength(input); i < length; i++) {
-	      var value = input[i];
-	      if (isArrayLike(value) && (_.isArray(value) || _.isArguments(value))) {
-	        //flatten current level of array or arguments object
-	        if (!shallow) value = flatten(value, shallow, strict);
-	        var j = 0, len = value.length;
-	        output.length += len;
-	        while (j < len) {
-	          output[idx++] = value[j++];
-	        }
-	      } else if (!strict) {
-	        output[idx++] = value;
-	      }
-	    }
-	    return output;
-	  };
-
-	  // Flatten out an array, either recursively (by default), or just one level.
-	  _.flatten = function(array, shallow) {
-	    return flatten(array, shallow, false);
-	  };
-
-	  // Return a version of the array that does not contain the specified value(s).
-	  _.without = function(array) {
-	    return _.difference(array, slice.call(arguments, 1));
-	  };
-
-	  // Produce a duplicate-free version of the array. If the array has already
-	  // been sorted, you have the option of using a faster algorithm.
-	  // Aliased as `unique`.
-	  _.uniq = _.unique = function(array, isSorted, iteratee, context) {
-	    if (!_.isBoolean(isSorted)) {
-	      context = iteratee;
-	      iteratee = isSorted;
-	      isSorted = false;
-	    }
-	    if (iteratee != null) iteratee = cb(iteratee, context);
-	    var result = [];
-	    var seen = [];
-	    for (var i = 0, length = getLength(array); i < length; i++) {
-	      var value = array[i],
-	          computed = iteratee ? iteratee(value, i, array) : value;
-	      if (isSorted) {
-	        if (!i || seen !== computed) result.push(value);
-	        seen = computed;
-	      } else if (iteratee) {
-	        if (!_.contains(seen, computed)) {
-	          seen.push(computed);
-	          result.push(value);
-	        }
-	      } else if (!_.contains(result, value)) {
-	        result.push(value);
-	      }
-	    }
-	    return result;
-	  };
-
-	  // Produce an array that contains the union: each distinct element from all of
-	  // the passed-in arrays.
-	  _.union = function() {
-	    return _.uniq(flatten(arguments, true, true));
-	  };
-
-	  // Produce an array that contains every item shared between all the
-	  // passed-in arrays.
-	  _.intersection = function(array) {
-	    var result = [];
-	    var argsLength = arguments.length;
-	    for (var i = 0, length = getLength(array); i < length; i++) {
-	      var item = array[i];
-	      if (_.contains(result, item)) continue;
-	      for (var j = 1; j < argsLength; j++) {
-	        if (!_.contains(arguments[j], item)) break;
-	      }
-	      if (j === argsLength) result.push(item);
-	    }
-	    return result;
-	  };
-
-	  // Take the difference between one array and a number of other arrays.
-	  // Only the elements present in just the first array will remain.
-	  _.difference = function(array) {
-	    var rest = flatten(arguments, true, true, 1);
-	    return _.filter(array, function(value){
-	      return !_.contains(rest, value);
-	    });
-	  };
-
-	  // Zip together multiple lists into a single array -- elements that share
-	  // an index go together.
-	  _.zip = function() {
-	    return _.unzip(arguments);
-	  };
-
-	  // Complement of _.zip. Unzip accepts an array of arrays and groups
-	  // each array's elements on shared indices
-	  _.unzip = function(array) {
-	    var length = array && _.max(array, getLength).length || 0;
-	    var result = Array(length);
-
-	    for (var index = 0; index < length; index++) {
-	      result[index] = _.pluck(array, index);
-	    }
-	    return result;
-	  };
-
-	  // Converts lists into objects. Pass either a single array of `[key, value]`
-	  // pairs, or two parallel arrays of the same length -- one of keys, and one of
-	  // the corresponding values.
-	  _.object = function(list, values) {
-	    var result = {};
-	    for (var i = 0, length = getLength(list); i < length; i++) {
-	      if (values) {
-	        result[list[i]] = values[i];
-	      } else {
-	        result[list[i][0]] = list[i][1];
-	      }
-	    }
-	    return result;
-	  };
-
-	  // Generator function to create the findIndex and findLastIndex functions
-	  function createPredicateIndexFinder(dir) {
-	    return function(array, predicate, context) {
-	      predicate = cb(predicate, context);
-	      var length = getLength(array);
-	      var index = dir > 0 ? 0 : length - 1;
-	      for (; index >= 0 && index < length; index += dir) {
-	        if (predicate(array[index], index, array)) return index;
-	      }
-	      return -1;
-	    };
-	  }
-
-	  // Returns the first index on an array-like that passes a predicate test
-	  _.findIndex = createPredicateIndexFinder(1);
-	  _.findLastIndex = createPredicateIndexFinder(-1);
-
-	  // Use a comparator function to figure out the smallest index at which
-	  // an object should be inserted so as to maintain order. Uses binary search.
-	  _.sortedIndex = function(array, obj, iteratee, context) {
-	    iteratee = cb(iteratee, context, 1);
-	    var value = iteratee(obj);
-	    var low = 0, high = getLength(array);
-	    while (low < high) {
-	      var mid = Math.floor((low + high) / 2);
-	      if (iteratee(array[mid]) < value) low = mid + 1; else high = mid;
-	    }
-	    return low;
-	  };
-
-	  // Generator function to create the indexOf and lastIndexOf functions
-	  function createIndexFinder(dir, predicateFind, sortedIndex) {
-	    return function(array, item, idx) {
-	      var i = 0, length = getLength(array);
-	      if (typeof idx == 'number') {
-	        if (dir > 0) {
-	            i = idx >= 0 ? idx : Math.max(idx + length, i);
-	        } else {
-	            length = idx >= 0 ? Math.min(idx + 1, length) : idx + length + 1;
-	        }
-	      } else if (sortedIndex && idx && length) {
-	        idx = sortedIndex(array, item);
-	        return array[idx] === item ? idx : -1;
-	      }
-	      if (item !== item) {
-	        idx = predicateFind(slice.call(array, i, length), _.isNaN);
-	        return idx >= 0 ? idx + i : -1;
-	      }
-	      for (idx = dir > 0 ? i : length - 1; idx >= 0 && idx < length; idx += dir) {
-	        if (array[idx] === item) return idx;
-	      }
-	      return -1;
-	    };
-	  }
-
-	  // Return the position of the first occurrence of an item in an array,
-	  // or -1 if the item is not included in the array.
-	  // If the array is large and already in sort order, pass `true`
-	  // for **isSorted** to use binary search.
-	  _.indexOf = createIndexFinder(1, _.findIndex, _.sortedIndex);
-	  _.lastIndexOf = createIndexFinder(-1, _.findLastIndex);
-
-	  // Generate an integer Array containing an arithmetic progression. A port of
-	  // the native Python `range()` function. See
-	  // [the Python documentation](http://docs.python.org/library/functions.html#range).
-	  _.range = function(start, stop, step) {
-	    if (stop == null) {
-	      stop = start || 0;
-	      start = 0;
-	    }
-	    step = step || 1;
-
-	    var length = Math.max(Math.ceil((stop - start) / step), 0);
-	    var range = Array(length);
-
-	    for (var idx = 0; idx < length; idx++, start += step) {
-	      range[idx] = start;
-	    }
-
-	    return range;
-	  };
-
-	  // Function (ahem) Functions
-	  // ------------------
-
-	  // Determines whether to execute a function as a constructor
-	  // or a normal function with the provided arguments
-	  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
-	    if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
-	    var self = baseCreate(sourceFunc.prototype);
-	    var result = sourceFunc.apply(self, args);
-	    if (_.isObject(result)) return result;
-	    return self;
-	  };
-
-	  // Create a function bound to a given object (assigning `this`, and arguments,
-	  // optionally). Delegates to **ECMAScript 5**'s native `Function.bind` if
-	  // available.
-	  _.bind = function(func, context) {
-	    if (nativeBind && func.bind === nativeBind) return nativeBind.apply(func, slice.call(arguments, 1));
-	    if (!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
-	    var args = slice.call(arguments, 2);
-	    var bound = function() {
-	      return executeBound(func, bound, context, this, args.concat(slice.call(arguments)));
-	    };
-	    return bound;
-	  };
-
-	  // Partially apply a function by creating a version that has had some of its
-	  // arguments pre-filled, without changing its dynamic `this` context. _ acts
-	  // as a placeholder, allowing any combination of arguments to be pre-filled.
-	  _.partial = function(func) {
-	    var boundArgs = slice.call(arguments, 1);
-	    var bound = function() {
-	      var position = 0, length = boundArgs.length;
-	      var args = Array(length);
-	      for (var i = 0; i < length; i++) {
-	        args[i] = boundArgs[i] === _ ? arguments[position++] : boundArgs[i];
-	      }
-	      while (position < arguments.length) args.push(arguments[position++]);
-	      return executeBound(func, bound, this, this, args);
-	    };
-	    return bound;
-	  };
-
-	  // Bind a number of an object's methods to that object. Remaining arguments
-	  // are the method names to be bound. Useful for ensuring that all callbacks
-	  // defined on an object belong to it.
-	  _.bindAll = function(obj) {
-	    var i, length = arguments.length, key;
-	    if (length <= 1) throw new Error('bindAll must be passed function names');
-	    for (i = 1; i < length; i++) {
-	      key = arguments[i];
-	      obj[key] = _.bind(obj[key], obj);
-	    }
-	    return obj;
-	  };
-
-	  // Memoize an expensive function by storing its results.
-	  _.memoize = function(func, hasher) {
-	    var memoize = function(key) {
-	      var cache = memoize.cache;
-	      var address = '' + (hasher ? hasher.apply(this, arguments) : key);
-	      if (!_.has(cache, address)) cache[address] = func.apply(this, arguments);
-	      return cache[address];
-	    };
-	    memoize.cache = {};
-	    return memoize;
-	  };
-
-	  // Delays a function for the given number of milliseconds, and then calls
-	  // it with the arguments supplied.
-	  _.delay = function(func, wait) {
-	    var args = slice.call(arguments, 2);
-	    return setTimeout(function(){
-	      return func.apply(null, args);
-	    }, wait);
-	  };
-
-	  // Defers a function, scheduling it to run after the current call stack has
-	  // cleared.
-	  _.defer = _.partial(_.delay, _, 1);
-
-	  // Returns a function, that, when invoked, will only be triggered at most once
-	  // during a given window of time. Normally, the throttled function will run
-	  // as much as it can, without ever going more than once per `wait` duration;
-	  // but if you'd like to disable the execution on the leading edge, pass
-	  // `{leading: false}`. To disable execution on the trailing edge, ditto.
-	  _.throttle = function(func, wait, options) {
-	    var context, args, result;
-	    var timeout = null;
-	    var previous = 0;
-	    if (!options) options = {};
-	    var later = function() {
-	      previous = options.leading === false ? 0 : _.now();
-	      timeout = null;
-	      result = func.apply(context, args);
-	      if (!timeout) context = args = null;
-	    };
-	    return function() {
-	      var now = _.now();
-	      if (!previous && options.leading === false) previous = now;
-	      var remaining = wait - (now - previous);
-	      context = this;
-	      args = arguments;
-	      if (remaining <= 0 || remaining > wait) {
-	        if (timeout) {
-	          clearTimeout(timeout);
-	          timeout = null;
-	        }
-	        previous = now;
-	        result = func.apply(context, args);
-	        if (!timeout) context = args = null;
-	      } else if (!timeout && options.trailing !== false) {
-	        timeout = setTimeout(later, remaining);
-	      }
-	      return result;
-	    };
-	  };
-
-	  // Returns a function, that, as long as it continues to be invoked, will not
-	  // be triggered. The function will be called after it stops being called for
-	  // N milliseconds. If `immediate` is passed, trigger the function on the
-	  // leading edge, instead of the trailing.
-	  _.debounce = function(func, wait, immediate) {
-	    var timeout, args, context, timestamp, result;
-
-	    var later = function() {
-	      var last = _.now() - timestamp;
-
-	      if (last < wait && last >= 0) {
-	        timeout = setTimeout(later, wait - last);
-	      } else {
-	        timeout = null;
-	        if (!immediate) {
-	          result = func.apply(context, args);
-	          if (!timeout) context = args = null;
-	        }
-	      }
-	    };
-
-	    return function() {
-	      context = this;
-	      args = arguments;
-	      timestamp = _.now();
-	      var callNow = immediate && !timeout;
-	      if (!timeout) timeout = setTimeout(later, wait);
-	      if (callNow) {
-	        result = func.apply(context, args);
-	        context = args = null;
-	      }
-
-	      return result;
-	    };
-	  };
-
-	  // Returns the first function passed as an argument to the second,
-	  // allowing you to adjust arguments, run code before and after, and
-	  // conditionally execute the original function.
-	  _.wrap = function(func, wrapper) {
-	    return _.partial(wrapper, func);
-	  };
-
-	  // Returns a negated version of the passed-in predicate.
-	  _.negate = function(predicate) {
-	    return function() {
-	      return !predicate.apply(this, arguments);
-	    };
-	  };
-
-	  // Returns a function that is the composition of a list of functions, each
-	  // consuming the return value of the function that follows.
-	  _.compose = function() {
-	    var args = arguments;
-	    var start = args.length - 1;
-	    return function() {
-	      var i = start;
-	      var result = args[start].apply(this, arguments);
-	      while (i--) result = args[i].call(this, result);
-	      return result;
-	    };
-	  };
-
-	  // Returns a function that will only be executed on and after the Nth call.
-	  _.after = function(times, func) {
-	    return function() {
-	      if (--times < 1) {
-	        return func.apply(this, arguments);
-	      }
-	    };
-	  };
-
-	  // Returns a function that will only be executed up to (but not including) the Nth call.
-	  _.before = function(times, func) {
-	    var memo;
-	    return function() {
-	      if (--times > 0) {
-	        memo = func.apply(this, arguments);
-	      }
-	      if (times <= 1) func = null;
-	      return memo;
-	    };
-	  };
-
-	  // Returns a function that will be executed at most one time, no matter how
-	  // often you call it. Useful for lazy initialization.
-	  _.once = _.partial(_.before, 2);
-
-	  // Object Functions
-	  // ----------------
-
-	  // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
-	  var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
-	  var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
-	                      'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
-
-	  function collectNonEnumProps(obj, keys) {
-	    var nonEnumIdx = nonEnumerableProps.length;
-	    var constructor = obj.constructor;
-	    var proto = (_.isFunction(constructor) && constructor.prototype) || ObjProto;
-
-	    // Constructor is a special case.
-	    var prop = 'constructor';
-	    if (_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
-
-	    while (nonEnumIdx--) {
-	      prop = nonEnumerableProps[nonEnumIdx];
-	      if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
-	        keys.push(prop);
-	      }
-	    }
-	  }
-
-	  // Retrieve the names of an object's own properties.
-	  // Delegates to **ECMAScript 5**'s native `Object.keys`
-	  _.keys = function(obj) {
-	    if (!_.isObject(obj)) return [];
-	    if (nativeKeys) return nativeKeys(obj);
-	    var keys = [];
-	    for (var key in obj) if (_.has(obj, key)) keys.push(key);
-	    // Ahem, IE < 9.
-	    if (hasEnumBug) collectNonEnumProps(obj, keys);
-	    return keys;
-	  };
-
-	  // Retrieve all the property names of an object.
-	  _.allKeys = function(obj) {
-	    if (!_.isObject(obj)) return [];
-	    var keys = [];
-	    for (var key in obj) keys.push(key);
-	    // Ahem, IE < 9.
-	    if (hasEnumBug) collectNonEnumProps(obj, keys);
-	    return keys;
-	  };
-
-	  // Retrieve the values of an object's properties.
-	  _.values = function(obj) {
-	    var keys = _.keys(obj);
-	    var length = keys.length;
-	    var values = Array(length);
-	    for (var i = 0; i < length; i++) {
-	      values[i] = obj[keys[i]];
-	    }
-	    return values;
-	  };
-
-	  // Returns the results of applying the iteratee to each element of the object
-	  // In contrast to _.map it returns an object
-	  _.mapObject = function(obj, iteratee, context) {
-	    iteratee = cb(iteratee, context);
-	    var keys =  _.keys(obj),
-	          length = keys.length,
-	          results = {},
-	          currentKey;
-	      for (var index = 0; index < length; index++) {
-	        currentKey = keys[index];
-	        results[currentKey] = iteratee(obj[currentKey], currentKey, obj);
-	      }
-	      return results;
-	  };
-
-	  // Convert an object into a list of `[key, value]` pairs.
-	  _.pairs = function(obj) {
-	    var keys = _.keys(obj);
-	    var length = keys.length;
-	    var pairs = Array(length);
-	    for (var i = 0; i < length; i++) {
-	      pairs[i] = [keys[i], obj[keys[i]]];
-	    }
-	    return pairs;
-	  };
-
-	  // Invert the keys and values of an object. The values must be serializable.
-	  _.invert = function(obj) {
-	    var result = {};
-	    var keys = _.keys(obj);
-	    for (var i = 0, length = keys.length; i < length; i++) {
-	      result[obj[keys[i]]] = keys[i];
-	    }
-	    return result;
-	  };
-
-	  // Return a sorted list of the function names available on the object.
-	  // Aliased as `methods`
-	  _.functions = _.methods = function(obj) {
-	    var names = [];
-	    for (var key in obj) {
-	      if (_.isFunction(obj[key])) names.push(key);
-	    }
-	    return names.sort();
-	  };
-
-	  // Extend a given object with all the properties in passed-in object(s).
-	  _.extend = createAssigner(_.allKeys);
-
-	  // Assigns a given object with all the own properties in the passed-in object(s)
-	  // (https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
-	  _.extendOwn = _.assign = createAssigner(_.keys);
-
-	  // Returns the first key on an object that passes a predicate test
-	  _.findKey = function(obj, predicate, context) {
-	    predicate = cb(predicate, context);
-	    var keys = _.keys(obj), key;
-	    for (var i = 0, length = keys.length; i < length; i++) {
-	      key = keys[i];
-	      if (predicate(obj[key], key, obj)) return key;
-	    }
-	  };
-
-	  // Return a copy of the object only containing the whitelisted properties.
-	  _.pick = function(object, oiteratee, context) {
-	    var result = {}, obj = object, iteratee, keys;
-	    if (obj == null) return result;
-	    if (_.isFunction(oiteratee)) {
-	      keys = _.allKeys(obj);
-	      iteratee = optimizeCb(oiteratee, context);
-	    } else {
-	      keys = flatten(arguments, false, false, 1);
-	      iteratee = function(value, key, obj) { return key in obj; };
-	      obj = Object(obj);
-	    }
-	    for (var i = 0, length = keys.length; i < length; i++) {
-	      var key = keys[i];
-	      var value = obj[key];
-	      if (iteratee(value, key, obj)) result[key] = value;
-	    }
-	    return result;
-	  };
-
-	   // Return a copy of the object without the blacklisted properties.
-	  _.omit = function(obj, iteratee, context) {
-	    if (_.isFunction(iteratee)) {
-	      iteratee = _.negate(iteratee);
-	    } else {
-	      var keys = _.map(flatten(arguments, false, false, 1), String);
-	      iteratee = function(value, key) {
-	        return !_.contains(keys, key);
-	      };
-	    }
-	    return _.pick(obj, iteratee, context);
-	  };
-
-	  // Fill in a given object with default properties.
-	  _.defaults = createAssigner(_.allKeys, true);
-
-	  // Creates an object that inherits from the given prototype object.
-	  // If additional properties are provided then they will be added to the
-	  // created object.
-	  _.create = function(prototype, props) {
-	    var result = baseCreate(prototype);
-	    if (props) _.extendOwn(result, props);
-	    return result;
-	  };
-
-	  // Create a (shallow-cloned) duplicate of an object.
-	  _.clone = function(obj) {
-	    if (!_.isObject(obj)) return obj;
-	    return _.isArray(obj) ? obj.slice() : _.extend({}, obj);
-	  };
-
-	  // Invokes interceptor with the obj, and then returns obj.
-	  // The primary purpose of this method is to "tap into" a method chain, in
-	  // order to perform operations on intermediate results within the chain.
-	  _.tap = function(obj, interceptor) {
-	    interceptor(obj);
-	    return obj;
-	  };
-
-	  // Returns whether an object has a given set of `key:value` pairs.
-	  _.isMatch = function(object, attrs) {
-	    var keys = _.keys(attrs), length = keys.length;
-	    if (object == null) return !length;
-	    var obj = Object(object);
-	    for (var i = 0; i < length; i++) {
-	      var key = keys[i];
-	      if (attrs[key] !== obj[key] || !(key in obj)) return false;
-	    }
-	    return true;
-	  };
-
-
-	  // Internal recursive comparison function for `isEqual`.
-	  var eq = function(a, b, aStack, bStack) {
-	    // Identical objects are equal. `0 === -0`, but they aren't identical.
-	    // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
-	    if (a === b) return a !== 0 || 1 / a === 1 / b;
-	    // A strict comparison is necessary because `null == undefined`.
-	    if (a == null || b == null) return a === b;
-	    // Unwrap any wrapped objects.
-	    if (a instanceof _) a = a._wrapped;
-	    if (b instanceof _) b = b._wrapped;
-	    // Compare `[[Class]]` names.
-	    var className = toString.call(a);
-	    if (className !== toString.call(b)) return false;
-	    switch (className) {
-	      // Strings, numbers, regular expressions, dates, and booleans are compared by value.
-	      case '[object RegExp]':
-	      // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
-	      case '[object String]':
-	        // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
-	        // equivalent to `new String("5")`.
-	        return '' + a === '' + b;
-	      case '[object Number]':
-	        // `NaN`s are equivalent, but non-reflexive.
-	        // Object(NaN) is equivalent to NaN
-	        if (+a !== +a) return +b !== +b;
-	        // An `egal` comparison is performed for other numeric values.
-	        return +a === 0 ? 1 / +a === 1 / b : +a === +b;
-	      case '[object Date]':
-	      case '[object Boolean]':
-	        // Coerce dates and booleans to numeric primitive values. Dates are compared by their
-	        // millisecond representations. Note that invalid dates with millisecond representations
-	        // of `NaN` are not equivalent.
-	        return +a === +b;
-	    }
-
-	    var areArrays = className === '[object Array]';
-	    if (!areArrays) {
-	      if (typeof a != 'object' || typeof b != 'object') return false;
-
-	      // Objects with different constructors are not equivalent, but `Object`s or `Array`s
-	      // from different frames are.
-	      var aCtor = a.constructor, bCtor = b.constructor;
-	      if (aCtor !== bCtor && !(_.isFunction(aCtor) && aCtor instanceof aCtor &&
-	                               _.isFunction(bCtor) && bCtor instanceof bCtor)
-	                          && ('constructor' in a && 'constructor' in b)) {
-	        return false;
-	      }
-	    }
-	    // Assume equality for cyclic structures. The algorithm for detecting cyclic
-	    // structures is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
-
-	    // Initializing stack of traversed objects.
-	    // It's done here since we only need them for objects and arrays comparison.
-	    aStack = aStack || [];
-	    bStack = bStack || [];
-	    var length = aStack.length;
-	    while (length--) {
-	      // Linear search. Performance is inversely proportional to the number of
-	      // unique nested structures.
-	      if (aStack[length] === a) return bStack[length] === b;
-	    }
-
-	    // Add the first object to the stack of traversed objects.
-	    aStack.push(a);
-	    bStack.push(b);
-
-	    // Recursively compare objects and arrays.
-	    if (areArrays) {
-	      // Compare array lengths to determine if a deep comparison is necessary.
-	      length = a.length;
-	      if (length !== b.length) return false;
-	      // Deep compare the contents, ignoring non-numeric properties.
-	      while (length--) {
-	        if (!eq(a[length], b[length], aStack, bStack)) return false;
-	      }
-	    } else {
-	      // Deep compare objects.
-	      var keys = _.keys(a), key;
-	      length = keys.length;
-	      // Ensure that both objects contain the same number of properties before comparing deep equality.
-	      if (_.keys(b).length !== length) return false;
-	      while (length--) {
-	        // Deep compare each member
-	        key = keys[length];
-	        if (!(_.has(b, key) && eq(a[key], b[key], aStack, bStack))) return false;
-	      }
-	    }
-	    // Remove the first object from the stack of traversed objects.
-	    aStack.pop();
-	    bStack.pop();
-	    return true;
-	  };
-
-	  // Perform a deep comparison to check if two objects are equal.
-	  _.isEqual = function(a, b) {
-	    return eq(a, b);
-	  };
-
-	  // Is a given array, string, or object empty?
-	  // An "empty" object has no enumerable own-properties.
-	  _.isEmpty = function(obj) {
-	    if (obj == null) return true;
-	    if (isArrayLike(obj) && (_.isArray(obj) || _.isString(obj) || _.isArguments(obj))) return obj.length === 0;
-	    return _.keys(obj).length === 0;
-	  };
-
-	  // Is a given value a DOM element?
-	  _.isElement = function(obj) {
-	    return !!(obj && obj.nodeType === 1);
-	  };
-
-	  // Is a given value an array?
-	  // Delegates to ECMA5's native Array.isArray
-	  _.isArray = nativeIsArray || function(obj) {
-	    return toString.call(obj) === '[object Array]';
-	  };
-
-	  // Is a given variable an object?
-	  _.isObject = function(obj) {
-	    var type = typeof obj;
-	    return type === 'function' || type === 'object' && !!obj;
-	  };
-
-	  // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp, isError.
-	  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function(name) {
-	    _['is' + name] = function(obj) {
-	      return toString.call(obj) === '[object ' + name + ']';
-	    };
-	  });
-
-	  // Define a fallback version of the method in browsers (ahem, IE < 9), where
-	  // there isn't any inspectable "Arguments" type.
-	  if (!_.isArguments(arguments)) {
-	    _.isArguments = function(obj) {
-	      return _.has(obj, 'callee');
-	    };
-	  }
-
-	  // Optimize `isFunction` if appropriate. Work around some typeof bugs in old v8,
-	  // IE 11 (#1621), and in Safari 8 (#1929).
-	  if (typeof /./ != 'function' && typeof Int8Array != 'object') {
-	    _.isFunction = function(obj) {
-	      return typeof obj == 'function' || false;
-	    };
-	  }
-
-	  // Is a given object a finite number?
-	  _.isFinite = function(obj) {
-	    return isFinite(obj) && !isNaN(parseFloat(obj));
-	  };
-
-	  // Is the given value `NaN`? (NaN is the only number which does not equal itself).
-	  _.isNaN = function(obj) {
-	    return _.isNumber(obj) && obj !== +obj;
-	  };
-
-	  // Is a given value a boolean?
-	  _.isBoolean = function(obj) {
-	    return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
-	  };
-
-	  // Is a given value equal to null?
-	  _.isNull = function(obj) {
-	    return obj === null;
-	  };
-
-	  // Is a given variable undefined?
-	  _.isUndefined = function(obj) {
-	    return obj === void 0;
-	  };
-
-	  // Shortcut function for checking if an object has a given property directly
-	  // on itself (in other words, not on a prototype).
-	  _.has = function(obj, key) {
-	    return obj != null && hasOwnProperty.call(obj, key);
-	  };
-
-	  // Utility Functions
-	  // -----------------
-
-	  // Run Underscore.js in *noConflict* mode, returning the `_` variable to its
-	  // previous owner. Returns a reference to the Underscore object.
-	  _.noConflict = function() {
-	    root._ = previousUnderscore;
-	    return this;
-	  };
-
-	  // Keep the identity function around for default iteratees.
-	  _.identity = function(value) {
-	    return value;
-	  };
-
-	  // Predicate-generating functions. Often useful outside of Underscore.
-	  _.constant = function(value) {
-	    return function() {
-	      return value;
-	    };
-	  };
-
-	  _.noop = function(){};
-
-	  _.property = property;
-
-	  // Generates a function for a given object that returns a given property.
-	  _.propertyOf = function(obj) {
-	    return obj == null ? function(){} : function(key) {
-	      return obj[key];
-	    };
-	  };
-
-	  // Returns a predicate for checking whether an object has a given set of
-	  // `key:value` pairs.
-	  _.matcher = _.matches = function(attrs) {
-	    attrs = _.extendOwn({}, attrs);
-	    return function(obj) {
-	      return _.isMatch(obj, attrs);
-	    };
-	  };
-
-	  // Run a function **n** times.
-	  _.times = function(n, iteratee, context) {
-	    var accum = Array(Math.max(0, n));
-	    iteratee = optimizeCb(iteratee, context, 1);
-	    for (var i = 0; i < n; i++) accum[i] = iteratee(i);
-	    return accum;
-	  };
-
-	  // Return a random integer between min and max (inclusive).
-	  _.random = function(min, max) {
-	    if (max == null) {
-	      max = min;
-	      min = 0;
-	    }
-	    return min + Math.floor(Math.random() * (max - min + 1));
-	  };
-
-	  // A (possibly faster) way to get the current timestamp as an integer.
-	  _.now = Date.now || function() {
-	    return new Date().getTime();
-	  };
-
-	   // List of HTML entities for escaping.
-	  var escapeMap = {
-	    '&': '&amp;',
-	    '<': '&lt;',
-	    '>': '&gt;',
-	    '"': '&quot;',
-	    "'": '&#x27;',
-	    '`': '&#x60;'
-	  };
-	  var unescapeMap = _.invert(escapeMap);
-
-	  // Functions for escaping and unescaping strings to/from HTML interpolation.
-	  var createEscaper = function(map) {
-	    var escaper = function(match) {
-	      return map[match];
-	    };
-	    // Regexes for identifying a key that needs to be escaped
-	    var source = '(?:' + _.keys(map).join('|') + ')';
-	    var testRegexp = RegExp(source);
-	    var replaceRegexp = RegExp(source, 'g');
-	    return function(string) {
-	      string = string == null ? '' : '' + string;
-	      return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
-	    };
-	  };
-	  _.escape = createEscaper(escapeMap);
-	  _.unescape = createEscaper(unescapeMap);
-
-	  // If the value of the named `property` is a function then invoke it with the
-	  // `object` as context; otherwise, return it.
-	  _.result = function(object, property, fallback) {
-	    var value = object == null ? void 0 : object[property];
-	    if (value === void 0) {
-	      value = fallback;
-	    }
-	    return _.isFunction(value) ? value.call(object) : value;
-	  };
-
-	  // Generate a unique integer id (unique within the entire client session).
-	  // Useful for temporary DOM ids.
-	  var idCounter = 0;
-	  _.uniqueId = function(prefix) {
-	    var id = ++idCounter + '';
-	    return prefix ? prefix + id : id;
-	  };
-
-	  // By default, Underscore uses ERB-style template delimiters, change the
-	  // following template settings to use alternative delimiters.
-	  _.templateSettings = {
-	    evaluate    : /<%([\s\S]+?)%>/g,
-	    interpolate : /<%=([\s\S]+?)%>/g,
-	    escape      : /<%-([\s\S]+?)%>/g
-	  };
-
-	  // When customizing `templateSettings`, if you don't want to define an
-	  // interpolation, evaluation or escaping regex, we need one that is
-	  // guaranteed not to match.
-	  var noMatch = /(.)^/;
-
-	  // Certain characters need to be escaped so that they can be put into a
-	  // string literal.
-	  var escapes = {
-	    "'":      "'",
-	    '\\':     '\\',
-	    '\r':     'r',
-	    '\n':     'n',
-	    '\u2028': 'u2028',
-	    '\u2029': 'u2029'
-	  };
-
-	  var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
-
-	  var escapeChar = function(match) {
-	    return '\\' + escapes[match];
-	  };
-
-	  // JavaScript micro-templating, similar to John Resig's implementation.
-	  // Underscore templating handles arbitrary delimiters, preserves whitespace,
-	  // and correctly escapes quotes within interpolated code.
-	  // NB: `oldSettings` only exists for backwards compatibility.
-	  _.template = function(text, settings, oldSettings) {
-	    if (!settings && oldSettings) settings = oldSettings;
-	    settings = _.defaults({}, settings, _.templateSettings);
-
-	    // Combine delimiters into one regular expression via alternation.
-	    var matcher = RegExp([
-	      (settings.escape || noMatch).source,
-	      (settings.interpolate || noMatch).source,
-	      (settings.evaluate || noMatch).source
-	    ].join('|') + '|$', 'g');
-
-	    // Compile the template source, escaping string literals appropriately.
-	    var index = 0;
-	    var source = "__p+='";
-	    text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
-	      source += text.slice(index, offset).replace(escaper, escapeChar);
-	      index = offset + match.length;
-
-	      if (escape) {
-	        source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
-	      } else if (interpolate) {
-	        source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
-	      } else if (evaluate) {
-	        source += "';\n" + evaluate + "\n__p+='";
-	      }
-
-	      // Adobe VMs need the match returned to produce the correct offest.
-	      return match;
-	    });
-	    source += "';\n";
-
-	    // If a variable is not specified, place data values in local scope.
-	    if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
-
-	    source = "var __t,__p='',__j=Array.prototype.join," +
-	      "print=function(){__p+=__j.call(arguments,'');};\n" +
-	      source + 'return __p;\n';
-
-	    try {
-	      var render = new Function(settings.variable || 'obj', '_', source);
-	    } catch (e) {
-	      e.source = source;
-	      throw e;
-	    }
-
-	    var template = function(data) {
-	      return render.call(this, data, _);
-	    };
-
-	    // Provide the compiled source as a convenience for precompilation.
-	    var argument = settings.variable || 'obj';
-	    template.source = 'function(' + argument + '){\n' + source + '}';
-
-	    return template;
-	  };
-
-	  // Add a "chain" function. Start chaining a wrapped Underscore object.
-	  _.chain = function(obj) {
-	    var instance = _(obj);
-	    instance._chain = true;
-	    return instance;
-	  };
-
-	  // OOP
-	  // ---------------
-	  // If Underscore is called as a function, it returns a wrapped object that
-	  // can be used OO-style. This wrapper holds altered versions of all the
-	  // underscore functions. Wrapped objects may be chained.
-
-	  // Helper function to continue chaining intermediate results.
-	  var result = function(instance, obj) {
-	    return instance._chain ? _(obj).chain() : obj;
-	  };
-
-	  // Add your own custom functions to the Underscore object.
-	  _.mixin = function(obj) {
-	    _.each(_.functions(obj), function(name) {
-	      var func = _[name] = obj[name];
-	      _.prototype[name] = function() {
-	        var args = [this._wrapped];
-	        push.apply(args, arguments);
-	        return result(this, func.apply(_, args));
-	      };
-	    });
-	  };
-
-	  // Add all of the Underscore functions to the wrapper object.
-	  _.mixin(_);
-
-	  // Add all mutator Array functions to the wrapper.
-	  _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
-	    var method = ArrayProto[name];
-	    _.prototype[name] = function() {
-	      var obj = this._wrapped;
-	      method.apply(obj, arguments);
-	      if ((name === 'shift' || name === 'splice') && obj.length === 0) delete obj[0];
-	      return result(this, obj);
-	    };
-	  });
-
-	  // Add all accessor Array functions to the wrapper.
-	  _.each(['concat', 'join', 'slice'], function(name) {
-	    var method = ArrayProto[name];
-	    _.prototype[name] = function() {
-	      return result(this, method.apply(this._wrapped, arguments));
-	    };
-	  });
-
-	  // Extracts the result from a wrapped and chained object.
-	  _.prototype.value = function() {
-	    return this._wrapped;
-	  };
-
-	  // Provide unwrapping proxy for some methods used in engine operations
-	  // such as arithmetic and JSON stringification.
-	  _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
-
-	  _.prototype.toString = function() {
-	    return '' + this._wrapped;
-	  };
-
-	  // AMD registration happens at the end for compatibility with AMD loaders
-	  // that may not enforce next-turn semantics on modules. Even though general
-	  // practice for AMD registration is to be anonymous, underscore registers
-	  // as a named module because, like jQuery, it is a base library that is
-	  // popular enough to be bundled in a third party lib, but not be part of
-	  // an AMD load request. Those cases could generate an error when an
-	  // anonymous define() is called outside of a loader request.
-	  if (true) {
-	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
-	      return _;
-	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	  }
-	}.call(this));
-
+	module.exports = EditTextPanel;
 
 /***/ },
 /* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+
+	var SingleChoicePanel = React.createClass({
+	    displayName: "SingleChoicePanel",
+
+
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+
+	    componentDidMount: function componentDidMount() {},
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    render: function render() {
+	        return React.createElement("div", { className: "single-choice-panel", style: {
+	                display: this.props.display ? "inherit" : "none"
+	            } });
+	    }
+	});
+
+	module.exports = SingleChoicePanel;
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+
+	var BlockTypeMenu = __webpack_require__(184);
+	var PageConfigMenu = __webpack_require__(197);
+
+	var LeftMenu = React.createClass({
+	    displayName: "LeftMenu",
+
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            showBlockTypes: false,
+	            showConfigMenu: false
+	        };
+	    },
+
+	    stateChange: function stateChange(newstate) {
+	        this.setState(newstate);
+	    },
+
+	    componentDidMount: function componentDidMount() {},
+
+	    resolution: function resolution(value) {
+	        if (value === "1920x1080") {
+	            this.props.configurationChange({ width: 1920, minHeight: 1080 });
+	        } else if (value === "1280x800") {
+	            this.props.configurationChange({ width: 1280, minHeight: 800 });
+	        } else if (value === "1024x768") {
+	            this.props.configurationChange({ width: 1024, minHeight: 768 });
+	        }
+	    },
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    clearState: function clearState() {
+	        this.setState({
+	            showBlockTypes: false,
+	            showConfigMenu: false
+	        });
+	    },
+
+	    showBlockTypes: function showBlockTypes(event) {
+	        if (!this.props.doubleScreen) {
+	            this.setState({
+	                showBlockTypes: !this.state.showBlockTypes,
+	                showConfigMenu: false
+	            });
+	        }
+	        event.stopPropagation();
+	    },
+
+	    showConfigMenu: function showConfigMenu(event) {
+	        this.setState({
+	            showConfigMenu: !this.state.showConfigMenu,
+	            showBlockTypes: false
+	        });
+	        event.stopPropagation();
+	    },
+
+	    editContent: function editContent() {
+	        this.clearState();
+	        this.props.disableLayout();
+	    },
+
+	    toggleDoubleScreen: function toggleDoubleScreen() {
+	        this.props.configurationChange({
+	            doubleScreen: !this.props.doubleScreen
+	        });
+	    },
+
+	    /*<!-- <span className="glyphicon glyphicon-edit" data-disabled={this.props.doubleScreen} onClick={this.editContent}></span>-->*/
+
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            null,
+	            React.createElement(
+	                "div",
+	                { className: "leftMenu" },
+	                this.props.layoutable ? React.createElement(
+	                    "div",
+	                    null,
+	                    React.createElement("span", { className: "glyphicon glyphicon-plus", "data-disabled": this.props.doubleScreen, "data-clicked": this.state.showBlockTypes, id: "btn-add-block", onClick: this.showBlockTypes }),
+	                    React.createElement("span", { className: "glyphicon glyphicon-cog", "data-clicked": this.state.showConfigMenu, onClick: this.showConfigMenu })
+	                ) : React.createElement(
+	                    "div",
+	                    null,
+	                    React.createElement("span", { className: "glyphicon glyphicon-arrow-left", "data-clicked": "true", onClick: this.props.enableLayout })
+	                ),
+	                React.createElement(
+	                    "div",
+	                    { className: "screenRatios",
+	                        style: {
+	                            marginTop: "160px",
+	                            display: this.props.layoutable ? "inherit" : "none"
+	                        } },
+	                    React.createElement("span", { className: "glyphicon glyphicon-blackboard", "data-clicked": this.props.doubleScreen, onClick: this.toggleDoubleScreen }),
+	                    React.createElement(
+	                        "span",
+	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1024x768"), "data-clicked": this.props.width === 1024 },
+	                        "1024",
+	                        React.createElement("br", null),
+	                        "768"
+	                    ),
+	                    React.createElement(
+	                        "span",
+	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1280x800"), "data-clicked": this.props.width === 1280 },
+	                        "1280",
+	                        React.createElement("br", null),
+	                        "800"
+	                    ),
+	                    React.createElement(
+	                        "span",
+	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1920x1080"), "data-clicked": this.props.width === 1920 },
+	                        "1920",
+	                        React.createElement("br", null),
+	                        "1080"
+	                    )
+	                )
+	            ),
+	            React.createElement("div", { className: "hidder" }),
+	            React.createElement(BlockTypeMenu, { addBlock: this.props.addBlock, show: this.state.showBlockTypes, adddActivity: this.props.adddActivity, parentStateChange: this.stateChange }),
+	            React.createElement(PageConfigMenu, { configurationChange: this.props.configurationChange,
+	                showConfigMenu: this.showConfigMenu,
+	                showHeader: this.props.showHeader, showFooter: this.props.showFooter,
+	                show: this.state.showConfigMenu, closeSetting: this.props.closeSetting })
+	        );
+	    }
+	});
+
+	module.exports = LeftMenu;
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+	var ChooseImageMenu = __webpack_require__(185);
+	var AddTextMenu = __webpack_require__(191);
+	var AddActivityMenu = __webpack_require__(192);
+
+	var BlockTypeMenu = React.createClass({
+	    displayName: "BlockTypeMenu",
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            page: "addText"
+	        };
+	    },
+
+	    componentDidMount: function componentDidMount() {},
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    showAddText: function showAddText(event) {
+	        event.stopPropagation();
+	        this.setState({
+	            page: "addText"
+	        });
+	    },
+
+	    showAddImage: function showAddImage(event) {
+	        event.stopPropagation();
+	        this.setState({
+	            page: "chooseImage"
+	        });
+	    },
+
+	    showAddActivity: function showAddActivity(event) {
+	        event.stopPropagation();
+	        this.setState({
+	            page: "addActivity"
+	        });
+	    },
+
+	    adddActivity: function adddActivity(prop) {
+	        event.stopPropagation();
+	        this.props.adddActivity(prop);
+	    },
+
+	    stopPropagation: function stopPropagation(event) {
+	        event.stopPropagation();
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: this.props.show ? "blockType shown" : "blockType", onClick: this.stopPropagation },
+	            React.createElement(
+	                "ul",
+	                { className: "category-list" },
+	                React.createElement(
+	                    "li",
+	                    { className: "category" },
+	                    React.createElement(
+	                        "span",
+	                        { className: this.state.page === "addText" ? "current" : "", onClick: this.showAddText },
+	                        "Text"
+	                    )
+	                ),
+	                React.createElement(
+	                    "li",
+	                    { className: "category" },
+	                    React.createElement(
+	                        "span",
+	                        { className: this.state.page === "chooseImage" ? "current" : "", onClick: this.showAddImage },
+	                        "Image"
+	                    )
+	                ),
+	                React.createElement(
+	                    "li",
+	                    { className: "category" },
+	                    React.createElement(
+	                        "span",
+	                        null,
+	                        "Media"
+	                    )
+	                ),
+	                React.createElement(
+	                    "li",
+	                    { className: "category" },
+	                    React.createElement(
+	                        "span",
+	                        { className: this.state.page === "addActivity" ? "current" : "", onClick: this.showAddActivity },
+	                        "Activity"
+	                    )
+	                )
+	            ),
+	            React.createElement(AddTextMenu, { show: this.state.page === "addText", addBlock: this.props.addBlock, parentStateChange: this.props.parentStateChange }),
+	            React.createElement(ChooseImageMenu, { show: this.state.page === "chooseImage", addBlock: this.props.addBlock }),
+	            React.createElement(AddActivityMenu, { addActivity: this.adddActivity, show: this.state.page === "addActivity" })
+	        );
+	    }
+	});
+
+	module.exports = BlockTypeMenu;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(18);
+	var Dropzone = __webpack_require__(186);
+
+	var request = __webpack_require__(188);
+
+	var ChooseImageMenu = React.createClass({
+	    displayName: 'ChooseImageMenu',
+
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+
+	    componentDidMount: function componentDidMount() {},
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    onDrop: function onDrop(files) {
+	        console.log('Received files: ', files);
+
+	        request.post('/attach/upload').attach(files[0].name, files[0]).end(function (err, res) {});
+	    },
+
+	    handleFile: function handleFile(file) {},
+
+	    render: function render() {
+	        return React.createElement(
+	            'div',
+	            { className: 'chooseImage', 'data-show': this.props.show },
+	            React.createElement(
+	                Dropzone,
+	                { className: 'zone', onDrop: this.onDrop, multiple: false },
+	                React.createElement(
+	                    'div',
+	                    null,
+	                    'Try dropping some files here, or click to select files to upload.'
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = ChooseImageMenu;
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.__esModule = true;
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _attrAccept = __webpack_require__(187);
+
+	var _attrAccept2 = _interopRequireDefault(_attrAccept);
+
+	var _react = __webpack_require__(18);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var supportMultiple = typeof document !== 'undefined' && document && document.createElement ? 'multiple' in document.createElement('input') : true;
+
+	var Dropzone = (function (_React$Component) {
+	  _inherits(Dropzone, _React$Component);
+
+	  function Dropzone(props, context) {
+	    _classCallCheck(this, Dropzone);
+
+	    _React$Component.call(this, props, context);
+	    this.onClick = this.onClick.bind(this);
+	    this.onDragEnter = this.onDragEnter.bind(this);
+	    this.onDragLeave = this.onDragLeave.bind(this);
+	    this.onDragOver = this.onDragOver.bind(this);
+	    this.onDrop = this.onDrop.bind(this);
+
+	    this.state = {
+	      isDragActive: false
+	    };
+	  }
+
+	  Dropzone.prototype.componentDidMount = function componentDidMount() {
+	    this.enterCounter = 0;
+	  };
+
+	  Dropzone.prototype.onDragEnter = function onDragEnter(e) {
+	    e.preventDefault();
+
+	    // Count the dropzone and any children that are entered.
+	    ++this.enterCounter;
+
+	    // This is tricky. During the drag even the dataTransfer.files is null
+	    // But Chrome implements some drag store, which is accesible via dataTransfer.items
+	    var dataTransferItems = e.dataTransfer && e.dataTransfer.items ? e.dataTransfer.items : [];
+
+	    // Now we need to convert the DataTransferList to Array
+	    var allFilesAccepted = this.allFilesAccepted(Array.prototype.slice.call(dataTransferItems));
+
+	    this.setState({
+	      isDragActive: allFilesAccepted,
+	      isDragReject: !allFilesAccepted
+	    });
+
+	    if (this.props.onDragEnter) {
+	      this.props.onDragEnter.call(this, e);
+	    }
+	  };
+
+	  Dropzone.prototype.onDragOver = function onDragOver(e) {
+	    e.preventDefault();
+	    e.stopPropagation();
+	    return false;
+	  };
+
+	  Dropzone.prototype.onDragLeave = function onDragLeave(e) {
+	    e.preventDefault();
+
+	    // Only deactivate once the dropzone and all children was left.
+	    if (--this.enterCounter > 0) {
+	      return;
+	    }
+
+	    this.setState({
+	      isDragActive: false,
+	      isDragReject: false
+	    });
+
+	    if (this.props.onDragLeave) {
+	      this.props.onDragLeave.call(this, e);
+	    }
+	  };
+
+	  Dropzone.prototype.onDrop = function onDrop(e) {
+	    e.preventDefault();
+
+	    // Reset the counter along with the drag on a drop.
+	    this.enterCounter = 0;
+
+	    this.setState({
+	      isDragActive: false,
+	      isDragReject: false
+	    });
+
+	    var droppedFiles = e.dataTransfer ? e.dataTransfer.files : e.target.files;
+	    var max = this.props.multiple ? droppedFiles.length : 1;
+	    var files = [];
+
+	    for (var i = 0; i < max; i++) {
+	      var file = droppedFiles[i];
+	      // We might want to disable the preview creation to support big files
+	      if (!this.props.disablePreview) {
+	        file.preview = window.URL.createObjectURL(file);
+	      }
+	      files.push(file);
+	    }
+
+	    if (this.props.onDrop) {
+	      this.props.onDrop.call(this, files, e);
+	    }
+
+	    if (this.allFilesAccepted(files)) {
+	      if (this.props.onDropAccepted) {
+	        this.props.onDropAccepted.call(this, files, e);
+	      }
+	    } else {
+	      if (this.props.onDropRejected) {
+	        this.props.onDropRejected.call(this, files, e);
+	      }
+	    }
+	  };
+
+	  Dropzone.prototype.onClick = function onClick() {
+	    if (!this.props.disableClick) {
+	      this.open();
+	    }
+	  };
+
+	  Dropzone.prototype.allFilesAccepted = function allFilesAccepted(files) {
+	    var _this = this;
+
+	    return files.every(function (file) {
+	      return _attrAccept2['default'](file, _this.props.accept);
+	    });
+	  };
+
+	  Dropzone.prototype.open = function open() {
+	    this.fileInputEl.value = null;
+	    this.fileInputEl.click();
+	  };
+
+	  Dropzone.prototype.render = function render() {
+	    var _this2 = this;
+
+	    var _props = this.props;
+	    var accept = _props.accept;
+	    var activeClassName = _props.activeClassName;
+	    var inputProps = _props.inputProps;
+	    var multiple = _props.multiple;
+	    var name = _props.name;
+	    var rejectClassName = _props.rejectClassName;
+
+	    var rest = _objectWithoutProperties(_props, ['accept', 'activeClassName', 'inputProps', 'multiple', 'name', 'rejectClassName']);
+
+	    var activeStyle = // eslint-disable-line prefer-const
+	    rest.activeStyle;
+	    var className = rest.className;
+	    var rejectStyle = rest.rejectStyle;
+	    var style = rest.style;
+
+	    var props = _objectWithoutProperties(rest, ['activeStyle', 'className', 'rejectStyle', 'style']);
+
+	    var _state = this.state;
+	    var isDragActive = _state.isDragActive;
+	    var isDragReject = _state.isDragReject;
+
+	    className = className || '';
+
+	    if (isDragActive && activeClassName) {
+	      className += ' ' + activeClassName;
+	    }
+	    if (isDragReject && rejectClassName) {
+	      className += ' ' + rejectClassName;
+	    }
+
+	    if (!className && !style && !activeStyle && !rejectStyle) {
+	      style = {
+	        width: 200,
+	        height: 200,
+	        borderWidth: 2,
+	        borderColor: '#666',
+	        borderStyle: 'dashed',
+	        borderRadius: 5
+	      };
+	      activeStyle = {
+	        borderStyle: 'solid',
+	        backgroundColor: '#eee'
+	      };
+	      rejectStyle = {
+	        borderStyle: 'solid',
+	        backgroundColor: '#ffdddd'
+	      };
+	    }
+
+	    var appliedStyle = undefined;
+	    if (activeStyle && isDragActive) {
+	      appliedStyle = _extends({}, style, activeStyle);
+	    } else if (rejectStyle && isDragReject) {
+	      appliedStyle = _extends({}, style, rejectStyle);
+	    } else {
+	      appliedStyle = _extends({}, style);
+	    }
+
+	    var inputAttributes = {
+	      accept: accept,
+	      type: 'file',
+	      style: { display: 'none' },
+	      multiple: supportMultiple && multiple,
+	      ref: function ref(el) {
+	        return _this2.fileInputEl = el;
+	      },
+	      onChange: this.onDrop
+	    };
+
+	    if (name && name.length) {
+	      inputAttributes.name = name;
+	    }
+
+	    return _react2['default'].createElement(
+	      'div',
+	      _extends({
+	        className: className,
+	        style: appliedStyle
+	      }, props, /* expand user provided props first so event handlers are never overridden */{
+	        onClick: this.onClick,
+	        onDragEnter: this.onDragEnter,
+	        onDragOver: this.onDragOver,
+	        onDragLeave: this.onDragLeave,
+	        onDrop: this.onDrop
+	      }),
+	      this.props.children,
+	      _react2['default'].createElement('input', _extends({}, inputProps, /* expand user provided inputProps first so inputAttributes override them */inputAttributes))
+	    );
+	  };
+
+	  return Dropzone;
+	})(_react2['default'].Component);
+
+	Dropzone.defaultProps = {
+	  disablePreview: false,
+	  disableClick: false,
+	  multiple: true
+	};
+
+	Dropzone.propTypes = {
+	  onDrop: _react2['default'].PropTypes.func,
+	  onDropAccepted: _react2['default'].PropTypes.func,
+	  onDropRejected: _react2['default'].PropTypes.func,
+	  onDragEnter: _react2['default'].PropTypes.func,
+	  onDragLeave: _react2['default'].PropTypes.func,
+
+	  children: _react2['default'].PropTypes.node,
+	  style: _react2['default'].PropTypes.object,
+	  activeStyle: _react2['default'].PropTypes.object,
+	  rejectStyle: _react2['default'].PropTypes.object,
+	  className: _react2['default'].PropTypes.string,
+	  activeClassName: _react2['default'].PropTypes.string,
+	  rejectClassName: _react2['default'].PropTypes.string,
+
+	  disablePreview: _react2['default'].PropTypes.bool,
+	  disableClick: _react2['default'].PropTypes.bool,
+
+	  inputProps: _react2['default'].PropTypes.object,
+	  multiple: _react2['default'].PropTypes.bool,
+	  accept: _react2['default'].PropTypes.string,
+	  name: _react2['default'].PropTypes.string
+	};
+
+	exports['default'] = Dropzone;
+	module.exports = exports['default'];
+
+/***/ },
+/* 187 */
+/***/ function(module, exports) {
+
+	module.exports=function(t){function n(e){if(r[e])return r[e].exports;var o=r[e]={exports:{},id:e,loaded:!1};return t[e].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var r={};return n.m=t,n.c=r,n.p="",n(0)}([function(t,n,r){"use strict";n.__esModule=!0,r(8),r(9),n["default"]=function(t,n){if(t&&n){var r=function(){var r=n.split(","),e=t.name||"",o=t.type||"",i=o.replace(/\/.*$/,"");return{v:r.some(function(t){var n=t.trim();return"."===n.charAt(0)?e.toLowerCase().endsWith(n.toLowerCase()):/\/\*$/.test(n)?i===n.replace(/\/.*$/,""):o===n})}}();if("object"==typeof r)return r.v}return!0},t.exports=n["default"]},function(t,n){var r=t.exports={version:"1.2.2"};"number"==typeof __e&&(__e=r)},function(t,n){var r=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=r)},function(t,n,r){var e=r(2),o=r(1),i=r(4),u=r(19),c="prototype",f=function(t,n){return function(){return t.apply(n,arguments)}},s=function(t,n,r){var a,p,l,d,y=t&s.G,h=t&s.P,v=y?e:t&s.S?e[n]||(e[n]={}):(e[n]||{})[c],x=y?o:o[n]||(o[n]={});y&&(r=n);for(a in r)p=!(t&s.F)&&v&&a in v,l=(p?v:r)[a],d=t&s.B&&p?f(l,e):h&&"function"==typeof l?f(Function.call,l):l,v&&!p&&u(v,a,l),x[a]!=l&&i(x,a,d),h&&((x[c]||(x[c]={}))[a]=l)};e.core=o,s.F=1,s.G=2,s.S=4,s.P=8,s.B=16,s.W=32,t.exports=s},function(t,n,r){var e=r(5),o=r(18);t.exports=r(22)?function(t,n,r){return e.setDesc(t,n,o(1,r))}:function(t,n,r){return t[n]=r,t}},function(t,n){var r=Object;t.exports={create:r.create,getProto:r.getPrototypeOf,isEnum:{}.propertyIsEnumerable,getDesc:r.getOwnPropertyDescriptor,setDesc:r.defineProperty,setDescs:r.defineProperties,getKeys:r.keys,getNames:r.getOwnPropertyNames,getSymbols:r.getOwnPropertySymbols,each:[].forEach}},function(t,n){var r=0,e=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++r+e).toString(36))}},function(t,n,r){var e=r(20)("wks"),o=r(2).Symbol;t.exports=function(t){return e[t]||(e[t]=o&&o[t]||(o||r(6))("Symbol."+t))}},function(t,n,r){r(26),t.exports=r(1).Array.some},function(t,n,r){r(25),t.exports=r(1).String.endsWith},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){var r={}.toString;t.exports=function(t){return r.call(t).slice(8,-1)}},function(t,n,r){var e=r(10);t.exports=function(t,n,r){if(e(t),void 0===n)return t;switch(r){case 1:return function(r){return t.call(n,r)};case 2:return function(r,e){return t.call(n,r,e)};case 3:return function(r,e,o){return t.call(n,r,e,o)}}return function(){return t.apply(n,arguments)}}},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n,r){t.exports=function(t){var n=/./;try{"/./"[t](n)}catch(e){try{return n[r(7)("match")]=!1,!"/./"[t](n)}catch(o){}}return!0}},function(t,n){t.exports=function(t){try{return!!t()}catch(n){return!0}}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n,r){var e=r(16),o=r(11),i=r(7)("match");t.exports=function(t){var n;return e(t)&&(void 0!==(n=t[i])?!!n:"RegExp"==o(t))}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n,r){var e=r(2),o=r(4),i=r(6)("src"),u="toString",c=Function[u],f=(""+c).split(u);r(1).inspectSource=function(t){return c.call(t)},(t.exports=function(t,n,r,u){"function"==typeof r&&(o(r,i,t[n]?""+t[n]:f.join(String(n))),"name"in r||(r.name=n)),t===e?t[n]=r:(u||delete t[n],o(t,n,r))})(Function.prototype,u,function(){return"function"==typeof this&&this[i]||c.call(this)})},function(t,n,r){var e=r(2),o="__core-js_shared__",i=e[o]||(e[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n,r){var e=r(17),o=r(13);t.exports=function(t,n,r){if(e(n))throw TypeError("String#"+r+" doesn't accept regex!");return String(o(t))}},function(t,n,r){t.exports=!r(15)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n){var r=Math.ceil,e=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?e:r)(t)}},function(t,n,r){var e=r(23),o=Math.min;t.exports=function(t){return t>0?o(e(t),9007199254740991):0}},function(t,n,r){"use strict";var e=r(3),o=r(24),i=r(21),u="endsWith",c=""[u];e(e.P+e.F*r(14)(u),"String",{endsWith:function(t){var n=i(this,t,u),r=arguments,e=r.length>1?r[1]:void 0,f=o(n.length),s=void 0===e?f:Math.min(o(e),f),a=String(t);return c?c.call(n,a,s):n.slice(s-a.length,s)===a}})},function(t,n,r){var e=r(5),o=r(3),i=r(1).Array||Array,u={},c=function(t,n){e.each.call(t.split(","),function(t){void 0==n&&t in i?u[t]=i[t]:t in[]&&(u[t]=r(12)(Function.call,[][t],n))})};c("pop,reverse,shift,keys,values,entries",1),c("indexOf,every,some,forEach,map,filter,find,findIndex,includes",3),c("join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill"),o(o.S,"Array",u)}]);
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Module dependencies.
+	 */
+
+	var Emitter = __webpack_require__(189);
+	var reduce = __webpack_require__(190);
+
+	/**
+	 * Root reference for iframes.
+	 */
+
+	var root;
+	if (typeof window !== 'undefined') { // Browser window
+	  root = window;
+	} else if (typeof self !== 'undefined') { // Web Worker
+	  root = self;
+	} else { // Other environments
+	  root = this;
+	}
+
+	/**
+	 * Noop.
+	 */
+
+	function noop(){};
+
+	/**
+	 * Check if `obj` is a host object,
+	 * we don't want to serialize these :)
+	 *
+	 * TODO: future proof, move to compoent land
+	 *
+	 * @param {Object} obj
+	 * @return {Boolean}
+	 * @api private
+	 */
+
+	function isHost(obj) {
+	  var str = {}.toString.call(obj);
+
+	  switch (str) {
+	    case '[object File]':
+	    case '[object Blob]':
+	    case '[object FormData]':
+	      return true;
+	    default:
+	      return false;
+	  }
+	}
+
+	/**
+	 * Determine XHR.
+	 */
+
+	request.getXHR = function () {
+	  if (root.XMLHttpRequest
+	      && (!root.location || 'file:' != root.location.protocol
+	          || !root.ActiveXObject)) {
+	    return new XMLHttpRequest;
+	  } else {
+	    try { return new ActiveXObject('Microsoft.XMLHTTP'); } catch(e) {}
+	    try { return new ActiveXObject('Msxml2.XMLHTTP.6.0'); } catch(e) {}
+	    try { return new ActiveXObject('Msxml2.XMLHTTP.3.0'); } catch(e) {}
+	    try { return new ActiveXObject('Msxml2.XMLHTTP'); } catch(e) {}
+	  }
+	  return false;
+	};
+
+	/**
+	 * Removes leading and trailing whitespace, added to support IE.
+	 *
+	 * @param {String} s
+	 * @return {String}
+	 * @api private
+	 */
+
+	var trim = ''.trim
+	  ? function(s) { return s.trim(); }
+	  : function(s) { return s.replace(/(^\s*|\s*$)/g, ''); };
+
+	/**
+	 * Check if `obj` is an object.
+	 *
+	 * @param {Object} obj
+	 * @return {Boolean}
+	 * @api private
+	 */
+
+	function isObject(obj) {
+	  return obj === Object(obj);
+	}
+
+	/**
+	 * Serialize the given `obj`.
+	 *
+	 * @param {Object} obj
+	 * @return {String}
+	 * @api private
+	 */
+
+	function serialize(obj) {
+	  if (!isObject(obj)) return obj;
+	  var pairs = [];
+	  for (var key in obj) {
+	    if (null != obj[key]) {
+	      pushEncodedKeyValuePair(pairs, key, obj[key]);
+	        }
+	      }
+	  return pairs.join('&');
+	}
+
+	/**
+	 * Helps 'serialize' with serializing arrays.
+	 * Mutates the pairs array.
+	 *
+	 * @param {Array} pairs
+	 * @param {String} key
+	 * @param {Mixed} val
+	 */
+
+	function pushEncodedKeyValuePair(pairs, key, val) {
+	  if (Array.isArray(val)) {
+	    return val.forEach(function(v) {
+	      pushEncodedKeyValuePair(pairs, key, v);
+	    });
+	  }
+	  pairs.push(encodeURIComponent(key)
+	    + '=' + encodeURIComponent(val));
+	}
+
+	/**
+	 * Expose serialization method.
+	 */
+
+	 request.serializeObject = serialize;
+
+	 /**
+	  * Parse the given x-www-form-urlencoded `str`.
+	  *
+	  * @param {String} str
+	  * @return {Object}
+	  * @api private
+	  */
+
+	function parseString(str) {
+	  var obj = {};
+	  var pairs = str.split('&');
+	  var parts;
+	  var pair;
+
+	  for (var i = 0, len = pairs.length; i < len; ++i) {
+	    pair = pairs[i];
+	    parts = pair.split('=');
+	    obj[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+	  }
+
+	  return obj;
+	}
+
+	/**
+	 * Expose parser.
+	 */
+
+	request.parseString = parseString;
+
+	/**
+	 * Default MIME type map.
+	 *
+	 *     superagent.types.xml = 'application/xml';
+	 *
+	 */
+
+	request.types = {
+	  html: 'text/html',
+	  json: 'application/json',
+	  xml: 'application/xml',
+	  urlencoded: 'application/x-www-form-urlencoded',
+	  'form': 'application/x-www-form-urlencoded',
+	  'form-data': 'application/x-www-form-urlencoded'
+	};
+
+	/**
+	 * Default serialization map.
+	 *
+	 *     superagent.serialize['application/xml'] = function(obj){
+	 *       return 'generated xml here';
+	 *     };
+	 *
+	 */
+
+	 request.serialize = {
+	   'application/x-www-form-urlencoded': serialize,
+	   'application/json': JSON.stringify
+	 };
+
+	 /**
+	  * Default parsers.
+	  *
+	  *     superagent.parse['application/xml'] = function(str){
+	  *       return { object parsed from str };
+	  *     };
+	  *
+	  */
+
+	request.parse = {
+	  'application/x-www-form-urlencoded': parseString,
+	  'application/json': JSON.parse
+	};
+
+	/**
+	 * Parse the given header `str` into
+	 * an object containing the mapped fields.
+	 *
+	 * @param {String} str
+	 * @return {Object}
+	 * @api private
+	 */
+
+	function parseHeader(str) {
+	  var lines = str.split(/\r?\n/);
+	  var fields = {};
+	  var index;
+	  var line;
+	  var field;
+	  var val;
+
+	  lines.pop(); // trailing CRLF
+
+	  for (var i = 0, len = lines.length; i < len; ++i) {
+	    line = lines[i];
+	    index = line.indexOf(':');
+	    field = line.slice(0, index).toLowerCase();
+	    val = trim(line.slice(index + 1));
+	    fields[field] = val;
+	  }
+
+	  return fields;
+	}
+
+	/**
+	 * Check if `mime` is json or has +json structured syntax suffix.
+	 *
+	 * @param {String} mime
+	 * @return {Boolean}
+	 * @api private
+	 */
+
+	function isJSON(mime) {
+	  return /[\/+]json\b/.test(mime);
+	}
+
+	/**
+	 * Return the mime type for the given `str`.
+	 *
+	 * @param {String} str
+	 * @return {String}
+	 * @api private
+	 */
+
+	function type(str){
+	  return str.split(/ *; */).shift();
+	};
+
+	/**
+	 * Return header field parameters.
+	 *
+	 * @param {String} str
+	 * @return {Object}
+	 * @api private
+	 */
+
+	function params(str){
+	  return reduce(str.split(/ *; */), function(obj, str){
+	    var parts = str.split(/ *= */)
+	      , key = parts.shift()
+	      , val = parts.shift();
+
+	    if (key && val) obj[key] = val;
+	    return obj;
+	  }, {});
+	};
+
+	/**
+	 * Initialize a new `Response` with the given `xhr`.
+	 *
+	 *  - set flags (.ok, .error, etc)
+	 *  - parse header
+	 *
+	 * Examples:
+	 *
+	 *  Aliasing `superagent` as `request` is nice:
+	 *
+	 *      request = superagent;
+	 *
+	 *  We can use the promise-like API, or pass callbacks:
+	 *
+	 *      request.get('/').end(function(res){});
+	 *      request.get('/', function(res){});
+	 *
+	 *  Sending data can be chained:
+	 *
+	 *      request
+	 *        .post('/user')
+	 *        .send({ name: 'tj' })
+	 *        .end(function(res){});
+	 *
+	 *  Or passed to `.send()`:
+	 *
+	 *      request
+	 *        .post('/user')
+	 *        .send({ name: 'tj' }, function(res){});
+	 *
+	 *  Or passed to `.post()`:
+	 *
+	 *      request
+	 *        .post('/user', { name: 'tj' })
+	 *        .end(function(res){});
+	 *
+	 * Or further reduced to a single call for simple cases:
+	 *
+	 *      request
+	 *        .post('/user', { name: 'tj' }, function(res){});
+	 *
+	 * @param {XMLHTTPRequest} xhr
+	 * @param {Object} options
+	 * @api private
+	 */
+
+	function Response(req, options) {
+	  options = options || {};
+	  this.req = req;
+	  this.xhr = this.req.xhr;
+	  // responseText is accessible only if responseType is '' or 'text' and on older browsers
+	  this.text = ((this.req.method !='HEAD' && (this.xhr.responseType === '' || this.xhr.responseType === 'text')) || typeof this.xhr.responseType === 'undefined')
+	     ? this.xhr.responseText
+	     : null;
+	  this.statusText = this.req.xhr.statusText;
+	  this.setStatusProperties(this.xhr.status);
+	  this.header = this.headers = parseHeader(this.xhr.getAllResponseHeaders());
+	  // getAllResponseHeaders sometimes falsely returns "" for CORS requests, but
+	  // getResponseHeader still works. so we get content-type even if getting
+	  // other headers fails.
+	  this.header['content-type'] = this.xhr.getResponseHeader('content-type');
+	  this.setHeaderProperties(this.header);
+	  this.body = this.req.method != 'HEAD'
+	    ? this.parseBody(this.text ? this.text : this.xhr.response)
+	    : null;
+	}
+
+	/**
+	 * Get case-insensitive `field` value.
+	 *
+	 * @param {String} field
+	 * @return {String}
+	 * @api public
+	 */
+
+	Response.prototype.get = function(field){
+	  return this.header[field.toLowerCase()];
+	};
+
+	/**
+	 * Set header related properties:
+	 *
+	 *   - `.type` the content type without params
+	 *
+	 * A response of "Content-Type: text/plain; charset=utf-8"
+	 * will provide you with a `.type` of "text/plain".
+	 *
+	 * @param {Object} header
+	 * @api private
+	 */
+
+	Response.prototype.setHeaderProperties = function(header){
+	  // content-type
+	  var ct = this.header['content-type'] || '';
+	  this.type = type(ct);
+
+	  // params
+	  var obj = params(ct);
+	  for (var key in obj) this[key] = obj[key];
+	};
+
+	/**
+	 * Parse the given body `str`.
+	 *
+	 * Used for auto-parsing of bodies. Parsers
+	 * are defined on the `superagent.parse` object.
+	 *
+	 * @param {String} str
+	 * @return {Mixed}
+	 * @api private
+	 */
+
+	Response.prototype.parseBody = function(str){
+	  var parse = request.parse[this.type];
+	  return parse && str && (str.length || str instanceof Object)
+	    ? parse(str)
+	    : null;
+	};
+
+	/**
+	 * Set flags such as `.ok` based on `status`.
+	 *
+	 * For example a 2xx response will give you a `.ok` of __true__
+	 * whereas 5xx will be __false__ and `.error` will be __true__. The
+	 * `.clientError` and `.serverError` are also available to be more
+	 * specific, and `.statusType` is the class of error ranging from 1..5
+	 * sometimes useful for mapping respond colors etc.
+	 *
+	 * "sugar" properties are also defined for common cases. Currently providing:
+	 *
+	 *   - .noContent
+	 *   - .badRequest
+	 *   - .unauthorized
+	 *   - .notAcceptable
+	 *   - .notFound
+	 *
+	 * @param {Number} status
+	 * @api private
+	 */
+
+	Response.prototype.setStatusProperties = function(status){
+	  // handle IE9 bug: http://stackoverflow.com/questions/10046972/msie-returns-status-code-of-1223-for-ajax-request
+	  if (status === 1223) {
+	    status = 204;
+	  }
+
+	  var type = status / 100 | 0;
+
+	  // status / class
+	  this.status = this.statusCode = status;
+	  this.statusType = type;
+
+	  // basics
+	  this.info = 1 == type;
+	  this.ok = 2 == type;
+	  this.clientError = 4 == type;
+	  this.serverError = 5 == type;
+	  this.error = (4 == type || 5 == type)
+	    ? this.toError()
+	    : false;
+
+	  // sugar
+	  this.accepted = 202 == status;
+	  this.noContent = 204 == status;
+	  this.badRequest = 400 == status;
+	  this.unauthorized = 401 == status;
+	  this.notAcceptable = 406 == status;
+	  this.notFound = 404 == status;
+	  this.forbidden = 403 == status;
+	};
+
+	/**
+	 * Return an `Error` representative of this response.
+	 *
+	 * @return {Error}
+	 * @api public
+	 */
+
+	Response.prototype.toError = function(){
+	  var req = this.req;
+	  var method = req.method;
+	  var url = req.url;
+
+	  var msg = 'cannot ' + method + ' ' + url + ' (' + this.status + ')';
+	  var err = new Error(msg);
+	  err.status = this.status;
+	  err.method = method;
+	  err.url = url;
+
+	  return err;
+	};
+
+	/**
+	 * Expose `Response`.
+	 */
+
+	request.Response = Response;
+
+	/**
+	 * Initialize a new `Request` with the given `method` and `url`.
+	 *
+	 * @param {String} method
+	 * @param {String} url
+	 * @api public
+	 */
+
+	function Request(method, url) {
+	  var self = this;
+	  Emitter.call(this);
+	  this._query = this._query || [];
+	  this.method = method;
+	  this.url = url;
+	  this.header = {};
+	  this._header = {};
+	  this.on('end', function(){
+	    var err = null;
+	    var res = null;
+
+	    try {
+	      res = new Response(self);
+	    } catch(e) {
+	      err = new Error('Parser is unable to parse the response');
+	      err.parse = true;
+	      err.original = e;
+	      // issue #675: return the raw response if the response parsing fails
+	      err.rawResponse = self.xhr && self.xhr.responseText ? self.xhr.responseText : null;
+	      return self.callback(err);
+	    }
+
+	    self.emit('response', res);
+
+	    if (err) {
+	      return self.callback(err, res);
+	    }
+
+	    if (res.status >= 200 && res.status < 300) {
+	      return self.callback(err, res);
+	    }
+
+	    var new_err = new Error(res.statusText || 'Unsuccessful HTTP response');
+	    new_err.original = err;
+	    new_err.response = res;
+	    new_err.status = res.status;
+
+	    self.callback(new_err, res);
+	  });
+	}
+
+	/**
+	 * Mixin `Emitter`.
+	 */
+
+	Emitter(Request.prototype);
+
+	/**
+	 * Allow for extension
+	 */
+
+	Request.prototype.use = function(fn) {
+	  fn(this);
+	  return this;
+	}
+
+	/**
+	 * Set timeout to `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.timeout = function(ms){
+	  this._timeout = ms;
+	  return this;
+	};
+
+	/**
+	 * Clear previous timeout.
+	 *
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.clearTimeout = function(){
+	  this._timeout = 0;
+	  clearTimeout(this._timer);
+	  return this;
+	};
+
+	/**
+	 * Abort the request, and clear potential timeout.
+	 *
+	 * @return {Request}
+	 * @api public
+	 */
+
+	Request.prototype.abort = function(){
+	  if (this.aborted) return;
+	  this.aborted = true;
+	  this.xhr.abort();
+	  this.clearTimeout();
+	  this.emit('abort');
+	  return this;
+	};
+
+	/**
+	 * Set header `field` to `val`, or multiple fields with one object.
+	 *
+	 * Examples:
+	 *
+	 *      req.get('/')
+	 *        .set('Accept', 'application/json')
+	 *        .set('X-API-Key', 'foobar')
+	 *        .end(callback);
+	 *
+	 *      req.get('/')
+	 *        .set({ Accept: 'application/json', 'X-API-Key': 'foobar' })
+	 *        .end(callback);
+	 *
+	 * @param {String|Object} field
+	 * @param {String} val
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.set = function(field, val){
+	  if (isObject(field)) {
+	    for (var key in field) {
+	      this.set(key, field[key]);
+	    }
+	    return this;
+	  }
+	  this._header[field.toLowerCase()] = val;
+	  this.header[field] = val;
+	  return this;
+	};
+
+	/**
+	 * Remove header `field`.
+	 *
+	 * Example:
+	 *
+	 *      req.get('/')
+	 *        .unset('User-Agent')
+	 *        .end(callback);
+	 *
+	 * @param {String} field
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.unset = function(field){
+	  delete this._header[field.toLowerCase()];
+	  delete this.header[field];
+	  return this;
+	};
+
+	/**
+	 * Get case-insensitive header `field` value.
+	 *
+	 * @param {String} field
+	 * @return {String}
+	 * @api private
+	 */
+
+	Request.prototype.getHeader = function(field){
+	  return this._header[field.toLowerCase()];
+	};
+
+	/**
+	 * Set Content-Type to `type`, mapping values from `request.types`.
+	 *
+	 * Examples:
+	 *
+	 *      superagent.types.xml = 'application/xml';
+	 *
+	 *      request.post('/')
+	 *        .type('xml')
+	 *        .send(xmlstring)
+	 *        .end(callback);
+	 *
+	 *      request.post('/')
+	 *        .type('application/xml')
+	 *        .send(xmlstring)
+	 *        .end(callback);
+	 *
+	 * @param {String} type
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.type = function(type){
+	  this.set('Content-Type', request.types[type] || type);
+	  return this;
+	};
+
+	/**
+	 * Force given parser
+	 *
+	 * Sets the body parser no matter type.
+	 *
+	 * @param {Function}
+	 * @api public
+	 */
+
+	Request.prototype.parse = function(fn){
+	  this._parser = fn;
+	  return this;
+	};
+
+	/**
+	 * Set Accept to `type`, mapping values from `request.types`.
+	 *
+	 * Examples:
+	 *
+	 *      superagent.types.json = 'application/json';
+	 *
+	 *      request.get('/agent')
+	 *        .accept('json')
+	 *        .end(callback);
+	 *
+	 *      request.get('/agent')
+	 *        .accept('application/json')
+	 *        .end(callback);
+	 *
+	 * @param {String} accept
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.accept = function(type){
+	  this.set('Accept', request.types[type] || type);
+	  return this;
+	};
+
+	/**
+	 * Set Authorization field value with `user` and `pass`.
+	 *
+	 * @param {String} user
+	 * @param {String} pass
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.auth = function(user, pass){
+	  var str = btoa(user + ':' + pass);
+	  this.set('Authorization', 'Basic ' + str);
+	  return this;
+	};
+
+	/**
+	* Add query-string `val`.
+	*
+	* Examples:
+	*
+	*   request.get('/shoes')
+	*     .query('size=10')
+	*     .query({ color: 'blue' })
+	*
+	* @param {Object|String} val
+	* @return {Request} for chaining
+	* @api public
+	*/
+
+	Request.prototype.query = function(val){
+	  if ('string' != typeof val) val = serialize(val);
+	  if (val) this._query.push(val);
+	  return this;
+	};
+
+	/**
+	 * Write the field `name` and `val` for "multipart/form-data"
+	 * request bodies.
+	 *
+	 * ``` js
+	 * request.post('/upload')
+	 *   .field('foo', 'bar')
+	 *   .end(callback);
+	 * ```
+	 *
+	 * @param {String} name
+	 * @param {String|Blob|File} val
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.field = function(name, val){
+	  if (!this._formData) this._formData = new root.FormData();
+	  this._formData.append(name, val);
+	  return this;
+	};
+
+	/**
+	 * Queue the given `file` as an attachment to the specified `field`,
+	 * with optional `filename`.
+	 *
+	 * ``` js
+	 * request.post('/upload')
+	 *   .attach(new Blob(['<a id="a"><b id="b">hey!</b></a>'], { type: "text/html"}))
+	 *   .end(callback);
+	 * ```
+	 *
+	 * @param {String} field
+	 * @param {Blob|File} file
+	 * @param {String} filename
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.attach = function(field, file, filename){
+	  if (!this._formData) this._formData = new root.FormData();
+	  this._formData.append(field, file, filename || file.name);
+	  return this;
+	};
+
+	/**
+	 * Send `data` as the request body, defaulting the `.type()` to "json" when
+	 * an object is given.
+	 *
+	 * Examples:
+	 *
+	 *       // manual json
+	 *       request.post('/user')
+	 *         .type('json')
+	 *         .send('{"name":"tj"}')
+	 *         .end(callback)
+	 *
+	 *       // auto json
+	 *       request.post('/user')
+	 *         .send({ name: 'tj' })
+	 *         .end(callback)
+	 *
+	 *       // manual x-www-form-urlencoded
+	 *       request.post('/user')
+	 *         .type('form')
+	 *         .send('name=tj')
+	 *         .end(callback)
+	 *
+	 *       // auto x-www-form-urlencoded
+	 *       request.post('/user')
+	 *         .type('form')
+	 *         .send({ name: 'tj' })
+	 *         .end(callback)
+	 *
+	 *       // defaults to x-www-form-urlencoded
+	  *      request.post('/user')
+	  *        .send('name=tobi')
+	  *        .send('species=ferret')
+	  *        .end(callback)
+	 *
+	 * @param {String|Object} data
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.send = function(data){
+	  var obj = isObject(data);
+	  var type = this.getHeader('Content-Type');
+
+	  // merge
+	  if (obj && isObject(this._data)) {
+	    for (var key in data) {
+	      this._data[key] = data[key];
+	    }
+	  } else if ('string' == typeof data) {
+	    if (!type) this.type('form');
+	    type = this.getHeader('Content-Type');
+	    if ('application/x-www-form-urlencoded' == type) {
+	      this._data = this._data
+	        ? this._data + '&' + data
+	        : data;
+	    } else {
+	      this._data = (this._data || '') + data;
+	    }
+	  } else {
+	    this._data = data;
+	  }
+
+	  if (!obj || isHost(data)) return this;
+	  if (!type) this.type('json');
+	  return this;
+	};
+
+	/**
+	 * Invoke the callback with `err` and `res`
+	 * and handle arity check.
+	 *
+	 * @param {Error} err
+	 * @param {Response} res
+	 * @api private
+	 */
+
+	Request.prototype.callback = function(err, res){
+	  var fn = this._callback;
+	  this.clearTimeout();
+	  fn(err, res);
+	};
+
+	/**
+	 * Invoke callback with x-domain error.
+	 *
+	 * @api private
+	 */
+
+	Request.prototype.crossDomainError = function(){
+	  var err = new Error('Request has been terminated\nPossible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.');
+	  err.crossDomain = true;
+
+	  err.status = this.status;
+	  err.method = this.method;
+	  err.url = this.url;
+
+	  this.callback(err);
+	};
+
+	/**
+	 * Invoke callback with timeout error.
+	 *
+	 * @api private
+	 */
+
+	Request.prototype.timeoutError = function(){
+	  var timeout = this._timeout;
+	  var err = new Error('timeout of ' + timeout + 'ms exceeded');
+	  err.timeout = timeout;
+	  this.callback(err);
+	};
+
+	/**
+	 * Enable transmission of cookies with x-domain requests.
+	 *
+	 * Note that for this to work the origin must not be
+	 * using "Access-Control-Allow-Origin" with a wildcard,
+	 * and also must set "Access-Control-Allow-Credentials"
+	 * to "true".
+	 *
+	 * @api public
+	 */
+
+	Request.prototype.withCredentials = function(){
+	  this._withCredentials = true;
+	  return this;
+	};
+
+	/**
+	 * Initiate request, invoking callback `fn(res)`
+	 * with an instanceof `Response`.
+	 *
+	 * @param {Function} fn
+	 * @return {Request} for chaining
+	 * @api public
+	 */
+
+	Request.prototype.end = function(fn){
+	  var self = this;
+	  var xhr = this.xhr = request.getXHR();
+	  var query = this._query.join('&');
+	  var timeout = this._timeout;
+	  var data = this._formData || this._data;
+
+	  // store callback
+	  this._callback = fn || noop;
+
+	  // state change
+	  xhr.onreadystatechange = function(){
+	    if (4 != xhr.readyState) return;
+
+	    // In IE9, reads to any property (e.g. status) off of an aborted XHR will
+	    // result in the error "Could not complete the operation due to error c00c023f"
+	    var status;
+	    try { status = xhr.status } catch(e) { status = 0; }
+
+	    if (0 == status) {
+	      if (self.timedout) return self.timeoutError();
+	      if (self.aborted) return;
+	      return self.crossDomainError();
+	    }
+	    self.emit('end');
+	  };
+
+	  // progress
+	  var handleProgress = function(e){
+	    if (e.total > 0) {
+	      e.percent = e.loaded / e.total * 100;
+	    }
+	    e.direction = 'download';
+	    self.emit('progress', e);
+	  };
+	  if (this.hasListeners('progress')) {
+	    xhr.onprogress = handleProgress;
+	  }
+	  try {
+	    if (xhr.upload && this.hasListeners('progress')) {
+	      xhr.upload.onprogress = handleProgress;
+	    }
+	  } catch(e) {
+	    // Accessing xhr.upload fails in IE from a web worker, so just pretend it doesn't exist.
+	    // Reported here:
+	    // https://connect.microsoft.com/IE/feedback/details/837245/xmlhttprequest-upload-throws-invalid-argument-when-used-from-web-worker-context
+	  }
+
+	  // timeout
+	  if (timeout && !this._timer) {
+	    this._timer = setTimeout(function(){
+	      self.timedout = true;
+	      self.abort();
+	    }, timeout);
+	  }
+
+	  // querystring
+	  if (query) {
+	    query = request.serializeObject(query);
+	    this.url += ~this.url.indexOf('?')
+	      ? '&' + query
+	      : '?' + query;
+	  }
+
+	  // initiate request
+	  xhr.open(this.method, this.url, true);
+
+	  // CORS
+	  if (this._withCredentials) xhr.withCredentials = true;
+
+	  // body
+	  if ('GET' != this.method && 'HEAD' != this.method && 'string' != typeof data && !isHost(data)) {
+	    // serialize stuff
+	    var contentType = this.getHeader('Content-Type');
+	    var serialize = this._parser || request.serialize[contentType ? contentType.split(';')[0] : ''];
+	    if (!serialize && isJSON(contentType)) serialize = request.serialize['application/json'];
+	    if (serialize) data = serialize(data);
+	  }
+
+	  // set header fields
+	  for (var field in this.header) {
+	    if (null == this.header[field]) continue;
+	    xhr.setRequestHeader(field, this.header[field]);
+	  }
+
+	  // send stuff
+	  this.emit('request', this);
+
+	  // IE11 xhr.send(undefined) sends 'undefined' string as POST payload (instead of nothing)
+	  // We need null here if data is undefined
+	  xhr.send(typeof data !== 'undefined' ? data : null);
+	  return this;
+	};
+
+	/**
+	 * Faux promise support
+	 *
+	 * @param {Function} fulfill
+	 * @param {Function} reject
+	 * @return {Request}
+	 */
+
+	Request.prototype.then = function (fulfill, reject) {
+	  return this.end(function(err, res) {
+	    err ? reject(err) : fulfill(res);
+	  });
+	}
+
+	/**
+	 * Expose `Request`.
+	 */
+
+	request.Request = Request;
+
+	/**
+	 * Issue a request:
+	 *
+	 * Examples:
+	 *
+	 *    request('GET', '/users').end(callback)
+	 *    request('/users').end(callback)
+	 *    request('/users', callback)
+	 *
+	 * @param {String} method
+	 * @param {String|Function} url or callback
+	 * @return {Request}
+	 * @api public
+	 */
+
+	function request(method, url) {
+	  // callback
+	  if ('function' == typeof url) {
+	    return new Request('GET', method).end(url);
+	  }
+
+	  // url first
+	  if (1 == arguments.length) {
+	    return new Request('GET', method);
+	  }
+
+	  return new Request(method, url);
+	}
+
+	/**
+	 * GET `url` with optional callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed|Function} data or fn
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.get = function(url, data, fn){
+	  var req = request('GET', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.query(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * HEAD `url` with optional callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed|Function} data or fn
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.head = function(url, data, fn){
+	  var req = request('HEAD', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * DELETE `url` with optional callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	function del(url, fn){
+	  var req = request('DELETE', url);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	request['del'] = del;
+	request['delete'] = del;
+
+	/**
+	 * PATCH `url` with optional `data` and callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed} data
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.patch = function(url, data, fn){
+	  var req = request('PATCH', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * POST `url` with optional `data` and callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed} data
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.post = function(url, data, fn){
+	  var req = request('POST', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * PUT `url` with optional `data` and callback `fn(res)`.
+	 *
+	 * @param {String} url
+	 * @param {Mixed|Function} data or fn
+	 * @param {Function} fn
+	 * @return {Request}
+	 * @api public
+	 */
+
+	request.put = function(url, data, fn){
+	  var req = request('PUT', url);
+	  if ('function' == typeof data) fn = data, data = null;
+	  if (data) req.send(data);
+	  if (fn) req.end(fn);
+	  return req;
+	};
+
+	/**
+	 * Expose `request`.
+	 */
+
+	module.exports = request;
+
+
+/***/ },
+/* 189 */
+/***/ function(module, exports) {
+
+	
+	/**
+	 * Expose `Emitter`.
+	 */
+
+	module.exports = Emitter;
+
+	/**
+	 * Initialize a new `Emitter`.
+	 *
+	 * @api public
+	 */
+
+	function Emitter(obj) {
+	  if (obj) return mixin(obj);
+	};
+
+	/**
+	 * Mixin the emitter properties.
+	 *
+	 * @param {Object} obj
+	 * @return {Object}
+	 * @api private
+	 */
+
+	function mixin(obj) {
+	  for (var key in Emitter.prototype) {
+	    obj[key] = Emitter.prototype[key];
+	  }
+	  return obj;
+	}
+
+	/**
+	 * Listen on the given `event` with `fn`.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.on =
+	Emitter.prototype.addEventListener = function(event, fn){
+	  this._callbacks = this._callbacks || {};
+	  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
+	    .push(fn);
+	  return this;
+	};
+
+	/**
+	 * Adds an `event` listener that will be invoked a single
+	 * time then automatically removed.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.once = function(event, fn){
+	  function on() {
+	    this.off(event, on);
+	    fn.apply(this, arguments);
+	  }
+
+	  on.fn = fn;
+	  this.on(event, on);
+	  return this;
+	};
+
+	/**
+	 * Remove the given callback for `event` or all
+	 * registered callbacks.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+
+	Emitter.prototype.off =
+	Emitter.prototype.removeListener =
+	Emitter.prototype.removeAllListeners =
+	Emitter.prototype.removeEventListener = function(event, fn){
+	  this._callbacks = this._callbacks || {};
+
+	  // all
+	  if (0 == arguments.length) {
+	    this._callbacks = {};
+	    return this;
+	  }
+
+	  // specific event
+	  var callbacks = this._callbacks['$' + event];
+	  if (!callbacks) return this;
+
+	  // remove all handlers
+	  if (1 == arguments.length) {
+	    delete this._callbacks['$' + event];
+	    return this;
+	  }
+
+	  // remove specific handler
+	  var cb;
+	  for (var i = 0; i < callbacks.length; i++) {
+	    cb = callbacks[i];
+	    if (cb === fn || cb.fn === fn) {
+	      callbacks.splice(i, 1);
+	      break;
+	    }
+	  }
+	  return this;
+	};
+
+	/**
+	 * Emit `event` with the given args.
+	 *
+	 * @param {String} event
+	 * @param {Mixed} ...
+	 * @return {Emitter}
+	 */
+
+	Emitter.prototype.emit = function(event){
+	  this._callbacks = this._callbacks || {};
+	  var args = [].slice.call(arguments, 1)
+	    , callbacks = this._callbacks['$' + event];
+
+	  if (callbacks) {
+	    callbacks = callbacks.slice(0);
+	    for (var i = 0, len = callbacks.length; i < len; ++i) {
+	      callbacks[i].apply(this, args);
+	    }
+	  }
+
+	  return this;
+	};
+
+	/**
+	 * Return array of callbacks for `event`.
+	 *
+	 * @param {String} event
+	 * @return {Array}
+	 * @api public
+	 */
+
+	Emitter.prototype.listeners = function(event){
+	  this._callbacks = this._callbacks || {};
+	  return this._callbacks['$' + event] || [];
+	};
+
+	/**
+	 * Check if this emitter has `event` handlers.
+	 *
+	 * @param {String} event
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	Emitter.prototype.hasListeners = function(event){
+	  return !! this.listeners(event).length;
+	};
+
+
+/***/ },
+/* 190 */
+/***/ function(module, exports) {
+
+	
+	/**
+	 * Reduce `arr` with `fn`.
+	 *
+	 * @param {Array} arr
+	 * @param {Function} fn
+	 * @param {Mixed} initial
+	 *
+	 * TODO: combatible error handling?
+	 */
+
+	module.exports = function(arr, fn, initial){  
+	  var idx = 0;
+	  var len = arr.length;
+	  var curr = arguments.length == 3
+	    ? initial
+	    : arr[idx++];
+
+	  while (idx < len) {
+	    curr = fn.call(null, curr, arr[idx], ++idx, arr);
+	  }
+	  
+	  return curr;
+	};
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+
+	var AddTextMenu = React.createClass({
+	    displayName: "AddTextMenu",
+
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+
+	    BLOCK_PARAGRAPH: "<div class='rtf'>You can edit text on your website by double clicking on a text box on your website. Alternatively, when you select a text box a settings menu will appear. Selecting 'Edit Text' from this menu will also allow you to edit the text within this text box. Remember to keep your wording friendly, approachable and easy to understand as if you were talking to your customer</div>",
+	    BLOCK_H1: "<h1 class='rtf'>Heading 1</h1>",
+	    BLOCK_H2: "<h2 class='rtf'>Heading 2</h2>",
+	    BLOCK_H3: "<h3 class='rtf'>Heading 3</h3>",
+
+	    componentDidMount: function componentDidMount() {},
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    addTextBlock: function addTextBlock(event) {
+	        var ele = $(event.target);
+	        while (!ele.data("template")) {
+	            ele = ele.parent();
+	        }
+	        var sizex = ele.data("width");
+	        var sizey = ele.data("height");
+	        if (sizex) sizex = parseInt(sizex);
+	        if (sizey) sizey = parseInt(sizey);
+
+	        var template = ele.data("template");
+	        this.props.addBlock(template, sizex, sizey);
+	        this.props.parentStateChange({ showBlockTypes: false });
+	    },
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: "textTemplateLists", "data-show": this.props.show },
+	            React.createElement(
+	                "div",
+	                { onClick: this.addTextBlock, "data-template": this.BLOCK_PARAGRAPH },
+	                React.createElement("span", { className: "glyphicon glyphicon-align-justify" }),
+	                React.createElement(
+	                    "div",
+	                    { className: "rtf" },
+	                    "Paragraph"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addTextBlock, "data-width": "12", "data-height": "1", "data-template": this.BLOCK_H1 },
+	                React.createElement(
+	                    "span",
+	                    { className: "glyphicon" },
+	                    "H1"
+	                ),
+	                React.createElement(
+	                    "div",
+	                    { className: "rtf" },
+	                    "Heading 1"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addTextBlock, "data-width": "12", "data-height": "1", "data-template": this.BLOCK_H2 },
+	                React.createElement(
+	                    "span",
+	                    { className: "glyphicon" },
+	                    "H2"
+	                ),
+	                React.createElement(
+	                    "div",
+	                    { className: "rtf" },
+	                    "Heading 2"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addTextBlock, "data-width": "12", "data-height": "1", "data-template": this.BLOCK_H3 },
+	                React.createElement(
+	                    "span",
+	                    { className: "glyphicon" },
+	                    "H3"
+	                ),
+	                React.createElement(
+	                    "div",
+	                    { className: "rtf" },
+	                    "Heading 3"
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = AddTextMenu;
+
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	/**
+	 * Created by hand on 2016/2/19.
+	 */
+
+	var React = __webpack_require__(18);
+	var postal = __webpack_require__(193);
+
+	var channel = postal.channel("activities");
+
+	var AddActivityMenu = React.createClass({
+	    displayName: "AddActivityMenu",
+
+
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+
+	    addSingleChoice: function addSingleChoice() {
+	        postal.publish({
+	            channel: "activities",
+	            topic: "single-choice",
+	            data: { /**useless data for later usage*/
+	                sku: "AZDTF4346",
+	                qty: 21
+	            }
+	        });
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: "menuActivityList", "data-show": this.props.show },
+	            React.createElement(
+	                "div",
+	                { className: "category" },
+	                "choice question"
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addSingleChoice },
+	                React.createElement("span", { className: "glyphicon glyphicon-ok-circle" }),
+	                React.createElement(
+	                    "div",
+	                    { className: "activity-name" },
+	                    "Single Choice"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addSingleChoice },
+	                React.createElement("span", { className: "glyphicon glyphicon-screenshot" }),
+	                React.createElement(
+	                    "div",
+	                    { className: "activity-name" },
+	                    "Multiple Choice"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addSingleChoice },
+	                React.createElement("span", { className: "glyphicon glyphicon-saved" }),
+	                React.createElement(
+	                    "div",
+	                    { className: "activity-name" },
+	                    "Highlight"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addSingleChoice },
+	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
+	                React.createElement(
+	                    "div",
+	                    { className: "activity-name" },
+	                    "Right or Wrong"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addSingleChoice },
+	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
+	                React.createElement(
+	                    "div",
+	                    { className: "activity-name" },
+	                    "Right or Wrong"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addSingleChoice },
+	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
+	                React.createElement(
+	                    "div",
+	                    { className: "activity-name" },
+	                    "Right or Wrong"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addSingleChoice },
+	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
+	                React.createElement(
+	                    "div",
+	                    { className: "activity-name" },
+	                    "Right or Wrong"
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { onClick: this.addSingleChoice },
+	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
+	                React.createElement(
+	                    "div",
+	                    { className: "activity-name" },
+	                    "Right or Wrong"
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = AddActivityMenu;
+
+/***/ },
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -25833,7 +26076,7 @@
 		
 		if ( true ) {
 			// AMD. Register as an anonymous module.
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(183) ], __WEBPACK_AMD_DEFINE_RESULT__ = function( _ ) {
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(194) ], __WEBPACK_AMD_DEFINE_RESULT__ = function( _ ) {
 				return factory( _, root );
 			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 		
@@ -26324,7 +26567,7 @@
 
 		noConflict: function noConflict() {
 			
-			if ( typeof window === "undefined" || ( typeof window !== "undefined" && "function" === "function" && __webpack_require__(185) ) ) {
+			if ( typeof window === "undefined" || ( typeof window !== "undefined" && "function" === "function" && __webpack_require__(196) ) ) {
 				throw new Error( "noConflict can only be used in browser clients which aren't using AMD modules" );
 			}
 			global.postal = prevPostal;
@@ -26516,7 +26759,7 @@
 
 
 /***/ },
-/* 183 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -38871,10 +39114,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(184)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(195)(module), (function() { return this; }())))
 
 /***/ },
-/* 184 */
+/* 195 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -38890,7 +39133,7 @@
 
 
 /***/ },
-/* 185 */
+/* 196 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -38898,2373 +39141,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(18);
-
-	var EditTextPanel = __webpack_require__(187);
-	var SingleChoicePanel = __webpack_require__(188);
-
-	var RightPanel = React.createClass({
-	    displayName: "RightPanel",
-
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            subpanel: 'edit-text'
-	        };
-	    },
-
-	    stateChange: function stateChange(newstate) {
-	        this.setState(newstate);
-	    },
-
-	    componentDidMount: function componentDidMount() {},
-
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
-
-	    close: function close() {},
-
-	    preventUp: function preventUp(event) {
-	        event.stopPropagation();
-	    },
-
-	    render: function render() {
-	        return React.createElement(
-	            "div",
-	            { className: "rightPanel", style: {
-	                    display: this.props.display ? "inherit" : "none"
-	                }, onClick: this.preventUp },
-	            React.createElement(
-	                "div",
-	                { className: "pn-header" },
-	                React.createElement(
-	                    "div",
-	                    { className: "pn-title" },
-	                    "Header"
-	                ),
-	                React.createElement("span", { className: "glyphicon glyphicon-remove btn-close", onClick: this.close })
-	            ),
-	            React.createElement(
-	                "div",
-	                { className: "pn-body" },
-	                React.createElement(EditTextPanel, { display: this.props.subpanel === "edit-text" }),
-	                React.createElement(SingleChoicePanel, { display: this.props.subpanel === "edit-single-choice" })
-	            )
-	        );
-	    }
-	});
-
-	module.exports = RightPanel;
-
-/***/ },
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(18);
-
-	var EditTextPanel = React.createClass({
-	    displayName: "EditTextPanel",
-
-
-	    getInitialState: function getInitialState() {
-	        return {};
-	    },
-
-	    componentDidMount: function componentDidMount() {},
-
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
-
-	    preventUp: function preventUp(event) {
-	        event.stopPropagation();
-	    },
-
-	    render: function render() {
-	        return React.createElement(
-	            "div",
-	            { className: "editTextPanel", style: {
-	                    display: this.props.display ? "inherit" : "none"
-	                } },
-	            React.createElement(
-	                "div",
-	                { className: "form-group" },
-	                React.createElement(
-	                    "p",
-	                    { className: "label" },
-	                    "Horizontal Align"
-	                ),
-	                React.createElement(
-	                    "div",
-	                    { className: "btn-group", role: "group", "aria-label": "..." },
-	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-left" }),
-	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-center" }),
-	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-right" })
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { className: "form-group" },
-	                React.createElement(
-	                    "p",
-	                    { className: "label" },
-	                    "Vertical Align"
-	                ),
-	                React.createElement(
-	                    "div",
-	                    { className: "btn-group", role: "group", "aria-label": "..." },
-	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-left" }),
-	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-center" }),
-	                    React.createElement("button", { type: "button", className: "btn btn-default glyphicon glyphicon-align-right" })
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = EditTextPanel;
-
-/***/ },
-/* 188 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(18);
-
-	var SingleChoicePanel = React.createClass({
-	    displayName: "SingleChoicePanel",
-
-
-	    getInitialState: function getInitialState() {
-	        return {};
-	    },
-
-	    componentDidMount: function componentDidMount() {},
-
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
-
-	    render: function render() {
-	        return React.createElement("div", { className: "single-choice-panel", style: {
-	                display: this.props.display ? "inherit" : "none"
-	            } });
-	    }
-	});
-
-	module.exports = SingleChoicePanel;
-
-/***/ },
-/* 189 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(18);
-
-	var BlockTypeMenu = __webpack_require__(190);
-	var PageConfigMenu = __webpack_require__(199);
-
-	var LeftMenu = React.createClass({
-	    displayName: "LeftMenu",
-
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            showBlockTypes: false,
-	            showConfigMenu: false
-	        };
-	    },
-
-	    stateChange: function stateChange(newstate) {
-	        this.setState(newstate);
-	    },
-
-	    componentDidMount: function componentDidMount() {},
-
-	    resolution: function resolution(value) {
-	        if (value === "1920x1080") {
-	            this.props.configurationChange({ width: 1920, minHeight: 1080 });
-	        } else if (value === "1280x800") {
-	            this.props.configurationChange({ width: 1280, minHeight: 800 });
-	        } else if (value === "1024x768") {
-	            this.props.configurationChange({ width: 1024, minHeight: 768 });
-	        }
-	    },
-
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
-
-	    clearState: function clearState() {
-	        this.setState({
-	            showBlockTypes: false,
-	            showConfigMenu: false
-	        });
-	    },
-
-	    showBlockTypes: function showBlockTypes(event) {
-	        if (!this.props.doubleScreen) {
-	            this.setState({
-	                showBlockTypes: !this.state.showBlockTypes,
-	                showConfigMenu: false
-	            });
-	        }
-	        event.stopPropagation();
-	    },
-
-	    showConfigMenu: function showConfigMenu(event) {
-	        this.setState({
-	            showConfigMenu: !this.state.showConfigMenu,
-	            showBlockTypes: false
-	        });
-	        event.stopPropagation();
-	    },
-
-	    editContent: function editContent() {
-	        this.clearState();
-	        this.props.disableLayout();
-	    },
-
-	    toggleDoubleScreen: function toggleDoubleScreen() {
-	        this.props.configurationChange({
-	            doubleScreen: !this.props.doubleScreen
-	        });
-	    },
-
-	    /*<!-- <span className="glyphicon glyphicon-edit" data-disabled={this.props.doubleScreen} onClick={this.editContent}></span>-->*/
-
-	    render: function render() {
-	        return React.createElement(
-	            "div",
-	            null,
-	            React.createElement(
-	                "div",
-	                { className: "leftMenu" },
-	                this.props.layoutable ? React.createElement(
-	                    "div",
-	                    null,
-	                    React.createElement("span", { className: "glyphicon glyphicon-plus", "data-disabled": this.props.doubleScreen, "data-clicked": this.state.showBlockTypes, id: "btn-add-block", onClick: this.showBlockTypes }),
-	                    React.createElement("span", { className: "glyphicon glyphicon-cog", "data-clicked": this.state.showConfigMenu, onClick: this.showConfigMenu })
-	                ) : React.createElement(
-	                    "div",
-	                    null,
-	                    React.createElement("span", { className: "glyphicon glyphicon-arrow-left", "data-clicked": "true", onClick: this.props.enableLayout })
-	                ),
-	                React.createElement(
-	                    "div",
-	                    { className: "screenRatios",
-	                        style: {
-	                            marginTop: "160px",
-	                            display: this.props.layoutable ? "inherit" : "none"
-	                        } },
-	                    React.createElement("span", { className: "glyphicon glyphicon-blackboard", "data-clicked": this.props.doubleScreen, onClick: this.toggleDoubleScreen }),
-	                    React.createElement(
-	                        "span",
-	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1024x768"), "data-clicked": this.props.width === 1024 },
-	                        "1024",
-	                        React.createElement("br", null),
-	                        "768"
-	                    ),
-	                    React.createElement(
-	                        "span",
-	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1280x800"), "data-clicked": this.props.width === 1280 },
-	                        "1280",
-	                        React.createElement("br", null),
-	                        "800"
-	                    ),
-	                    React.createElement(
-	                        "span",
-	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1920x1080"), "data-clicked": this.props.width === 1920 },
-	                        "1920",
-	                        React.createElement("br", null),
-	                        "1080"
-	                    )
-	                )
-	            ),
-	            React.createElement("div", { className: "hidder" }),
-	            React.createElement(BlockTypeMenu, { addBlock: this.props.addBlock, show: this.state.showBlockTypes, adddActivity: this.props.adddActivity, parentStateChange: this.stateChange }),
-	            React.createElement(PageConfigMenu, { configurationChange: this.props.configurationChange,
-	                showConfigMenu: this.showConfigMenu,
-	                showHeader: this.props.showHeader, showFooter: this.props.showFooter,
-	                show: this.state.showConfigMenu, closeSetting: this.props.closeSetting })
-	        );
-	    }
-	});
-
-	module.exports = LeftMenu;
-
-/***/ },
-/* 190 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(18);
-	var ChooseImageMenu = __webpack_require__(191);
-	var AddTextMenu = __webpack_require__(197);
-	var AddActivityMenu = __webpack_require__(198);
-
-	var BlockTypeMenu = React.createClass({
-	    displayName: "BlockTypeMenu",
-
-	    getInitialState: function getInitialState() {
-	        return {
-	            page: "addText"
-	        };
-	    },
-
-	    componentDidMount: function componentDidMount() {},
-
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
-
-	    showAddText: function showAddText(event) {
-	        event.stopPropagation();
-	        this.setState({
-	            page: "addText"
-	        });
-	    },
-
-	    showAddImage: function showAddImage(event) {
-	        event.stopPropagation();
-	        this.setState({
-	            page: "chooseImage"
-	        });
-	    },
-
-	    showAddActivity: function showAddActivity(event) {
-	        event.stopPropagation();
-	        this.setState({
-	            page: "addActivity"
-	        });
-	    },
-
-	    adddActivity: function adddActivity(prop) {
-	        event.stopPropagation();
-	        this.props.adddActivity(prop);
-	    },
-
-	    stopPropagation: function stopPropagation(event) {
-	        event.stopPropagation();
-	    },
-	    render: function render() {
-	        return React.createElement(
-	            "div",
-	            { className: this.props.show ? "blockType shown" : "blockType", onClick: this.stopPropagation },
-	            React.createElement(
-	                "ul",
-	                { className: "category-list" },
-	                React.createElement(
-	                    "li",
-	                    { className: "category" },
-	                    React.createElement(
-	                        "span",
-	                        { className: this.state.page === "addText" ? "current" : "", onClick: this.showAddText },
-	                        "Text"
-	                    )
-	                ),
-	                React.createElement(
-	                    "li",
-	                    { className: "category" },
-	                    React.createElement(
-	                        "span",
-	                        { className: this.state.page === "chooseImage" ? "current" : "", onClick: this.showAddImage },
-	                        "Image"
-	                    )
-	                ),
-	                React.createElement(
-	                    "li",
-	                    { className: "category" },
-	                    React.createElement(
-	                        "span",
-	                        null,
-	                        "Media"
-	                    )
-	                ),
-	                React.createElement(
-	                    "li",
-	                    { className: "category" },
-	                    React.createElement(
-	                        "span",
-	                        { className: this.state.page === "addActivity" ? "current" : "", onClick: this.showAddActivity },
-	                        "Activity"
-	                    )
-	                )
-	            ),
-	            React.createElement(AddTextMenu, { show: this.state.page === "addText", addBlock: this.props.addBlock, parentStateChange: this.props.parentStateChange }),
-	            React.createElement(ChooseImageMenu, { show: this.state.page === "chooseImage", addBlock: this.props.addBlock }),
-	            React.createElement(AddActivityMenu, { addActivity: this.adddActivity, show: this.state.page === "addActivity" })
-	        );
-	    }
-	});
-
-	module.exports = BlockTypeMenu;
-
-/***/ },
-/* 191 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(18);
-	var Dropzone = __webpack_require__(192);
-
-	var request = __webpack_require__(194);
-
-	var ChooseImageMenu = React.createClass({
-	    displayName: 'ChooseImageMenu',
-
-	    getInitialState: function getInitialState() {
-	        return {};
-	    },
-
-	    componentDidMount: function componentDidMount() {},
-
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
-
-	    onDrop: function onDrop(files) {
-	        console.log('Received files: ', files);
-
-	        request.post('/attach/upload').attach(files[0].name, files[0]).end(function (err, res) {});
-	    },
-
-	    handleFile: function handleFile(file) {},
-
-	    render: function render() {
-	        return React.createElement(
-	            'div',
-	            { className: 'chooseImage', 'data-show': this.props.show },
-	            React.createElement(
-	                Dropzone,
-	                { className: 'zone', onDrop: this.onDrop, multiple: false },
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    'Try dropping some files here, or click to select files to upload.'
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = ChooseImageMenu;
-
-/***/ },
-/* 192 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _attrAccept = __webpack_require__(193);
-
-	var _attrAccept2 = _interopRequireDefault(_attrAccept);
-
-	var _react = __webpack_require__(18);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var supportMultiple = typeof document !== 'undefined' && document && document.createElement ? 'multiple' in document.createElement('input') : true;
-
-	var Dropzone = (function (_React$Component) {
-	  _inherits(Dropzone, _React$Component);
-
-	  function Dropzone(props, context) {
-	    _classCallCheck(this, Dropzone);
-
-	    _React$Component.call(this, props, context);
-	    this.onClick = this.onClick.bind(this);
-	    this.onDragEnter = this.onDragEnter.bind(this);
-	    this.onDragLeave = this.onDragLeave.bind(this);
-	    this.onDragOver = this.onDragOver.bind(this);
-	    this.onDrop = this.onDrop.bind(this);
-
-	    this.state = {
-	      isDragActive: false
-	    };
-	  }
-
-	  Dropzone.prototype.componentDidMount = function componentDidMount() {
-	    this.enterCounter = 0;
-	  };
-
-	  Dropzone.prototype.onDragEnter = function onDragEnter(e) {
-	    e.preventDefault();
-
-	    // Count the dropzone and any children that are entered.
-	    ++this.enterCounter;
-
-	    // This is tricky. During the drag even the dataTransfer.files is null
-	    // But Chrome implements some drag store, which is accesible via dataTransfer.items
-	    var dataTransferItems = e.dataTransfer && e.dataTransfer.items ? e.dataTransfer.items : [];
-
-	    // Now we need to convert the DataTransferList to Array
-	    var allFilesAccepted = this.allFilesAccepted(Array.prototype.slice.call(dataTransferItems));
-
-	    this.setState({
-	      isDragActive: allFilesAccepted,
-	      isDragReject: !allFilesAccepted
-	    });
-
-	    if (this.props.onDragEnter) {
-	      this.props.onDragEnter.call(this, e);
-	    }
-	  };
-
-	  Dropzone.prototype.onDragOver = function onDragOver(e) {
-	    e.preventDefault();
-	    e.stopPropagation();
-	    return false;
-	  };
-
-	  Dropzone.prototype.onDragLeave = function onDragLeave(e) {
-	    e.preventDefault();
-
-	    // Only deactivate once the dropzone and all children was left.
-	    if (--this.enterCounter > 0) {
-	      return;
-	    }
-
-	    this.setState({
-	      isDragActive: false,
-	      isDragReject: false
-	    });
-
-	    if (this.props.onDragLeave) {
-	      this.props.onDragLeave.call(this, e);
-	    }
-	  };
-
-	  Dropzone.prototype.onDrop = function onDrop(e) {
-	    e.preventDefault();
-
-	    // Reset the counter along with the drag on a drop.
-	    this.enterCounter = 0;
-
-	    this.setState({
-	      isDragActive: false,
-	      isDragReject: false
-	    });
-
-	    var droppedFiles = e.dataTransfer ? e.dataTransfer.files : e.target.files;
-	    var max = this.props.multiple ? droppedFiles.length : 1;
-	    var files = [];
-
-	    for (var i = 0; i < max; i++) {
-	      var file = droppedFiles[i];
-	      // We might want to disable the preview creation to support big files
-	      if (!this.props.disablePreview) {
-	        file.preview = window.URL.createObjectURL(file);
-	      }
-	      files.push(file);
-	    }
-
-	    if (this.props.onDrop) {
-	      this.props.onDrop.call(this, files, e);
-	    }
-
-	    if (this.allFilesAccepted(files)) {
-	      if (this.props.onDropAccepted) {
-	        this.props.onDropAccepted.call(this, files, e);
-	      }
-	    } else {
-	      if (this.props.onDropRejected) {
-	        this.props.onDropRejected.call(this, files, e);
-	      }
-	    }
-	  };
-
-	  Dropzone.prototype.onClick = function onClick() {
-	    if (!this.props.disableClick) {
-	      this.open();
-	    }
-	  };
-
-	  Dropzone.prototype.allFilesAccepted = function allFilesAccepted(files) {
-	    var _this = this;
-
-	    return files.every(function (file) {
-	      return _attrAccept2['default'](file, _this.props.accept);
-	    });
-	  };
-
-	  Dropzone.prototype.open = function open() {
-	    this.fileInputEl.value = null;
-	    this.fileInputEl.click();
-	  };
-
-	  Dropzone.prototype.render = function render() {
-	    var _this2 = this;
-
-	    var _props = this.props;
-	    var accept = _props.accept;
-	    var activeClassName = _props.activeClassName;
-	    var inputProps = _props.inputProps;
-	    var multiple = _props.multiple;
-	    var name = _props.name;
-	    var rejectClassName = _props.rejectClassName;
-
-	    var rest = _objectWithoutProperties(_props, ['accept', 'activeClassName', 'inputProps', 'multiple', 'name', 'rejectClassName']);
-
-	    var activeStyle = // eslint-disable-line prefer-const
-	    rest.activeStyle;
-	    var className = rest.className;
-	    var rejectStyle = rest.rejectStyle;
-	    var style = rest.style;
-
-	    var props = _objectWithoutProperties(rest, ['activeStyle', 'className', 'rejectStyle', 'style']);
-
-	    var _state = this.state;
-	    var isDragActive = _state.isDragActive;
-	    var isDragReject = _state.isDragReject;
-
-	    className = className || '';
-
-	    if (isDragActive && activeClassName) {
-	      className += ' ' + activeClassName;
-	    }
-	    if (isDragReject && rejectClassName) {
-	      className += ' ' + rejectClassName;
-	    }
-
-	    if (!className && !style && !activeStyle && !rejectStyle) {
-	      style = {
-	        width: 200,
-	        height: 200,
-	        borderWidth: 2,
-	        borderColor: '#666',
-	        borderStyle: 'dashed',
-	        borderRadius: 5
-	      };
-	      activeStyle = {
-	        borderStyle: 'solid',
-	        backgroundColor: '#eee'
-	      };
-	      rejectStyle = {
-	        borderStyle: 'solid',
-	        backgroundColor: '#ffdddd'
-	      };
-	    }
-
-	    var appliedStyle = undefined;
-	    if (activeStyle && isDragActive) {
-	      appliedStyle = _extends({}, style, activeStyle);
-	    } else if (rejectStyle && isDragReject) {
-	      appliedStyle = _extends({}, style, rejectStyle);
-	    } else {
-	      appliedStyle = _extends({}, style);
-	    }
-
-	    var inputAttributes = {
-	      accept: accept,
-	      type: 'file',
-	      style: { display: 'none' },
-	      multiple: supportMultiple && multiple,
-	      ref: function ref(el) {
-	        return _this2.fileInputEl = el;
-	      },
-	      onChange: this.onDrop
-	    };
-
-	    if (name && name.length) {
-	      inputAttributes.name = name;
-	    }
-
-	    return _react2['default'].createElement(
-	      'div',
-	      _extends({
-	        className: className,
-	        style: appliedStyle
-	      }, props, /* expand user provided props first so event handlers are never overridden */{
-	        onClick: this.onClick,
-	        onDragEnter: this.onDragEnter,
-	        onDragOver: this.onDragOver,
-	        onDragLeave: this.onDragLeave,
-	        onDrop: this.onDrop
-	      }),
-	      this.props.children,
-	      _react2['default'].createElement('input', _extends({}, inputProps, /* expand user provided inputProps first so inputAttributes override them */inputAttributes))
-	    );
-	  };
-
-	  return Dropzone;
-	})(_react2['default'].Component);
-
-	Dropzone.defaultProps = {
-	  disablePreview: false,
-	  disableClick: false,
-	  multiple: true
-	};
-
-	Dropzone.propTypes = {
-	  onDrop: _react2['default'].PropTypes.func,
-	  onDropAccepted: _react2['default'].PropTypes.func,
-	  onDropRejected: _react2['default'].PropTypes.func,
-	  onDragEnter: _react2['default'].PropTypes.func,
-	  onDragLeave: _react2['default'].PropTypes.func,
-
-	  children: _react2['default'].PropTypes.node,
-	  style: _react2['default'].PropTypes.object,
-	  activeStyle: _react2['default'].PropTypes.object,
-	  rejectStyle: _react2['default'].PropTypes.object,
-	  className: _react2['default'].PropTypes.string,
-	  activeClassName: _react2['default'].PropTypes.string,
-	  rejectClassName: _react2['default'].PropTypes.string,
-
-	  disablePreview: _react2['default'].PropTypes.bool,
-	  disableClick: _react2['default'].PropTypes.bool,
-
-	  inputProps: _react2['default'].PropTypes.object,
-	  multiple: _react2['default'].PropTypes.bool,
-	  accept: _react2['default'].PropTypes.string,
-	  name: _react2['default'].PropTypes.string
-	};
-
-	exports['default'] = Dropzone;
-	module.exports = exports['default'];
-
-/***/ },
-/* 193 */
-/***/ function(module, exports) {
-
-	module.exports=function(t){function n(e){if(r[e])return r[e].exports;var o=r[e]={exports:{},id:e,loaded:!1};return t[e].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var r={};return n.m=t,n.c=r,n.p="",n(0)}([function(t,n,r){"use strict";n.__esModule=!0,r(8),r(9),n["default"]=function(t,n){if(t&&n){var r=function(){var r=n.split(","),e=t.name||"",o=t.type||"",i=o.replace(/\/.*$/,"");return{v:r.some(function(t){var n=t.trim();return"."===n.charAt(0)?e.toLowerCase().endsWith(n.toLowerCase()):/\/\*$/.test(n)?i===n.replace(/\/.*$/,""):o===n})}}();if("object"==typeof r)return r.v}return!0},t.exports=n["default"]},function(t,n){var r=t.exports={version:"1.2.2"};"number"==typeof __e&&(__e=r)},function(t,n){var r=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=r)},function(t,n,r){var e=r(2),o=r(1),i=r(4),u=r(19),c="prototype",f=function(t,n){return function(){return t.apply(n,arguments)}},s=function(t,n,r){var a,p,l,d,y=t&s.G,h=t&s.P,v=y?e:t&s.S?e[n]||(e[n]={}):(e[n]||{})[c],x=y?o:o[n]||(o[n]={});y&&(r=n);for(a in r)p=!(t&s.F)&&v&&a in v,l=(p?v:r)[a],d=t&s.B&&p?f(l,e):h&&"function"==typeof l?f(Function.call,l):l,v&&!p&&u(v,a,l),x[a]!=l&&i(x,a,d),h&&((x[c]||(x[c]={}))[a]=l)};e.core=o,s.F=1,s.G=2,s.S=4,s.P=8,s.B=16,s.W=32,t.exports=s},function(t,n,r){var e=r(5),o=r(18);t.exports=r(22)?function(t,n,r){return e.setDesc(t,n,o(1,r))}:function(t,n,r){return t[n]=r,t}},function(t,n){var r=Object;t.exports={create:r.create,getProto:r.getPrototypeOf,isEnum:{}.propertyIsEnumerable,getDesc:r.getOwnPropertyDescriptor,setDesc:r.defineProperty,setDescs:r.defineProperties,getKeys:r.keys,getNames:r.getOwnPropertyNames,getSymbols:r.getOwnPropertySymbols,each:[].forEach}},function(t,n){var r=0,e=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++r+e).toString(36))}},function(t,n,r){var e=r(20)("wks"),o=r(2).Symbol;t.exports=function(t){return e[t]||(e[t]=o&&o[t]||(o||r(6))("Symbol."+t))}},function(t,n,r){r(26),t.exports=r(1).Array.some},function(t,n,r){r(25),t.exports=r(1).String.endsWith},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){var r={}.toString;t.exports=function(t){return r.call(t).slice(8,-1)}},function(t,n,r){var e=r(10);t.exports=function(t,n,r){if(e(t),void 0===n)return t;switch(r){case 1:return function(r){return t.call(n,r)};case 2:return function(r,e){return t.call(n,r,e)};case 3:return function(r,e,o){return t.call(n,r,e,o)}}return function(){return t.apply(n,arguments)}}},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n,r){t.exports=function(t){var n=/./;try{"/./"[t](n)}catch(e){try{return n[r(7)("match")]=!1,!"/./"[t](n)}catch(o){}}return!0}},function(t,n){t.exports=function(t){try{return!!t()}catch(n){return!0}}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n,r){var e=r(16),o=r(11),i=r(7)("match");t.exports=function(t){var n;return e(t)&&(void 0!==(n=t[i])?!!n:"RegExp"==o(t))}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n,r){var e=r(2),o=r(4),i=r(6)("src"),u="toString",c=Function[u],f=(""+c).split(u);r(1).inspectSource=function(t){return c.call(t)},(t.exports=function(t,n,r,u){"function"==typeof r&&(o(r,i,t[n]?""+t[n]:f.join(String(n))),"name"in r||(r.name=n)),t===e?t[n]=r:(u||delete t[n],o(t,n,r))})(Function.prototype,u,function(){return"function"==typeof this&&this[i]||c.call(this)})},function(t,n,r){var e=r(2),o="__core-js_shared__",i=e[o]||(e[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n,r){var e=r(17),o=r(13);t.exports=function(t,n,r){if(e(n))throw TypeError("String#"+r+" doesn't accept regex!");return String(o(t))}},function(t,n,r){t.exports=!r(15)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n){var r=Math.ceil,e=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?e:r)(t)}},function(t,n,r){var e=r(23),o=Math.min;t.exports=function(t){return t>0?o(e(t),9007199254740991):0}},function(t,n,r){"use strict";var e=r(3),o=r(24),i=r(21),u="endsWith",c=""[u];e(e.P+e.F*r(14)(u),"String",{endsWith:function(t){var n=i(this,t,u),r=arguments,e=r.length>1?r[1]:void 0,f=o(n.length),s=void 0===e?f:Math.min(o(e),f),a=String(t);return c?c.call(n,a,s):n.slice(s-a.length,s)===a}})},function(t,n,r){var e=r(5),o=r(3),i=r(1).Array||Array,u={},c=function(t,n){e.each.call(t.split(","),function(t){void 0==n&&t in i?u[t]=i[t]:t in[]&&(u[t]=r(12)(Function.call,[][t],n))})};c("pop,reverse,shift,keys,values,entries",1),c("indexOf,every,some,forEach,map,filter,find,findIndex,includes",3),c("join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill"),o(o.S,"Array",u)}]);
-
-/***/ },
-/* 194 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Module dependencies.
-	 */
-
-	var Emitter = __webpack_require__(195);
-	var reduce = __webpack_require__(196);
-
-	/**
-	 * Root reference for iframes.
-	 */
-
-	var root;
-	if (typeof window !== 'undefined') { // Browser window
-	  root = window;
-	} else if (typeof self !== 'undefined') { // Web Worker
-	  root = self;
-	} else { // Other environments
-	  root = this;
-	}
-
-	/**
-	 * Noop.
-	 */
-
-	function noop(){};
-
-	/**
-	 * Check if `obj` is a host object,
-	 * we don't want to serialize these :)
-	 *
-	 * TODO: future proof, move to compoent land
-	 *
-	 * @param {Object} obj
-	 * @return {Boolean}
-	 * @api private
-	 */
-
-	function isHost(obj) {
-	  var str = {}.toString.call(obj);
-
-	  switch (str) {
-	    case '[object File]':
-	    case '[object Blob]':
-	    case '[object FormData]':
-	      return true;
-	    default:
-	      return false;
-	  }
-	}
-
-	/**
-	 * Determine XHR.
-	 */
-
-	request.getXHR = function () {
-	  if (root.XMLHttpRequest
-	      && (!root.location || 'file:' != root.location.protocol
-	          || !root.ActiveXObject)) {
-	    return new XMLHttpRequest;
-	  } else {
-	    try { return new ActiveXObject('Microsoft.XMLHTTP'); } catch(e) {}
-	    try { return new ActiveXObject('Msxml2.XMLHTTP.6.0'); } catch(e) {}
-	    try { return new ActiveXObject('Msxml2.XMLHTTP.3.0'); } catch(e) {}
-	    try { return new ActiveXObject('Msxml2.XMLHTTP'); } catch(e) {}
-	  }
-	  return false;
-	};
-
-	/**
-	 * Removes leading and trailing whitespace, added to support IE.
-	 *
-	 * @param {String} s
-	 * @return {String}
-	 * @api private
-	 */
-
-	var trim = ''.trim
-	  ? function(s) { return s.trim(); }
-	  : function(s) { return s.replace(/(^\s*|\s*$)/g, ''); };
-
-	/**
-	 * Check if `obj` is an object.
-	 *
-	 * @param {Object} obj
-	 * @return {Boolean}
-	 * @api private
-	 */
-
-	function isObject(obj) {
-	  return obj === Object(obj);
-	}
-
-	/**
-	 * Serialize the given `obj`.
-	 *
-	 * @param {Object} obj
-	 * @return {String}
-	 * @api private
-	 */
-
-	function serialize(obj) {
-	  if (!isObject(obj)) return obj;
-	  var pairs = [];
-	  for (var key in obj) {
-	    if (null != obj[key]) {
-	      pushEncodedKeyValuePair(pairs, key, obj[key]);
-	        }
-	      }
-	  return pairs.join('&');
-	}
-
-	/**
-	 * Helps 'serialize' with serializing arrays.
-	 * Mutates the pairs array.
-	 *
-	 * @param {Array} pairs
-	 * @param {String} key
-	 * @param {Mixed} val
-	 */
-
-	function pushEncodedKeyValuePair(pairs, key, val) {
-	  if (Array.isArray(val)) {
-	    return val.forEach(function(v) {
-	      pushEncodedKeyValuePair(pairs, key, v);
-	    });
-	  }
-	  pairs.push(encodeURIComponent(key)
-	    + '=' + encodeURIComponent(val));
-	}
-
-	/**
-	 * Expose serialization method.
-	 */
-
-	 request.serializeObject = serialize;
-
-	 /**
-	  * Parse the given x-www-form-urlencoded `str`.
-	  *
-	  * @param {String} str
-	  * @return {Object}
-	  * @api private
-	  */
-
-	function parseString(str) {
-	  var obj = {};
-	  var pairs = str.split('&');
-	  var parts;
-	  var pair;
-
-	  for (var i = 0, len = pairs.length; i < len; ++i) {
-	    pair = pairs[i];
-	    parts = pair.split('=');
-	    obj[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
-	  }
-
-	  return obj;
-	}
-
-	/**
-	 * Expose parser.
-	 */
-
-	request.parseString = parseString;
-
-	/**
-	 * Default MIME type map.
-	 *
-	 *     superagent.types.xml = 'application/xml';
-	 *
-	 */
-
-	request.types = {
-	  html: 'text/html',
-	  json: 'application/json',
-	  xml: 'application/xml',
-	  urlencoded: 'application/x-www-form-urlencoded',
-	  'form': 'application/x-www-form-urlencoded',
-	  'form-data': 'application/x-www-form-urlencoded'
-	};
-
-	/**
-	 * Default serialization map.
-	 *
-	 *     superagent.serialize['application/xml'] = function(obj){
-	 *       return 'generated xml here';
-	 *     };
-	 *
-	 */
-
-	 request.serialize = {
-	   'application/x-www-form-urlencoded': serialize,
-	   'application/json': JSON.stringify
-	 };
-
-	 /**
-	  * Default parsers.
-	  *
-	  *     superagent.parse['application/xml'] = function(str){
-	  *       return { object parsed from str };
-	  *     };
-	  *
-	  */
-
-	request.parse = {
-	  'application/x-www-form-urlencoded': parseString,
-	  'application/json': JSON.parse
-	};
-
-	/**
-	 * Parse the given header `str` into
-	 * an object containing the mapped fields.
-	 *
-	 * @param {String} str
-	 * @return {Object}
-	 * @api private
-	 */
-
-	function parseHeader(str) {
-	  var lines = str.split(/\r?\n/);
-	  var fields = {};
-	  var index;
-	  var line;
-	  var field;
-	  var val;
-
-	  lines.pop(); // trailing CRLF
-
-	  for (var i = 0, len = lines.length; i < len; ++i) {
-	    line = lines[i];
-	    index = line.indexOf(':');
-	    field = line.slice(0, index).toLowerCase();
-	    val = trim(line.slice(index + 1));
-	    fields[field] = val;
-	  }
-
-	  return fields;
-	}
-
-	/**
-	 * Check if `mime` is json or has +json structured syntax suffix.
-	 *
-	 * @param {String} mime
-	 * @return {Boolean}
-	 * @api private
-	 */
-
-	function isJSON(mime) {
-	  return /[\/+]json\b/.test(mime);
-	}
-
-	/**
-	 * Return the mime type for the given `str`.
-	 *
-	 * @param {String} str
-	 * @return {String}
-	 * @api private
-	 */
-
-	function type(str){
-	  return str.split(/ *; */).shift();
-	};
-
-	/**
-	 * Return header field parameters.
-	 *
-	 * @param {String} str
-	 * @return {Object}
-	 * @api private
-	 */
-
-	function params(str){
-	  return reduce(str.split(/ *; */), function(obj, str){
-	    var parts = str.split(/ *= */)
-	      , key = parts.shift()
-	      , val = parts.shift();
-
-	    if (key && val) obj[key] = val;
-	    return obj;
-	  }, {});
-	};
-
-	/**
-	 * Initialize a new `Response` with the given `xhr`.
-	 *
-	 *  - set flags (.ok, .error, etc)
-	 *  - parse header
-	 *
-	 * Examples:
-	 *
-	 *  Aliasing `superagent` as `request` is nice:
-	 *
-	 *      request = superagent;
-	 *
-	 *  We can use the promise-like API, or pass callbacks:
-	 *
-	 *      request.get('/').end(function(res){});
-	 *      request.get('/', function(res){});
-	 *
-	 *  Sending data can be chained:
-	 *
-	 *      request
-	 *        .post('/user')
-	 *        .send({ name: 'tj' })
-	 *        .end(function(res){});
-	 *
-	 *  Or passed to `.send()`:
-	 *
-	 *      request
-	 *        .post('/user')
-	 *        .send({ name: 'tj' }, function(res){});
-	 *
-	 *  Or passed to `.post()`:
-	 *
-	 *      request
-	 *        .post('/user', { name: 'tj' })
-	 *        .end(function(res){});
-	 *
-	 * Or further reduced to a single call for simple cases:
-	 *
-	 *      request
-	 *        .post('/user', { name: 'tj' }, function(res){});
-	 *
-	 * @param {XMLHTTPRequest} xhr
-	 * @param {Object} options
-	 * @api private
-	 */
-
-	function Response(req, options) {
-	  options = options || {};
-	  this.req = req;
-	  this.xhr = this.req.xhr;
-	  // responseText is accessible only if responseType is '' or 'text' and on older browsers
-	  this.text = ((this.req.method !='HEAD' && (this.xhr.responseType === '' || this.xhr.responseType === 'text')) || typeof this.xhr.responseType === 'undefined')
-	     ? this.xhr.responseText
-	     : null;
-	  this.statusText = this.req.xhr.statusText;
-	  this.setStatusProperties(this.xhr.status);
-	  this.header = this.headers = parseHeader(this.xhr.getAllResponseHeaders());
-	  // getAllResponseHeaders sometimes falsely returns "" for CORS requests, but
-	  // getResponseHeader still works. so we get content-type even if getting
-	  // other headers fails.
-	  this.header['content-type'] = this.xhr.getResponseHeader('content-type');
-	  this.setHeaderProperties(this.header);
-	  this.body = this.req.method != 'HEAD'
-	    ? this.parseBody(this.text ? this.text : this.xhr.response)
-	    : null;
-	}
-
-	/**
-	 * Get case-insensitive `field` value.
-	 *
-	 * @param {String} field
-	 * @return {String}
-	 * @api public
-	 */
-
-	Response.prototype.get = function(field){
-	  return this.header[field.toLowerCase()];
-	};
-
-	/**
-	 * Set header related properties:
-	 *
-	 *   - `.type` the content type without params
-	 *
-	 * A response of "Content-Type: text/plain; charset=utf-8"
-	 * will provide you with a `.type` of "text/plain".
-	 *
-	 * @param {Object} header
-	 * @api private
-	 */
-
-	Response.prototype.setHeaderProperties = function(header){
-	  // content-type
-	  var ct = this.header['content-type'] || '';
-	  this.type = type(ct);
-
-	  // params
-	  var obj = params(ct);
-	  for (var key in obj) this[key] = obj[key];
-	};
-
-	/**
-	 * Parse the given body `str`.
-	 *
-	 * Used for auto-parsing of bodies. Parsers
-	 * are defined on the `superagent.parse` object.
-	 *
-	 * @param {String} str
-	 * @return {Mixed}
-	 * @api private
-	 */
-
-	Response.prototype.parseBody = function(str){
-	  var parse = request.parse[this.type];
-	  return parse && str && (str.length || str instanceof Object)
-	    ? parse(str)
-	    : null;
-	};
-
-	/**
-	 * Set flags such as `.ok` based on `status`.
-	 *
-	 * For example a 2xx response will give you a `.ok` of __true__
-	 * whereas 5xx will be __false__ and `.error` will be __true__. The
-	 * `.clientError` and `.serverError` are also available to be more
-	 * specific, and `.statusType` is the class of error ranging from 1..5
-	 * sometimes useful for mapping respond colors etc.
-	 *
-	 * "sugar" properties are also defined for common cases. Currently providing:
-	 *
-	 *   - .noContent
-	 *   - .badRequest
-	 *   - .unauthorized
-	 *   - .notAcceptable
-	 *   - .notFound
-	 *
-	 * @param {Number} status
-	 * @api private
-	 */
-
-	Response.prototype.setStatusProperties = function(status){
-	  // handle IE9 bug: http://stackoverflow.com/questions/10046972/msie-returns-status-code-of-1223-for-ajax-request
-	  if (status === 1223) {
-	    status = 204;
-	  }
-
-	  var type = status / 100 | 0;
-
-	  // status / class
-	  this.status = this.statusCode = status;
-	  this.statusType = type;
-
-	  // basics
-	  this.info = 1 == type;
-	  this.ok = 2 == type;
-	  this.clientError = 4 == type;
-	  this.serverError = 5 == type;
-	  this.error = (4 == type || 5 == type)
-	    ? this.toError()
-	    : false;
-
-	  // sugar
-	  this.accepted = 202 == status;
-	  this.noContent = 204 == status;
-	  this.badRequest = 400 == status;
-	  this.unauthorized = 401 == status;
-	  this.notAcceptable = 406 == status;
-	  this.notFound = 404 == status;
-	  this.forbidden = 403 == status;
-	};
-
-	/**
-	 * Return an `Error` representative of this response.
-	 *
-	 * @return {Error}
-	 * @api public
-	 */
-
-	Response.prototype.toError = function(){
-	  var req = this.req;
-	  var method = req.method;
-	  var url = req.url;
-
-	  var msg = 'cannot ' + method + ' ' + url + ' (' + this.status + ')';
-	  var err = new Error(msg);
-	  err.status = this.status;
-	  err.method = method;
-	  err.url = url;
-
-	  return err;
-	};
-
-	/**
-	 * Expose `Response`.
-	 */
-
-	request.Response = Response;
-
-	/**
-	 * Initialize a new `Request` with the given `method` and `url`.
-	 *
-	 * @param {String} method
-	 * @param {String} url
-	 * @api public
-	 */
-
-	function Request(method, url) {
-	  var self = this;
-	  Emitter.call(this);
-	  this._query = this._query || [];
-	  this.method = method;
-	  this.url = url;
-	  this.header = {};
-	  this._header = {};
-	  this.on('end', function(){
-	    var err = null;
-	    var res = null;
-
-	    try {
-	      res = new Response(self);
-	    } catch(e) {
-	      err = new Error('Parser is unable to parse the response');
-	      err.parse = true;
-	      err.original = e;
-	      // issue #675: return the raw response if the response parsing fails
-	      err.rawResponse = self.xhr && self.xhr.responseText ? self.xhr.responseText : null;
-	      return self.callback(err);
-	    }
-
-	    self.emit('response', res);
-
-	    if (err) {
-	      return self.callback(err, res);
-	    }
-
-	    if (res.status >= 200 && res.status < 300) {
-	      return self.callback(err, res);
-	    }
-
-	    var new_err = new Error(res.statusText || 'Unsuccessful HTTP response');
-	    new_err.original = err;
-	    new_err.response = res;
-	    new_err.status = res.status;
-
-	    self.callback(new_err, res);
-	  });
-	}
-
-	/**
-	 * Mixin `Emitter`.
-	 */
-
-	Emitter(Request.prototype);
-
-	/**
-	 * Allow for extension
-	 */
-
-	Request.prototype.use = function(fn) {
-	  fn(this);
-	  return this;
-	}
-
-	/**
-	 * Set timeout to `ms`.
-	 *
-	 * @param {Number} ms
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.timeout = function(ms){
-	  this._timeout = ms;
-	  return this;
-	};
-
-	/**
-	 * Clear previous timeout.
-	 *
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.clearTimeout = function(){
-	  this._timeout = 0;
-	  clearTimeout(this._timer);
-	  return this;
-	};
-
-	/**
-	 * Abort the request, and clear potential timeout.
-	 *
-	 * @return {Request}
-	 * @api public
-	 */
-
-	Request.prototype.abort = function(){
-	  if (this.aborted) return;
-	  this.aborted = true;
-	  this.xhr.abort();
-	  this.clearTimeout();
-	  this.emit('abort');
-	  return this;
-	};
-
-	/**
-	 * Set header `field` to `val`, or multiple fields with one object.
-	 *
-	 * Examples:
-	 *
-	 *      req.get('/')
-	 *        .set('Accept', 'application/json')
-	 *        .set('X-API-Key', 'foobar')
-	 *        .end(callback);
-	 *
-	 *      req.get('/')
-	 *        .set({ Accept: 'application/json', 'X-API-Key': 'foobar' })
-	 *        .end(callback);
-	 *
-	 * @param {String|Object} field
-	 * @param {String} val
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.set = function(field, val){
-	  if (isObject(field)) {
-	    for (var key in field) {
-	      this.set(key, field[key]);
-	    }
-	    return this;
-	  }
-	  this._header[field.toLowerCase()] = val;
-	  this.header[field] = val;
-	  return this;
-	};
-
-	/**
-	 * Remove header `field`.
-	 *
-	 * Example:
-	 *
-	 *      req.get('/')
-	 *        .unset('User-Agent')
-	 *        .end(callback);
-	 *
-	 * @param {String} field
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.unset = function(field){
-	  delete this._header[field.toLowerCase()];
-	  delete this.header[field];
-	  return this;
-	};
-
-	/**
-	 * Get case-insensitive header `field` value.
-	 *
-	 * @param {String} field
-	 * @return {String}
-	 * @api private
-	 */
-
-	Request.prototype.getHeader = function(field){
-	  return this._header[field.toLowerCase()];
-	};
-
-	/**
-	 * Set Content-Type to `type`, mapping values from `request.types`.
-	 *
-	 * Examples:
-	 *
-	 *      superagent.types.xml = 'application/xml';
-	 *
-	 *      request.post('/')
-	 *        .type('xml')
-	 *        .send(xmlstring)
-	 *        .end(callback);
-	 *
-	 *      request.post('/')
-	 *        .type('application/xml')
-	 *        .send(xmlstring)
-	 *        .end(callback);
-	 *
-	 * @param {String} type
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.type = function(type){
-	  this.set('Content-Type', request.types[type] || type);
-	  return this;
-	};
-
-	/**
-	 * Force given parser
-	 *
-	 * Sets the body parser no matter type.
-	 *
-	 * @param {Function}
-	 * @api public
-	 */
-
-	Request.prototype.parse = function(fn){
-	  this._parser = fn;
-	  return this;
-	};
-
-	/**
-	 * Set Accept to `type`, mapping values from `request.types`.
-	 *
-	 * Examples:
-	 *
-	 *      superagent.types.json = 'application/json';
-	 *
-	 *      request.get('/agent')
-	 *        .accept('json')
-	 *        .end(callback);
-	 *
-	 *      request.get('/agent')
-	 *        .accept('application/json')
-	 *        .end(callback);
-	 *
-	 * @param {String} accept
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.accept = function(type){
-	  this.set('Accept', request.types[type] || type);
-	  return this;
-	};
-
-	/**
-	 * Set Authorization field value with `user` and `pass`.
-	 *
-	 * @param {String} user
-	 * @param {String} pass
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.auth = function(user, pass){
-	  var str = btoa(user + ':' + pass);
-	  this.set('Authorization', 'Basic ' + str);
-	  return this;
-	};
-
-	/**
-	* Add query-string `val`.
-	*
-	* Examples:
-	*
-	*   request.get('/shoes')
-	*     .query('size=10')
-	*     .query({ color: 'blue' })
-	*
-	* @param {Object|String} val
-	* @return {Request} for chaining
-	* @api public
-	*/
-
-	Request.prototype.query = function(val){
-	  if ('string' != typeof val) val = serialize(val);
-	  if (val) this._query.push(val);
-	  return this;
-	};
-
-	/**
-	 * Write the field `name` and `val` for "multipart/form-data"
-	 * request bodies.
-	 *
-	 * ``` js
-	 * request.post('/upload')
-	 *   .field('foo', 'bar')
-	 *   .end(callback);
-	 * ```
-	 *
-	 * @param {String} name
-	 * @param {String|Blob|File} val
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.field = function(name, val){
-	  if (!this._formData) this._formData = new root.FormData();
-	  this._formData.append(name, val);
-	  return this;
-	};
-
-	/**
-	 * Queue the given `file` as an attachment to the specified `field`,
-	 * with optional `filename`.
-	 *
-	 * ``` js
-	 * request.post('/upload')
-	 *   .attach(new Blob(['<a id="a"><b id="b">hey!</b></a>'], { type: "text/html"}))
-	 *   .end(callback);
-	 * ```
-	 *
-	 * @param {String} field
-	 * @param {Blob|File} file
-	 * @param {String} filename
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.attach = function(field, file, filename){
-	  if (!this._formData) this._formData = new root.FormData();
-	  this._formData.append(field, file, filename || file.name);
-	  return this;
-	};
-
-	/**
-	 * Send `data` as the request body, defaulting the `.type()` to "json" when
-	 * an object is given.
-	 *
-	 * Examples:
-	 *
-	 *       // manual json
-	 *       request.post('/user')
-	 *         .type('json')
-	 *         .send('{"name":"tj"}')
-	 *         .end(callback)
-	 *
-	 *       // auto json
-	 *       request.post('/user')
-	 *         .send({ name: 'tj' })
-	 *         .end(callback)
-	 *
-	 *       // manual x-www-form-urlencoded
-	 *       request.post('/user')
-	 *         .type('form')
-	 *         .send('name=tj')
-	 *         .end(callback)
-	 *
-	 *       // auto x-www-form-urlencoded
-	 *       request.post('/user')
-	 *         .type('form')
-	 *         .send({ name: 'tj' })
-	 *         .end(callback)
-	 *
-	 *       // defaults to x-www-form-urlencoded
-	  *      request.post('/user')
-	  *        .send('name=tobi')
-	  *        .send('species=ferret')
-	  *        .end(callback)
-	 *
-	 * @param {String|Object} data
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.send = function(data){
-	  var obj = isObject(data);
-	  var type = this.getHeader('Content-Type');
-
-	  // merge
-	  if (obj && isObject(this._data)) {
-	    for (var key in data) {
-	      this._data[key] = data[key];
-	    }
-	  } else if ('string' == typeof data) {
-	    if (!type) this.type('form');
-	    type = this.getHeader('Content-Type');
-	    if ('application/x-www-form-urlencoded' == type) {
-	      this._data = this._data
-	        ? this._data + '&' + data
-	        : data;
-	    } else {
-	      this._data = (this._data || '') + data;
-	    }
-	  } else {
-	    this._data = data;
-	  }
-
-	  if (!obj || isHost(data)) return this;
-	  if (!type) this.type('json');
-	  return this;
-	};
-
-	/**
-	 * Invoke the callback with `err` and `res`
-	 * and handle arity check.
-	 *
-	 * @param {Error} err
-	 * @param {Response} res
-	 * @api private
-	 */
-
-	Request.prototype.callback = function(err, res){
-	  var fn = this._callback;
-	  this.clearTimeout();
-	  fn(err, res);
-	};
-
-	/**
-	 * Invoke callback with x-domain error.
-	 *
-	 * @api private
-	 */
-
-	Request.prototype.crossDomainError = function(){
-	  var err = new Error('Request has been terminated\nPossible causes: the network is offline, Origin is not allowed by Access-Control-Allow-Origin, the page is being unloaded, etc.');
-	  err.crossDomain = true;
-
-	  err.status = this.status;
-	  err.method = this.method;
-	  err.url = this.url;
-
-	  this.callback(err);
-	};
-
-	/**
-	 * Invoke callback with timeout error.
-	 *
-	 * @api private
-	 */
-
-	Request.prototype.timeoutError = function(){
-	  var timeout = this._timeout;
-	  var err = new Error('timeout of ' + timeout + 'ms exceeded');
-	  err.timeout = timeout;
-	  this.callback(err);
-	};
-
-	/**
-	 * Enable transmission of cookies with x-domain requests.
-	 *
-	 * Note that for this to work the origin must not be
-	 * using "Access-Control-Allow-Origin" with a wildcard,
-	 * and also must set "Access-Control-Allow-Credentials"
-	 * to "true".
-	 *
-	 * @api public
-	 */
-
-	Request.prototype.withCredentials = function(){
-	  this._withCredentials = true;
-	  return this;
-	};
-
-	/**
-	 * Initiate request, invoking callback `fn(res)`
-	 * with an instanceof `Response`.
-	 *
-	 * @param {Function} fn
-	 * @return {Request} for chaining
-	 * @api public
-	 */
-
-	Request.prototype.end = function(fn){
-	  var self = this;
-	  var xhr = this.xhr = request.getXHR();
-	  var query = this._query.join('&');
-	  var timeout = this._timeout;
-	  var data = this._formData || this._data;
-
-	  // store callback
-	  this._callback = fn || noop;
-
-	  // state change
-	  xhr.onreadystatechange = function(){
-	    if (4 != xhr.readyState) return;
-
-	    // In IE9, reads to any property (e.g. status) off of an aborted XHR will
-	    // result in the error "Could not complete the operation due to error c00c023f"
-	    var status;
-	    try { status = xhr.status } catch(e) { status = 0; }
-
-	    if (0 == status) {
-	      if (self.timedout) return self.timeoutError();
-	      if (self.aborted) return;
-	      return self.crossDomainError();
-	    }
-	    self.emit('end');
-	  };
-
-	  // progress
-	  var handleProgress = function(e){
-	    if (e.total > 0) {
-	      e.percent = e.loaded / e.total * 100;
-	    }
-	    e.direction = 'download';
-	    self.emit('progress', e);
-	  };
-	  if (this.hasListeners('progress')) {
-	    xhr.onprogress = handleProgress;
-	  }
-	  try {
-	    if (xhr.upload && this.hasListeners('progress')) {
-	      xhr.upload.onprogress = handleProgress;
-	    }
-	  } catch(e) {
-	    // Accessing xhr.upload fails in IE from a web worker, so just pretend it doesn't exist.
-	    // Reported here:
-	    // https://connect.microsoft.com/IE/feedback/details/837245/xmlhttprequest-upload-throws-invalid-argument-when-used-from-web-worker-context
-	  }
-
-	  // timeout
-	  if (timeout && !this._timer) {
-	    this._timer = setTimeout(function(){
-	      self.timedout = true;
-	      self.abort();
-	    }, timeout);
-	  }
-
-	  // querystring
-	  if (query) {
-	    query = request.serializeObject(query);
-	    this.url += ~this.url.indexOf('?')
-	      ? '&' + query
-	      : '?' + query;
-	  }
-
-	  // initiate request
-	  xhr.open(this.method, this.url, true);
-
-	  // CORS
-	  if (this._withCredentials) xhr.withCredentials = true;
-
-	  // body
-	  if ('GET' != this.method && 'HEAD' != this.method && 'string' != typeof data && !isHost(data)) {
-	    // serialize stuff
-	    var contentType = this.getHeader('Content-Type');
-	    var serialize = this._parser || request.serialize[contentType ? contentType.split(';')[0] : ''];
-	    if (!serialize && isJSON(contentType)) serialize = request.serialize['application/json'];
-	    if (serialize) data = serialize(data);
-	  }
-
-	  // set header fields
-	  for (var field in this.header) {
-	    if (null == this.header[field]) continue;
-	    xhr.setRequestHeader(field, this.header[field]);
-	  }
-
-	  // send stuff
-	  this.emit('request', this);
-
-	  // IE11 xhr.send(undefined) sends 'undefined' string as POST payload (instead of nothing)
-	  // We need null here if data is undefined
-	  xhr.send(typeof data !== 'undefined' ? data : null);
-	  return this;
-	};
-
-	/**
-	 * Faux promise support
-	 *
-	 * @param {Function} fulfill
-	 * @param {Function} reject
-	 * @return {Request}
-	 */
-
-	Request.prototype.then = function (fulfill, reject) {
-	  return this.end(function(err, res) {
-	    err ? reject(err) : fulfill(res);
-	  });
-	}
-
-	/**
-	 * Expose `Request`.
-	 */
-
-	request.Request = Request;
-
-	/**
-	 * Issue a request:
-	 *
-	 * Examples:
-	 *
-	 *    request('GET', '/users').end(callback)
-	 *    request('/users').end(callback)
-	 *    request('/users', callback)
-	 *
-	 * @param {String} method
-	 * @param {String|Function} url or callback
-	 * @return {Request}
-	 * @api public
-	 */
-
-	function request(method, url) {
-	  // callback
-	  if ('function' == typeof url) {
-	    return new Request('GET', method).end(url);
-	  }
-
-	  // url first
-	  if (1 == arguments.length) {
-	    return new Request('GET', method);
-	  }
-
-	  return new Request(method, url);
-	}
-
-	/**
-	 * GET `url` with optional callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Mixed|Function} data or fn
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.get = function(url, data, fn){
-	  var req = request('GET', url);
-	  if ('function' == typeof data) fn = data, data = null;
-	  if (data) req.query(data);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * HEAD `url` with optional callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Mixed|Function} data or fn
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.head = function(url, data, fn){
-	  var req = request('HEAD', url);
-	  if ('function' == typeof data) fn = data, data = null;
-	  if (data) req.send(data);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * DELETE `url` with optional callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	function del(url, fn){
-	  var req = request('DELETE', url);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	request['del'] = del;
-	request['delete'] = del;
-
-	/**
-	 * PATCH `url` with optional `data` and callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Mixed} data
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.patch = function(url, data, fn){
-	  var req = request('PATCH', url);
-	  if ('function' == typeof data) fn = data, data = null;
-	  if (data) req.send(data);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * POST `url` with optional `data` and callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Mixed} data
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.post = function(url, data, fn){
-	  var req = request('POST', url);
-	  if ('function' == typeof data) fn = data, data = null;
-	  if (data) req.send(data);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * PUT `url` with optional `data` and callback `fn(res)`.
-	 *
-	 * @param {String} url
-	 * @param {Mixed|Function} data or fn
-	 * @param {Function} fn
-	 * @return {Request}
-	 * @api public
-	 */
-
-	request.put = function(url, data, fn){
-	  var req = request('PUT', url);
-	  if ('function' == typeof data) fn = data, data = null;
-	  if (data) req.send(data);
-	  if (fn) req.end(fn);
-	  return req;
-	};
-
-	/**
-	 * Expose `request`.
-	 */
-
-	module.exports = request;
-
-
-/***/ },
-/* 195 */
-/***/ function(module, exports) {
-
-	
-	/**
-	 * Expose `Emitter`.
-	 */
-
-	module.exports = Emitter;
-
-	/**
-	 * Initialize a new `Emitter`.
-	 *
-	 * @api public
-	 */
-
-	function Emitter(obj) {
-	  if (obj) return mixin(obj);
-	};
-
-	/**
-	 * Mixin the emitter properties.
-	 *
-	 * @param {Object} obj
-	 * @return {Object}
-	 * @api private
-	 */
-
-	function mixin(obj) {
-	  for (var key in Emitter.prototype) {
-	    obj[key] = Emitter.prototype[key];
-	  }
-	  return obj;
-	}
-
-	/**
-	 * Listen on the given `event` with `fn`.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-
-	Emitter.prototype.on =
-	Emitter.prototype.addEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-	  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
-	    .push(fn);
-	  return this;
-	};
-
-	/**
-	 * Adds an `event` listener that will be invoked a single
-	 * time then automatically removed.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-
-	Emitter.prototype.once = function(event, fn){
-	  function on() {
-	    this.off(event, on);
-	    fn.apply(this, arguments);
-	  }
-
-	  on.fn = fn;
-	  this.on(event, on);
-	  return this;
-	};
-
-	/**
-	 * Remove the given callback for `event` or all
-	 * registered callbacks.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-
-	Emitter.prototype.off =
-	Emitter.prototype.removeListener =
-	Emitter.prototype.removeAllListeners =
-	Emitter.prototype.removeEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-
-	  // all
-	  if (0 == arguments.length) {
-	    this._callbacks = {};
-	    return this;
-	  }
-
-	  // specific event
-	  var callbacks = this._callbacks['$' + event];
-	  if (!callbacks) return this;
-
-	  // remove all handlers
-	  if (1 == arguments.length) {
-	    delete this._callbacks['$' + event];
-	    return this;
-	  }
-
-	  // remove specific handler
-	  var cb;
-	  for (var i = 0; i < callbacks.length; i++) {
-	    cb = callbacks[i];
-	    if (cb === fn || cb.fn === fn) {
-	      callbacks.splice(i, 1);
-	      break;
-	    }
-	  }
-	  return this;
-	};
-
-	/**
-	 * Emit `event` with the given args.
-	 *
-	 * @param {String} event
-	 * @param {Mixed} ...
-	 * @return {Emitter}
-	 */
-
-	Emitter.prototype.emit = function(event){
-	  this._callbacks = this._callbacks || {};
-	  var args = [].slice.call(arguments, 1)
-	    , callbacks = this._callbacks['$' + event];
-
-	  if (callbacks) {
-	    callbacks = callbacks.slice(0);
-	    for (var i = 0, len = callbacks.length; i < len; ++i) {
-	      callbacks[i].apply(this, args);
-	    }
-	  }
-
-	  return this;
-	};
-
-	/**
-	 * Return array of callbacks for `event`.
-	 *
-	 * @param {String} event
-	 * @return {Array}
-	 * @api public
-	 */
-
-	Emitter.prototype.listeners = function(event){
-	  this._callbacks = this._callbacks || {};
-	  return this._callbacks['$' + event] || [];
-	};
-
-	/**
-	 * Check if this emitter has `event` handlers.
-	 *
-	 * @param {String} event
-	 * @return {Boolean}
-	 * @api public
-	 */
-
-	Emitter.prototype.hasListeners = function(event){
-	  return !! this.listeners(event).length;
-	};
-
-
-/***/ },
-/* 196 */
-/***/ function(module, exports) {
-
-	
-	/**
-	 * Reduce `arr` with `fn`.
-	 *
-	 * @param {Array} arr
-	 * @param {Function} fn
-	 * @param {Mixed} initial
-	 *
-	 * TODO: combatible error handling?
-	 */
-
-	module.exports = function(arr, fn, initial){  
-	  var idx = 0;
-	  var len = arr.length;
-	  var curr = arguments.length == 3
-	    ? initial
-	    : arr[idx++];
-
-	  while (idx < len) {
-	    curr = fn.call(null, curr, arr[idx], ++idx, arr);
-	  }
-	  
-	  return curr;
-	};
-
-/***/ },
 /* 197 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(18);
-
-	var AddTextMenu = React.createClass({
-	    displayName: "AddTextMenu",
-
-	    getInitialState: function getInitialState() {
-	        return {};
-	    },
-
-	    BLOCK_PARAGRAPH: "<div class='rtf'>You can edit text on your website by double clicking on a text box on your website. Alternatively, when you select a text box a settings menu will appear. Selecting 'Edit Text' from this menu will also allow you to edit the text within this text box. Remember to keep your wording friendly, approachable and easy to understand as if you were talking to your customer</div>",
-	    BLOCK_H1: "<h1 class='rtf'>Heading 1</h1>",
-	    BLOCK_H2: "<h2 class='rtf'>Heading 2</h2>",
-	    BLOCK_H3: "<h3 class='rtf'>Heading 3</h3>",
-
-	    componentDidMount: function componentDidMount() {},
-
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
-
-	    addTextBlock: function addTextBlock(event) {
-	        var ele = $(event.target);
-	        while (!ele.data("template")) {
-	            ele = ele.parent();
-	        }
-	        var sizex = ele.data("width");
-	        var sizey = ele.data("height");
-	        if (sizex) sizex = parseInt(sizex);
-	        if (sizey) sizey = parseInt(sizey);
-
-	        var template = ele.data("template");
-	        this.props.addBlock(template, sizex, sizey);
-	        this.props.parentStateChange({ showBlockTypes: false });
-	    },
-	    render: function render() {
-	        return React.createElement(
-	            "div",
-	            { className: "textTemplateLists", "data-show": this.props.show },
-	            React.createElement(
-	                "div",
-	                { onClick: this.addTextBlock, "data-template": this.BLOCK_PARAGRAPH },
-	                React.createElement("span", { className: "glyphicon glyphicon-align-justify" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "rtf" },
-	                    "Paragraph"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addTextBlock, "data-width": "12", "data-height": "1", "data-template": this.BLOCK_H1 },
-	                React.createElement(
-	                    "span",
-	                    { className: "glyphicon" },
-	                    "H1"
-	                ),
-	                React.createElement(
-	                    "div",
-	                    { className: "rtf" },
-	                    "Heading 1"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addTextBlock, "data-width": "12", "data-height": "1", "data-template": this.BLOCK_H2 },
-	                React.createElement(
-	                    "span",
-	                    { className: "glyphicon" },
-	                    "H2"
-	                ),
-	                React.createElement(
-	                    "div",
-	                    { className: "rtf" },
-	                    "Heading 2"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addTextBlock, "data-width": "12", "data-height": "1", "data-template": this.BLOCK_H3 },
-	                React.createElement(
-	                    "span",
-	                    { className: "glyphicon" },
-	                    "H3"
-	                ),
-	                React.createElement(
-	                    "div",
-	                    { className: "rtf" },
-	                    "Heading 3"
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = AddTextMenu;
-
-/***/ },
-/* 198 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	/**
-	 * Created by hand on 2016/2/19.
-	 */
-
-	var React = __webpack_require__(18);
-	var postal = __webpack_require__(182);
-
-	var channel = postal.channel("activities");
-
-	var AddActivityMenu = React.createClass({
-	    displayName: "AddActivityMenu",
-
-
-	    getInitialState: function getInitialState() {
-	        return {};
-	    },
-
-	    addSingleChoice: function addSingleChoice() {
-	        postal.publish({
-	            channel: "activities",
-	            topic: "single-choice",
-	            data: { /**useless data for later usage*/
-	                sku: "AZDTF4346",
-	                qty: 21
-	            }
-	        });
-	    },
-
-	    render: function render() {
-	        return React.createElement(
-	            "div",
-	            { className: "menuActivityList", "data-show": this.props.show },
-	            React.createElement(
-	                "div",
-	                { className: "category" },
-	                "choice question"
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok-circle" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Single Choice"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-screenshot" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Multiple Choice"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-saved" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Highlight"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Right or Wrong"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Right or Wrong"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Right or Wrong"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Right or Wrong"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Right or Wrong"
-	                )
-	            )
-	        );
-	    }
-	});
-
-	module.exports = AddActivityMenu;
-
-/***/ },
-/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -41402,13 +39279,13 @@
 	module.exports = PageConfigMenu;
 
 /***/ },
-/* 200 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(18);
-	var LinkedStateMixin = __webpack_require__(201);
+	var LinkedStateMixin = __webpack_require__(199);
 
 	var FileNameDialog = React.createClass({
 	    displayName: 'FileNameDialog',
@@ -41498,13 +39375,13 @@
 	module.exports = FileNameDialog;
 
 /***/ },
-/* 201 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(202);
+	module.exports = __webpack_require__(200);
 
 /***/ },
-/* 202 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41521,8 +39398,8 @@
 
 	'use strict';
 
-	var ReactLink = __webpack_require__(203);
-	var ReactStateSetters = __webpack_require__(204);
+	var ReactLink = __webpack_require__(201);
+	var ReactStateSetters = __webpack_require__(202);
 
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -41545,7 +39422,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 203 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41619,7 +39496,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 204 */
+/* 202 */
 /***/ function(module, exports) {
 
 	/**
@@ -41728,14 +39605,14 @@
 	module.exports = ReactStateSetters;
 
 /***/ },
-/* 205 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(18);
 
-	var moment = __webpack_require__(206);
+	var moment = __webpack_require__(204);
 
 	var OpenPageDialog = React.createClass({
 	    displayName: 'OpenPageDialog',
@@ -41843,7 +39720,7 @@
 	module.exports = OpenPageDialog;
 
 /***/ },
-/* 206 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -42114,7 +39991,7 @@
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(207)("./" + name);
+	                __webpack_require__(205)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -45041,183 +42918,183 @@
 	    return _moment;
 
 	}));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(184)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(195)(module)))
 
 /***/ },
-/* 207 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 208,
-		"./af.js": 208,
-		"./ar": 209,
-		"./ar-ma": 210,
-		"./ar-ma.js": 210,
-		"./ar-sa": 211,
-		"./ar-sa.js": 211,
-		"./ar-tn": 212,
-		"./ar-tn.js": 212,
-		"./ar.js": 209,
-		"./az": 213,
-		"./az.js": 213,
-		"./be": 214,
-		"./be.js": 214,
-		"./bg": 215,
-		"./bg.js": 215,
-		"./bn": 216,
-		"./bn.js": 216,
-		"./bo": 217,
-		"./bo.js": 217,
-		"./br": 218,
-		"./br.js": 218,
-		"./bs": 219,
-		"./bs.js": 219,
-		"./ca": 220,
-		"./ca.js": 220,
-		"./cs": 221,
-		"./cs.js": 221,
-		"./cv": 222,
-		"./cv.js": 222,
-		"./cy": 223,
-		"./cy.js": 223,
-		"./da": 224,
-		"./da.js": 224,
-		"./de": 225,
-		"./de-at": 226,
-		"./de-at.js": 226,
-		"./de.js": 225,
-		"./el": 227,
-		"./el.js": 227,
-		"./en-au": 228,
-		"./en-au.js": 228,
-		"./en-ca": 229,
-		"./en-ca.js": 229,
-		"./en-gb": 230,
-		"./en-gb.js": 230,
-		"./eo": 231,
-		"./eo.js": 231,
-		"./es": 232,
-		"./es.js": 232,
-		"./et": 233,
-		"./et.js": 233,
-		"./eu": 234,
-		"./eu.js": 234,
-		"./fa": 235,
-		"./fa.js": 235,
-		"./fi": 236,
-		"./fi.js": 236,
-		"./fo": 237,
-		"./fo.js": 237,
-		"./fr": 238,
-		"./fr-ca": 239,
-		"./fr-ca.js": 239,
-		"./fr.js": 238,
-		"./fy": 240,
-		"./fy.js": 240,
-		"./gl": 241,
-		"./gl.js": 241,
-		"./he": 242,
-		"./he.js": 242,
-		"./hi": 243,
-		"./hi.js": 243,
-		"./hr": 244,
-		"./hr.js": 244,
-		"./hu": 245,
-		"./hu.js": 245,
-		"./hy-am": 246,
-		"./hy-am.js": 246,
-		"./id": 247,
-		"./id.js": 247,
-		"./is": 248,
-		"./is.js": 248,
-		"./it": 249,
-		"./it.js": 249,
-		"./ja": 250,
-		"./ja.js": 250,
-		"./jv": 251,
-		"./jv.js": 251,
-		"./ka": 252,
-		"./ka.js": 252,
-		"./km": 253,
-		"./km.js": 253,
-		"./ko": 254,
-		"./ko.js": 254,
-		"./lb": 255,
-		"./lb.js": 255,
-		"./lt": 256,
-		"./lt.js": 256,
-		"./lv": 257,
-		"./lv.js": 257,
-		"./me": 258,
-		"./me.js": 258,
-		"./mk": 259,
-		"./mk.js": 259,
-		"./ml": 260,
-		"./ml.js": 260,
-		"./mr": 261,
-		"./mr.js": 261,
-		"./ms": 262,
-		"./ms-my": 263,
-		"./ms-my.js": 263,
-		"./ms.js": 262,
-		"./my": 264,
-		"./my.js": 264,
-		"./nb": 265,
-		"./nb.js": 265,
-		"./ne": 266,
-		"./ne.js": 266,
-		"./nl": 267,
-		"./nl.js": 267,
-		"./nn": 268,
-		"./nn.js": 268,
-		"./pl": 269,
-		"./pl.js": 269,
-		"./pt": 270,
-		"./pt-br": 271,
-		"./pt-br.js": 271,
-		"./pt.js": 270,
-		"./ro": 272,
-		"./ro.js": 272,
-		"./ru": 273,
-		"./ru.js": 273,
-		"./si": 274,
-		"./si.js": 274,
-		"./sk": 275,
-		"./sk.js": 275,
-		"./sl": 276,
-		"./sl.js": 276,
-		"./sq": 277,
-		"./sq.js": 277,
-		"./sr": 278,
-		"./sr-cyrl": 279,
-		"./sr-cyrl.js": 279,
-		"./sr.js": 278,
-		"./sv": 280,
-		"./sv.js": 280,
-		"./ta": 281,
-		"./ta.js": 281,
-		"./th": 282,
-		"./th.js": 282,
-		"./tl-ph": 283,
-		"./tl-ph.js": 283,
-		"./tr": 284,
-		"./tr.js": 284,
-		"./tzl": 285,
-		"./tzl.js": 285,
-		"./tzm": 286,
-		"./tzm-latn": 287,
-		"./tzm-latn.js": 287,
-		"./tzm.js": 286,
-		"./uk": 288,
-		"./uk.js": 288,
-		"./uz": 289,
-		"./uz.js": 289,
-		"./vi": 290,
-		"./vi.js": 290,
-		"./zh-cn": 291,
-		"./zh-cn.js": 291,
-		"./zh-tw": 292,
-		"./zh-tw.js": 292
+		"./af": 206,
+		"./af.js": 206,
+		"./ar": 207,
+		"./ar-ma": 208,
+		"./ar-ma.js": 208,
+		"./ar-sa": 209,
+		"./ar-sa.js": 209,
+		"./ar-tn": 210,
+		"./ar-tn.js": 210,
+		"./ar.js": 207,
+		"./az": 211,
+		"./az.js": 211,
+		"./be": 212,
+		"./be.js": 212,
+		"./bg": 213,
+		"./bg.js": 213,
+		"./bn": 214,
+		"./bn.js": 214,
+		"./bo": 215,
+		"./bo.js": 215,
+		"./br": 216,
+		"./br.js": 216,
+		"./bs": 217,
+		"./bs.js": 217,
+		"./ca": 218,
+		"./ca.js": 218,
+		"./cs": 219,
+		"./cs.js": 219,
+		"./cv": 220,
+		"./cv.js": 220,
+		"./cy": 221,
+		"./cy.js": 221,
+		"./da": 222,
+		"./da.js": 222,
+		"./de": 223,
+		"./de-at": 224,
+		"./de-at.js": 224,
+		"./de.js": 223,
+		"./el": 225,
+		"./el.js": 225,
+		"./en-au": 226,
+		"./en-au.js": 226,
+		"./en-ca": 227,
+		"./en-ca.js": 227,
+		"./en-gb": 228,
+		"./en-gb.js": 228,
+		"./eo": 229,
+		"./eo.js": 229,
+		"./es": 230,
+		"./es.js": 230,
+		"./et": 231,
+		"./et.js": 231,
+		"./eu": 232,
+		"./eu.js": 232,
+		"./fa": 233,
+		"./fa.js": 233,
+		"./fi": 234,
+		"./fi.js": 234,
+		"./fo": 235,
+		"./fo.js": 235,
+		"./fr": 236,
+		"./fr-ca": 237,
+		"./fr-ca.js": 237,
+		"./fr.js": 236,
+		"./fy": 238,
+		"./fy.js": 238,
+		"./gl": 239,
+		"./gl.js": 239,
+		"./he": 240,
+		"./he.js": 240,
+		"./hi": 241,
+		"./hi.js": 241,
+		"./hr": 242,
+		"./hr.js": 242,
+		"./hu": 243,
+		"./hu.js": 243,
+		"./hy-am": 244,
+		"./hy-am.js": 244,
+		"./id": 245,
+		"./id.js": 245,
+		"./is": 246,
+		"./is.js": 246,
+		"./it": 247,
+		"./it.js": 247,
+		"./ja": 248,
+		"./ja.js": 248,
+		"./jv": 249,
+		"./jv.js": 249,
+		"./ka": 250,
+		"./ka.js": 250,
+		"./km": 251,
+		"./km.js": 251,
+		"./ko": 252,
+		"./ko.js": 252,
+		"./lb": 253,
+		"./lb.js": 253,
+		"./lt": 254,
+		"./lt.js": 254,
+		"./lv": 255,
+		"./lv.js": 255,
+		"./me": 256,
+		"./me.js": 256,
+		"./mk": 257,
+		"./mk.js": 257,
+		"./ml": 258,
+		"./ml.js": 258,
+		"./mr": 259,
+		"./mr.js": 259,
+		"./ms": 260,
+		"./ms-my": 261,
+		"./ms-my.js": 261,
+		"./ms.js": 260,
+		"./my": 262,
+		"./my.js": 262,
+		"./nb": 263,
+		"./nb.js": 263,
+		"./ne": 264,
+		"./ne.js": 264,
+		"./nl": 265,
+		"./nl.js": 265,
+		"./nn": 266,
+		"./nn.js": 266,
+		"./pl": 267,
+		"./pl.js": 267,
+		"./pt": 268,
+		"./pt-br": 269,
+		"./pt-br.js": 269,
+		"./pt.js": 268,
+		"./ro": 270,
+		"./ro.js": 270,
+		"./ru": 271,
+		"./ru.js": 271,
+		"./si": 272,
+		"./si.js": 272,
+		"./sk": 273,
+		"./sk.js": 273,
+		"./sl": 274,
+		"./sl.js": 274,
+		"./sq": 275,
+		"./sq.js": 275,
+		"./sr": 276,
+		"./sr-cyrl": 277,
+		"./sr-cyrl.js": 277,
+		"./sr.js": 276,
+		"./sv": 278,
+		"./sv.js": 278,
+		"./ta": 279,
+		"./ta.js": 279,
+		"./th": 280,
+		"./th.js": 280,
+		"./tl-ph": 281,
+		"./tl-ph.js": 281,
+		"./tr": 282,
+		"./tr.js": 282,
+		"./tzl": 283,
+		"./tzl.js": 283,
+		"./tzm": 284,
+		"./tzm-latn": 285,
+		"./tzm-latn.js": 285,
+		"./tzm.js": 284,
+		"./uk": 286,
+		"./uk.js": 286,
+		"./uz": 287,
+		"./uz.js": 287,
+		"./vi": 288,
+		"./vi.js": 288,
+		"./zh-cn": 289,
+		"./zh-cn.js": 289,
+		"./zh-tw": 290,
+		"./zh-tw.js": 290
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -45230,11 +43107,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 207;
+	webpackContext.id = 205;
 
 
 /***/ },
-/* 208 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45242,7 +43119,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45311,7 +43188,7 @@
 	}));
 
 /***/ },
-/* 209 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45321,7 +43198,7 @@
 	//! Native plural forms: forabi https://github.com/forabi
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45451,7 +43328,7 @@
 	}));
 
 /***/ },
-/* 210 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45460,7 +43337,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45514,7 +43391,7 @@
 	}));
 
 /***/ },
-/* 211 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45522,7 +43399,7 @@
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45621,14 +43498,14 @@
 	}));
 
 /***/ },
-/* 212 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale  : Tunisian Arabic (ar-tn)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45682,7 +43559,7 @@
 	}));
 
 /***/ },
-/* 213 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45690,7 +43567,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45790,7 +43667,7 @@
 	}));
 
 /***/ },
-/* 214 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45800,7 +43677,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45941,7 +43818,7 @@
 	}));
 
 /***/ },
-/* 215 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45949,7 +43826,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46035,7 +43912,7 @@
 	}));
 
 /***/ },
-/* 216 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46043,7 +43920,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46152,7 +44029,7 @@
 	}));
 
 /***/ },
-/* 217 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46160,7 +44037,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46266,7 +44143,7 @@
 	}));
 
 /***/ },
-/* 218 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46274,7 +44151,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46377,7 +44254,7 @@
 	}));
 
 /***/ },
-/* 219 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46386,7 +44263,7 @@
 	//! based on (hr) translation by Bojan Marković
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46522,7 +44399,7 @@
 	}));
 
 /***/ },
-/* 220 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46530,7 +44407,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46605,7 +44482,7 @@
 	}));
 
 /***/ },
-/* 221 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46613,7 +44490,7 @@
 	//! author : petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46766,7 +44643,7 @@
 	}));
 
 /***/ },
-/* 222 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46774,7 +44651,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46833,7 +44710,7 @@
 	}));
 
 /***/ },
-/* 223 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46841,7 +44718,7 @@
 	//! author : Robert Allen
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46916,7 +44793,7 @@
 	}));
 
 /***/ },
-/* 224 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46924,7 +44801,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46980,7 +44857,7 @@
 	}));
 
 /***/ },
-/* 225 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46989,7 +44866,7 @@
 	//! author: Menelion Elensúle: https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47059,7 +44936,7 @@
 	}));
 
 /***/ },
-/* 226 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47069,7 +44946,7 @@
 	//! author : Martin Groller : https://github.com/MadMG
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47139,7 +45016,7 @@
 	}));
 
 /***/ },
-/* 227 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47147,7 +45024,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47237,14 +45114,14 @@
 	}));
 
 /***/ },
-/* 228 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : australian english (en-au)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47307,7 +45184,7 @@
 	}));
 
 /***/ },
-/* 229 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47315,7 +45192,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47374,7 +45251,7 @@
 	}));
 
 /***/ },
-/* 230 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47382,7 +45259,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47445,7 +45322,7 @@
 	}));
 
 /***/ },
-/* 231 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47455,7 +45332,7 @@
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47522,7 +45399,7 @@
 	}));
 
 /***/ },
-/* 232 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47530,7 +45407,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47605,7 +45482,7 @@
 	}));
 
 /***/ },
-/* 233 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47614,7 +45491,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47689,7 +45566,7 @@
 	}));
 
 /***/ },
-/* 234 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47697,7 +45574,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47757,7 +45634,7 @@
 	}));
 
 /***/ },
-/* 235 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47765,7 +45642,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47866,7 +45743,7 @@
 	}));
 
 /***/ },
-/* 236 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47874,7 +45751,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47977,7 +45854,7 @@
 	}));
 
 /***/ },
-/* 237 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47985,7 +45862,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48041,7 +45918,7 @@
 	}));
 
 /***/ },
-/* 238 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48049,7 +45926,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48107,7 +45984,7 @@
 	}));
 
 /***/ },
-/* 239 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48115,7 +45992,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48169,7 +46046,7 @@
 	}));
 
 /***/ },
-/* 240 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48177,7 +46054,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48244,7 +46121,7 @@
 	}));
 
 /***/ },
-/* 241 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48252,7 +46129,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48323,7 +46200,7 @@
 	}));
 
 /***/ },
-/* 242 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48333,7 +46210,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48409,7 +46286,7 @@
 	}));
 
 /***/ },
-/* 243 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48417,7 +46294,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48536,7 +46413,7 @@
 	}));
 
 /***/ },
-/* 244 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48544,7 +46421,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48680,7 +46557,7 @@
 	}));
 
 /***/ },
-/* 245 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48688,7 +46565,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48793,7 +46670,7 @@
 	}));
 
 /***/ },
-/* 246 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48801,7 +46678,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48908,7 +46785,7 @@
 	}));
 
 /***/ },
-/* 247 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48917,7 +46794,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48995,7 +46872,7 @@
 	}));
 
 /***/ },
-/* 248 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49003,7 +46880,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49126,7 +47003,7 @@
 	}));
 
 /***/ },
-/* 249 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49135,7 +47012,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49200,7 +47077,7 @@
 	}));
 
 /***/ },
-/* 250 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49208,7 +47085,7 @@
 	//! author : LI Long : https://github.com/baryon
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49269,7 +47146,7 @@
 	}));
 
 /***/ },
-/* 251 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49278,7 +47155,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49356,7 +47233,7 @@
 	}));
 
 /***/ },
-/* 252 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49364,7 +47241,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49463,7 +47340,7 @@
 	}));
 
 /***/ },
-/* 253 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49471,7 +47348,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49525,7 +47402,7 @@
 	}));
 
 /***/ },
-/* 254 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49537,7 +47414,7 @@
 	//! - Jeeeyul Lee <jeeeyul@gmail.com>
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49597,7 +47474,7 @@
 	}));
 
 /***/ },
-/* 255 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49605,7 +47482,7 @@
 	//! author : mweimerskirch : https://github.com/mweimerskirch, David Raison : https://github.com/kwisatz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49735,7 +47612,7 @@
 	}));
 
 /***/ },
-/* 256 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49743,7 +47620,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49864,7 +47741,7 @@
 	}));
 
 /***/ },
-/* 257 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49873,7 +47750,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49964,7 +47841,7 @@
 	}));
 
 /***/ },
-/* 258 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49972,7 +47849,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50077,7 +47954,7 @@
 	}));
 
 /***/ },
-/* 259 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50085,7 +47962,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50171,7 +48048,7 @@
 	}));
 
 /***/ },
-/* 260 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50179,7 +48056,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50246,7 +48123,7 @@
 	}));
 
 /***/ },
-/* 261 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50254,7 +48131,7 @@
 	//! author : Harshad Kale : https://github.com/kalehv
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50371,7 +48248,7 @@
 	}));
 
 /***/ },
-/* 262 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50379,7 +48256,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50457,7 +48334,7 @@
 	}));
 
 /***/ },
-/* 263 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50465,7 +48342,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50543,7 +48420,7 @@
 	}));
 
 /***/ },
-/* 264 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50551,7 +48428,7 @@
 	//! author : Squar team, mysquar.com
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50640,7 +48517,7 @@
 	}));
 
 /***/ },
-/* 265 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50649,7 +48526,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50705,7 +48582,7 @@
 	}));
 
 /***/ },
-/* 266 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50713,7 +48590,7 @@
 	//! author : suvash : https://github.com/suvash
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50832,7 +48709,7 @@
 	}));
 
 /***/ },
-/* 267 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50840,7 +48717,7 @@
 	//! author : Joris Röling : https://github.com/jjupiter
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50907,7 +48784,7 @@
 	}));
 
 /***/ },
-/* 268 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50915,7 +48792,7 @@
 	//! author : https://github.com/mechuwind
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50971,7 +48848,7 @@
 	}));
 
 /***/ },
-/* 269 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50979,7 +48856,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51080,7 +48957,7 @@
 	}));
 
 /***/ },
-/* 270 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51088,7 +48965,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51148,7 +49025,7 @@
 	}));
 
 /***/ },
-/* 271 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51156,7 +49033,7 @@
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51212,7 +49089,7 @@
 	}));
 
 /***/ },
-/* 272 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51221,7 +49098,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51290,7 +49167,7 @@
 	}));
 
 /***/ },
-/* 273 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51299,7 +49176,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51458,7 +49335,7 @@
 	}));
 
 /***/ },
-/* 274 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51466,7 +49343,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51527,7 +49404,7 @@
 	}));
 
 /***/ },
-/* 275 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51536,7 +49413,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51689,7 +49566,7 @@
 	}));
 
 /***/ },
-/* 276 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51697,7 +49574,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51853,7 +49730,7 @@
 	}));
 
 /***/ },
-/* 277 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51863,7 +49740,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd (fixes)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51926,7 +49803,7 @@
 	}));
 
 /***/ },
-/* 278 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51934,7 +49811,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52038,7 +49915,7 @@
 	}));
 
 /***/ },
-/* 279 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52046,7 +49923,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52150,7 +50027,7 @@
 	}));
 
 /***/ },
-/* 280 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52158,7 +50035,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52221,7 +50098,7 @@
 	}));
 
 /***/ },
-/* 281 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52229,7 +50106,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52320,7 +50197,7 @@
 	}));
 
 /***/ },
-/* 282 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52328,7 +50205,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52389,7 +50266,7 @@
 	}));
 
 /***/ },
-/* 283 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52397,7 +50274,7 @@
 	//! author : Dan Hagman
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52455,7 +50332,7 @@
 	}));
 
 /***/ },
-/* 284 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52464,7 +50341,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52549,7 +50426,7 @@
 	}));
 
 /***/ },
-/* 285 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52557,7 +50434,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v with the help of Iustì Canun
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52638,7 +50515,7 @@
 	}));
 
 /***/ },
-/* 286 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52646,7 +50523,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52700,7 +50577,7 @@
 	}));
 
 /***/ },
-/* 287 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52708,7 +50585,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52762,7 +50639,7 @@
 	}));
 
 /***/ },
-/* 288 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52771,7 +50648,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52919,7 +50796,7 @@
 	}));
 
 /***/ },
-/* 289 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52927,7 +50804,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52981,7 +50858,7 @@
 	}));
 
 /***/ },
-/* 290 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52989,7 +50866,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53051,7 +50928,7 @@
 	}));
 
 /***/ },
-/* 291 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53060,7 +50937,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53182,7 +51059,7 @@
 	}));
 
 /***/ },
-/* 292 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53190,7 +51067,7 @@
 	//! author : Ben : https://github.com/ben-lin
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(204)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53285,6 +51162,2069 @@
 	    return zh_tw;
 
 	}));
+
+/***/ },
+/* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+
+	var _ = __webpack_require__(292);
+	var postal = __webpack_require__(193);
+
+	var GridLayout = React.createClass({
+	    displayName: "GridLayout",
+
+
+	    BLOCK_ID_PREFIX: "block_",
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            layoutable: true,
+	            minHeight: 768,
+	            zoom: 1,
+	            doubleScreen: 0,
+	            showHeader: true,
+	            showFooter: true,
+	            theme: "default"
+	        };
+	    },
+
+	    data: {
+	        singleScreenWidgets: [],
+	        doubleScreenLeftWidgets: [],
+	        doubleScreenRightWidgets: [],
+	        widgetContents: {}
+	    },
+
+	    /**
+	     * Default gridster options
+	     * */
+	    defaultGridOptions: {
+	        widget_margins: [1, 1],
+	        min_cols: 12,
+	        min_rows: 10,
+	        serialize_params: function serialize_params($w, wgd) {
+	            var cli = $w.clone();
+	            cli.find(".gs-resize-handle").remove();
+	            cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+
+	            return {
+	                content: cli.html(),
+	                id: $w.data('id'),
+	                col: wgd.col,
+	                row: wgd.row,
+	                size_x: wgd.size_x,
+	                size_y: wgd.size_y
+	            };
+	        }
+	    },
+
+	    componentDidMount: function componentDidMount() {
+	        if (this.props.data === null) {
+	            this.data = {
+	                singleScreenWidgets: [],
+	                doubleScreenLeftWidgets: [],
+	                doubleScreenRightWidgets: [],
+	                widgetContents: {}
+	            };
+	        } else {
+	            this.data = this.props.data;
+	        }
+	        this.initGridster();
+	        this.subscribeChanel();
+	    },
+
+	    subscribeChanel: function subscribeChanel() {
+	        var layout = this;
+	        postal.subscribe({
+	            channel: "activities",
+	            topic: "single-choice",
+	            callback: function callback(data, envelope) {
+	                layout.addActivity("single-choice");
+	                // `data` is the data published by the publisher.
+	                // `envelope` is a wrapper around the data & contains
+	                // metadata about the message like the channel, topic,
+	                // timestamp and any other data which might have been
+	                // added by the sender.
+	            }
+	        });
+
+	        postal.subscribe({
+	            channel: "workspace",
+	            topic: "empty.clicked",
+	            callback: function callback(data, envelope) {
+	                layout.enableGridster();
+	            }
+	        });
+	    },
+
+	    /**When propeties and states change */
+	    componentWillUpdate: function componentWillUpdate(nextProps, nextState) {
+	        this.saveGridData();
+	        /**When screen mode is single to double, try to set/init the double screen widgets */
+	        if (nextProps.doubleScreen != this.props.doubleScreen) {
+	            if (nextProps.doubleScreen) {
+	                // Single -> Double
+	                if (this.data.doubleScreenLeftWidgets.length === 0 && this.data.doubleScreenRightWidgets.length === 0) {
+	                    this.data.doubleScreenLeftWidgets = this.data.singleScreenWidgets;
+	                }
+	            }
+	        }
+	    },
+
+	    /**Extract n save grid data*/
+	    saveGridData: function saveGridData() {
+	        var layout = this;
+	        /**cache the state of grids by current screen(s) content*/
+
+	        if (this.props.doubleScreen === true) {
+	            //current double screen setting
+	            this.data.doubleScreenLeftWidgets = pured("#main-grid>ul");
+	            this.data.doubleScreenRightWidgets = pured("#extra-grid>ul");
+	        } else {
+	            //current single screeny setting
+	            this.data.singleScreenWidgets = pured("#main-grid>ul");
+	        }
+
+	        function pured(id) {
+	            var wlist = $(id).gridster().data('gridster').serialize();
+	            $(wlist).each(function () {
+	                layout.data.widgetContents[this.id] = this.coiinntent;
+	                delete this.content;
+	            });
+	            return wlist;
+	        }
+	        return this.data;
+	    },
+
+	    /**Load gridster widgets from layout.data */
+	    loadGridData: function loadGridData() {
+	        var layout = this;
+	        if (layout.props.doubleScreen) {
+	            foreachAddWidget("#main-grid > ul", layout.data.doubleScreenLeftWidgets);
+	            foreachAddWidget("#extra-grid > ul", layout.data.doubleScreenRightWidgets);
+	        } else {
+	            foreachAddWidget("#main-grid > ul", layout.data.singleScreenWidgets);
+	        }
+	        function foreachAddWidget(selector, data) {
+	            var gridster = $(selector).gridster().data('gridster');
+	            $.each(data, function () {
+	                var li = "<li data-id='" + this.id + "'>" + layout.data.widgetContents[this.id] + "</li>";
+	                gridster.add_widget(li, this.size_x, this.size_y, this.col, this.row);
+	            });
+	        }
+	    },
+
+	    setData: function setData(data) {
+	        this.data = data;
+	        this.initGridster();
+	    },
+
+	    getData: function getData() {
+	        this.saveGridData();
+	        return this.data;
+	    },
+
+	    initGridster: function initGridster() {
+	        var layout = this;
+	        $("#main-grid").empty();
+	        $("#extra-grid").empty();
+	        $("#main-grid").append("<ul></ul>");
+	        $("#extra-grid").append("<ul></ul>");
+
+	        /**Initialize the grid first*/
+	        $(".footer").css("position", "initial");
+	        if (this.props.double) {
+	            if (this.props.expandMode === 1) {
+	                //portrait cut model
+	                layout.initPortraitCutMode();
+	            }
+	            if (this.props.expandMode === 2) {
+	                //expand mode
+	                this.initExpandMode();
+	            }
+	            if (this.props.expandMode === 3) {
+	                //extra mode
+	                layout.initExtraMode();
+	            }
+	        } else {
+	            layout.initSingleMode();
+	        }
+
+	        /**Add blocks to gridster*/
+	        this.loadGridData();
+	        this.initBlockEvents();
+	        /**If it is in edit mode , disable gridster resize and movements, init the mce editor*/
+
+	        /*
+	        if(!this.state.layoutable) {
+	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
+	            tinymce.init({
+	                selector: '.gridster li .rtf',
+	                inline: true,
+	                menubar: false,
+	                toolbar: 'undo redo| bold italic underline strikethrough'
+	            });
+	        }
+	        */
+	    },
+	    startDraging: false,
+
+	    initSingleMode: function initSingleMode() {
+	        var screenCount = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
+
+	        var layout = this;
+	        /*
+	        style={{
+	            width: (this.props.double&&this.props.expandMode===2)? this.props.width*2: this.props.width
+	        }}
+	        */
+	        console.log("init single mode", this.props);
+	        $("#main-grid").css("width", this.props.width);
+	        $("#main-grid").css("min-height", this.props.height);
+
+	        var gridsterWidth = this.props.width;
+	        if (this.props.padding) {
+	            $("#main-grid").css("padding", this.props.padding.join(" "));
+	            $("#main-grid>ul").css("width", "100%");
+	            $("#main-grid>ul").css("height", "100%");
+	        }
+
+	        $("#main-grid>ul").gridster(_.extend({
+	            namespace: '#main-grid',
+	            widget_base_dimensions: [this.props.width / 12 - 2, this.props.height / 10 - 2],
+	            draggable: {
+	                start: function start() {
+	                    layout.startDraging = true;
+	                },
+	                stop: function stop(event, ui) {
+	                    /**
+	                     * When on double screen and the expand mode is 'extra' or 'portrait',
+	                     * Move the widget from left to right
+	                     * */
+	                    if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode === 1 || layout.props.pageSetting.expandMode === 3) && ui.pointer.left >= layout.props.pageSetting.width + 70) {
+	                        layout.moveBlock(ui.$player, true);
+	                    }
+	                }
+	            },
+	            resize: {
+	                enabled: true,
+	                start: function start() {
+	                    layout.startDraging = true;
+	                    console.log("start resizing");
+	                },
+
+	                resize: function resize() {
+	                    console.log("resizing");
+	                },
+
+	                stop: function stop() {}
+	            }
+	        }, this.defaultGridOptions));
+	        $("#extra-grid").hide();
+	    },
+
+	    /***
+	     * Expand Mode: expand the single screen(1024 width) to doubled width (2048 width)
+	     */
+	    initExpandMode: function initExpandMode() {
+	        this.initSingleMode(2);
+	    },
+
+	    /**
+	     * Extra Mode: the right screen is full screened for media plays(Movie) or full screen demonstration
+	     */
+	    initExtraMode: function initExtraMode() {
+	        var layout = this;
+	        layout.initSingleMode(1);
+	        $("#extra-grid").show();
+
+	        $("#extra-grid").css("position", "absolute").css("top", 0).css("right", 0).css("width", this.props.width).show();
+
+	        $("#extra-grid>ul").gridster(_.extend({
+	            namespace: '#extra-grid',
+	            widget_base_dimensions: [this.props.width / 12 - 2, this.props.height / 10 - 2],
+	            draggable: {
+	                stop: function stop(event, ui) {
+	                    /**
+	                     * When on double screen and the expand mode is 'extra' or 'portrait',
+	                     * Move the widget from left to right
+	                     * */
+	                    if (ui.pointer.left <= layout.props.width - 200) {
+	                        layout.moveBlock(ui.$player, false);
+	                    }
+	                }
+	            },
+	            resize: {
+	                enabled: true
+	            }
+	        }, this.defaultGridOptions));
+	    },
+
+	    initPortraitCutMode: function initPortraitCutMode() {
+	        var layout = this;
+	        $(".footer").css("position", "absolute").css("bottom", 0).css("right", 0);
+	        var contentWidth = this.props.width - this.props.padding[1] - this.props.padding[3];
+
+	        var extraHeight = this.props.height;
+	        if (this.props.showFooter) {
+	            extraHeight -= this.props.footerHeight;
+	        }
+	        extraHeight -= this.props.padding[0];
+	        $("#extra-grid").css("position", "absolute").css("top", this.props.padding[0]).css("right", this.props.padding[1]).css("width", contentWidth).show();
+	        $("#extra-grid>ul").gridster(_.extend({
+	            namespace: '#extra-grid',
+	            widget_base_dimensions: [contentWidth / 12 - 2, extraHeight / 10 - 2],
+	            draggable: {
+	                stop: function stop(event, ui) {
+	                    if (ui.pointer.left <= layout.props.width - 200) {
+	                        layout.moveBlock(ui.$player, false);
+	                    }
+	                }
+	            },
+	            resize: {
+	                enabled: true
+	            }
+	        }, this.defaultGridOptions));
+
+	        var contentHeight = this.props.height;
+	        if (this.props.showHeader) {
+	            contentHeight -= this.props.headerHeight;
+	        }
+	        contentHeight -= this.props.padding[2];
+
+	        $("#main-grid>ul").css("min-height", contentHeight);
+	        $("#main-grid>ul").css("margin-left", this.props.padding[3]);
+
+	        $("#main-grid>ul").gridster(_.extend({
+	            namespace: '#main-grid',
+	            widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
+	            draggable: {
+	                stop: function stop(event, ui) {
+	                    if (ui.pointer.left >= layout.props.width + 70) {
+	                        layout.moveBlock(ui.$player, true);
+	                    }
+	                }
+	            },
+	            resize: {
+	                enabled: true
+	            }
+	        }, this.defaultGridOptions));
+	    },
+
+	    componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+	        /**When the layout attributes changed, reset the gridster*/
+	        this.initGridster();
+
+	        /*
+	        if (this.props.doubleScreen!==prevProps.doubleScreen || this.props.width!==prevProps.width
+	            || this.props.expandMode!==prevProps.expandMode
+	            || this.props.headerHeight!==prevProps.headerHeight
+	            || this.props.footerHeight!==prevProps.footerHeight
+	            || this.props.padding!==prevProps.padding
+	            || this.props.gdata!==prevProps.gdata
+	        ) {
+	         }
+	        */
+	    },
+
+	    addActivity: function addActivity(type) {
+	        var gridster = $("#main-grid ul").gridster().data('gridster');
+	        var sizex = 12;
+	        var sizey = 4;
+	        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
+	        gridster.add_widget("<li data-id='" + blockId + "'>" + type + "</li>", sizex, sizey, 1, 100);
+	        this.initBlockEvents();
+
+	        this.data.doubleScreenLeftWidgets.push({
+	            id: blockId,
+	            col: 1,
+	            row: 100,
+	            size_x: sizex,
+	            size_y: sizey
+	        });
+	    },
+
+	    addBlock: function addBlock(template, sizex, sizey) {
+	        var gridster = $("#main-grid ul").gridster().data('gridster');
+	        if (!sizex) {
+	            sizex = 12;
+	        }
+	        if (!sizey) {
+	            sizey = 2;
+	        }
+	        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
+	        gridster.add_widget("<li data-id='" + blockId + "' data-btype='text-block'>" + template + "</li>", sizex, sizey, 1, 100);
+
+	        this.initBlockEvents();
+
+	        this.data.doubleScreenLeftWidgets.push({
+	            id: blockId,
+	            col: 1,
+	            row: 100,
+	            size_x: sizex,
+	            size_y: sizey
+	        });
+	    },
+
+	    disableLayout: function disableLayout() {
+	        this.setState({
+	            layoutable: false
+	        });
+	    },
+
+	    enableLayout: function enableLayout() {
+	        this.setState({
+	            layoutable: true
+	        });
+	    },
+
+	    moveBlock: function moveBlock(li, direction) {
+	        var src, target;
+	        if (direction) {
+	            src = $("#main-grid>ul").gridster().data('gridster');
+	            target = $("#extra-grid>ul").gridster().data('gridster');
+	        } else {
+	            target = $("#main-grid>ul").gridster().data('gridster');
+	            src = $("#extra-grid>ul").gridster().data('gridster');
+	        }
+	        var cli = li.clone();
+	        cli.find(".gs-resize-handle").remove();
+	        cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+	        target.add_widget("<li data-id='" + li.data("id") + "'>" + li.html() + "</li>", li.data("sizex"), li.data("sizey"), 1, 100);
+	        src.remove_widget(li);
+	    },
+
+	    enableGridster: function enableGridster() {
+	        $(".gridster ul").gridster().data('gridster').enable().enable_resize();
+	        $(".gridster ul li.current").removeClass("current");
+	    },
+
+	    initBlockEvents: function initBlockEvents(block) {
+	        $(block).off("click").on("click", function (event) {
+	            event.stopPropagation();
+	            $(".gridster ul li.current").removeClass("current");
+	            $(this).addClass("current");
+	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
+	        });
+	        var gridlayout = this;
+	        $(".gridster li").unbind('click').bind("click", function (event) {
+	            event.stopPropagation();
+	            if (gridlayout.startDraging) {
+	                gridlayout.startDraging = false;
+	                return;
+	            }
+	            $(".gridster ul li.current").removeClass("current");
+	            $(this).addClass("current");
+
+	            //gridlayout.props.editBlock($(this).data("btype"));
+	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
+	        });
+	        tinymce.init({
+	            selector: '.gridster li .rtf',
+	            inline: true,
+	            menubar: false,
+	            toolbar: 'undo redo| bold italic underline strikethrough'
+	        });
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: this.state.layoutable ? "layoutable" : "editable" },
+	            React.createElement(
+	                "div",
+	                { className: "gridster", id: "main-grid" },
+	                React.createElement("ul", null)
+	            ),
+	            React.createElement(
+	                "div",
+	                { className: "gridster", id: "extra-grid" },
+	                React.createElement("ul", null)
+	            )
+	        );
+	    }
+	});
+
+	tinymce.PluginManager.add('stylebuttons', function (editor, url) {
+	    ['pre', 'p', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach(function (name) {
+	        editor.addButton("style-" + name, {
+	            tooltip: "Toggle " + name,
+	            text: name.toUpperCase(),
+	            onClick: function onClick() {
+	                editor.execCommand('mceToggleFormat', false, name);
+	            },
+	            onPostRender: function onPostRender() {
+	                var self = this,
+	                    setup = function setup() {
+	                    editor.formatter.formatChanged(name, function (state) {
+	                        self.active(state);
+	                    });
+	                };
+	                editor.formatter ? setup() : editor.on('init', setup);
+	            }
+	        });
+	    });
+	});
+
+	module.exports = GridLayout;
+
+/***/ },
+/* 292 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3
+	//     http://underscorejs.org
+	//     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+	//     Underscore may be freely distributed under the MIT license.
+
+	(function() {
+
+	  // Baseline setup
+	  // --------------
+
+	  // Establish the root object, `window` in the browser, or `exports` on the server.
+	  var root = this;
+
+	  // Save the previous value of the `_` variable.
+	  var previousUnderscore = root._;
+
+	  // Save bytes in the minified (but not gzipped) version:
+	  var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
+
+	  // Create quick reference variables for speed access to core prototypes.
+	  var
+	    push             = ArrayProto.push,
+	    slice            = ArrayProto.slice,
+	    toString         = ObjProto.toString,
+	    hasOwnProperty   = ObjProto.hasOwnProperty;
+
+	  // All **ECMAScript 5** native function implementations that we hope to use
+	  // are declared here.
+	  var
+	    nativeIsArray      = Array.isArray,
+	    nativeKeys         = Object.keys,
+	    nativeBind         = FuncProto.bind,
+	    nativeCreate       = Object.create;
+
+	  // Naked function reference for surrogate-prototype-swapping.
+	  var Ctor = function(){};
+
+	  // Create a safe reference to the Underscore object for use below.
+	  var _ = function(obj) {
+	    if (obj instanceof _) return obj;
+	    if (!(this instanceof _)) return new _(obj);
+	    this._wrapped = obj;
+	  };
+
+	  // Export the Underscore object for **Node.js**, with
+	  // backwards-compatibility for the old `require()` API. If we're in
+	  // the browser, add `_` as a global object.
+	  if (true) {
+	    if (typeof module !== 'undefined' && module.exports) {
+	      exports = module.exports = _;
+	    }
+	    exports._ = _;
+	  } else {
+	    root._ = _;
+	  }
+
+	  // Current version.
+	  _.VERSION = '1.8.3';
+
+	  // Internal function that returns an efficient (for current engines) version
+	  // of the passed-in callback, to be repeatedly applied in other Underscore
+	  // functions.
+	  var optimizeCb = function(func, context, argCount) {
+	    if (context === void 0) return func;
+	    switch (argCount == null ? 3 : argCount) {
+	      case 1: return function(value) {
+	        return func.call(context, value);
+	      };
+	      case 2: return function(value, other) {
+	        return func.call(context, value, other);
+	      };
+	      case 3: return function(value, index, collection) {
+	        return func.call(context, value, index, collection);
+	      };
+	      case 4: return function(accumulator, value, index, collection) {
+	        return func.call(context, accumulator, value, index, collection);
+	      };
+	    }
+	    return function() {
+	      return func.apply(context, arguments);
+	    };
+	  };
+
+	  // A mostly-internal function to generate callbacks that can be applied
+	  // to each element in a collection, returning the desired result — either
+	  // identity, an arbitrary callback, a property matcher, or a property accessor.
+	  var cb = function(value, context, argCount) {
+	    if (value == null) return _.identity;
+	    if (_.isFunction(value)) return optimizeCb(value, context, argCount);
+	    if (_.isObject(value)) return _.matcher(value);
+	    return _.property(value);
+	  };
+	  _.iteratee = function(value, context) {
+	    return cb(value, context, Infinity);
+	  };
+
+	  // An internal function for creating assigner functions.
+	  var createAssigner = function(keysFunc, undefinedOnly) {
+	    return function(obj) {
+	      var length = arguments.length;
+	      if (length < 2 || obj == null) return obj;
+	      for (var index = 1; index < length; index++) {
+	        var source = arguments[index],
+	            keys = keysFunc(source),
+	            l = keys.length;
+	        for (var i = 0; i < l; i++) {
+	          var key = keys[i];
+	          if (!undefinedOnly || obj[key] === void 0) obj[key] = source[key];
+	        }
+	      }
+	      return obj;
+	    };
+	  };
+
+	  // An internal function for creating a new object that inherits from another.
+	  var baseCreate = function(prototype) {
+	    if (!_.isObject(prototype)) return {};
+	    if (nativeCreate) return nativeCreate(prototype);
+	    Ctor.prototype = prototype;
+	    var result = new Ctor;
+	    Ctor.prototype = null;
+	    return result;
+	  };
+
+	  var property = function(key) {
+	    return function(obj) {
+	      return obj == null ? void 0 : obj[key];
+	    };
+	  };
+
+	  // Helper for collection methods to determine whether a collection
+	  // should be iterated as an array or as an object
+	  // Related: http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
+	  // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
+	  var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+	  var getLength = property('length');
+	  var isArrayLike = function(collection) {
+	    var length = getLength(collection);
+	    return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+	  };
+
+	  // Collection Functions
+	  // --------------------
+
+	  // The cornerstone, an `each` implementation, aka `forEach`.
+	  // Handles raw objects in addition to array-likes. Treats all
+	  // sparse array-likes as if they were dense.
+	  _.each = _.forEach = function(obj, iteratee, context) {
+	    iteratee = optimizeCb(iteratee, context);
+	    var i, length;
+	    if (isArrayLike(obj)) {
+	      for (i = 0, length = obj.length; i < length; i++) {
+	        iteratee(obj[i], i, obj);
+	      }
+	    } else {
+	      var keys = _.keys(obj);
+	      for (i = 0, length = keys.length; i < length; i++) {
+	        iteratee(obj[keys[i]], keys[i], obj);
+	      }
+	    }
+	    return obj;
+	  };
+
+	  // Return the results of applying the iteratee to each element.
+	  _.map = _.collect = function(obj, iteratee, context) {
+	    iteratee = cb(iteratee, context);
+	    var keys = !isArrayLike(obj) && _.keys(obj),
+	        length = (keys || obj).length,
+	        results = Array(length);
+	    for (var index = 0; index < length; index++) {
+	      var currentKey = keys ? keys[index] : index;
+	      results[index] = iteratee(obj[currentKey], currentKey, obj);
+	    }
+	    return results;
+	  };
+
+	  // Create a reducing function iterating left or right.
+	  function createReduce(dir) {
+	    // Optimized iterator function as using arguments.length
+	    // in the main function will deoptimize the, see #1991.
+	    function iterator(obj, iteratee, memo, keys, index, length) {
+	      for (; index >= 0 && index < length; index += dir) {
+	        var currentKey = keys ? keys[index] : index;
+	        memo = iteratee(memo, obj[currentKey], currentKey, obj);
+	      }
+	      return memo;
+	    }
+
+	    return function(obj, iteratee, memo, context) {
+	      iteratee = optimizeCb(iteratee, context, 4);
+	      var keys = !isArrayLike(obj) && _.keys(obj),
+	          length = (keys || obj).length,
+	          index = dir > 0 ? 0 : length - 1;
+	      // Determine the initial value if none is provided.
+	      if (arguments.length < 3) {
+	        memo = obj[keys ? keys[index] : index];
+	        index += dir;
+	      }
+	      return iterator(obj, iteratee, memo, keys, index, length);
+	    };
+	  }
+
+	  // **Reduce** builds up a single result from a list of values, aka `inject`,
+	  // or `foldl`.
+	  _.reduce = _.foldl = _.inject = createReduce(1);
+
+	  // The right-associative version of reduce, also known as `foldr`.
+	  _.reduceRight = _.foldr = createReduce(-1);
+
+	  // Return the first value which passes a truth test. Aliased as `detect`.
+	  _.find = _.detect = function(obj, predicate, context) {
+	    var key;
+	    if (isArrayLike(obj)) {
+	      key = _.findIndex(obj, predicate, context);
+	    } else {
+	      key = _.findKey(obj, predicate, context);
+	    }
+	    if (key !== void 0 && key !== -1) return obj[key];
+	  };
+
+	  // Return all the elements that pass a truth test.
+	  // Aliased as `select`.
+	  _.filter = _.select = function(obj, predicate, context) {
+	    var results = [];
+	    predicate = cb(predicate, context);
+	    _.each(obj, function(value, index, list) {
+	      if (predicate(value, index, list)) results.push(value);
+	    });
+	    return results;
+	  };
+
+	  // Return all the elements for which a truth test fails.
+	  _.reject = function(obj, predicate, context) {
+	    return _.filter(obj, _.negate(cb(predicate)), context);
+	  };
+
+	  // Determine whether all of the elements match a truth test.
+	  // Aliased as `all`.
+	  _.every = _.all = function(obj, predicate, context) {
+	    predicate = cb(predicate, context);
+	    var keys = !isArrayLike(obj) && _.keys(obj),
+	        length = (keys || obj).length;
+	    for (var index = 0; index < length; index++) {
+	      var currentKey = keys ? keys[index] : index;
+	      if (!predicate(obj[currentKey], currentKey, obj)) return false;
+	    }
+	    return true;
+	  };
+
+	  // Determine if at least one element in the object matches a truth test.
+	  // Aliased as `any`.
+	  _.some = _.any = function(obj, predicate, context) {
+	    predicate = cb(predicate, context);
+	    var keys = !isArrayLike(obj) && _.keys(obj),
+	        length = (keys || obj).length;
+	    for (var index = 0; index < length; index++) {
+	      var currentKey = keys ? keys[index] : index;
+	      if (predicate(obj[currentKey], currentKey, obj)) return true;
+	    }
+	    return false;
+	  };
+
+	  // Determine if the array or object contains a given item (using `===`).
+	  // Aliased as `includes` and `include`.
+	  _.contains = _.includes = _.include = function(obj, item, fromIndex, guard) {
+	    if (!isArrayLike(obj)) obj = _.values(obj);
+	    if (typeof fromIndex != 'number' || guard) fromIndex = 0;
+	    return _.indexOf(obj, item, fromIndex) >= 0;
+	  };
+
+	  // Invoke a method (with arguments) on every item in a collection.
+	  _.invoke = function(obj, method) {
+	    var args = slice.call(arguments, 2);
+	    var isFunc = _.isFunction(method);
+	    return _.map(obj, function(value) {
+	      var func = isFunc ? method : value[method];
+	      return func == null ? func : func.apply(value, args);
+	    });
+	  };
+
+	  // Convenience version of a common use case of `map`: fetching a property.
+	  _.pluck = function(obj, key) {
+	    return _.map(obj, _.property(key));
+	  };
+
+	  // Convenience version of a common use case of `filter`: selecting only objects
+	  // containing specific `key:value` pairs.
+	  _.where = function(obj, attrs) {
+	    return _.filter(obj, _.matcher(attrs));
+	  };
+
+	  // Convenience version of a common use case of `find`: getting the first object
+	  // containing specific `key:value` pairs.
+	  _.findWhere = function(obj, attrs) {
+	    return _.find(obj, _.matcher(attrs));
+	  };
+
+	  // Return the maximum element (or element-based computation).
+	  _.max = function(obj, iteratee, context) {
+	    var result = -Infinity, lastComputed = -Infinity,
+	        value, computed;
+	    if (iteratee == null && obj != null) {
+	      obj = isArrayLike(obj) ? obj : _.values(obj);
+	      for (var i = 0, length = obj.length; i < length; i++) {
+	        value = obj[i];
+	        if (value > result) {
+	          result = value;
+	        }
+	      }
+	    } else {
+	      iteratee = cb(iteratee, context);
+	      _.each(obj, function(value, index, list) {
+	        computed = iteratee(value, index, list);
+	        if (computed > lastComputed || computed === -Infinity && result === -Infinity) {
+	          result = value;
+	          lastComputed = computed;
+	        }
+	      });
+	    }
+	    return result;
+	  };
+
+	  // Return the minimum element (or element-based computation).
+	  _.min = function(obj, iteratee, context) {
+	    var result = Infinity, lastComputed = Infinity,
+	        value, computed;
+	    if (iteratee == null && obj != null) {
+	      obj = isArrayLike(obj) ? obj : _.values(obj);
+	      for (var i = 0, length = obj.length; i < length; i++) {
+	        value = obj[i];
+	        if (value < result) {
+	          result = value;
+	        }
+	      }
+	    } else {
+	      iteratee = cb(iteratee, context);
+	      _.each(obj, function(value, index, list) {
+	        computed = iteratee(value, index, list);
+	        if (computed < lastComputed || computed === Infinity && result === Infinity) {
+	          result = value;
+	          lastComputed = computed;
+	        }
+	      });
+	    }
+	    return result;
+	  };
+
+	  // Shuffle a collection, using the modern version of the
+	  // [Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
+	  _.shuffle = function(obj) {
+	    var set = isArrayLike(obj) ? obj : _.values(obj);
+	    var length = set.length;
+	    var shuffled = Array(length);
+	    for (var index = 0, rand; index < length; index++) {
+	      rand = _.random(0, index);
+	      if (rand !== index) shuffled[index] = shuffled[rand];
+	      shuffled[rand] = set[index];
+	    }
+	    return shuffled;
+	  };
+
+	  // Sample **n** random values from a collection.
+	  // If **n** is not specified, returns a single random element.
+	  // The internal `guard` argument allows it to work with `map`.
+	  _.sample = function(obj, n, guard) {
+	    if (n == null || guard) {
+	      if (!isArrayLike(obj)) obj = _.values(obj);
+	      return obj[_.random(obj.length - 1)];
+	    }
+	    return _.shuffle(obj).slice(0, Math.max(0, n));
+	  };
+
+	  // Sort the object's values by a criterion produced by an iteratee.
+	  _.sortBy = function(obj, iteratee, context) {
+	    iteratee = cb(iteratee, context);
+	    return _.pluck(_.map(obj, function(value, index, list) {
+	      return {
+	        value: value,
+	        index: index,
+	        criteria: iteratee(value, index, list)
+	      };
+	    }).sort(function(left, right) {
+	      var a = left.criteria;
+	      var b = right.criteria;
+	      if (a !== b) {
+	        if (a > b || a === void 0) return 1;
+	        if (a < b || b === void 0) return -1;
+	      }
+	      return left.index - right.index;
+	    }), 'value');
+	  };
+
+	  // An internal function used for aggregate "group by" operations.
+	  var group = function(behavior) {
+	    return function(obj, iteratee, context) {
+	      var result = {};
+	      iteratee = cb(iteratee, context);
+	      _.each(obj, function(value, index) {
+	        var key = iteratee(value, index, obj);
+	        behavior(result, value, key);
+	      });
+	      return result;
+	    };
+	  };
+
+	  // Groups the object's values by a criterion. Pass either a string attribute
+	  // to group by, or a function that returns the criterion.
+	  _.groupBy = group(function(result, value, key) {
+	    if (_.has(result, key)) result[key].push(value); else result[key] = [value];
+	  });
+
+	  // Indexes the object's values by a criterion, similar to `groupBy`, but for
+	  // when you know that your index values will be unique.
+	  _.indexBy = group(function(result, value, key) {
+	    result[key] = value;
+	  });
+
+	  // Counts instances of an object that group by a certain criterion. Pass
+	  // either a string attribute to count by, or a function that returns the
+	  // criterion.
+	  _.countBy = group(function(result, value, key) {
+	    if (_.has(result, key)) result[key]++; else result[key] = 1;
+	  });
+
+	  // Safely create a real, live array from anything iterable.
+	  _.toArray = function(obj) {
+	    if (!obj) return [];
+	    if (_.isArray(obj)) return slice.call(obj);
+	    if (isArrayLike(obj)) return _.map(obj, _.identity);
+	    return _.values(obj);
+	  };
+
+	  // Return the number of elements in an object.
+	  _.size = function(obj) {
+	    if (obj == null) return 0;
+	    return isArrayLike(obj) ? obj.length : _.keys(obj).length;
+	  };
+
+	  // Split a collection into two arrays: one whose elements all satisfy the given
+	  // predicate, and one whose elements all do not satisfy the predicate.
+	  _.partition = function(obj, predicate, context) {
+	    predicate = cb(predicate, context);
+	    var pass = [], fail = [];
+	    _.each(obj, function(value, key, obj) {
+	      (predicate(value, key, obj) ? pass : fail).push(value);
+	    });
+	    return [pass, fail];
+	  };
+
+	  // Array Functions
+	  // ---------------
+
+	  // Get the first element of an array. Passing **n** will return the first N
+	  // values in the array. Aliased as `head` and `take`. The **guard** check
+	  // allows it to work with `_.map`.
+	  _.first = _.head = _.take = function(array, n, guard) {
+	    if (array == null) return void 0;
+	    if (n == null || guard) return array[0];
+	    return _.initial(array, array.length - n);
+	  };
+
+	  // Returns everything but the last entry of the array. Especially useful on
+	  // the arguments object. Passing **n** will return all the values in
+	  // the array, excluding the last N.
+	  _.initial = function(array, n, guard) {
+	    return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
+	  };
+
+	  // Get the last element of an array. Passing **n** will return the last N
+	  // values in the array.
+	  _.last = function(array, n, guard) {
+	    if (array == null) return void 0;
+	    if (n == null || guard) return array[array.length - 1];
+	    return _.rest(array, Math.max(0, array.length - n));
+	  };
+
+	  // Returns everything but the first entry of the array. Aliased as `tail` and `drop`.
+	  // Especially useful on the arguments object. Passing an **n** will return
+	  // the rest N values in the array.
+	  _.rest = _.tail = _.drop = function(array, n, guard) {
+	    return slice.call(array, n == null || guard ? 1 : n);
+	  };
+
+	  // Trim out all falsy values from an array.
+	  _.compact = function(array) {
+	    return _.filter(array, _.identity);
+	  };
+
+	  // Internal implementation of a recursive `flatten` function.
+	  var flatten = function(input, shallow, strict, startIndex) {
+	    var output = [], idx = 0;
+	    for (var i = startIndex || 0, length = getLength(input); i < length; i++) {
+	      var value = input[i];
+	      if (isArrayLike(value) && (_.isArray(value) || _.isArguments(value))) {
+	        //flatten current level of array or arguments object
+	        if (!shallow) value = flatten(value, shallow, strict);
+	        var j = 0, len = value.length;
+	        output.length += len;
+	        while (j < len) {
+	          output[idx++] = value[j++];
+	        }
+	      } else if (!strict) {
+	        output[idx++] = value;
+	      }
+	    }
+	    return output;
+	  };
+
+	  // Flatten out an array, either recursively (by default), or just one level.
+	  _.flatten = function(array, shallow) {
+	    return flatten(array, shallow, false);
+	  };
+
+	  // Return a version of the array that does not contain the specified value(s).
+	  _.without = function(array) {
+	    return _.difference(array, slice.call(arguments, 1));
+	  };
+
+	  // Produce a duplicate-free version of the array. If the array has already
+	  // been sorted, you have the option of using a faster algorithm.
+	  // Aliased as `unique`.
+	  _.uniq = _.unique = function(array, isSorted, iteratee, context) {
+	    if (!_.isBoolean(isSorted)) {
+	      context = iteratee;
+	      iteratee = isSorted;
+	      isSorted = false;
+	    }
+	    if (iteratee != null) iteratee = cb(iteratee, context);
+	    var result = [];
+	    var seen = [];
+	    for (var i = 0, length = getLength(array); i < length; i++) {
+	      var value = array[i],
+	          computed = iteratee ? iteratee(value, i, array) : value;
+	      if (isSorted) {
+	        if (!i || seen !== computed) result.push(value);
+	        seen = computed;
+	      } else if (iteratee) {
+	        if (!_.contains(seen, computed)) {
+	          seen.push(computed);
+	          result.push(value);
+	        }
+	      } else if (!_.contains(result, value)) {
+	        result.push(value);
+	      }
+	    }
+	    return result;
+	  };
+
+	  // Produce an array that contains the union: each distinct element from all of
+	  // the passed-in arrays.
+	  _.union = function() {
+	    return _.uniq(flatten(arguments, true, true));
+	  };
+
+	  // Produce an array that contains every item shared between all the
+	  // passed-in arrays.
+	  _.intersection = function(array) {
+	    var result = [];
+	    var argsLength = arguments.length;
+	    for (var i = 0, length = getLength(array); i < length; i++) {
+	      var item = array[i];
+	      if (_.contains(result, item)) continue;
+	      for (var j = 1; j < argsLength; j++) {
+	        if (!_.contains(arguments[j], item)) break;
+	      }
+	      if (j === argsLength) result.push(item);
+	    }
+	    return result;
+	  };
+
+	  // Take the difference between one array and a number of other arrays.
+	  // Only the elements present in just the first array will remain.
+	  _.difference = function(array) {
+	    var rest = flatten(arguments, true, true, 1);
+	    return _.filter(array, function(value){
+	      return !_.contains(rest, value);
+	    });
+	  };
+
+	  // Zip together multiple lists into a single array -- elements that share
+	  // an index go together.
+	  _.zip = function() {
+	    return _.unzip(arguments);
+	  };
+
+	  // Complement of _.zip. Unzip accepts an array of arrays and groups
+	  // each array's elements on shared indices
+	  _.unzip = function(array) {
+	    var length = array && _.max(array, getLength).length || 0;
+	    var result = Array(length);
+
+	    for (var index = 0; index < length; index++) {
+	      result[index] = _.pluck(array, index);
+	    }
+	    return result;
+	  };
+
+	  // Converts lists into objects. Pass either a single array of `[key, value]`
+	  // pairs, or two parallel arrays of the same length -- one of keys, and one of
+	  // the corresponding values.
+	  _.object = function(list, values) {
+	    var result = {};
+	    for (var i = 0, length = getLength(list); i < length; i++) {
+	      if (values) {
+	        result[list[i]] = values[i];
+	      } else {
+	        result[list[i][0]] = list[i][1];
+	      }
+	    }
+	    return result;
+	  };
+
+	  // Generator function to create the findIndex and findLastIndex functions
+	  function createPredicateIndexFinder(dir) {
+	    return function(array, predicate, context) {
+	      predicate = cb(predicate, context);
+	      var length = getLength(array);
+	      var index = dir > 0 ? 0 : length - 1;
+	      for (; index >= 0 && index < length; index += dir) {
+	        if (predicate(array[index], index, array)) return index;
+	      }
+	      return -1;
+	    };
+	  }
+
+	  // Returns the first index on an array-like that passes a predicate test
+	  _.findIndex = createPredicateIndexFinder(1);
+	  _.findLastIndex = createPredicateIndexFinder(-1);
+
+	  // Use a comparator function to figure out the smallest index at which
+	  // an object should be inserted so as to maintain order. Uses binary search.
+	  _.sortedIndex = function(array, obj, iteratee, context) {
+	    iteratee = cb(iteratee, context, 1);
+	    var value = iteratee(obj);
+	    var low = 0, high = getLength(array);
+	    while (low < high) {
+	      var mid = Math.floor((low + high) / 2);
+	      if (iteratee(array[mid]) < value) low = mid + 1; else high = mid;
+	    }
+	    return low;
+	  };
+
+	  // Generator function to create the indexOf and lastIndexOf functions
+	  function createIndexFinder(dir, predicateFind, sortedIndex) {
+	    return function(array, item, idx) {
+	      var i = 0, length = getLength(array);
+	      if (typeof idx == 'number') {
+	        if (dir > 0) {
+	            i = idx >= 0 ? idx : Math.max(idx + length, i);
+	        } else {
+	            length = idx >= 0 ? Math.min(idx + 1, length) : idx + length + 1;
+	        }
+	      } else if (sortedIndex && idx && length) {
+	        idx = sortedIndex(array, item);
+	        return array[idx] === item ? idx : -1;
+	      }
+	      if (item !== item) {
+	        idx = predicateFind(slice.call(array, i, length), _.isNaN);
+	        return idx >= 0 ? idx + i : -1;
+	      }
+	      for (idx = dir > 0 ? i : length - 1; idx >= 0 && idx < length; idx += dir) {
+	        if (array[idx] === item) return idx;
+	      }
+	      return -1;
+	    };
+	  }
+
+	  // Return the position of the first occurrence of an item in an array,
+	  // or -1 if the item is not included in the array.
+	  // If the array is large and already in sort order, pass `true`
+	  // for **isSorted** to use binary search.
+	  _.indexOf = createIndexFinder(1, _.findIndex, _.sortedIndex);
+	  _.lastIndexOf = createIndexFinder(-1, _.findLastIndex);
+
+	  // Generate an integer Array containing an arithmetic progression. A port of
+	  // the native Python `range()` function. See
+	  // [the Python documentation](http://docs.python.org/library/functions.html#range).
+	  _.range = function(start, stop, step) {
+	    if (stop == null) {
+	      stop = start || 0;
+	      start = 0;
+	    }
+	    step = step || 1;
+
+	    var length = Math.max(Math.ceil((stop - start) / step), 0);
+	    var range = Array(length);
+
+	    for (var idx = 0; idx < length; idx++, start += step) {
+	      range[idx] = start;
+	    }
+
+	    return range;
+	  };
+
+	  // Function (ahem) Functions
+	  // ------------------
+
+	  // Determines whether to execute a function as a constructor
+	  // or a normal function with the provided arguments
+	  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
+	    if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
+	    var self = baseCreate(sourceFunc.prototype);
+	    var result = sourceFunc.apply(self, args);
+	    if (_.isObject(result)) return result;
+	    return self;
+	  };
+
+	  // Create a function bound to a given object (assigning `this`, and arguments,
+	  // optionally). Delegates to **ECMAScript 5**'s native `Function.bind` if
+	  // available.
+	  _.bind = function(func, context) {
+	    if (nativeBind && func.bind === nativeBind) return nativeBind.apply(func, slice.call(arguments, 1));
+	    if (!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
+	    var args = slice.call(arguments, 2);
+	    var bound = function() {
+	      return executeBound(func, bound, context, this, args.concat(slice.call(arguments)));
+	    };
+	    return bound;
+	  };
+
+	  // Partially apply a function by creating a version that has had some of its
+	  // arguments pre-filled, without changing its dynamic `this` context. _ acts
+	  // as a placeholder, allowing any combination of arguments to be pre-filled.
+	  _.partial = function(func) {
+	    var boundArgs = slice.call(arguments, 1);
+	    var bound = function() {
+	      var position = 0, length = boundArgs.length;
+	      var args = Array(length);
+	      for (var i = 0; i < length; i++) {
+	        args[i] = boundArgs[i] === _ ? arguments[position++] : boundArgs[i];
+	      }
+	      while (position < arguments.length) args.push(arguments[position++]);
+	      return executeBound(func, bound, this, this, args);
+	    };
+	    return bound;
+	  };
+
+	  // Bind a number of an object's methods to that object. Remaining arguments
+	  // are the method names to be bound. Useful for ensuring that all callbacks
+	  // defined on an object belong to it.
+	  _.bindAll = function(obj) {
+	    var i, length = arguments.length, key;
+	    if (length <= 1) throw new Error('bindAll must be passed function names');
+	    for (i = 1; i < length; i++) {
+	      key = arguments[i];
+	      obj[key] = _.bind(obj[key], obj);
+	    }
+	    return obj;
+	  };
+
+	  // Memoize an expensive function by storing its results.
+	  _.memoize = function(func, hasher) {
+	    var memoize = function(key) {
+	      var cache = memoize.cache;
+	      var address = '' + (hasher ? hasher.apply(this, arguments) : key);
+	      if (!_.has(cache, address)) cache[address] = func.apply(this, arguments);
+	      return cache[address];
+	    };
+	    memoize.cache = {};
+	    return memoize;
+	  };
+
+	  // Delays a function for the given number of milliseconds, and then calls
+	  // it with the arguments supplied.
+	  _.delay = function(func, wait) {
+	    var args = slice.call(arguments, 2);
+	    return setTimeout(function(){
+	      return func.apply(null, args);
+	    }, wait);
+	  };
+
+	  // Defers a function, scheduling it to run after the current call stack has
+	  // cleared.
+	  _.defer = _.partial(_.delay, _, 1);
+
+	  // Returns a function, that, when invoked, will only be triggered at most once
+	  // during a given window of time. Normally, the throttled function will run
+	  // as much as it can, without ever going more than once per `wait` duration;
+	  // but if you'd like to disable the execution on the leading edge, pass
+	  // `{leading: false}`. To disable execution on the trailing edge, ditto.
+	  _.throttle = function(func, wait, options) {
+	    var context, args, result;
+	    var timeout = null;
+	    var previous = 0;
+	    if (!options) options = {};
+	    var later = function() {
+	      previous = options.leading === false ? 0 : _.now();
+	      timeout = null;
+	      result = func.apply(context, args);
+	      if (!timeout) context = args = null;
+	    };
+	    return function() {
+	      var now = _.now();
+	      if (!previous && options.leading === false) previous = now;
+	      var remaining = wait - (now - previous);
+	      context = this;
+	      args = arguments;
+	      if (remaining <= 0 || remaining > wait) {
+	        if (timeout) {
+	          clearTimeout(timeout);
+	          timeout = null;
+	        }
+	        previous = now;
+	        result = func.apply(context, args);
+	        if (!timeout) context = args = null;
+	      } else if (!timeout && options.trailing !== false) {
+	        timeout = setTimeout(later, remaining);
+	      }
+	      return result;
+	    };
+	  };
+
+	  // Returns a function, that, as long as it continues to be invoked, will not
+	  // be triggered. The function will be called after it stops being called for
+	  // N milliseconds. If `immediate` is passed, trigger the function on the
+	  // leading edge, instead of the trailing.
+	  _.debounce = function(func, wait, immediate) {
+	    var timeout, args, context, timestamp, result;
+
+	    var later = function() {
+	      var last = _.now() - timestamp;
+
+	      if (last < wait && last >= 0) {
+	        timeout = setTimeout(later, wait - last);
+	      } else {
+	        timeout = null;
+	        if (!immediate) {
+	          result = func.apply(context, args);
+	          if (!timeout) context = args = null;
+	        }
+	      }
+	    };
+
+	    return function() {
+	      context = this;
+	      args = arguments;
+	      timestamp = _.now();
+	      var callNow = immediate && !timeout;
+	      if (!timeout) timeout = setTimeout(later, wait);
+	      if (callNow) {
+	        result = func.apply(context, args);
+	        context = args = null;
+	      }
+
+	      return result;
+	    };
+	  };
+
+	  // Returns the first function passed as an argument to the second,
+	  // allowing you to adjust arguments, run code before and after, and
+	  // conditionally execute the original function.
+	  _.wrap = function(func, wrapper) {
+	    return _.partial(wrapper, func);
+	  };
+
+	  // Returns a negated version of the passed-in predicate.
+	  _.negate = function(predicate) {
+	    return function() {
+	      return !predicate.apply(this, arguments);
+	    };
+	  };
+
+	  // Returns a function that is the composition of a list of functions, each
+	  // consuming the return value of the function that follows.
+	  _.compose = function() {
+	    var args = arguments;
+	    var start = args.length - 1;
+	    return function() {
+	      var i = start;
+	      var result = args[start].apply(this, arguments);
+	      while (i--) result = args[i].call(this, result);
+	      return result;
+	    };
+	  };
+
+	  // Returns a function that will only be executed on and after the Nth call.
+	  _.after = function(times, func) {
+	    return function() {
+	      if (--times < 1) {
+	        return func.apply(this, arguments);
+	      }
+	    };
+	  };
+
+	  // Returns a function that will only be executed up to (but not including) the Nth call.
+	  _.before = function(times, func) {
+	    var memo;
+	    return function() {
+	      if (--times > 0) {
+	        memo = func.apply(this, arguments);
+	      }
+	      if (times <= 1) func = null;
+	      return memo;
+	    };
+	  };
+
+	  // Returns a function that will be executed at most one time, no matter how
+	  // often you call it. Useful for lazy initialization.
+	  _.once = _.partial(_.before, 2);
+
+	  // Object Functions
+	  // ----------------
+
+	  // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
+	  var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
+	  var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
+	                      'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
+
+	  function collectNonEnumProps(obj, keys) {
+	    var nonEnumIdx = nonEnumerableProps.length;
+	    var constructor = obj.constructor;
+	    var proto = (_.isFunction(constructor) && constructor.prototype) || ObjProto;
+
+	    // Constructor is a special case.
+	    var prop = 'constructor';
+	    if (_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
+
+	    while (nonEnumIdx--) {
+	      prop = nonEnumerableProps[nonEnumIdx];
+	      if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
+	        keys.push(prop);
+	      }
+	    }
+	  }
+
+	  // Retrieve the names of an object's own properties.
+	  // Delegates to **ECMAScript 5**'s native `Object.keys`
+	  _.keys = function(obj) {
+	    if (!_.isObject(obj)) return [];
+	    if (nativeKeys) return nativeKeys(obj);
+	    var keys = [];
+	    for (var key in obj) if (_.has(obj, key)) keys.push(key);
+	    // Ahem, IE < 9.
+	    if (hasEnumBug) collectNonEnumProps(obj, keys);
+	    return keys;
+	  };
+
+	  // Retrieve all the property names of an object.
+	  _.allKeys = function(obj) {
+	    if (!_.isObject(obj)) return [];
+	    var keys = [];
+	    for (var key in obj) keys.push(key);
+	    // Ahem, IE < 9.
+	    if (hasEnumBug) collectNonEnumProps(obj, keys);
+	    return keys;
+	  };
+
+	  // Retrieve the values of an object's properties.
+	  _.values = function(obj) {
+	    var keys = _.keys(obj);
+	    var length = keys.length;
+	    var values = Array(length);
+	    for (var i = 0; i < length; i++) {
+	      values[i] = obj[keys[i]];
+	    }
+	    return values;
+	  };
+
+	  // Returns the results of applying the iteratee to each element of the object
+	  // In contrast to _.map it returns an object
+	  _.mapObject = function(obj, iteratee, context) {
+	    iteratee = cb(iteratee, context);
+	    var keys =  _.keys(obj),
+	          length = keys.length,
+	          results = {},
+	          currentKey;
+	      for (var index = 0; index < length; index++) {
+	        currentKey = keys[index];
+	        results[currentKey] = iteratee(obj[currentKey], currentKey, obj);
+	      }
+	      return results;
+	  };
+
+	  // Convert an object into a list of `[key, value]` pairs.
+	  _.pairs = function(obj) {
+	    var keys = _.keys(obj);
+	    var length = keys.length;
+	    var pairs = Array(length);
+	    for (var i = 0; i < length; i++) {
+	      pairs[i] = [keys[i], obj[keys[i]]];
+	    }
+	    return pairs;
+	  };
+
+	  // Invert the keys and values of an object. The values must be serializable.
+	  _.invert = function(obj) {
+	    var result = {};
+	    var keys = _.keys(obj);
+	    for (var i = 0, length = keys.length; i < length; i++) {
+	      result[obj[keys[i]]] = keys[i];
+	    }
+	    return result;
+	  };
+
+	  // Return a sorted list of the function names available on the object.
+	  // Aliased as `methods`
+	  _.functions = _.methods = function(obj) {
+	    var names = [];
+	    for (var key in obj) {
+	      if (_.isFunction(obj[key])) names.push(key);
+	    }
+	    return names.sort();
+	  };
+
+	  // Extend a given object with all the properties in passed-in object(s).
+	  _.extend = createAssigner(_.allKeys);
+
+	  // Assigns a given object with all the own properties in the passed-in object(s)
+	  // (https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+	  _.extendOwn = _.assign = createAssigner(_.keys);
+
+	  // Returns the first key on an object that passes a predicate test
+	  _.findKey = function(obj, predicate, context) {
+	    predicate = cb(predicate, context);
+	    var keys = _.keys(obj), key;
+	    for (var i = 0, length = keys.length; i < length; i++) {
+	      key = keys[i];
+	      if (predicate(obj[key], key, obj)) return key;
+	    }
+	  };
+
+	  // Return a copy of the object only containing the whitelisted properties.
+	  _.pick = function(object, oiteratee, context) {
+	    var result = {}, obj = object, iteratee, keys;
+	    if (obj == null) return result;
+	    if (_.isFunction(oiteratee)) {
+	      keys = _.allKeys(obj);
+	      iteratee = optimizeCb(oiteratee, context);
+	    } else {
+	      keys = flatten(arguments, false, false, 1);
+	      iteratee = function(value, key, obj) { return key in obj; };
+	      obj = Object(obj);
+	    }
+	    for (var i = 0, length = keys.length; i < length; i++) {
+	      var key = keys[i];
+	      var value = obj[key];
+	      if (iteratee(value, key, obj)) result[key] = value;
+	    }
+	    return result;
+	  };
+
+	   // Return a copy of the object without the blacklisted properties.
+	  _.omit = function(obj, iteratee, context) {
+	    if (_.isFunction(iteratee)) {
+	      iteratee = _.negate(iteratee);
+	    } else {
+	      var keys = _.map(flatten(arguments, false, false, 1), String);
+	      iteratee = function(value, key) {
+	        return !_.contains(keys, key);
+	      };
+	    }
+	    return _.pick(obj, iteratee, context);
+	  };
+
+	  // Fill in a given object with default properties.
+	  _.defaults = createAssigner(_.allKeys, true);
+
+	  // Creates an object that inherits from the given prototype object.
+	  // If additional properties are provided then they will be added to the
+	  // created object.
+	  _.create = function(prototype, props) {
+	    var result = baseCreate(prototype);
+	    if (props) _.extendOwn(result, props);
+	    return result;
+	  };
+
+	  // Create a (shallow-cloned) duplicate of an object.
+	  _.clone = function(obj) {
+	    if (!_.isObject(obj)) return obj;
+	    return _.isArray(obj) ? obj.slice() : _.extend({}, obj);
+	  };
+
+	  // Invokes interceptor with the obj, and then returns obj.
+	  // The primary purpose of this method is to "tap into" a method chain, in
+	  // order to perform operations on intermediate results within the chain.
+	  _.tap = function(obj, interceptor) {
+	    interceptor(obj);
+	    return obj;
+	  };
+
+	  // Returns whether an object has a given set of `key:value` pairs.
+	  _.isMatch = function(object, attrs) {
+	    var keys = _.keys(attrs), length = keys.length;
+	    if (object == null) return !length;
+	    var obj = Object(object);
+	    for (var i = 0; i < length; i++) {
+	      var key = keys[i];
+	      if (attrs[key] !== obj[key] || !(key in obj)) return false;
+	    }
+	    return true;
+	  };
+
+
+	  // Internal recursive comparison function for `isEqual`.
+	  var eq = function(a, b, aStack, bStack) {
+	    // Identical objects are equal. `0 === -0`, but they aren't identical.
+	    // See the [Harmony `egal` proposal](http://wiki.ecmascript.org/doku.php?id=harmony:egal).
+	    if (a === b) return a !== 0 || 1 / a === 1 / b;
+	    // A strict comparison is necessary because `null == undefined`.
+	    if (a == null || b == null) return a === b;
+	    // Unwrap any wrapped objects.
+	    if (a instanceof _) a = a._wrapped;
+	    if (b instanceof _) b = b._wrapped;
+	    // Compare `[[Class]]` names.
+	    var className = toString.call(a);
+	    if (className !== toString.call(b)) return false;
+	    switch (className) {
+	      // Strings, numbers, regular expressions, dates, and booleans are compared by value.
+	      case '[object RegExp]':
+	      // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
+	      case '[object String]':
+	        // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
+	        // equivalent to `new String("5")`.
+	        return '' + a === '' + b;
+	      case '[object Number]':
+	        // `NaN`s are equivalent, but non-reflexive.
+	        // Object(NaN) is equivalent to NaN
+	        if (+a !== +a) return +b !== +b;
+	        // An `egal` comparison is performed for other numeric values.
+	        return +a === 0 ? 1 / +a === 1 / b : +a === +b;
+	      case '[object Date]':
+	      case '[object Boolean]':
+	        // Coerce dates and booleans to numeric primitive values. Dates are compared by their
+	        // millisecond representations. Note that invalid dates with millisecond representations
+	        // of `NaN` are not equivalent.
+	        return +a === +b;
+	    }
+
+	    var areArrays = className === '[object Array]';
+	    if (!areArrays) {
+	      if (typeof a != 'object' || typeof b != 'object') return false;
+
+	      // Objects with different constructors are not equivalent, but `Object`s or `Array`s
+	      // from different frames are.
+	      var aCtor = a.constructor, bCtor = b.constructor;
+	      if (aCtor !== bCtor && !(_.isFunction(aCtor) && aCtor instanceof aCtor &&
+	                               _.isFunction(bCtor) && bCtor instanceof bCtor)
+	                          && ('constructor' in a && 'constructor' in b)) {
+	        return false;
+	      }
+	    }
+	    // Assume equality for cyclic structures. The algorithm for detecting cyclic
+	    // structures is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
+
+	    // Initializing stack of traversed objects.
+	    // It's done here since we only need them for objects and arrays comparison.
+	    aStack = aStack || [];
+	    bStack = bStack || [];
+	    var length = aStack.length;
+	    while (length--) {
+	      // Linear search. Performance is inversely proportional to the number of
+	      // unique nested structures.
+	      if (aStack[length] === a) return bStack[length] === b;
+	    }
+
+	    // Add the first object to the stack of traversed objects.
+	    aStack.push(a);
+	    bStack.push(b);
+
+	    // Recursively compare objects and arrays.
+	    if (areArrays) {
+	      // Compare array lengths to determine if a deep comparison is necessary.
+	      length = a.length;
+	      if (length !== b.length) return false;
+	      // Deep compare the contents, ignoring non-numeric properties.
+	      while (length--) {
+	        if (!eq(a[length], b[length], aStack, bStack)) return false;
+	      }
+	    } else {
+	      // Deep compare objects.
+	      var keys = _.keys(a), key;
+	      length = keys.length;
+	      // Ensure that both objects contain the same number of properties before comparing deep equality.
+	      if (_.keys(b).length !== length) return false;
+	      while (length--) {
+	        // Deep compare each member
+	        key = keys[length];
+	        if (!(_.has(b, key) && eq(a[key], b[key], aStack, bStack))) return false;
+	      }
+	    }
+	    // Remove the first object from the stack of traversed objects.
+	    aStack.pop();
+	    bStack.pop();
+	    return true;
+	  };
+
+	  // Perform a deep comparison to check if two objects are equal.
+	  _.isEqual = function(a, b) {
+	    return eq(a, b);
+	  };
+
+	  // Is a given array, string, or object empty?
+	  // An "empty" object has no enumerable own-properties.
+	  _.isEmpty = function(obj) {
+	    if (obj == null) return true;
+	    if (isArrayLike(obj) && (_.isArray(obj) || _.isString(obj) || _.isArguments(obj))) return obj.length === 0;
+	    return _.keys(obj).length === 0;
+	  };
+
+	  // Is a given value a DOM element?
+	  _.isElement = function(obj) {
+	    return !!(obj && obj.nodeType === 1);
+	  };
+
+	  // Is a given value an array?
+	  // Delegates to ECMA5's native Array.isArray
+	  _.isArray = nativeIsArray || function(obj) {
+	    return toString.call(obj) === '[object Array]';
+	  };
+
+	  // Is a given variable an object?
+	  _.isObject = function(obj) {
+	    var type = typeof obj;
+	    return type === 'function' || type === 'object' && !!obj;
+	  };
+
+	  // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp, isError.
+	  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function(name) {
+	    _['is' + name] = function(obj) {
+	      return toString.call(obj) === '[object ' + name + ']';
+	    };
+	  });
+
+	  // Define a fallback version of the method in browsers (ahem, IE < 9), where
+	  // there isn't any inspectable "Arguments" type.
+	  if (!_.isArguments(arguments)) {
+	    _.isArguments = function(obj) {
+	      return _.has(obj, 'callee');
+	    };
+	  }
+
+	  // Optimize `isFunction` if appropriate. Work around some typeof bugs in old v8,
+	  // IE 11 (#1621), and in Safari 8 (#1929).
+	  if (typeof /./ != 'function' && typeof Int8Array != 'object') {
+	    _.isFunction = function(obj) {
+	      return typeof obj == 'function' || false;
+	    };
+	  }
+
+	  // Is a given object a finite number?
+	  _.isFinite = function(obj) {
+	    return isFinite(obj) && !isNaN(parseFloat(obj));
+	  };
+
+	  // Is the given value `NaN`? (NaN is the only number which does not equal itself).
+	  _.isNaN = function(obj) {
+	    return _.isNumber(obj) && obj !== +obj;
+	  };
+
+	  // Is a given value a boolean?
+	  _.isBoolean = function(obj) {
+	    return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
+	  };
+
+	  // Is a given value equal to null?
+	  _.isNull = function(obj) {
+	    return obj === null;
+	  };
+
+	  // Is a given variable undefined?
+	  _.isUndefined = function(obj) {
+	    return obj === void 0;
+	  };
+
+	  // Shortcut function for checking if an object has a given property directly
+	  // on itself (in other words, not on a prototype).
+	  _.has = function(obj, key) {
+	    return obj != null && hasOwnProperty.call(obj, key);
+	  };
+
+	  // Utility Functions
+	  // -----------------
+
+	  // Run Underscore.js in *noConflict* mode, returning the `_` variable to its
+	  // previous owner. Returns a reference to the Underscore object.
+	  _.noConflict = function() {
+	    root._ = previousUnderscore;
+	    return this;
+	  };
+
+	  // Keep the identity function around for default iteratees.
+	  _.identity = function(value) {
+	    return value;
+	  };
+
+	  // Predicate-generating functions. Often useful outside of Underscore.
+	  _.constant = function(value) {
+	    return function() {
+	      return value;
+	    };
+	  };
+
+	  _.noop = function(){};
+
+	  _.property = property;
+
+	  // Generates a function for a given object that returns a given property.
+	  _.propertyOf = function(obj) {
+	    return obj == null ? function(){} : function(key) {
+	      return obj[key];
+	    };
+	  };
+
+	  // Returns a predicate for checking whether an object has a given set of
+	  // `key:value` pairs.
+	  _.matcher = _.matches = function(attrs) {
+	    attrs = _.extendOwn({}, attrs);
+	    return function(obj) {
+	      return _.isMatch(obj, attrs);
+	    };
+	  };
+
+	  // Run a function **n** times.
+	  _.times = function(n, iteratee, context) {
+	    var accum = Array(Math.max(0, n));
+	    iteratee = optimizeCb(iteratee, context, 1);
+	    for (var i = 0; i < n; i++) accum[i] = iteratee(i);
+	    return accum;
+	  };
+
+	  // Return a random integer between min and max (inclusive).
+	  _.random = function(min, max) {
+	    if (max == null) {
+	      max = min;
+	      min = 0;
+	    }
+	    return min + Math.floor(Math.random() * (max - min + 1));
+	  };
+
+	  // A (possibly faster) way to get the current timestamp as an integer.
+	  _.now = Date.now || function() {
+	    return new Date().getTime();
+	  };
+
+	   // List of HTML entities for escaping.
+	  var escapeMap = {
+	    '&': '&amp;',
+	    '<': '&lt;',
+	    '>': '&gt;',
+	    '"': '&quot;',
+	    "'": '&#x27;',
+	    '`': '&#x60;'
+	  };
+	  var unescapeMap = _.invert(escapeMap);
+
+	  // Functions for escaping and unescaping strings to/from HTML interpolation.
+	  var createEscaper = function(map) {
+	    var escaper = function(match) {
+	      return map[match];
+	    };
+	    // Regexes for identifying a key that needs to be escaped
+	    var source = '(?:' + _.keys(map).join('|') + ')';
+	    var testRegexp = RegExp(source);
+	    var replaceRegexp = RegExp(source, 'g');
+	    return function(string) {
+	      string = string == null ? '' : '' + string;
+	      return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+	    };
+	  };
+	  _.escape = createEscaper(escapeMap);
+	  _.unescape = createEscaper(unescapeMap);
+
+	  // If the value of the named `property` is a function then invoke it with the
+	  // `object` as context; otherwise, return it.
+	  _.result = function(object, property, fallback) {
+	    var value = object == null ? void 0 : object[property];
+	    if (value === void 0) {
+	      value = fallback;
+	    }
+	    return _.isFunction(value) ? value.call(object) : value;
+	  };
+
+	  // Generate a unique integer id (unique within the entire client session).
+	  // Useful for temporary DOM ids.
+	  var idCounter = 0;
+	  _.uniqueId = function(prefix) {
+	    var id = ++idCounter + '';
+	    return prefix ? prefix + id : id;
+	  };
+
+	  // By default, Underscore uses ERB-style template delimiters, change the
+	  // following template settings to use alternative delimiters.
+	  _.templateSettings = {
+	    evaluate    : /<%([\s\S]+?)%>/g,
+	    interpolate : /<%=([\s\S]+?)%>/g,
+	    escape      : /<%-([\s\S]+?)%>/g
+	  };
+
+	  // When customizing `templateSettings`, if you don't want to define an
+	  // interpolation, evaluation or escaping regex, we need one that is
+	  // guaranteed not to match.
+	  var noMatch = /(.)^/;
+
+	  // Certain characters need to be escaped so that they can be put into a
+	  // string literal.
+	  var escapes = {
+	    "'":      "'",
+	    '\\':     '\\',
+	    '\r':     'r',
+	    '\n':     'n',
+	    '\u2028': 'u2028',
+	    '\u2029': 'u2029'
+	  };
+
+	  var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
+
+	  var escapeChar = function(match) {
+	    return '\\' + escapes[match];
+	  };
+
+	  // JavaScript micro-templating, similar to John Resig's implementation.
+	  // Underscore templating handles arbitrary delimiters, preserves whitespace,
+	  // and correctly escapes quotes within interpolated code.
+	  // NB: `oldSettings` only exists for backwards compatibility.
+	  _.template = function(text, settings, oldSettings) {
+	    if (!settings && oldSettings) settings = oldSettings;
+	    settings = _.defaults({}, settings, _.templateSettings);
+
+	    // Combine delimiters into one regular expression via alternation.
+	    var matcher = RegExp([
+	      (settings.escape || noMatch).source,
+	      (settings.interpolate || noMatch).source,
+	      (settings.evaluate || noMatch).source
+	    ].join('|') + '|$', 'g');
+
+	    // Compile the template source, escaping string literals appropriately.
+	    var index = 0;
+	    var source = "__p+='";
+	    text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
+	      source += text.slice(index, offset).replace(escaper, escapeChar);
+	      index = offset + match.length;
+
+	      if (escape) {
+	        source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
+	      } else if (interpolate) {
+	        source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
+	      } else if (evaluate) {
+	        source += "';\n" + evaluate + "\n__p+='";
+	      }
+
+	      // Adobe VMs need the match returned to produce the correct offest.
+	      return match;
+	    });
+	    source += "';\n";
+
+	    // If a variable is not specified, place data values in local scope.
+	    if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
+
+	    source = "var __t,__p='',__j=Array.prototype.join," +
+	      "print=function(){__p+=__j.call(arguments,'');};\n" +
+	      source + 'return __p;\n';
+
+	    try {
+	      var render = new Function(settings.variable || 'obj', '_', source);
+	    } catch (e) {
+	      e.source = source;
+	      throw e;
+	    }
+
+	    var template = function(data) {
+	      return render.call(this, data, _);
+	    };
+
+	    // Provide the compiled source as a convenience for precompilation.
+	    var argument = settings.variable || 'obj';
+	    template.source = 'function(' + argument + '){\n' + source + '}';
+
+	    return template;
+	  };
+
+	  // Add a "chain" function. Start chaining a wrapped Underscore object.
+	  _.chain = function(obj) {
+	    var instance = _(obj);
+	    instance._chain = true;
+	    return instance;
+	  };
+
+	  // OOP
+	  // ---------------
+	  // If Underscore is called as a function, it returns a wrapped object that
+	  // can be used OO-style. This wrapper holds altered versions of all the
+	  // underscore functions. Wrapped objects may be chained.
+
+	  // Helper function to continue chaining intermediate results.
+	  var result = function(instance, obj) {
+	    return instance._chain ? _(obj).chain() : obj;
+	  };
+
+	  // Add your own custom functions to the Underscore object.
+	  _.mixin = function(obj) {
+	    _.each(_.functions(obj), function(name) {
+	      var func = _[name] = obj[name];
+	      _.prototype[name] = function() {
+	        var args = [this._wrapped];
+	        push.apply(args, arguments);
+	        return result(this, func.apply(_, args));
+	      };
+	    });
+	  };
+
+	  // Add all of the Underscore functions to the wrapper object.
+	  _.mixin(_);
+
+	  // Add all mutator Array functions to the wrapper.
+	  _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
+	    var method = ArrayProto[name];
+	    _.prototype[name] = function() {
+	      var obj = this._wrapped;
+	      method.apply(obj, arguments);
+	      if ((name === 'shift' || name === 'splice') && obj.length === 0) delete obj[0];
+	      return result(this, obj);
+	    };
+	  });
+
+	  // Add all accessor Array functions to the wrapper.
+	  _.each(['concat', 'join', 'slice'], function(name) {
+	    var method = ArrayProto[name];
+	    _.prototype[name] = function() {
+	      return result(this, method.apply(this._wrapped, arguments));
+	    };
+	  });
+
+	  // Extracts the result from a wrapped and chained object.
+	  _.prototype.value = function() {
+	    return this._wrapped;
+	  };
+
+	  // Provide unwrapping proxy for some methods used in engine operations
+	  // such as arithmetic and JSON stringification.
+	  _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
+
+	  _.prototype.toString = function() {
+	    return '' + this._wrapped;
+	  };
+
+	  // AMD registration happens at the end for compatibility with AMD loaders
+	  // that may not enforce next-turn semantics on modules. Even though general
+	  // practice for AMD registration is to be anonymous, underscore registers
+	  // as a named module because, like jQuery, it is a base library that is
+	  // popular enough to be bundled in a third party lib, but not be part of
+	  // an AMD load request. Those cases could generate an error when an
+	  // anonymous define() is called outside of a loader request.
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	      return _;
+	    }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  }
+	}.call(this));
+
 
 /***/ }
 /******/ ]);

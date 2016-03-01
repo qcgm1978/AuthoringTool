@@ -27,8 +27,9 @@ var ThemedPage = React.createClass({
         return this.themeConfig;
     },
 
+    //create a new ajax request
     loadTheme: function() {
-        var themeConfig = this.getThemeConfig();
+        var themeConfig = this.getThemeConfig();  //synchronize loading
         $.ajax({
             type: "GET",
             url: "templates/" + this.props.themeName + "/" + themeConfig.default.html,
@@ -47,7 +48,6 @@ var ThemedPage = React.createClass({
      * @param html
      */
     handleTemplateLoaded: function(html) {
-        console.log("template loaded" + html);
         $(".styles").empty();
         $(".header").empty().append($(html).filter("header"));
         $(".footer").empty().append($(html).filter("footer"));
@@ -57,7 +57,6 @@ var ThemedPage = React.createClass({
                 .attr('href',"templates/default/" + $(this).attr("href"))
                 .appendTo('.styles');
         });
-        //this.themeReady();
         setTimeout(this.themeReady, 300);
     },
 
@@ -69,13 +68,6 @@ var ThemedPage = React.createClass({
                 padding: this.themeConfig.default.padding
             }
         });
-        /*
-        this.setState({
-            headerHeight: $(".header").height(),
-            footerHeight: $(".footer").height(),
-            padding: this.themeConfig.default.padding
-        });
-        */
     },
 
     componentDidMount: function () {
@@ -83,91 +75,38 @@ var ThemedPage = React.createClass({
     },
 
     componentWillReceiveProps: function(nextProps) {
-        if (nextProps.data.theme!=this.props.data.theme) {
+        if (nextProps.data.themeName!=this.props.data.themeName) {
             this.loadTheme();
         }
     },
 
-    onclick: function() {
-        this.refs["layout"].returnGridster();
-        this.setState({
-            showPanel: false
-        });
-        this.refs["leftmenu"].clearState();
-    },
-
-    editBlock: function(blockType) {
-        console.log("edit type " + blockType);
-        this.setState({
-            showPanel: true,
-            panel: blockType
-        });
-    },
-
-    addBlock: function(template, sizex, sizey) {
-        this.refs["layout"].addBlock(template, sizex, sizey);
-    },
-
-    adddActivity: function(type) {
-        this.refs["layout"].adddActivity(type);
-    },
-
-    disableLayout: function() {
-        this.refs['layout'].disableLayout()
-    },
-    enableLayout: function() {
-        this.refs['layout'].enableLayout()
-    },
-    closeSetting: function() {
-        this.refs['layout'].closeSetting()
-    },
-
     render: function () {
-        var swidth = this.props.pageSetting.width;
-        if (this.props.pageSetting.doubleScreen) {
-            swidth = swidth * 2;
-        }
-
-        var headerWidth = "100%";
-        if (this.props.pageSetting.doubleScreen) {
-            if (this.props.pageSetting.expandMode===3||this.props.pageSetting.expandMode===1) {
-                headerWidth = "50%";
-            }
-        }
-
-        var contentHeight = this.props.pageSetting.height;
-        var contentWidth = this.props.pageSetting.width;
-
         var layout = <div ref="layout"/>;
         if (this.state.themeConfig) {
+            /*When theme config loaded£¬ reset the layout frame*/
             console.log("render after theme load ", this.state.themeConfig);
-
-            if (this.props.pageSetting.showHeader) {
-                contentHeight -= this.state.themeConfig.headerHeight;
-            }
-            if (this.props.showFooter) {
-                contentHeight -= this.state.themeConfig.footerHeight;
-            }
-            if(contentHeight=== this.props.pageSetting.height && this.themeConfig) {
-                contentHeight -= this.themeConfig.default.padding[0];
-                contentHeight -= this.themeConfig.default.padding[2];
-            }
-            layout = <GridLayout
-                pageSetting={this.props.pageSetting}
-                themeConfig={this.state.themeConfig}
-                configurationChange={this.props.configurationChange}
+            layout = <GridLayout height={this.props.pageSetting.height} width={this.props.pageSetting.width}
+                padding={this.state.themeConfig.padding}
+                double={this.props.pageSetting.doubleScreen}
+                expandMode={this.props.pageSetting.expandMode}
                 data={this.props.data}
-                editBlock={this.editBlock}
                 ref="layout"/>
         }
         /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
 
+        var headerWidth = this.props.pageSetting.width;
+        if (this.props.pageSetting.doubleScreen ) {
+            if (this.props.pageSetting.expandMode===2) {
+                headerWidth *=2;
+            }
+            if (this.props.pageSetting.expandMode===3) {
+
+            }
+        }
+
         return (
-            <div className="screen" onClick={this.onclick}>
-                <div className="display" style={{
-                        width:  swidth,
-                        minHeight: this.props.pageSetting.height
-                    }}>
+            <div className="screen">
+                <div className="display" >
                     <div className="styles"></div>
                     <div className="header" style={{
                         width: headerWidth,

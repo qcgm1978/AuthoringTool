@@ -43,12 +43,8 @@ var PageToolWorkspace = React.createClass({
     onclick: function() {
         postal.publish({
             channel: "workspace",
-            topic: "empty.click"
+            topic: "empty.clicked"
         });
-        /*
-        this.refs.page.returnGridster();
-        this.refs.leftmenu.clearState();
-        */
     },
 
     editBlock: function(blockType) {

@@ -3,27 +3,13 @@ var React = require('react');
 var _ = require("underscore");
 var postal = require("postal");
 
-var GridLayout = React.createClass({
+var Gridster = React.createClass({
 
     BLOCK_ID_PREFIX: "block_",
 
     getInitialState: function () {
         return {
-            layoutable: true,
-            minHeight: 768,
-            zoom: 1,
-            doubleScreen: 0,
-            showHeader: true,
-            showFooter: true,
-            theme: "default"
         };
-    },
-
-    data: {
-        singleScreenWidgets: [],
-        doubleScreenLeftWidgets: [],
-        doubleScreenRightWidgets: [],
-        widgetContents: {}
     },
 
     /**
@@ -51,18 +37,57 @@ var GridLayout = React.createClass({
     },
 
     componentDidMount: function () {
-        if (this.props.data===null) {
-            this.data = {
-                singleScreenWidgets: [],
-                doubleScreenLeftWidgets: [],
-                doubleScreenRightWidgets: [],
-                widgetContents: {}
-            };
-        } else {
-            this.data = this.props.data;
+        var gridster = this;
+
+        $("#main-grid").css("width", this.props.width);
+        $("#main-grid").css("min-height", this.props.height);
+
+        var gridsterWidth = this.props.width;
+        if (this.props.padding) {
+            $("#main-grid").css("padding", this.props.padding.join(" "));
+            $("#main-grid>ul").css("width", "100%");
+            $("#main-grid>ul").css("height", "100%");
         }
-        this.initGridster();
-        this.subscribeChanel();
+
+        $("#" + this.props.gid + ">ul").gridster(_.extend({
+            namespace: '#' + this.props.gid,
+            widget_base_dimensions: [(this.props.width) / 12 - 2, (this.props.height) / 10 - 2],
+            draggable: {
+                start: function() {
+                    layout.startDraging = true;
+                },
+                stop: function(event, ui) {
+                    /**
+                     * When on double screen and the expand mode is 'extra' or 'portrait',
+                     * Move the widget from left to right
+                     * */
+                    if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode===1||layout.props.pageSetting.expandMode===3)
+                        && ui.pointer.left>=layout.props.pageSetting.width+70) {
+                        layout.moveBlock(ui.$player, true);
+                    }
+                }
+            },
+            resize: {
+                enabled: true,
+                start: function() {
+                    layout.startDraging = true;
+                    console.log("start resizing");
+                },
+
+                resize: function() {
+                    console.log("resizing");
+                },
+
+                stop: function() {
+                }
+            }
+        }, this.defaultGridOptions));
+        $("#extra-grid").hide();
+
+
+        /**Add blocks to gridster*/
+        this.loadGridData();
+        this.initBlockEvents();
     },
 
 
@@ -463,37 +488,11 @@ var GridLayout = React.createClass({
     },
 
     render: function () {
-        return (
-            <div className={this.state.layoutable?"layoutable":"editable"}>
-                <div className="gridster" id="main-grid">
-                    <ul></ul>
-                </div>
-                <div className="gridster" id="extra-grid">
-                    <ul></ul>
-                </div>
+        return (<div className="gridster" id={this.props.gid} style={this.props.style}>
+                <ul></ul>
             </div>
         );
     }
 });
 
-
-tinymce.PluginManager.add('stylebuttons', function(editor, url) {
-    ['pre', 'p', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach(function(name){
-        editor.addButton("style-" + name, {
-            tooltip: "Toggle " + name,
-            text: name.toUpperCase(),
-            onClick: function() { editor.execCommand('mceToggleFormat', false, name); },
-            onPostRender: function() {
-                var self = this, setup = function() {
-                    editor.formatter.formatChanged(name, function(state) {
-                        self.active(state);
-                    });
-                };
-                editor.formatter ? setup() : editor.on('init', setup);
-            }
-        })
-    });
-});
-
-
-module.exports = GridLayout;
+module.exports = Gridster;
