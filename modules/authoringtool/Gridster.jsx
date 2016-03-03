@@ -80,6 +80,7 @@ var Gridster = React.createClass({
 
     /**When propeties and states change */
     componentWillUpdate : function(nextProps, nextState) {
+
     },
 
     /**Extract n save grid data*/
@@ -146,19 +147,26 @@ var Gridster = React.createClass({
         });
     },
 
-    addBlock: function (type, content, sizex, sizey) {
-        var gridster = $("#main-grid ul").gridster().data('gridster');
-        if (!sizex) {
-            sizex = 12;
-        }
-        if (!sizey) {
-            sizey = 2;
-        }
-        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX)
-        gridster.add_widget("<li data-id='" + blockId + "' data-btype='text-block'>" + template + "</li>", sizex, sizey, 1, 100);
+    addBlock: function (type, content, size_x, size_y, pos_x, pos_y) {
+        var gridster = $("#" + this.props.id + " ul").gridster().data('gridster');
 
-        this.initBlockEvents();
+        if (!size_x) {
+            size_x = 12;
+        }
+        if (!size_y) {
+            size_y = 2;
+        }
 
+        if (!pos_x) {
+            pos_x = 1;
+        }
+        if (!pos_y) {
+            pos_y = 10;
+        }
+        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
+        gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
+        this.initBlockEvents(blockId);
+        /*
         this.data.doubleScreenLeftWidgets.push({
             id: blockId,
             col: 1,
@@ -166,15 +174,17 @@ var Gridster = React.createClass({
             size_x: sizex,
             size_y: sizey
         });
+        */
     },
 
-    initBlockEvents: function(block) {
-        $(block).off("click").on("click", function(event) {
+    initBlockEvents: function(blockId) {
+        $("li[data-disabled='" + blockId + "']").off("click").on("click", function(event) {
             event.stopPropagation();
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
         });
+
         var gridlayout = this;
         $(".gridster li").unbind('click').bind("click", function(event) {
             event.stopPropagation();
@@ -197,7 +207,7 @@ var Gridster = React.createClass({
     },
 
     render: function () {
-        return (<div className="gridster" id={this.props.gid} style={this.props.style}>
+        return (<div className="gridster" id={this.props.id} style={this.props.style}>
                 <ul></ul>
             </div>
         );

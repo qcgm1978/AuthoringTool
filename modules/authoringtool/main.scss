@@ -54,8 +54,8 @@ body {
       background-color: #F5F5F5;
       color: #5CB85C;
       cursor: pointer;
-      -webkit-transition: background-color .4s ease-in;
-      transition: background-color .4s ease-in;
+      -webkit-transition: background-color .1s ease-in;
+      transition: background-color .1s ease-in;
 
       &.ratio {
         line-height: 16px;
@@ -241,10 +241,10 @@ body {
     }
   }
 
-
   .screen {
     position: relative;
     background-color: #fff;
+    overflow: auto;
 
     > div {
       .gridpanel {
@@ -361,6 +361,7 @@ svg.gridLines {
 
 
 .gridster  {
+  background-color: rgb(237, 253, 218);
   li {
     .content {
       width: 100%;

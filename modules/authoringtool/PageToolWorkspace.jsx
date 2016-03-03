@@ -55,6 +55,12 @@ var PageToolWorkspace = React.createClass({
         });
     },
 
+    pageSettingChanged: function(settings) {
+        this.setState({
+            pageSetting: _.extend(this.state.pageSetting,settings)
+        });
+    },
+
     /***
      * Delegated methods
      */
@@ -79,22 +85,14 @@ var PageToolWorkspace = React.createClass({
     render: function () {
         return (
             <div className="tool-workspace" onClick={this.onclick}>
-                <LeftMenu ref="leftmenu"
-                        configurationChange={this.props.configurationChange}
-                        doubleScreen={this.state.pageSetting.doubleScreen}
-                        addBlock={this.addBlock}
-                        adddActivity={this.adddActivity}
-                        layoutable="true" disableLayout={this.disableLayout}
-                        enableLayout={this.enableLayout}  closeSetting={this.closeSetting}
-                        showHeader={this.state.pageSetting.doubleScreen.showHeader} showFooter={this.state.pageSetting.doubleScreen.showFooter}
-                        width={this.state.pageSetting.width}/>
+                <LeftMenu ref="leftmenu" configurationChangedCallback={this.pageSettingChanged} pageSetting={this.state.pageSetting}/>
 
                 <ThemedPage ref="page" data={this.props.data} themeName={this.state.themeName} pageSetting={this.state.pageSetting}/>
 
                 <RightPanel display={this.state.showPanel} panel={this.state.panel}/>
+
                 <AxisLines width={this.state.pageSetting.width} height={this.state.pageSetting.height}
-                           doubleScreen={this.state.pageSetting.doubleScreen} expandMode={this.state.pageSetting.expandMode}
-                           />
+                           doubleScreen={this.state.pageSetting.doubleScreen} expandMode={this.state.pageSetting.expandMode}/>
             </div>
         );
     }

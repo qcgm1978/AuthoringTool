@@ -1,4 +1,15 @@
 var React = require('react');
+var postal = require("postal");
+
+/***
+ * props
+ * show : visibility
+ * pageSetting: page setting
+ * configurationChangedCallback£º callback when change setting
+ *
+ * state
+ *
+ */
 
 var PageConfigMenu = React.createClass({
 
@@ -12,32 +23,21 @@ var PageConfigMenu = React.createClass({
         }
     },
 
-    screenModel: function(event) {
-        var value = $(event.target).val();
-        var mode = 1;
-        if (value===this.SCREEN_MODEL_PORTRAIT) {
-            mode = 1
-        }
-        if (value===this.SCREEN_MODEL_EXPAND) {
-            mode = 2;
-        }
-        if (value===this.SCREEN_MODEL_EXTRA) {
-            mode = 3;
-        }
-        this.props.configurationChange({
-            expandMode: mode
-        });
-    },
-
     toggleHeader: function(event) {
-        this.props.configurationChange({
+        this.props.configurationChangedCallback({
             showHeader: event.target.checked
         });
     },
 
     toggleFooter: function(event) {
-        this.props.configurationChange({
+        this.props.configurationChangedCallback({
             showFooter: event.target.checked
+        });
+    },
+
+    expandModeChanged: function(event) {
+        this.props.configurationChangedCallback({
+            expandMode: parseInt($(event.target).val())
         });
     },
 
@@ -50,7 +50,10 @@ var PageConfigMenu = React.createClass({
     },
 
     closeMe: function() {
-        this.props.showConfigMenu(false);
+        postal.publish({
+            channel: "workspace",
+            topic: "empty.clicked"
+        });
     },
 
     stopPropagation: function(event) {
@@ -63,13 +66,13 @@ var PageConfigMenu = React.createClass({
                     display: this.props.show? "inherit":"none"
             }} onClick={this.stopPropagation}>
                 <div className="close glyphicon glyphicon-remove" onClick={this.closeMe}/>
-                <div><input checked={this.props.showHeader} type="checkbox" onChange={this.toggleHeader}/><span>Show Header</span></div>
-                <div><input checked={this.props.showFooter} type="checkbox" onChange={this.toggleFooter}/><span>Show Footer</span></div>
+                <div><input checked={this.props.pageSetting.showHeader} type="checkbox" onChange={this.toggleHeader}/><span>Show Header</span></div>
+                <div><input checked={this.props.pageSetting.showFooter} type="checkbox" onChange={this.toggleFooter}/><span>Show Footer</span></div>
                 <div> <span>Double Screen</span>
-                    <select onChange={this.screenModel}>
-                        <option>{this.SCREEN_MODEL_PORTRAIT}</option>
-                        <option>{this.SCREEN_MODEL_EXPAND}</option>
-                        <option>{this.SCREEN_MODEL_EXTRA}</option>
+                    <select onChange={this.expandModeChanged}>
+                        <option value="1">{this.SCREEN_MODEL_PORTRAIT}</option>
+                        <option value="2">{this.SCREEN_MODEL_EXPAND}</option>
+                        <option value="3">{this.SCREEN_MODEL_EXTRA}</option>
                     </select>
                 </div>
                 <div> Theme <select><option>Default</option></select> </div>

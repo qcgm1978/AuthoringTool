@@ -4,6 +4,12 @@ var GridLayout = require("./GridLayout.jsx");
 var Gridster = require("./Gridster.jsx");
 /**
  * 最终页面组件。 包括了Theme、footer、header等相关设置。及用于布局的Layout
+ * props:
+ * data : project info
+ * themeName: theme for display
+ * pageSetting : the screen and layout settings
+ * state:
+ * themeConfig : ajax loaded by themeName
  * @type {*|Function}
  */
 var ThemedPage = React.createClass({
@@ -75,7 +81,7 @@ var ThemedPage = React.createClass({
     },
 
     componentWillReceiveProps: function(nextProps) {
-        if (nextProps.data.themeName!=this.props.data.themeName) {
+        if (nextProps.themeName!=this.props.themeName) {
             this.loadTheme();
         }
     },
@@ -85,46 +91,51 @@ var ThemedPage = React.createClass({
         $(".header").css("position", "absolute").css("top", 0).css("left", 0).css("width", this.props.pageSetting.width);
 
         var contentWidth = this.props.pageSetting.width
-            - parseInt(this.props.themeConfig.padding[1])
-            - parseInt(this.props.padding[3]);
+            - parseInt(this.state.themeConfig.padding[1])
+            - parseInt(this.state.themeConfig.padding[3]);
         var mainHeight = this.props.pageSetting.height
-            - parseInt(this.props.themeConfig.padding[0])
-            - parseInt(this.props.themeConfig.padding[2]) - $(".header").height();
+            - parseInt(this.state.themeConfig.padding[0])
+            - parseInt(this.state.themeConfig.padding[2])
+            - (this.props.pageSetting.showHeader?$(".header").height():0);
         var extraHeight =  this.props.pageSetting.height
-            - parseInt(this.props.themeConfig.padding[0])
-            - parseInt(this.props.themeConfig.padding[2]);
+            - parseInt(this.state.themeConfig.padding[0])
+            - parseInt(this.state.themeConfig.padding[2]);
 
         if (this.props.pageSetting.showFooter) {
             extraHeight -= $(".footer").height();
         }
         var mainStyle = {
             position: "absolute",
-            left: this.props.themeConfig.padding[3],
-            top: $(".header").height() + this.props.themeConfig.padding[0],
+            left: this.state.themeConfig.padding[3],
+            top: $(".header").height() + parseInt(this.state.themeConfig.padding[0]),
             width: contentWidth,
             height: mainHeight
         };
-        var mainGrid = <Gridster ref="main-grid" id="main-grid" styles={mainStyle}/>;
+
+        console.log("main style", mainStyle);
+        var mainGrid = <Gridster ref="main-grid" id="main-grid" style={mainStyle}/>;
         var extraStyle = {
             position: "absolute",
-            right: this.props.themeConfig.padding[1],
-            bottom: $(".footer").height() + this.props.themeConfig.padding[2],
+            right: this.state.themeConfig.padding[1],
+            bottom: $(".footer").height() + parseInt(this.state.themeConfig.padding[2]),
             width: contentWidth,
             height: extraHeight
-        }
-        var extraGrid =  <Gridster ref="extra-grid" id="extra-grid" styles={extraStyle}/>;
-        return (<div>
+        };
+        console.log("extra style", extraStyle);
+        var extraGrid =  <Gridster ref="extra-grid" id="extra-grid" style={extraStyle}/>;
+        return <div>
             {mainGrid}
             {extraGrid}
-        </div>);
+        </div>;
     },
 
     getSingleLayout: function(width) {
-        $(".header").css("width", "100%");
-        $(".footer").css("width", "100%");
+        $(".header").css("position", "inherit").css("width", width);
+        $(".footer").css("position", "inherit").css("width", width);
         var minHeight = this.props.pageSetting.height - parseInt(this.state.themeConfig.padding[0])
-            - parseInt(this.state.themeConfig.padding[2]) - $(".header").height() - $(".footer").height();
-
+            - parseInt(this.state.themeConfig.padding[2])
+            - (this.props.pageSetting.showHeader?$(".header").height():0)
+            - (this.props.pageSetting.showFooter?$(".footer").height():0);
         var mainStyle = {
             width: width- parseInt(this.state.themeConfig.padding[0])
             - parseInt(this.state.themeConfig.padding[2]),
@@ -133,8 +144,27 @@ var ThemedPage = React.createClass({
             marginTop: this.state.themeConfig.padding[0],
             marginBottom: this.state.themeConfig.padding[2],
         };
-
         return (<Gridster ref="main-grid" id="main-grid" style={mainStyle}/>);
+    },
+
+    getExtraLayout: function() {
+        var extraStyle = {
+            position: "absolute",
+            right: 0,
+            bottom: 0,
+            top: 0,
+            width: this.props.pageSetting.width
+        };
+
+        var main = this.getSingleLayout(this.props.pageSetting.width);
+        return <div>
+                {main}
+                <Gridster ref="extra-grid" id="extra-grid" style={extraStyle}/>
+            </div>;
+    },
+
+    getExpandLayout: function() {
+        return this.getSingleLayout(this.props.pageSetting.width*2);
     },
 
     render: function () {
@@ -143,14 +173,14 @@ var ThemedPage = React.createClass({
             /*When theme config loaded， reset the layout frame*/
             console.log("render after theme load ", this.state.themeConfig, this.props.pageSetting);
             if (this.props.pageSetting.doubleScreen) {
-                if (this.props.expandMode===1) {  //portrait cut model
+                if (this.props.pageSetting.expandMode===1) {  //portrait cut model
                     layout = this.getPortraitCutLayout();
                 }
-                if (this.props.expandMode===2) {  //expand mode
-
+                if (this.props.pageSetting.expandMode===2) {  //expand mode
+                    layout = this.getExpandLayout();
                 }
-                if (this.props.expandMode===3) {  //extra mode
-
+                if (this.props.pageSetting.expandMode===3) {  //extra mode
+                    layout = this.getExtraLayout();
                 }
             } else {
                 layout = this.getSingleLayout(this.props.pageSetting.width);
