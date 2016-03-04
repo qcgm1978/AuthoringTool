@@ -32,7 +32,7 @@ var LeftMenu = React.createClass({
         var menu = this;
         postal.subscribe({
             channel: "workspace",
-            topic: "empty.clicked",
+            topic: "reset",
             callback: function(data, envelope) {
                 menu.setState({
                     showBlockTypes: false,

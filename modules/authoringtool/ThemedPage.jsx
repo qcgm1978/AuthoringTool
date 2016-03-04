@@ -2,6 +2,9 @@ var React = require('react');
 
 var GridLayout = require("./GridLayout.jsx");
 var Gridster = require("./Gridster.jsx");
+var postal = require("postal");
+var PageOperation = require("./PageOperation");
+
 /**
  * 最终页面组件。 包括了Theme、footer、header等相关设置。及用于布局的Layout
  * props:
@@ -74,6 +77,19 @@ var ThemedPage = React.createClass({
                 padding: this.themeConfig.default.padding
             }
         });
+
+        var page = this;
+
+        postal.subscribe({
+            channel: "block",
+            topic: "add",
+            callback: function(data, envelope) {
+                if (page.refs["main-grid"]) {
+                    page.refs["main-grid"].addBlock(data.type, data.html,
+                        data.size_x, data.size_y, data.pos_x, data.pos_y);
+                }
+            }
+        });
     },
 
     componentDidMount: function () {
@@ -139,7 +155,7 @@ var ThemedPage = React.createClass({
         var mainStyle = {
             width: width- parseInt(this.state.themeConfig.padding[0])
             - parseInt(this.state.themeConfig.padding[2]),
-            minHeight: minHeight,
+            height: minHeight,
             marginLeft: this.state.themeConfig.padding[3],
             marginTop: this.state.themeConfig.padding[0],
             marginBottom: this.state.themeConfig.padding[2],
@@ -207,3 +223,5 @@ var ThemedPage = React.createClass({
 });
 
 module.exports = ThemedPage;
+
+

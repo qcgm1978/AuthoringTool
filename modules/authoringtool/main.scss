@@ -244,7 +244,7 @@ body {
   .screen {
     position: relative;
     background-color: #fff;
-    overflow: auto;
+    overflow: hidden;
 
     > div {
       .gridpanel {
@@ -362,18 +362,26 @@ svg.gridLines {
 
 .gridster  {
   background-color: rgb(237, 253, 218);
-  li {
-    .content {
-      width: 100%;
-      height: 100%;
+
+  ul {
+    &.dragged {
+      background-color: #FFF694;
     }
 
-    &:hover {
-      border: 1px dashed green;
-    }
+    li {
+      .content {
+        width: 100%;
+        height: 100%;
+      }
 
-    &.current {
-      border: 1px solid #FB9221;
+      &:hover {
+        border: 2px dashed green;
+      }
+
+      &.current {
+        border: 2px solid #FB9221;
+      }
+
     }
 
   }

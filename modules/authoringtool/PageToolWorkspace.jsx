@@ -43,7 +43,7 @@ var PageToolWorkspace = React.createClass({
     onclick: function() {
         postal.publish({
             channel: "workspace",
-            topic: "empty.clicked"
+            topic: "reset"
         });
     },
 

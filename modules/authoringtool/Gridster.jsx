@@ -3,6 +3,7 @@ var React = require('react');
 var _ = require("underscore");
 var postal = require("postal");
 
+var PageOperation = require("./PageOperation");
 
 /***
  * Properties :
@@ -37,45 +38,100 @@ var Gridster = React.createClass({
                 col: wgd.col,
                 row: wgd.row,
                 size_x: wgd.size_x,
-                size_y: wgd.size_y,
+                size_y: wgd.size_y
             };
         }
     },
 
+    startDraging: false,
+
     componentDidMount: function () {
-        return;
         var gridster = this;
-        $("#" + this.props.gid + ">ul").gridster(_.extend({
-            namespace: '#' + this.props.gid,
-            widget_base_dimensions: [(this.props.width) / 12 - 2, (this.props.height) / 10 - 2],
+        this.initGridster();
+        this.bindEvent();
+        postal.subscribe({
+            channel: "workspace",
+            topic: "reset",
+            callback: function(data, envelope) {
+                $("#" + gridster.props.id + " ul").find("li.current").removeClass("current");
+                $("#" + gridster.props.id + " ul").gridster().data('gridster').enable().enable_resize();
+            }
+        });
+
+    },
+
+    /**When mouse over(drag in、dragging) mouse out(drag out) mouseup( dragin effects)*/
+    bindEvent: function() {
+        var gridster = this;
+        $('#' + this.props.id).hover(function() {
+            if (PageOperation.dragging) {
+                $('#' + gridster.props.id).addClass("dragged");
+            }
+        }, function() {
+
+        }).on("mouseup", function() {
+            if (PageOperation.dragging && PageOperation.dragged) {
+                console.log("drag mouse up");
+            }
+            $('#' + gridster.props.id).removeClass("dragged");
+        })
+    },
+
+    initGridster: function() {
+        var options = {
+            namespace: '#' + this.props.id,
+            widget_margins: [1, 1],
+            widget_base_dimensions: [(this.props.style.width) / 12 - 2, (this.props.style.height) / 10 - 2],
             draggable: {
-                start: function() {
-                    layout.startDraging = true;
+                start: function(event, ui) {
+                    PageOperation.dragging = true;
+                    PageOperation.dragged = ui;
+                    console.log("drag of start");
                 },
                 stop: function(event, ui) {
+                    PageOperation.dragging = false;
+                    PageOperation.dragged = null;
+                    console.log("drag of stop");
                     /**
                      * When on double screen and the expand mode is 'extra' or 'portrait',
                      * Move the widget from left to right
+                        if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode===1||layout.props.pageSetting.expandMode===3)
+                            && ui.pointer.left>=layout.props.pageSetting.width+70) {
+                            layout.moveBlock(ui.$player, true);
+                        }
                      * */
-                    if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode===1||layout.props.pageSetting.expandMode===3)
-                        && ui.pointer.left>=layout.props.pageSetting.width+70) {
-                        layout.moveBlock(ui.$player, true);
-                    }
                 }
             },
             resize: {
                 enabled: true,
                 start: function() {
-                    layout.startDraging = true;
-                    console.log("start resizing");
+                    PageOperation.resizing = true;
                 },
                 resize: function() {
                     console.log("resizing");
                 },
                 stop: function() {
+                    PageOperation.resizing = false;
                 }
+            },
+            min_cols: 12,
+            min_rows: 10,
+            serialize_params: function ($w, wgd) {
+                var cli = $w.clone();
+                cli.find(".gs-resize-handle").remove();
+                cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
+                    .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+                return {
+                    content: cli.html(),
+                    id: $w.data('id'),
+                    col: wgd.col,
+                    row: wgd.row,
+                    size_x: wgd.size_x,
+                    size_y: wgd.size_y
+                };
             }
-        }, this.defaultGridOptions));
+        };
+        $("#" + this.props.id + ">ul").gridster(options);
     },
 
     /**When propeties and states change */
@@ -130,26 +186,9 @@ var Gridster = React.createClass({
 
     },
 
-    addActivity: function(type) {
-        var gridster = $("#main-grid ul").gridster().data('gridster');
-        var sizex = 12;
-        var sizey = 4;
-        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
-        gridster.add_widget("<li data-id='" + blockId + "'>" + type + "</li>", sizex, sizey, 1, 100);
-        this.initBlockEvents();
-
-        this.data.doubleScreenLeftWidgets.push({
-            id: blockId,
-            col: 1,
-            row: 100,
-            size_x: sizex,
-            size_y: sizey
-        });
-    },
-
     addBlock: function (type, content, size_x, size_y, pos_x, pos_y) {
         var gridster = $("#" + this.props.id + " ul").gridster().data('gridster');
-
+        console.log(gridster);
         if (!size_x) {
             size_x = 12;
         }
@@ -179,23 +218,12 @@ var Gridster = React.createClass({
 
     initBlockEvents: function(blockId) {
         $("li[data-disabled='" + blockId + "']").off("click").on("click", function(event) {
+            console.log("clicked");
             event.stopPropagation();
+            if (PageOperation.dragging) return;
+
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
-            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
-        });
-
-        var gridlayout = this;
-        $(".gridster li").unbind('click').bind("click", function(event) {
-            event.stopPropagation();
-            if (gridlayout.startDraging) {
-                gridlayout.startDraging = false;
-                return;
-            }
-            $(".gridster ul li.current").removeClass("current");
-            $(this).addClass("current");
-
-            //gridlayout.props.editBlock($(this).data("btype"));
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
         });
         tinymce.init({

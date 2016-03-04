@@ -2651,7 +2651,7 @@
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
 	* http://gridster.net/
 	* Copyright (c) 2014 ducksboard; Licensed MIT */;(function(root,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_0__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__));}else {root.GridsterCoords=factory(root.$||root.jQuery);}})(undefined,function($){ /**
 	    * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
@@ -3576,7 +3576,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.tool-workspace {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .tool-workspace .leftMenu {\n    position: absolute;\n    left: 30px;\n    top: 70px;\n    z-index: 1101; }\n    .tool-workspace .leftMenu span.glyphicon {\n      font-size: 18px;\n      display: block;\n      width: 40px;\n      line-height: 40px;\n      text-align: center;\n      background-color: #F5F5F5;\n      color: #5CB85C;\n      cursor: pointer;\n      -webkit-transition: background-color .1s ease-in;\n      transition: background-color .1s ease-in; }\n      .tool-workspace .leftMenu span.glyphicon.ratio {\n        line-height: 16px;\n        font-size: 12px;\n        padding: 5px 0; }\n      .tool-workspace .leftMenu span.glyphicon[data-disabled='true'] {\n        color: gray; }\n      .tool-workspace .leftMenu span.glyphicon[data-clicked='true'] {\n        background-color: #5CB85C;\n        color: #fff; }\n  .tool-workspace .hidder {\n    position: absolute;\n    left: 0;\n    top: 70px;\n    width: 70px;\n    bottom: 0;\n    z-index: 1100;\n    background-color: #F5F5F5; }\n  .tool-workspace .blockType {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 400px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    z-index: 1099;\n    border-left: 3px solid #5CB85C;\n    background: #fffeff;\n    border-right: 1px solid #bbb;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-transition: -webkit-transform .3s ease-out;\n    transition: transform .3s ease-out;\n    -webkit-transform: translateX(-120%);\n    transform: translateX(-120%); }\n    .tool-workspace .blockType.shown {\n      -webkit-transform: translateX(0);\n      transform: translateX(0); }\n    .tool-workspace .blockType ul.category-list {\n      background-color: #5CB85C;\n      display: inline-block;\n      height: 100%;\n      padding: 14px 0;\n      vertical-align: top; }\n      .tool-workspace .blockType ul.category-list li.category {\n        text-align: center;\n        color: #fff;\n        cursor: pointer;\n        font-size: 14px;\n        margin-bottom: 2px;\n        max-height: 30px;\n        min-height: 14px;\n        padding: 0 10px 0 3px;\n        position: relative; }\n        .tool-workspace .blockType ul.category-list li.category span {\n          border-radius: 20px;\n          display: inline-block;\n          height: 100%;\n          overflow: hidden;\n          padding: 0 14px;\n          position: relative; }\n          .tool-workspace .blockType ul.category-list li.category span.current {\n            background-color: rgba(0, 0, 0, 0.2);\n            box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n    .tool-workspace .blockType .textTemplateLists {\n      display: inline-block;\n      padding: 10px;\n      width: 310px; }\n      .tool-workspace .blockType .textTemplateLists > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .textTemplateLists > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .textTemplateLists > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType .chooseImage {\n      display: inline-block;\n      width: 500px;\n      height: 380px; }\n      .tool-workspace .blockType .chooseImage .zone {\n        margin: 10px;\n        border: 2px dashed #999;\n        padding: 10px;\n        height: 370px;\n        text-align: center;\n        font-size: 18px; }\n    .tool-workspace .blockType .menuActivityList {\n      display: inline-block;\n      width: 500px;\n      padding: 10px; }\n      .tool-workspace .blockType .menuActivityList > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .menuActivityList > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .menuActivityList > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType [data-show='false'] {\n      display: none; }\n  .tool-workspace .pageConfig {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 300px;\n    width: 300px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    background-color: #fff;\n    z-index: 1100;\n    padding: 10px; }\n    .tool-workspace .pageConfig > div {\n      padding: 5px; }\n  .tool-workspace .screen {\n    position: relative;\n    background-color: #fff;\n    overflow: auto; }\n    .tool-workspace .screen > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .tool-workspace .screen > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .tool-workspace .screen > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .tool-workspace .screen > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n  .tool-workspace .rightPanel {\n    position: absolute;\n    background: #FFFEFF;\n    z-index: 110001;\n    display: block;\n    top: 65px;\n    right: 26px;\n    border: 1px solid #bbb;\n    border-radius: 7px;\n    -moz-border-radius: 7px;\n    -webkit-border-radius: 7px;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    min-width: 420px; }\n    .tool-workspace .rightPanel .pn-header {\n      position: relative;\n      line-height: 44px;\n      height: 44px;\n      border-bottom: 1px solid #E2E2E2;\n      padding: 0 30px 0 10px;\n      font-size: 18px;\n      font-weight: 600; }\n      .tool-workspace .rightPanel .pn-header .btn-close {\n        position: absolute;\n        right: 10px;\n        top: 0;\n        line-height: 44px;\n        height: 100%;\n        color: #b3b3b3; }\n    .tool-workspace .rightPanel .pn-body {\n      padding: 10px; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster {\n  background-color: #edfdda; }\n  .gridster li .content {\n    width: 100%;\n    height: 100%; }\n  .gridster li:hover {\n    border: 1px dashed green; }\n  .gridster li.current {\n    border: 1px solid #FB9221; }\n\n.right-block {\n  float: right; }\n\n.example-enter {\n  opacity: 0.01; }\n\n.example-enter.example-enter-active {\n  opacity: 1;\n  transition: opacity 500ms ease-in; }\n\n.example-leave {\n  opacity: 1; }\n\n.example-leave.example-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.tool-workspace {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .tool-workspace .leftMenu {\n    position: absolute;\n    left: 30px;\n    top: 70px;\n    z-index: 1101; }\n    .tool-workspace .leftMenu span.glyphicon {\n      font-size: 18px;\n      display: block;\n      width: 40px;\n      line-height: 40px;\n      text-align: center;\n      background-color: #F5F5F5;\n      color: #5CB85C;\n      cursor: pointer;\n      -webkit-transition: background-color .1s ease-in;\n      transition: background-color .1s ease-in; }\n      .tool-workspace .leftMenu span.glyphicon.ratio {\n        line-height: 16px;\n        font-size: 12px;\n        padding: 5px 0; }\n      .tool-workspace .leftMenu span.glyphicon[data-disabled='true'] {\n        color: gray; }\n      .tool-workspace .leftMenu span.glyphicon[data-clicked='true'] {\n        background-color: #5CB85C;\n        color: #fff; }\n  .tool-workspace .hidder {\n    position: absolute;\n    left: 0;\n    top: 70px;\n    width: 70px;\n    bottom: 0;\n    z-index: 1100;\n    background-color: #F5F5F5; }\n  .tool-workspace .blockType {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 400px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    z-index: 1099;\n    border-left: 3px solid #5CB85C;\n    background: #fffeff;\n    border-right: 1px solid #bbb;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-transition: -webkit-transform .3s ease-out;\n    transition: transform .3s ease-out;\n    -webkit-transform: translateX(-120%);\n    transform: translateX(-120%); }\n    .tool-workspace .blockType.shown {\n      -webkit-transform: translateX(0);\n      transform: translateX(0); }\n    .tool-workspace .blockType ul.category-list {\n      background-color: #5CB85C;\n      display: inline-block;\n      height: 100%;\n      padding: 14px 0;\n      vertical-align: top; }\n      .tool-workspace .blockType ul.category-list li.category {\n        text-align: center;\n        color: #fff;\n        cursor: pointer;\n        font-size: 14px;\n        margin-bottom: 2px;\n        max-height: 30px;\n        min-height: 14px;\n        padding: 0 10px 0 3px;\n        position: relative; }\n        .tool-workspace .blockType ul.category-list li.category span {\n          border-radius: 20px;\n          display: inline-block;\n          height: 100%;\n          overflow: hidden;\n          padding: 0 14px;\n          position: relative; }\n          .tool-workspace .blockType ul.category-list li.category span.current {\n            background-color: rgba(0, 0, 0, 0.2);\n            box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n    .tool-workspace .blockType .textTemplateLists {\n      display: inline-block;\n      padding: 10px;\n      width: 310px; }\n      .tool-workspace .blockType .textTemplateLists > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .textTemplateLists > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .textTemplateLists > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType .chooseImage {\n      display: inline-block;\n      width: 500px;\n      height: 380px; }\n      .tool-workspace .blockType .chooseImage .zone {\n        margin: 10px;\n        border: 2px dashed #999;\n        padding: 10px;\n        height: 370px;\n        text-align: center;\n        font-size: 18px; }\n    .tool-workspace .blockType .menuActivityList {\n      display: inline-block;\n      width: 500px;\n      padding: 10px; }\n      .tool-workspace .blockType .menuActivityList > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .menuActivityList > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .menuActivityList > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType [data-show='false'] {\n      display: none; }\n  .tool-workspace .pageConfig {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 300px;\n    width: 300px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    background-color: #fff;\n    z-index: 1100;\n    padding: 10px; }\n    .tool-workspace .pageConfig > div {\n      padding: 5px; }\n  .tool-workspace .screen {\n    position: relative;\n    background-color: #fff;\n    overflow: hidden; }\n    .tool-workspace .screen > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .tool-workspace .screen > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .tool-workspace .screen > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .tool-workspace .screen > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n  .tool-workspace .rightPanel {\n    position: absolute;\n    background: #FFFEFF;\n    z-index: 110001;\n    display: block;\n    top: 65px;\n    right: 26px;\n    border: 1px solid #bbb;\n    border-radius: 7px;\n    -moz-border-radius: 7px;\n    -webkit-border-radius: 7px;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    min-width: 420px; }\n    .tool-workspace .rightPanel .pn-header {\n      position: relative;\n      line-height: 44px;\n      height: 44px;\n      border-bottom: 1px solid #E2E2E2;\n      padding: 0 30px 0 10px;\n      font-size: 18px;\n      font-weight: 600; }\n      .tool-workspace .rightPanel .pn-header .btn-close {\n        position: absolute;\n        right: 10px;\n        top: 0;\n        line-height: 44px;\n        height: 100%;\n        color: #b3b3b3; }\n    .tool-workspace .rightPanel .pn-body {\n      padding: 10px; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster {\n  background-color: #edfdda; }\n  .gridster ul.dragged {\n    background-color: #FFF694; }\n  .gridster ul li .content {\n    width: 100%;\n    height: 100%; }\n  .gridster ul li:hover {\n    border: 2px dashed green; }\n  .gridster ul li.current {\n    border: 2px solid #FB9221; }\n\n.right-block {\n  float: right; }\n\n.example-enter {\n  opacity: 0.01; }\n\n.example-enter.example-enter-active {\n  opacity: 1;\n  transition: opacity 500ms ease-in; }\n\n.example-leave {\n  opacity: 1; }\n\n.example-leave.example-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in; }\n", ""]);
 
 	// exports
 
@@ -23428,7 +23428,7 @@
 	    onclick: function onclick() {
 	        postal.publish({
 	            channel: "workspace",
-	            topic: "empty.clicked"
+	            topic: "reset"
 	        });
 	    },
 
@@ -23569,6 +23569,9 @@
 
 	var GridLayout = __webpack_require__(180);
 	var Gridster = __webpack_require__(186);
+	var postal = __webpack_require__(182);
+	var PageOperation = __webpack_require__(294);
+
 	/**
 	 * ����ҳ�������� ������Theme��footer��header���������á������ڲ��ֵ�Layout
 	 * props:
@@ -23640,6 +23643,18 @@
 	                padding: this.themeConfig.default.padding
 	            }
 	        });
+
+	        var page = this;
+
+	        postal.subscribe({
+	            channel: "block",
+	            topic: "add",
+	            callback: function callback(data, envelope) {
+	                if (page.refs["main-grid"]) {
+	                    page.refs["main-grid"].addBlock(data.type, data.html, data.size_x, data.size_y, data.pos_x, data.pos_y);
+	                }
+	            }
+	        });
 	    },
 
 	    componentDidMount: function componentDidMount() {
@@ -23696,7 +23711,7 @@
 	        var minHeight = this.props.pageSetting.height - parseInt(this.state.themeConfig.padding[0]) - parseInt(this.state.themeConfig.padding[2]) - (this.props.pageSetting.showHeader ? $(".header").height() : 0) - (this.props.pageSetting.showFooter ? $(".footer").height() : 0);
 	        var mainStyle = {
 	            width: width - parseInt(this.state.themeConfig.padding[0]) - parseInt(this.state.themeConfig.padding[2]),
-	            minHeight: minHeight,
+	            height: minHeight,
 	            marginLeft: this.state.themeConfig.padding[3],
 	            marginTop: this.state.themeConfig.padding[0],
 	            marginBottom: this.state.themeConfig.padding[2]
@@ -38924,6 +38939,8 @@
 	var _ = __webpack_require__(181);
 	var postal = __webpack_require__(182);
 
+	var PageOperation = __webpack_require__(294);
+
 	/***
 	 * Properties :
 	 * id : grid id
@@ -38961,38 +38978,91 @@
 	        }
 	    },
 
+	    startDraging: false,
+
 	    componentDidMount: function componentDidMount() {
-	        return;
 	        var gridster = this;
-	        $("#" + this.props.gid + ">ul").gridster(_.extend({
-	            namespace: '#' + this.props.gid,
-	            widget_base_dimensions: [this.props.width / 12 - 2, this.props.height / 10 - 2],
+	        this.initGridster();
+	        this.bindEvent();
+	        postal.subscribe({
+	            channel: "workspace",
+	            topic: "reset",
+	            callback: function callback(data, envelope) {
+	                $("#" + gridster.props.id + " ul").find("li.current").removeClass("current");
+	                $("#" + gridster.props.id + " ul").gridster().data('gridster').enable().enable_resize();
+	            }
+	        });
+	    },
+
+	    /**When mouse over(drag in、dragging) mouse out(drag out) mouseup( dragin effects)*/
+	    bindEvent: function bindEvent() {
+	        var gridster = this;
+	        $('#' + this.props.id).hover(function () {
+	            if (PageOperation.dragging) {
+	                $('#' + gridster.props.id).addClass("dragged");
+	            }
+	        }, function () {}).on("mouseup", function () {
+	            if (PageOperation.dragging && PageOperation.dragged) {
+	                console.log("drag mouse up");
+	            }
+	            $('#' + gridster.props.id).removeClass("dragged");
+	        });
+	    },
+
+	    initGridster: function initGridster() {
+	        var options = {
+	            namespace: '#' + this.props.id,
+	            widget_margins: [1, 1],
+	            widget_base_dimensions: [this.props.style.width / 12 - 2, this.props.style.height / 10 - 2],
 	            draggable: {
-	                start: function start() {
-	                    layout.startDraging = true;
+	                start: function start(event, ui) {
+	                    PageOperation.dragging = true;
+	                    PageOperation.dragged = ui;
+	                    console.log("drag of start");
 	                },
 	                stop: function stop(event, ui) {
+	                    PageOperation.dragging = false;
+	                    PageOperation.dragged = null;
+	                    console.log("drag of stop");
 	                    /**
 	                     * When on double screen and the expand mode is 'extra' or 'portrait',
 	                     * Move the widget from left to right
+	                        if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode===1||layout.props.pageSetting.expandMode===3)
+	                            && ui.pointer.left>=layout.props.pageSetting.width+70) {
+	                            layout.moveBlock(ui.$player, true);
+	                        }
 	                     * */
-	                    if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode === 1 || layout.props.pageSetting.expandMode === 3) && ui.pointer.left >= layout.props.pageSetting.width + 70) {
-	                        layout.moveBlock(ui.$player, true);
-	                    }
 	                }
 	            },
 	            resize: {
 	                enabled: true,
 	                start: function start() {
-	                    layout.startDraging = true;
-	                    console.log("start resizing");
+	                    PageOperation.resizing = true;
 	                },
 	                resize: function resize() {
 	                    console.log("resizing");
 	                },
-	                stop: function stop() {}
+	                stop: function stop() {
+	                    PageOperation.resizing = false;
+	                }
+	            },
+	            min_cols: 12,
+	            min_rows: 10,
+	            serialize_params: function serialize_params($w, wgd) {
+	                var cli = $w.clone();
+	                cli.find(".gs-resize-handle").remove();
+	                cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+	                return {
+	                    content: cli.html(),
+	                    id: $w.data('id'),
+	                    col: wgd.col,
+	                    row: wgd.row,
+	                    size_x: wgd.size_x,
+	                    size_y: wgd.size_y
+	                };
 	            }
-	        }, this.defaultGridOptions));
+	        };
+	        $("#" + this.props.id + ">ul").gridster(options);
 	    },
 
 	    /**When propeties and states change */
@@ -39043,26 +39113,9 @@
 
 	    componentDidUpdate: function componentDidUpdate(prevProps, prevState) {},
 
-	    addActivity: function addActivity(type) {
-	        var gridster = $("#main-grid ul").gridster().data('gridster');
-	        var sizex = 12;
-	        var sizey = 4;
-	        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
-	        gridster.add_widget("<li data-id='" + blockId + "'>" + type + "</li>", sizex, sizey, 1, 100);
-	        this.initBlockEvents();
-
-	        this.data.doubleScreenLeftWidgets.push({
-	            id: blockId,
-	            col: 1,
-	            row: 100,
-	            size_x: sizex,
-	            size_y: sizey
-	        });
-	    },
-
 	    addBlock: function addBlock(type, content, size_x, size_y, pos_x, pos_y) {
 	        var gridster = $("#" + this.props.id + " ul").gridster().data('gridster');
-
+	        console.log(gridster);
 	        if (!size_x) {
 	            size_x = 12;
 	        }
@@ -39092,23 +39145,12 @@
 
 	    initBlockEvents: function initBlockEvents(blockId) {
 	        $("li[data-disabled='" + blockId + "']").off("click").on("click", function (event) {
+	            console.log("clicked");
 	            event.stopPropagation();
+	            if (PageOperation.dragging) return;
+
 	            $(".gridster ul li.current").removeClass("current");
 	            $(this).addClass("current");
-	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
-	        });
-
-	        var gridlayout = this;
-	        $(".gridster li").unbind('click').bind("click", function (event) {
-	            event.stopPropagation();
-	            if (gridlayout.startDraging) {
-	                gridlayout.startDraging = false;
-	                return;
-	            }
-	            $(".gridster ul li.current").removeClass("current");
-	            $(this).addClass("current");
-
-	            //gridlayout.props.editBlock($(this).data("btype"));
 	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
 	        });
 	        tinymce.init({
@@ -39332,7 +39374,7 @@
 	        var menu = this;
 	        postal.subscribe({
 	            channel: "workspace",
-	            topic: "empty.clicked",
+	            topic: "reset",
 	            callback: function callback(data, envelope) {
 	                menu.setState({
 	                    showBlockTypes: false,
@@ -41294,6 +41336,8 @@
 
 	var React = __webpack_require__(18);
 
+	var postal = __webpack_require__(182);
+
 	var AddTextMenu = React.createClass({
 	    displayName: "AddTextMenu",
 
@@ -41315,15 +41359,28 @@
 	        while (!ele.data("template")) {
 	            ele = ele.parent();
 	        }
-	        var sizex = ele.data("width");
-	        var sizey = ele.data("height");
-	        if (sizex) sizex = parseInt(sizex);
-	        if (sizey) sizey = parseInt(sizey);
-
+	        var size_x = ele.data("width");
+	        var size_y = ele.data("height");
+	        if (size_x) size_x = parseInt(size_x);
+	        if (size_y) size_y = parseInt(size_y);
 	        var template = ele.data("template");
-	        this.props.addBlock(template, sizex, sizey);
-	        this.props.parentStateChange({ showBlockTypes: false });
+
+	        postal.publish({
+	            channel: "block",
+	            topic: "add",
+	            data: {
+	                type: "text",
+	                html: template,
+	                size_x: size_x,
+	                size_y: size_y
+	            }
+	        });
+	        postal.publish({
+	            channel: "workspace",
+	            topic: "reset"
+	        });
 	    },
+
 	    render: function render() {
 	        return React.createElement(
 	            "div",
@@ -53540,6 +53597,20 @@
 	    return zh_tw;
 
 	}));
+
+/***/ },
+/* 294 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * Created by ���� on 2016/3/4.
+	 */
+	var PageOperation = {
+	  dragging: false
+	};
+	module.exports = PageOperation;
 
 /***/ }
 /******/ ]);
