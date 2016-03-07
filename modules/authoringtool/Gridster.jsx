@@ -217,7 +217,7 @@ var Gridster = React.createClass({
     },
 
     initBlockEvents: function(blockId) {
-        $("li[data-disabled='" + blockId + "']").off("click").on("click", function(event) {
+        $("li[data-id='" + blockId + "']").off("click").on("click", function(event) {
             console.log("clicked");
             event.stopPropagation();
             if (PageOperation.dragging) return;
