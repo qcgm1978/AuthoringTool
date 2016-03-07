@@ -1,34 +1,58 @@
 var React = require('react');
-
+var postal = require("postal");
 
 var BlockTypeMenu = require("./BlockTypeMenu.jsx");
 var PageConfigMenu = require("./PageConfigMenu.jsx");
 
-
+/**
+ * props:
+ * configurationChangedCallback : transfer page config information to parent
+ * pageSetting : page settings.
+ *
+ *
+ * state:
+ * doubleScreen: display as doublescreen
+ * ratio: current selected ratio
+ * showBlockType: show add btn
+ * showConfigMenu: show config menu
+ *
+ */
 var LeftMenu = React.createClass({
 
     getInitialState: function () {
         return {
+            doubleScreen: this.props.pageSetting.doubleScreen,
+            ratio: "1024x768",
             showBlockTypes: false,
             showConfigMenu: false
         }
     },
 
-    stateChange: function(newstate) {
-        this.setState(newstate);
-    },
-
     componentDidMount: function () {
-
+        var menu = this;
+        postal.subscribe({
+            channel: "workspace",
+            topic: "reset",
+            callback: function(data, envelope) {
+                menu.setState({
+                    showBlockTypes: false,
+                    showConfigMenu: false
+                });
+            }
+        });
     },
 
     resolution: function(value) {
+        this.setState({
+            ratio: value
+        });
+
         if (value === "1920x1080") {
-            this.props.configurationChange({width: 1920, minHeight: 1080});
+            this.props.configurationChangedCallback({width: 1920, height: 1080});
         } else if (value === "1280x800") {
-            this.props.configurationChange({width: 1280, minHeight: 800});
+            this.props.configurationChangedCallback({width: 1280, height: 800});
         } else if (value === "1024x768") {
-            this.props.configurationChange({width: 1024, minHeight: 768});
+            this.props.configurationChangedCallback({width: 1024, height: 768});
         }
     },
 
@@ -36,7 +60,7 @@ var LeftMenu = React.createClass({
 
     },
 
-    clearState: function() {
+    close: function() {
         this.setState({
             showBlockTypes: false,
             showConfigMenu: false
@@ -44,13 +68,12 @@ var LeftMenu = React.createClass({
     },
 
     showBlockTypes: function(event) {
-        if (!this.props.doubleScreen) {
+        if (!this.state.doubleScreen) {
             this.setState({
                 showBlockTypes: !this.state.showBlockTypes,
                 showConfigMenu: false
             }) ;
         }
-        event.stopPropagation();
     },
 
     showConfigMenu: function(event) {
@@ -58,56 +81,48 @@ var LeftMenu = React.createClass({
             showConfigMenu: !this.state.showConfigMenu,
             showBlockTypes: false
         }) ;
-        event.stopPropagation();
-    },
 
-    editContent: function() {
-        this.clearState();
-        this.props.disableLayout();
     },
 
     toggleDoubleScreen: function() {
-        this.props.configurationChange({
-            doubleScreen: !this.props.doubleScreen
+        var screen = !this.state.doubleScreen;
+        this.setState({
+            doubleScreen: screen
         });
+
+        this.props.configurationChangedCallback({
+            doubleScreen: screen
+        });
+    },
+
+    stopPropagation: function(event) {
+        event.stopPropagation();
     },
 
 /*<!-- <span className="glyphicon glyphicon-edit" data-disabled={this.props.doubleScreen} onClick={this.editContent}></span>-->*/
 
     render: function () {
         return (
-            <div>
+            <div onClick={this.stopPropagation}>
                 <div className="leftMenu">
-                    {this.props.layoutable?
-                        <div>
-                            <span className="glyphicon glyphicon-plus" data-disabled={this.props.doubleScreen} data-clicked={this.state.showBlockTypes} id="btn-add-block" onClick={this.showBlockTypes}></span>
-                            <span className="glyphicon glyphicon-cog" data-clicked={this.state.showConfigMenu} onClick={this.showConfigMenu}></span>
-                        </div>
-                        :
-                        <div>
-                            <span className="glyphicon glyphicon-arrow-left" data-clicked="true" onClick={this.props.enableLayout}></span>
-                        </div>
-                    }
+                    <span className="glyphicon glyphicon-plus" data-clicked={this.state.showBlockTypes} data-disabled={this.state.doubleScreen} id="btn-add-block" onClick={this.showBlockTypes}></span>
+                    <span className="glyphicon glyphicon-cog" data-clicked={this.state.showConfigMenu} onClick={this.showConfigMenu}></span>
 
                     <div className="screenRatios"
                         style={{
-                            marginTop: "160px",
-                            display: this.props.layoutable?"inherit": "none"
+                            marginTop: "160px"
                         }}>
-                        <span className="glyphicon glyphicon-blackboard" data-clicked={this.props.doubleScreen} onClick={this.toggleDoubleScreen}></span>
-                        <span className="glyphicon ratio" onClick={this.resolution.bind(this, "1024x768")} data-clicked={this.props.width===1024}>1024<br/>768</span>
-                        <span className="glyphicon ratio" onClick={this.resolution.bind(this, "1280x800")} data-clicked={this.props.width===1280}>1280<br/>800</span>
-                        <span className="glyphicon ratio" onClick={this.resolution.bind(this, "1920x1080")} data-clicked={this.props.width===1920}>1920<br/>1080</span>
+                        <span className="glyphicon glyphicon-blackboard" data-clicked={this.state.doubleScreen} onClick={this.toggleDoubleScreen}></span>
+                        <span className="glyphicon ratio" onClick={this.resolution.bind(this, "1024x768")} data-clicked={this.state.ratio==="1024x768"}>1024<br/>768</span>
+                        <span className="glyphicon ratio" onClick={this.resolution.bind(this, "1280x800")} data-clicked={this.state.ratio==="1280x800"}>1280<br/>800</span>
+                        <span className="glyphicon ratio" onClick={this.resolution.bind(this, "1920x1080")} data-clicked={this.state.ratio==="1920x1080"}>1920<br/>1080</span>
                     </div>
                 </div>
                 <div className="hidder">
                 </div>
-                <BlockTypeMenu addBlock={this.props.addBlock} show={this.state.showBlockTypes} adddActivity={this.props.adddActivity} parentStateChange={this.stateChange}/>
-
-                <PageConfigMenu configurationChange={this.props.configurationChange}
-                                showConfigMenu={this.showConfigMenu}
-                                showHeader={this.props.showHeader} showFooter={this.props.showFooter}
-                                show={this.state.showConfigMenu} closeSetting={this.props.closeSetting}/>
+                <BlockTypeMenu show={this.state.showBlockTypes}/>
+                <PageConfigMenu show={this.state.showConfigMenu} pageSetting={this.props.pageSetting}
+                                configurationChangedCallback={this.props.configurationChangedCallback}/>
             </div>
         );
     }

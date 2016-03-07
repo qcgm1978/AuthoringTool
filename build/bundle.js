@@ -2651,7 +2651,7 @@
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
 	* http://gridster.net/
 	* Copyright (c) 2014 ducksboard; Licensed MIT */;(function(root,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_0__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__));}else {root.GridsterCoords=factory(root.$||root.jQuery);}})(undefined,function($){ /**
 	    * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
@@ -3576,7 +3576,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.tool-workspace {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .tool-workspace .leftMenu {\n    position: absolute;\n    left: 30px;\n    top: 70px;\n    z-index: 1101; }\n    .tool-workspace .leftMenu span.glyphicon {\n      font-size: 18px;\n      display: block;\n      width: 40px;\n      line-height: 40px;\n      text-align: center;\n      background-color: #F5F5F5;\n      color: #5CB85C;\n      cursor: pointer;\n      -webkit-transition: background-color .4s ease-in;\n      transition: background-color .4s ease-in; }\n      .tool-workspace .leftMenu span.glyphicon.ratio {\n        line-height: 16px;\n        font-size: 12px;\n        padding: 5px 0; }\n      .tool-workspace .leftMenu span.glyphicon[data-disabled='true'] {\n        color: gray; }\n      .tool-workspace .leftMenu span.glyphicon[data-clicked='true'] {\n        background-color: #5CB85C;\n        color: #fff; }\n  .tool-workspace .hidder {\n    position: absolute;\n    left: 0;\n    top: 70px;\n    width: 70px;\n    bottom: 0;\n    z-index: 1100;\n    background-color: #F5F5F5; }\n  .tool-workspace .blockType {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 400px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    z-index: 1099;\n    border-left: 3px solid #5CB85C;\n    background: #fffeff;\n    border-right: 1px solid #bbb;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-transition: -webkit-transform .3s ease-out;\n    transition: transform .3s ease-out;\n    -webkit-transform: translateX(-120%);\n    transform: translateX(-120%); }\n    .tool-workspace .blockType.shown {\n      -webkit-transform: translateX(0);\n      transform: translateX(0); }\n    .tool-workspace .blockType ul.category-list {\n      background-color: #5CB85C;\n      display: inline-block;\n      height: 100%;\n      padding: 14px 0;\n      vertical-align: top; }\n      .tool-workspace .blockType ul.category-list li.category {\n        text-align: center;\n        color: #fff;\n        cursor: pointer;\n        font-size: 14px;\n        margin-bottom: 2px;\n        max-height: 30px;\n        min-height: 14px;\n        padding: 0 10px 0 3px;\n        position: relative; }\n        .tool-workspace .blockType ul.category-list li.category span {\n          border-radius: 20px;\n          display: inline-block;\n          height: 100%;\n          overflow: hidden;\n          padding: 0 14px;\n          position: relative; }\n          .tool-workspace .blockType ul.category-list li.category span.current {\n            background-color: rgba(0, 0, 0, 0.2);\n            box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n    .tool-workspace .blockType .textTemplateLists {\n      display: inline-block;\n      padding: 10px;\n      width: 310px; }\n      .tool-workspace .blockType .textTemplateLists > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .textTemplateLists > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .textTemplateLists > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType .chooseImage {\n      display: inline-block;\n      width: 500px;\n      height: 380px; }\n      .tool-workspace .blockType .chooseImage .zone {\n        margin: 10px;\n        border: 2px dashed #999;\n        padding: 10px;\n        height: 370px;\n        text-align: center;\n        font-size: 18px; }\n    .tool-workspace .blockType .menuActivityList {\n      display: inline-block;\n      width: 500px;\n      padding: 10px; }\n      .tool-workspace .blockType .menuActivityList > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .menuActivityList > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .menuActivityList > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType [data-show='false'] {\n      display: none; }\n  .tool-workspace .pageConfig {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 300px;\n    width: 300px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    background-color: #fff;\n    z-index: 1100;\n    padding: 10px; }\n    .tool-workspace .pageConfig > div {\n      padding: 5px; }\n  .tool-workspace .display {\n    position: relative;\n    background-color: #fff; }\n    .tool-workspace .display > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .tool-workspace .display > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .tool-workspace .display > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .tool-workspace .display > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n  .tool-workspace .rightPanel {\n    position: absolute;\n    background: #FFFEFF;\n    z-index: 110001;\n    display: block;\n    top: 65px;\n    right: 26px;\n    border: 1px solid #bbb;\n    border-radius: 7px;\n    -moz-border-radius: 7px;\n    -webkit-border-radius: 7px;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    min-width: 420px; }\n    .tool-workspace .rightPanel .pn-header {\n      position: relative;\n      line-height: 44px;\n      height: 44px;\n      border-bottom: 1px solid #E2E2E2;\n      padding: 0 30px 0 10px;\n      font-size: 18px;\n      font-weight: 600; }\n      .tool-workspace .rightPanel .pn-header .btn-close {\n        position: absolute;\n        right: 10px;\n        top: 0;\n        line-height: 44px;\n        height: 100%;\n        color: #b3b3b3; }\n    .tool-workspace .rightPanel .pn-body {\n      padding: 10px; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster li .content {\n  width: 100%;\n  height: 100%; }\n\n.gridster li:hover {\n  border: 1px dashed green; }\n\n.gridster li.current {\n  border: 1px solid #FB9221; }\n\n.right-block {\n  float: right; }\n\n.example-enter {\n  opacity: 0.01; }\n\n.example-enter.example-enter-active {\n  opacity: 1;\n  transition: opacity 500ms ease-in; }\n\n.example-leave {\n  opacity: 1; }\n\n.example-leave.example-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.tool-workspace {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .tool-workspace .leftMenu {\n    position: absolute;\n    left: 30px;\n    top: 70px;\n    z-index: 1101; }\n    .tool-workspace .leftMenu span.glyphicon {\n      font-size: 18px;\n      display: block;\n      width: 40px;\n      line-height: 40px;\n      text-align: center;\n      background-color: #F5F5F5;\n      color: #5CB85C;\n      cursor: pointer;\n      -webkit-transition: background-color .1s ease-in;\n      transition: background-color .1s ease-in; }\n      .tool-workspace .leftMenu span.glyphicon.ratio {\n        line-height: 16px;\n        font-size: 12px;\n        padding: 5px 0; }\n      .tool-workspace .leftMenu span.glyphicon[data-disabled='true'] {\n        color: gray; }\n      .tool-workspace .leftMenu span.glyphicon[data-clicked='true'] {\n        background-color: #5CB85C;\n        color: #fff; }\n  .tool-workspace .hidder {\n    position: absolute;\n    left: 0;\n    top: 70px;\n    width: 70px;\n    bottom: 0;\n    z-index: 1100;\n    background-color: #F5F5F5; }\n  .tool-workspace .blockType {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 400px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    z-index: 1099;\n    border-left: 3px solid #5CB85C;\n    background: #fffeff;\n    border-right: 1px solid #bbb;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-transition: -webkit-transform .3s ease-out;\n    transition: transform .3s ease-out;\n    -webkit-transform: translateX(-120%);\n    transform: translateX(-120%); }\n    .tool-workspace .blockType.shown {\n      -webkit-transform: translateX(0);\n      transform: translateX(0); }\n    .tool-workspace .blockType ul.category-list {\n      background-color: #5CB85C;\n      display: inline-block;\n      height: 100%;\n      padding: 14px 0;\n      vertical-align: top; }\n      .tool-workspace .blockType ul.category-list li.category {\n        text-align: center;\n        color: #fff;\n        cursor: pointer;\n        font-size: 14px;\n        margin-bottom: 2px;\n        max-height: 30px;\n        min-height: 14px;\n        padding: 0 10px 0 3px;\n        position: relative; }\n        .tool-workspace .blockType ul.category-list li.category span {\n          border-radius: 20px;\n          display: inline-block;\n          height: 100%;\n          overflow: hidden;\n          padding: 0 14px;\n          position: relative; }\n          .tool-workspace .blockType ul.category-list li.category span.current {\n            background-color: rgba(0, 0, 0, 0.2);\n            box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n    .tool-workspace .blockType .textTemplateLists {\n      display: inline-block;\n      padding: 10px;\n      width: 310px; }\n      .tool-workspace .blockType .textTemplateLists > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .textTemplateLists > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .textTemplateLists > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType .chooseImage {\n      display: inline-block;\n      width: 500px;\n      height: 380px; }\n      .tool-workspace .blockType .chooseImage .zone {\n        margin: 10px;\n        border: 2px dashed #999;\n        padding: 10px;\n        height: 370px;\n        text-align: center;\n        font-size: 18px; }\n    .tool-workspace .blockType .menuActivityList {\n      display: inline-block;\n      width: 500px;\n      padding: 10px; }\n      .tool-workspace .blockType .menuActivityList > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .menuActivityList > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .menuActivityList > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType [data-show='false'] {\n      display: none; }\n  .tool-workspace .pageConfig {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 300px;\n    width: 300px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    background-color: #fff;\n    z-index: 1100;\n    padding: 10px; }\n    .tool-workspace .pageConfig > div {\n      padding: 5px; }\n  .tool-workspace .screen {\n    position: relative;\n    background-color: #fff;\n    overflow: hidden; }\n    .tool-workspace .screen > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .tool-workspace .screen > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .tool-workspace .screen > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .tool-workspace .screen > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n  .tool-workspace .rightPanel {\n    position: absolute;\n    background: #FFFEFF;\n    z-index: 110001;\n    display: block;\n    top: 65px;\n    right: 26px;\n    border: 1px solid #bbb;\n    border-radius: 7px;\n    -moz-border-radius: 7px;\n    -webkit-border-radius: 7px;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    min-width: 420px; }\n    .tool-workspace .rightPanel .pn-header {\n      position: relative;\n      line-height: 44px;\n      height: 44px;\n      border-bottom: 1px solid #E2E2E2;\n      padding: 0 30px 0 10px;\n      font-size: 18px;\n      font-weight: 600; }\n      .tool-workspace .rightPanel .pn-header .btn-close {\n        position: absolute;\n        right: 10px;\n        top: 0;\n        line-height: 44px;\n        height: 100%;\n        color: #b3b3b3; }\n    .tool-workspace .rightPanel .pn-body {\n      padding: 10px; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster {\n  background-color: #edfdda; }\n  .gridster ul.dragged {\n    background-color: #FFF694; }\n  .gridster ul li .content {\n    width: 100%;\n    height: 100%; }\n  .gridster ul li:hover {\n    border: 2px dashed green; }\n  .gridster ul li.current {\n    border: 2px solid #FB9221; }\n\n.right-block {\n  float: right; }\n\n.example-enter {\n  opacity: 0.01; }\n\n.example-enter.example-enter-active {\n  opacity: 1;\n  transition: opacity 500ms ease-in; }\n\n.example-leave {\n  opacity: 1; }\n\n.example-leave.example-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in; }\n", ""]);
 
 	// exports
 
@@ -3596,8 +3596,8 @@
 
 	var NavBar = __webpack_require__(176);
 	var PageToolWorkspace = __webpack_require__(177);
-	var FileNameDialog = __webpack_require__(200);
-	var OpenPageDialog = __webpack_require__(205);
+	var FileNameDialog = __webpack_require__(201);
+	var OpenPageDialog = __webpack_require__(206);
 
 	var AuthoringTool = React.createClass({
 	    displayName: 'AuthoringTool',
@@ -23388,8 +23388,8 @@
 
 	var AxisLines = __webpack_require__(178);
 	var ThemedPage = __webpack_require__(179);
-	var RightPanel = __webpack_require__(186);
-	var LeftMenu = __webpack_require__(189);
+	var RightPanel = __webpack_require__(187);
+	var LeftMenu = __webpack_require__(190);
 
 	var postal = __webpack_require__(182);
 
@@ -23428,12 +23428,8 @@
 	    onclick: function onclick() {
 	        postal.publish({
 	            channel: "workspace",
-	            topic: "empty.click"
+	            topic: "reset"
 	        });
-	        /*
-	        this.refs.page.returnGridster();
-	        this.refs.leftmenu.clearState();
-	        */
 	    },
 
 	    editBlock: function editBlock(blockType) {
@@ -23441,6 +23437,12 @@
 	        this.setState({
 	            showPanel: true,
 	            panel: blockType
+	        });
+	    },
+
+	    pageSettingChanged: function pageSettingChanged(settings) {
+	        this.setState({
+	            pageSetting: _.extend(this.state.pageSetting, settings)
 	        });
 	    },
 
@@ -23469,20 +23471,11 @@
 	        return React.createElement(
 	            "div",
 	            { className: "tool-workspace", onClick: this.onclick },
-	            React.createElement(LeftMenu, { ref: "leftmenu",
-	                configurationChange: this.props.configurationChange,
-	                doubleScreen: this.state.pageSetting.doubleScreen,
-	                addBlock: this.addBlock,
-	                adddActivity: this.adddActivity,
-	                layoutable: "true", disableLayout: this.disableLayout,
-	                enableLayout: this.enableLayout, closeSetting: this.closeSetting,
-	                showHeader: this.state.pageSetting.doubleScreen.showHeader, showFooter: this.state.pageSetting.doubleScreen.showFooter,
-	                width: this.state.pageSetting.width }),
+	            React.createElement(LeftMenu, { ref: "leftmenu", configurationChangedCallback: this.pageSettingChanged, pageSetting: this.state.pageSetting }),
 	            React.createElement(ThemedPage, { ref: "page", data: this.props.data, themeName: this.state.themeName, pageSetting: this.state.pageSetting }),
 	            React.createElement(RightPanel, { display: this.state.showPanel, panel: this.state.panel }),
 	            React.createElement(AxisLines, { width: this.state.pageSetting.width, height: this.state.pageSetting.height,
-	                doubleScreen: this.state.pageSetting.doubleScreen, expandMode: this.state.pageSetting.expandMode
-	            })
+	                doubleScreen: this.state.pageSetting.doubleScreen, expandMode: this.state.pageSetting.expandMode })
 	        );
 	    }
 	});
@@ -23575,9 +23568,18 @@
 	var React = __webpack_require__(18);
 
 	var GridLayout = __webpack_require__(180);
+	var Gridster = __webpack_require__(186);
+	var postal = __webpack_require__(182);
+	var PageOperation = __webpack_require__(294);
 
 	/**
 	 * ����ҳ�������� ������Theme��footer��header���������á������ڲ��ֵ�Layout
+	 * props:
+	 * data : project info
+	 * themeName: theme for display
+	 * pageSetting : the screen and layout settings
+	 * state:
+	 * themeConfig : ajax loaded by themeName
 	 * @type {*|Function}
 	 */
 	var ThemedPage = React.createClass({
@@ -23603,8 +23605,9 @@
 	        return this.themeConfig;
 	    },
 
+	    //create a new ajax request
 	    loadTheme: function loadTheme() {
-	        var themeConfig = this.getThemeConfig();
+	        var themeConfig = this.getThemeConfig(); //synchronize loading
 	        $.ajax({
 	            type: "GET",
 	            url: "templates/" + this.props.themeName + "/" + themeConfig.default.html,
@@ -23623,14 +23626,12 @@
 	     * @param html
 	     */
 	    handleTemplateLoaded: function handleTemplateLoaded(html) {
-	        console.log("template loaded" + html);
 	        $(".styles").empty();
 	        $(".header").empty().append($(html).filter("header"));
 	        $(".footer").empty().append($(html).filter("footer"));
 	        $(html).filter("link").each(function () {
 	            $('<link>').attr('rel', 'stylesheet').attr('type', 'text/css').attr('href', "templates/default/" + $(this).attr("href")).appendTo('.styles');
 	        });
-	        //this.themeReady();
 	        setTimeout(this.themeReady, 300);
 	    },
 
@@ -23642,13 +23643,18 @@
 	                padding: this.themeConfig.default.padding
 	            }
 	        });
-	        /*
-	        this.setState({
-	            headerHeight: $(".header").height(),
-	            footerHeight: $(".footer").height(),
-	            padding: this.themeConfig.default.padding
+
+	        var page = this;
+
+	        postal.subscribe({
+	            channel: "block",
+	            topic: "add",
+	            callback: function callback(data, envelope) {
+	                if (page.refs["main-grid"]) {
+	                    page.refs["main-grid"].addBlock(data.type, data.html, data.size_x, data.size_y, data.pos_x, data.pos_y);
+	                }
+	            }
 	        });
-	        */
 	    },
 
 	    componentDidMount: function componentDidMount() {
@@ -23656,105 +23662,123 @@
 	    },
 
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        if (nextProps.data.theme != this.props.data.theme) {
+	        if (nextProps.themeName != this.props.themeName) {
 	            this.loadTheme();
 	        }
 	    },
 
-	    onclick: function onclick() {
-	        this.refs["layout"].returnGridster();
-	        this.setState({
-	            showPanel: false
-	        });
-	        this.refs["leftmenu"].clearState();
+	    getPortraitCutLayout: function getPortraitCutLayout() {
+	        $(".footer").css("position", "absolute").css("bottom", 0).css("right", 0).css("width", this.props.pageSetting.width);
+	        $(".header").css("position", "absolute").css("top", 0).css("left", 0).css("width", this.props.pageSetting.width);
+
+	        var contentWidth = this.props.pageSetting.width - parseInt(this.state.themeConfig.padding[1]) - parseInt(this.state.themeConfig.padding[3]);
+	        var mainHeight = this.props.pageSetting.height - parseInt(this.state.themeConfig.padding[0]) - parseInt(this.state.themeConfig.padding[2]) - (this.props.pageSetting.showHeader ? $(".header").height() : 0);
+	        var extraHeight = this.props.pageSetting.height - parseInt(this.state.themeConfig.padding[0]) - parseInt(this.state.themeConfig.padding[2]);
+
+	        if (this.props.pageSetting.showFooter) {
+	            extraHeight -= $(".footer").height();
+	        }
+	        var mainStyle = {
+	            position: "absolute",
+	            left: this.state.themeConfig.padding[3],
+	            top: $(".header").height() + parseInt(this.state.themeConfig.padding[0]),
+	            width: contentWidth,
+	            height: mainHeight
+	        };
+
+	        console.log("main style", mainStyle);
+	        var mainGrid = React.createElement(Gridster, { ref: "main-grid", id: "main-grid", style: mainStyle });
+	        var extraStyle = {
+	            position: "absolute",
+	            right: this.state.themeConfig.padding[1],
+	            bottom: $(".footer").height() + parseInt(this.state.themeConfig.padding[2]),
+	            width: contentWidth,
+	            height: extraHeight
+	        };
+	        console.log("extra style", extraStyle);
+	        var extraGrid = React.createElement(Gridster, { ref: "extra-grid", id: "extra-grid", style: extraStyle });
+	        return React.createElement(
+	            "div",
+	            null,
+	            mainGrid,
+	            extraGrid
+	        );
 	    },
 
-	    editBlock: function editBlock(blockType) {
-	        console.log("edit type " + blockType);
-	        this.setState({
-	            showPanel: true,
-	            panel: blockType
-	        });
+	    getSingleLayout: function getSingleLayout(width) {
+	        $(".header").css("position", "inherit").css("width", width);
+	        $(".footer").css("position", "inherit").css("width", width);
+	        var minHeight = this.props.pageSetting.height - parseInt(this.state.themeConfig.padding[0]) - parseInt(this.state.themeConfig.padding[2]) - (this.props.pageSetting.showHeader ? $(".header").height() : 0) - (this.props.pageSetting.showFooter ? $(".footer").height() : 0);
+	        var mainStyle = {
+	            width: width - parseInt(this.state.themeConfig.padding[0]) - parseInt(this.state.themeConfig.padding[2]),
+	            height: minHeight,
+	            marginLeft: this.state.themeConfig.padding[3],
+	            marginTop: this.state.themeConfig.padding[0],
+	            marginBottom: this.state.themeConfig.padding[2]
+	        };
+	        return React.createElement(Gridster, { ref: "main-grid", id: "main-grid", style: mainStyle });
 	    },
 
-	    addBlock: function addBlock(template, sizex, sizey) {
-	        this.refs["layout"].addBlock(template, sizex, sizey);
+	    getExtraLayout: function getExtraLayout() {
+	        var extraStyle = {
+	            position: "absolute",
+	            right: 0,
+	            bottom: 0,
+	            top: 0,
+	            width: this.props.pageSetting.width
+	        };
+
+	        var main = this.getSingleLayout(this.props.pageSetting.width);
+	        return React.createElement(
+	            "div",
+	            null,
+	            main,
+	            React.createElement(Gridster, { ref: "extra-grid", id: "extra-grid", style: extraStyle })
+	        );
 	    },
 
-	    adddActivity: function adddActivity(type) {
-	        this.refs["layout"].adddActivity(type);
-	    },
-
-	    disableLayout: function disableLayout() {
-	        this.refs['layout'].disableLayout();
-	    },
-	    enableLayout: function enableLayout() {
-	        this.refs['layout'].enableLayout();
-	    },
-	    closeSetting: function closeSetting() {
-	        this.refs['layout'].closeSetting();
+	    getExpandLayout: function getExpandLayout() {
+	        return this.getSingleLayout(this.props.pageSetting.width * 2);
 	    },
 
 	    render: function render() {
-	        var swidth = this.props.pageSetting.width;
-	        if (this.props.pageSetting.doubleScreen) {
-	            swidth = swidth * 2;
-	        }
-
-	        var headerWidth = "100%";
-	        if (this.props.pageSetting.doubleScreen) {
-	            if (this.props.pageSetting.expandMode === 3 || this.props.pageSetting.expandMode === 1) {
-	                headerWidth = "50%";
-	            }
-	        }
-
-	        var contentHeight = this.props.pageSetting.height;
-	        var contentWidth = this.props.pageSetting.width;
-
 	        var layout = React.createElement("div", { ref: "layout" });
 	        if (this.state.themeConfig) {
-	            console.log("render after theme load ", this.state.themeConfig);
-
-	            if (this.props.pageSetting.showHeader) {
-	                contentHeight -= this.state.themeConfig.headerHeight;
+	            /*When theme config loaded�� reset the layout frame*/
+	            console.log("render after theme load ", this.state.themeConfig, this.props.pageSetting);
+	            if (this.props.pageSetting.doubleScreen) {
+	                if (this.props.pageSetting.expandMode === 1) {
+	                    //portrait cut model
+	                    layout = this.getPortraitCutLayout();
+	                }
+	                if (this.props.pageSetting.expandMode === 2) {
+	                    //expand mode
+	                    layout = this.getExpandLayout();
+	                }
+	                if (this.props.pageSetting.expandMode === 3) {
+	                    //extra mode
+	                    layout = this.getExtraLayout();
+	                }
+	            } else {
+	                layout = this.getSingleLayout(this.props.pageSetting.width);
 	            }
-	            if (this.props.showFooter) {
-	                contentHeight -= this.state.themeConfig.footerHeight;
-	            }
-	            if (contentHeight === this.props.pageSetting.height && this.themeConfig) {
-	                contentHeight -= this.themeConfig.default.padding[0];
-	                contentHeight -= this.themeConfig.default.padding[2];
-	            }
-	            layout = React.createElement(GridLayout, {
-	                pageSetting: this.props.pageSetting,
-	                themeConfig: this.state.themeConfig,
-	                configurationChange: this.props.configurationChange,
-	                data: this.props.data,
-	                editBlock: this.editBlock,
-	                ref: "layout" });
 	        }
-	        /** WebkitTransform:'scale(' + this.props.zoom + ')'*/
 
 	        return React.createElement(
 	            "div",
-	            { className: "screen", onClick: this.onclick },
-	            React.createElement(
-	                "div",
-	                { className: "display", style: {
-	                        width: swidth,
-	                        minHeight: this.props.pageSetting.height
-	                    } },
-	                React.createElement("div", { className: "styles" }),
-	                React.createElement("div", { className: "header", style: {
-	                        width: headerWidth,
-	                        display: this.props.pageSetting.showHeader ? "inherit" : "none"
-	                    } }),
-	                layout,
-	                React.createElement("div", { className: "footer", style: {
-	                        width: headerWidth,
-	                        display: this.props.pageSetting.showFooter ? "inherit" : "none"
-	                    } })
-	            )
+	            { className: "screen", style: {
+	                    position: "relative",
+	                    width: this.props.pageSetting.doubleScreen ? this.props.pageSetting.width * 2 : this.props.pageSetting.width,
+	                    height: this.props.pageSetting.height
+	                } },
+	            React.createElement("div", { className: "styles" }),
+	            React.createElement("div", { className: "header", style: {
+	                    display: this.props.pageSetting.showHeader ? "inherit" : "none"
+	                } }),
+	            layout,
+	            React.createElement("div", { className: "footer", style: {
+	                    display: this.props.pageSetting.showFooter ? "inherit" : "none"
+	                } })
 	        );
 	    }
 	});
@@ -23832,7 +23856,10 @@
 	            this.data = this.props.data;
 	        }
 	        this.initGridster();
+	        this.subscribeChanel();
+	    },
 
+	    subscribeChanel: function subscribeChanel() {
 	        var layout = this;
 	        postal.subscribe({
 	            channel: "activities",
@@ -23847,12 +23874,11 @@
 	            }
 	        });
 
-	        //gridster->enable
 	        postal.subscribe({
-	            channel: "gridster",
-	            topic: "enable",
+	            channel: "workspace",
+	            topic: "empty.clicked",
 	            callback: function callback(data, envelope) {
-	                layout.returnGridster();
+	                layout.enableGridster();
 	            }
 	        });
 	    },
@@ -23933,7 +23959,7 @@
 
 	        /**Initialize the grid first*/
 	        $(".footer").css("position", "initial");
-	        if (this.props.doubleScreen) {
+	        if (this.props.double) {
 	            if (this.props.expandMode === 1) {
 	                //portrait cut model
 	                layout.initPortraitCutMode();
@@ -23953,9 +23979,10 @@
 	        /**Add blocks to gridster*/
 	        this.loadGridData();
 	        this.initBlockEvents();
-
 	        /**If it is in edit mode , disable gridster resize and movements, init the mce editor*/
-	        if (!this.state.layoutable) {
+
+	        /*
+	        if(!this.state.layoutable) {
 	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
 	            tinymce.init({
 	                selector: '.gridster li .rtf',
@@ -23964,30 +23991,33 @@
 	                toolbar: 'undo redo| bold italic underline strikethrough'
 	            });
 	        }
+	        */
 	    },
-
 	    startDraging: false,
 
 	    initSingleMode: function initSingleMode() {
 	        var screenCount = arguments.length <= 0 || arguments[0] === undefined ? 1 : arguments[0];
 
 	        var layout = this;
+	        /*
+	        style={{
+	            width: (this.props.double&&this.props.expandMode===2)? this.props.width*2: this.props.width
+	        }}
+	        */
+	        console.log("init single mode", this.props);
+	        $("#main-grid").css("width", this.props.width);
+	        $("#main-grid").css("min-height", this.props.height);
 
-	        var contentHeight = this.props.pageSetting.height;
-	        if (this.props.pageSetting.showHeader) {
-	            contentHeight -= this.props.themeConfig.headerHeight;
+	        var gridsterWidth = this.props.width;
+	        if (this.props.padding) {
+	            $("#main-grid").css("padding", this.props.padding.join(" "));
+	            $("#main-grid>ul").css("width", "100%");
+	            $("#main-grid>ul").css("height", "100%");
 	        }
-	        if (this.props.pageSetting.showFooter) {
-	            contentHeight -= this.props.themeConfig.footerHeight;
-	        }
-	        var contentWidth = this.props.pageSetting.width * screenCount - this.props.themeConfig.padding[1] - this.props.themeConfig.padding[3];
-
-	        $("#main-grid>ul").css("min-height", contentHeight);
-	        $("#main-grid>ul").css("margin-left", this.props.themeConfig.padding[3]);
 
 	        $("#main-grid>ul").gridster(_.extend({
 	            namespace: '#main-grid',
-	            widget_base_dimensions: [contentWidth / 12 - 2, contentHeight / 10 - 2],
+	            widget_base_dimensions: [this.props.width / 12 - 2, this.props.height / 10 - 2],
 	            draggable: {
 	                start: function start() {
 	                    layout.startDraging = true;
@@ -24190,12 +24220,18 @@
 	        src.remove_widget(li);
 	    },
 
-	    returnGridster: function returnGridster() {
+	    enableGridster: function enableGridster() {
 	        $(".gridster ul").gridster().data('gridster').enable().enable_resize();
 	        $(".gridster ul li.current").removeClass("current");
 	    },
 
-	    initBlockEvents: function initBlockEvents() {
+	    initBlockEvents: function initBlockEvents(block) {
+	        $(block).off("click").on("click", function (event) {
+	            event.stopPropagation();
+	            $(".gridster ul li.current").removeClass("current");
+	            $(this).addClass("current");
+	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
+	        });
 	        var gridlayout = this;
 	        $(".gridster li").unbind('click').bind("click", function (event) {
 	            event.stopPropagation();
@@ -24209,7 +24245,6 @@
 	            //gridlayout.props.editBlock($(this).data("btype"));
 	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
 	        });
-
 	        tinymce.init({
 	            selector: '.gridster li .rtf',
 	            inline: true,
@@ -24218,17 +24253,13 @@
 	        });
 	    },
 
-	    closeEditing: function closeEditing() {},
-
 	    render: function render() {
 	        return React.createElement(
 	            "div",
 	            { className: this.state.layoutable ? "layoutable" : "editable" },
 	            React.createElement(
 	                "div",
-	                { className: "gridster", id: "main-grid", style: {
-	                        width: this.props.doubleScreen && this.props.expandMode === 2 ? this.props.width * 2 : this.props.width
-	                    } },
+	                { className: "gridster", id: "main-grid" },
 	                React.createElement("ul", null)
 	            ),
 	            React.createElement(
@@ -38905,8 +38936,252 @@
 
 	var React = __webpack_require__(18);
 
-	var EditTextPanel = __webpack_require__(187);
-	var SingleChoicePanel = __webpack_require__(188);
+	var _ = __webpack_require__(181);
+	var postal = __webpack_require__(182);
+
+	var PageOperation = __webpack_require__(294);
+
+	/***
+	 * Properties :
+	 * id : grid id
+	 * styles: about position and sizing informations
+	 */
+	var Gridster = React.createClass({
+	    displayName: "Gridster",
+
+
+	    BLOCK_ID_PREFIX: "block_",
+
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+
+	    /**
+	     * Default gridster options
+	     * */
+	    defaultGridOptions: {
+	        widget_margins: [1, 1],
+	        min_cols: 12,
+	        min_rows: 10,
+	        serialize_params: function serialize_params($w, wgd) {
+	            var cli = $w.clone();
+	            cli.find(".gs-resize-handle").remove();
+	            cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+	            return {
+	                content: cli.html(),
+	                id: $w.data('id'),
+	                col: wgd.col,
+	                row: wgd.row,
+	                size_x: wgd.size_x,
+	                size_y: wgd.size_y
+	            };
+	        }
+	    },
+
+	    startDraging: false,
+
+	    componentDidMount: function componentDidMount() {
+	        var gridster = this;
+	        this.initGridster();
+	        this.bindEvent();
+	        postal.subscribe({
+	            channel: "workspace",
+	            topic: "reset",
+	            callback: function callback(data, envelope) {
+	                $("#" + gridster.props.id + " ul").find("li.current").removeClass("current");
+	                $("#" + gridster.props.id + " ul").gridster().data('gridster').enable().enable_resize();
+	            }
+	        });
+	    },
+
+	    /**When mouse over(drag in、dragging) mouse out(drag out) mouseup( dragin effects)*/
+	    bindEvent: function bindEvent() {
+	        var gridster = this;
+	        $('#' + this.props.id).hover(function () {
+	            if (PageOperation.dragging) {
+	                $('#' + gridster.props.id).addClass("dragged");
+	            }
+	        }, function () {}).on("mouseup", function () {
+	            if (PageOperation.dragging && PageOperation.dragged) {
+	                console.log("drag mouse up");
+	            }
+	            $('#' + gridster.props.id).removeClass("dragged");
+	        });
+	    },
+
+	    initGridster: function initGridster() {
+	        var options = {
+	            namespace: '#' + this.props.id,
+	            widget_margins: [1, 1],
+	            widget_base_dimensions: [this.props.style.width / 12 - 2, this.props.style.height / 10 - 2],
+	            draggable: {
+	                start: function start(event, ui) {
+	                    PageOperation.dragging = true;
+	                    PageOperation.dragged = ui;
+	                    console.log("drag of start");
+	                },
+	                stop: function stop(event, ui) {
+	                    PageOperation.dragging = false;
+	                    PageOperation.dragged = null;
+	                    console.log("drag of stop");
+	                    /**
+	                     * When on double screen and the expand mode is 'extra' or 'portrait',
+	                     * Move the widget from left to right
+	                        if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode===1||layout.props.pageSetting.expandMode===3)
+	                            && ui.pointer.left>=layout.props.pageSetting.width+70) {
+	                            layout.moveBlock(ui.$player, true);
+	                        }
+	                     * */
+	                }
+	            },
+	            resize: {
+	                enabled: true,
+	                start: function start() {
+	                    PageOperation.resizing = true;
+	                },
+	                resize: function resize() {
+	                    console.log("resizing");
+	                },
+	                stop: function stop() {
+	                    PageOperation.resizing = false;
+	                }
+	            },
+	            min_cols: 12,
+	            min_rows: 10,
+	            serialize_params: function serialize_params($w, wgd) {
+	                var cli = $w.clone();
+	                cli.find(".gs-resize-handle").remove();
+	                cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+	                return {
+	                    content: cli.html(),
+	                    id: $w.data('id'),
+	                    col: wgd.col,
+	                    row: wgd.row,
+	                    size_x: wgd.size_x,
+	                    size_y: wgd.size_y
+	                };
+	            }
+	        };
+	        $("#" + this.props.id + ">ul").gridster(options);
+	    },
+
+	    /**When propeties and states change */
+	    componentWillUpdate: function componentWillUpdate(nextProps, nextState) {},
+
+	    /**Extract n save grid data*/
+	    getGridData: function getGridData() {
+	        var layout = this;
+	        /**cache the state of grids by current screen(s) content*/
+
+	        if (this.props.doubleScreen === true) {
+	            //current double screen setting
+	            this.data.doubleScreenLeftWidgets = pured("#main-grid>ul");
+	            this.data.doubleScreenRightWidgets = pured("#extra-grid>ul");
+	        } else {
+	            //current single screeny setting
+	            this.data.singleScreenWidgets = pured("#main-grid>ul");
+	        }
+
+	        function pured(id) {
+	            var wlist = $("#" + this.props.gid + ">ul").gridster().data('gridster').serialize();
+	            $(wlist).each(function () {
+	                layout.data.widgetContents[this.id] = this.content;
+	                delete this.content;
+	            });
+	            return wlist;
+	        }
+	        return this.data;
+	    },
+
+	    /**Load gridster widgets from layout.data */
+	    loadGridData: function loadGridData() {
+	        var layout = this;
+	        if (layout.props.doubleScreen) {
+	            foreachAddWidget("#main-grid > ul", layout.data.doubleScreenLeftWidgets);
+	            foreachAddWidget("#extra-grid > ul", layout.data.doubleScreenRightWidgets);
+	        } else {
+	            foreachAddWidget("#main-grid > ul", layout.data.singleScreenWidgets);
+	        }
+	        function foreachAddWidget(selector, data) {
+	            var gridster = $(selector).gridster().data('gridster');
+	            $.each(data, function () {
+	                var li = "<li data-id='" + this.id + "'>" + layout.data.widgetContents[this.id] + "</li>";
+	                gridster.add_widget(li, this.size_x, this.size_y, this.col, this.row);
+	            });
+	        }
+	    },
+
+	    componentDidUpdate: function componentDidUpdate(prevProps, prevState) {},
+
+	    addBlock: function addBlock(type, content, size_x, size_y, pos_x, pos_y) {
+	        var gridster = $("#" + this.props.id + " ul").gridster().data('gridster');
+	        console.log(gridster);
+	        if (!size_x) {
+	            size_x = 12;
+	        }
+	        if (!size_y) {
+	            size_y = 2;
+	        }
+
+	        if (!pos_x) {
+	            pos_x = 1;
+	        }
+	        if (!pos_y) {
+	            pos_y = 10;
+	        }
+	        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
+	        gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
+	        this.initBlockEvents(blockId);
+	        /*
+	        this.data.doubleScreenLeftWidgets.push({
+	            id: blockId,
+	            col: 1,
+	            row: 100,
+	            size_x: sizex,
+	            size_y: sizey
+	        });
+	        */
+	    },
+
+	    initBlockEvents: function initBlockEvents(blockId) {
+	        $("li[data-disabled='" + blockId + "']").off("click").on("click", function (event) {
+	            console.log("clicked");
+	            event.stopPropagation();
+	            if (PageOperation.dragging) return;
+
+	            $(".gridster ul li.current").removeClass("current");
+	            $(this).addClass("current");
+	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
+	        });
+	        tinymce.init({
+	            selector: '.gridster li .rtf',
+	            inline: true,
+	            menubar: false,
+	            toolbar: 'undo redo| bold italic underline strikethrough'
+	        });
+	    },
+
+	    render: function render() {
+	        return React.createElement(
+	            "div",
+	            { className: "gridster", id: this.props.id, style: this.props.style },
+	            React.createElement("ul", null)
+	        );
+	    }
+	});
+
+	module.exports = Gridster;
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(18);
+
+	var EditTextPanel = __webpack_require__(188);
+	var SingleChoicePanel = __webpack_require__(189);
 
 	var RightPanel = React.createClass({
 	    displayName: "RightPanel",
@@ -38961,7 +39236,7 @@
 	module.exports = RightPanel;
 
 /***/ },
-/* 187 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -39029,7 +39304,7 @@
 	module.exports = EditTextPanel;
 
 /***/ },
-/* 188 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -39058,46 +39333,74 @@
 	module.exports = SingleChoicePanel;
 
 /***/ },
-/* 189 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	var React = __webpack_require__(18);
+	var postal = __webpack_require__(182);
 
-	var BlockTypeMenu = __webpack_require__(190);
-	var PageConfigMenu = __webpack_require__(199);
+	var BlockTypeMenu = __webpack_require__(191);
+	var PageConfigMenu = __webpack_require__(200);
 
+	/**
+	 * props:
+	 * configurationChangedCallback : transfer page config information to parent
+	 * pageSetting : page settings.
+	 *
+	 *
+	 * state:
+	 * doubleScreen: display as doublescreen
+	 * ratio: current selected ratio
+	 * showBlockType: show add btn
+	 * showConfigMenu: show config menu
+	 *
+	 */
 	var LeftMenu = React.createClass({
 	    displayName: "LeftMenu",
 
 
 	    getInitialState: function getInitialState() {
 	        return {
+	            doubleScreen: this.props.pageSetting.doubleScreen,
+	            ratio: "1024x768",
 	            showBlockTypes: false,
 	            showConfigMenu: false
 	        };
 	    },
 
-	    stateChange: function stateChange(newstate) {
-	        this.setState(newstate);
+	    componentDidMount: function componentDidMount() {
+	        var menu = this;
+	        postal.subscribe({
+	            channel: "workspace",
+	            topic: "reset",
+	            callback: function callback(data, envelope) {
+	                menu.setState({
+	                    showBlockTypes: false,
+	                    showConfigMenu: false
+	                });
+	            }
+	        });
 	    },
 
-	    componentDidMount: function componentDidMount() {},
-
 	    resolution: function resolution(value) {
+	        this.setState({
+	            ratio: value
+	        });
+
 	        if (value === "1920x1080") {
-	            this.props.configurationChange({ width: 1920, minHeight: 1080 });
+	            this.props.configurationChangedCallback({ width: 1920, height: 1080 });
 	        } else if (value === "1280x800") {
-	            this.props.configurationChange({ width: 1280, minHeight: 800 });
+	            this.props.configurationChangedCallback({ width: 1280, height: 800 });
 	        } else if (value === "1024x768") {
-	            this.props.configurationChange({ width: 1024, minHeight: 768 });
+	            this.props.configurationChangedCallback({ width: 1024, height: 768 });
 	        }
 	    },
 
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
 
-	    clearState: function clearState() {
+	    close: function close() {
 	        this.setState({
 	            showBlockTypes: false,
 	            showConfigMenu: false
@@ -39105,13 +39408,12 @@
 	    },
 
 	    showBlockTypes: function showBlockTypes(event) {
-	        if (!this.props.doubleScreen) {
+	        if (!this.state.doubleScreen) {
 	            this.setState({
 	                showBlockTypes: !this.state.showBlockTypes,
 	                showConfigMenu: false
 	            });
 	        }
-	        event.stopPropagation();
 	    },
 
 	    showConfigMenu: function showConfigMenu(event) {
@@ -39119,18 +39421,21 @@
 	            showConfigMenu: !this.state.showConfigMenu,
 	            showBlockTypes: false
 	        });
-	        event.stopPropagation();
-	    },
-
-	    editContent: function editContent() {
-	        this.clearState();
-	        this.props.disableLayout();
 	    },
 
 	    toggleDoubleScreen: function toggleDoubleScreen() {
-	        this.props.configurationChange({
-	            doubleScreen: !this.props.doubleScreen
+	        var screen = !this.state.doubleScreen;
+	        this.setState({
+	            doubleScreen: screen
 	        });
+
+	        this.props.configurationChangedCallback({
+	            doubleScreen: screen
+	        });
+	    },
+
+	    stopPropagation: function stopPropagation(event) {
+	        event.stopPropagation();
 	    },
 
 	    /*<!-- <span className="glyphicon glyphicon-edit" data-disabled={this.props.doubleScreen} onClick={this.editContent}></span>-->*/
@@ -39138,45 +39443,36 @@
 	    render: function render() {
 	        return React.createElement(
 	            "div",
-	            null,
+	            { onClick: this.stopPropagation },
 	            React.createElement(
 	                "div",
 	                { className: "leftMenu" },
-	                this.props.layoutable ? React.createElement(
-	                    "div",
-	                    null,
-	                    React.createElement("span", { className: "glyphicon glyphicon-plus", "data-disabled": this.props.doubleScreen, "data-clicked": this.state.showBlockTypes, id: "btn-add-block", onClick: this.showBlockTypes }),
-	                    React.createElement("span", { className: "glyphicon glyphicon-cog", "data-clicked": this.state.showConfigMenu, onClick: this.showConfigMenu })
-	                ) : React.createElement(
-	                    "div",
-	                    null,
-	                    React.createElement("span", { className: "glyphicon glyphicon-arrow-left", "data-clicked": "true", onClick: this.props.enableLayout })
-	                ),
+	                React.createElement("span", { className: "glyphicon glyphicon-plus", "data-clicked": this.state.showBlockTypes, "data-disabled": this.state.doubleScreen, id: "btn-add-block", onClick: this.showBlockTypes }),
+	                React.createElement("span", { className: "glyphicon glyphicon-cog", "data-clicked": this.state.showConfigMenu, onClick: this.showConfigMenu }),
 	                React.createElement(
 	                    "div",
 	                    { className: "screenRatios",
 	                        style: {
-	                            marginTop: "160px",
-	                            display: this.props.layoutable ? "inherit" : "none"
+	                            marginTop: "160px"
 	                        } },
-	                    React.createElement("span", { className: "glyphicon glyphicon-blackboard", "data-clicked": this.props.doubleScreen, onClick: this.toggleDoubleScreen }),
+	                    React.createElement("span", { className: "glyphicon glyphicon-blackboard", "data-clicked": this.state.doubleScreen, onClick: this.toggleDoubleScreen }),
 	                    React.createElement(
 	                        "span",
-	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1024x768"), "data-clicked": this.props.width === 1024 },
+	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1024x768"), "data-clicked": this.state.ratio === "1024x768" },
 	                        "1024",
 	                        React.createElement("br", null),
 	                        "768"
 	                    ),
 	                    React.createElement(
 	                        "span",
-	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1280x800"), "data-clicked": this.props.width === 1280 },
+	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1280x800"), "data-clicked": this.state.ratio === "1280x800" },
 	                        "1280",
 	                        React.createElement("br", null),
 	                        "800"
 	                    ),
 	                    React.createElement(
 	                        "span",
-	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1920x1080"), "data-clicked": this.props.width === 1920 },
+	                        { className: "glyphicon ratio", onClick: this.resolution.bind(this, "1920x1080"), "data-clicked": this.state.ratio === "1920x1080" },
 	                        "1920",
 	                        React.createElement("br", null),
 	                        "1080"
@@ -39184,11 +39480,9 @@
 	                )
 	            ),
 	            React.createElement("div", { className: "hidder" }),
-	            React.createElement(BlockTypeMenu, { addBlock: this.props.addBlock, show: this.state.showBlockTypes, adddActivity: this.props.adddActivity, parentStateChange: this.stateChange }),
-	            React.createElement(PageConfigMenu, { configurationChange: this.props.configurationChange,
-	                showConfigMenu: this.showConfigMenu,
-	                showHeader: this.props.showHeader, showFooter: this.props.showFooter,
-	                show: this.state.showConfigMenu, closeSetting: this.props.closeSetting })
+	            React.createElement(BlockTypeMenu, { show: this.state.showBlockTypes }),
+	            React.createElement(PageConfigMenu, { show: this.state.showConfigMenu, pageSetting: this.props.pageSetting,
+	                configurationChangedCallback: this.props.configurationChangedCallback })
 	        );
 	    }
 	});
@@ -39196,15 +39490,15 @@
 	module.exports = LeftMenu;
 
 /***/ },
-/* 190 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	var React = __webpack_require__(18);
-	var ChooseImageMenu = __webpack_require__(191);
-	var AddTextMenu = __webpack_require__(197);
-	var AddActivityMenu = __webpack_require__(198);
+	var ChooseImageMenu = __webpack_require__(192);
+	var AddTextMenu = __webpack_require__(198);
+	var AddActivityMenu = __webpack_require__(199);
 
 	var BlockTypeMenu = React.createClass({
 	    displayName: "BlockTypeMenu",
@@ -39302,15 +39596,15 @@
 	module.exports = BlockTypeMenu;
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(18);
-	var Dropzone = __webpack_require__(192);
+	var Dropzone = __webpack_require__(193);
 
-	var request = __webpack_require__(194);
+	var request = __webpack_require__(195);
 
 	var ChooseImageMenu = React.createClass({
 	    displayName: 'ChooseImageMenu',
@@ -39351,7 +39645,7 @@
 	module.exports = ChooseImageMenu;
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -39368,7 +39662,7 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var _attrAccept = __webpack_require__(193);
+	var _attrAccept = __webpack_require__(194);
 
 	var _attrAccept2 = _interopRequireDefault(_attrAccept);
 
@@ -39636,21 +39930,21 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports) {
 
 	module.exports=function(t){function n(e){if(r[e])return r[e].exports;var o=r[e]={exports:{},id:e,loaded:!1};return t[e].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var r={};return n.m=t,n.c=r,n.p="",n(0)}([function(t,n,r){"use strict";n.__esModule=!0,r(8),r(9),n["default"]=function(t,n){if(t&&n){var r=function(){var r=n.split(","),e=t.name||"",o=t.type||"",i=o.replace(/\/.*$/,"");return{v:r.some(function(t){var n=t.trim();return"."===n.charAt(0)?e.toLowerCase().endsWith(n.toLowerCase()):/\/\*$/.test(n)?i===n.replace(/\/.*$/,""):o===n})}}();if("object"==typeof r)return r.v}return!0},t.exports=n["default"]},function(t,n){var r=t.exports={version:"1.2.2"};"number"==typeof __e&&(__e=r)},function(t,n){var r=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=r)},function(t,n,r){var e=r(2),o=r(1),i=r(4),u=r(19),c="prototype",f=function(t,n){return function(){return t.apply(n,arguments)}},s=function(t,n,r){var a,p,l,d,y=t&s.G,h=t&s.P,v=y?e:t&s.S?e[n]||(e[n]={}):(e[n]||{})[c],x=y?o:o[n]||(o[n]={});y&&(r=n);for(a in r)p=!(t&s.F)&&v&&a in v,l=(p?v:r)[a],d=t&s.B&&p?f(l,e):h&&"function"==typeof l?f(Function.call,l):l,v&&!p&&u(v,a,l),x[a]!=l&&i(x,a,d),h&&((x[c]||(x[c]={}))[a]=l)};e.core=o,s.F=1,s.G=2,s.S=4,s.P=8,s.B=16,s.W=32,t.exports=s},function(t,n,r){var e=r(5),o=r(18);t.exports=r(22)?function(t,n,r){return e.setDesc(t,n,o(1,r))}:function(t,n,r){return t[n]=r,t}},function(t,n){var r=Object;t.exports={create:r.create,getProto:r.getPrototypeOf,isEnum:{}.propertyIsEnumerable,getDesc:r.getOwnPropertyDescriptor,setDesc:r.defineProperty,setDescs:r.defineProperties,getKeys:r.keys,getNames:r.getOwnPropertyNames,getSymbols:r.getOwnPropertySymbols,each:[].forEach}},function(t,n){var r=0,e=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++r+e).toString(36))}},function(t,n,r){var e=r(20)("wks"),o=r(2).Symbol;t.exports=function(t){return e[t]||(e[t]=o&&o[t]||(o||r(6))("Symbol."+t))}},function(t,n,r){r(26),t.exports=r(1).Array.some},function(t,n,r){r(25),t.exports=r(1).String.endsWith},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){var r={}.toString;t.exports=function(t){return r.call(t).slice(8,-1)}},function(t,n,r){var e=r(10);t.exports=function(t,n,r){if(e(t),void 0===n)return t;switch(r){case 1:return function(r){return t.call(n,r)};case 2:return function(r,e){return t.call(n,r,e)};case 3:return function(r,e,o){return t.call(n,r,e,o)}}return function(){return t.apply(n,arguments)}}},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n,r){t.exports=function(t){var n=/./;try{"/./"[t](n)}catch(e){try{return n[r(7)("match")]=!1,!"/./"[t](n)}catch(o){}}return!0}},function(t,n){t.exports=function(t){try{return!!t()}catch(n){return!0}}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n,r){var e=r(16),o=r(11),i=r(7)("match");t.exports=function(t){var n;return e(t)&&(void 0!==(n=t[i])?!!n:"RegExp"==o(t))}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n,r){var e=r(2),o=r(4),i=r(6)("src"),u="toString",c=Function[u],f=(""+c).split(u);r(1).inspectSource=function(t){return c.call(t)},(t.exports=function(t,n,r,u){"function"==typeof r&&(o(r,i,t[n]?""+t[n]:f.join(String(n))),"name"in r||(r.name=n)),t===e?t[n]=r:(u||delete t[n],o(t,n,r))})(Function.prototype,u,function(){return"function"==typeof this&&this[i]||c.call(this)})},function(t,n,r){var e=r(2),o="__core-js_shared__",i=e[o]||(e[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n,r){var e=r(17),o=r(13);t.exports=function(t,n,r){if(e(n))throw TypeError("String#"+r+" doesn't accept regex!");return String(o(t))}},function(t,n,r){t.exports=!r(15)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n){var r=Math.ceil,e=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?e:r)(t)}},function(t,n,r){var e=r(23),o=Math.min;t.exports=function(t){return t>0?o(e(t),9007199254740991):0}},function(t,n,r){"use strict";var e=r(3),o=r(24),i=r(21),u="endsWith",c=""[u];e(e.P+e.F*r(14)(u),"String",{endsWith:function(t){var n=i(this,t,u),r=arguments,e=r.length>1?r[1]:void 0,f=o(n.length),s=void 0===e?f:Math.min(o(e),f),a=String(t);return c?c.call(n,a,s):n.slice(s-a.length,s)===a}})},function(t,n,r){var e=r(5),o=r(3),i=r(1).Array||Array,u={},c=function(t,n){e.each.call(t.split(","),function(t){void 0==n&&t in i?u[t]=i[t]:t in[]&&(u[t]=r(12)(Function.call,[][t],n))})};c("pop,reverse,shift,keys,values,entries",1),c("indexOf,every,some,forEach,map,filter,find,findIndex,includes",3),c("join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill"),o(o.S,"Array",u)}]);
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 
-	var Emitter = __webpack_require__(195);
-	var reduce = __webpack_require__(196);
+	var Emitter = __webpack_require__(196);
+	var reduce = __webpack_require__(197);
 
 	/**
 	 * Root reference for iframes.
@@ -40839,7 +41133,7 @@
 
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports) {
 
 	
@@ -41006,7 +41300,7 @@
 
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports) {
 
 	
@@ -41035,12 +41329,14 @@
 	};
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	var React = __webpack_require__(18);
+
+	var postal = __webpack_require__(182);
 
 	var AddTextMenu = React.createClass({
 	    displayName: "AddTextMenu",
@@ -41063,15 +41359,28 @@
 	        while (!ele.data("template")) {
 	            ele = ele.parent();
 	        }
-	        var sizex = ele.data("width");
-	        var sizey = ele.data("height");
-	        if (sizex) sizex = parseInt(sizex);
-	        if (sizey) sizey = parseInt(sizey);
-
+	        var size_x = ele.data("width");
+	        var size_y = ele.data("height");
+	        if (size_x) size_x = parseInt(size_x);
+	        if (size_y) size_y = parseInt(size_y);
 	        var template = ele.data("template");
-	        this.props.addBlock(template, sizex, sizey);
-	        this.props.parentStateChange({ showBlockTypes: false });
+
+	        postal.publish({
+	            channel: "block",
+	            topic: "add",
+	            data: {
+	                type: "text",
+	                html: template,
+	                size_x: size_x,
+	                size_y: size_y
+	            }
+	        });
+	        postal.publish({
+	            channel: "workspace",
+	            topic: "reset"
+	        });
 	    },
+
 	    render: function render() {
 	        return React.createElement(
 	            "div",
@@ -41135,7 +41444,7 @@
 	module.exports = AddTextMenu;
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -41264,12 +41573,23 @@
 	module.exports = AddActivityMenu;
 
 /***/ },
-/* 199 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
 	var React = __webpack_require__(18);
+	var postal = __webpack_require__(182);
+
+	/***
+	 * props
+	 * show : visibility
+	 * pageSetting: page setting
+	 * configurationChangedCallback�� callback when change setting
+	 *
+	 * state
+	 *
+	 */
 
 	var PageConfigMenu = React.createClass({
 	    displayName: "PageConfigMenu",
@@ -41283,32 +41603,21 @@
 	        return {};
 	    },
 
-	    screenModel: function screenModel(event) {
-	        var value = $(event.target).val();
-	        var mode = 1;
-	        if (value === this.SCREEN_MODEL_PORTRAIT) {
-	            mode = 1;
-	        }
-	        if (value === this.SCREEN_MODEL_EXPAND) {
-	            mode = 2;
-	        }
-	        if (value === this.SCREEN_MODEL_EXTRA) {
-	            mode = 3;
-	        }
-	        this.props.configurationChange({
-	            expandMode: mode
-	        });
-	    },
-
 	    toggleHeader: function toggleHeader(event) {
-	        this.props.configurationChange({
+	        this.props.configurationChangedCallback({
 	            showHeader: event.target.checked
 	        });
 	    },
 
 	    toggleFooter: function toggleFooter(event) {
-	        this.props.configurationChange({
+	        this.props.configurationChangedCallback({
 	            showFooter: event.target.checked
+	        });
+	    },
+
+	    expandModeChanged: function expandModeChanged(event) {
+	        this.props.configurationChangedCallback({
+	            expandMode: parseInt($(event.target).val())
 	        });
 	    },
 
@@ -41317,7 +41626,10 @@
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
 
 	    closeMe: function closeMe() {
-	        this.props.showConfigMenu(false);
+	        postal.publish({
+	            channel: "workspace",
+	            topic: "empty.clicked"
+	        });
 	    },
 
 	    stopPropagation: function stopPropagation(event) {
@@ -41334,7 +41646,7 @@
 	            React.createElement(
 	                "div",
 	                null,
-	                React.createElement("input", { checked: this.props.showHeader, type: "checkbox", onChange: this.toggleHeader }),
+	                React.createElement("input", { checked: this.props.pageSetting.showHeader, type: "checkbox", onChange: this.toggleHeader }),
 	                React.createElement(
 	                    "span",
 	                    null,
@@ -41344,7 +41656,7 @@
 	            React.createElement(
 	                "div",
 	                null,
-	                React.createElement("input", { checked: this.props.showFooter, type: "checkbox", onChange: this.toggleFooter }),
+	                React.createElement("input", { checked: this.props.pageSetting.showFooter, type: "checkbox", onChange: this.toggleFooter }),
 	                React.createElement(
 	                    "span",
 	                    null,
@@ -41362,20 +41674,20 @@
 	                ),
 	                React.createElement(
 	                    "select",
-	                    { onChange: this.screenModel },
+	                    { onChange: this.expandModeChanged },
 	                    React.createElement(
 	                        "option",
-	                        null,
+	                        { value: "1" },
 	                        this.SCREEN_MODEL_PORTRAIT
 	                    ),
 	                    React.createElement(
 	                        "option",
-	                        null,
+	                        { value: "2" },
 	                        this.SCREEN_MODEL_EXPAND
 	                    ),
 	                    React.createElement(
 	                        "option",
-	                        null,
+	                        { value: "3" },
 	                        this.SCREEN_MODEL_EXTRA
 	                    )
 	                )
@@ -41402,13 +41714,13 @@
 	module.exports = PageConfigMenu;
 
 /***/ },
-/* 200 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(18);
-	var LinkedStateMixin = __webpack_require__(201);
+	var LinkedStateMixin = __webpack_require__(202);
 
 	var FileNameDialog = React.createClass({
 	    displayName: 'FileNameDialog',
@@ -41498,13 +41810,13 @@
 	module.exports = FileNameDialog;
 
 /***/ },
-/* 201 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(202);
+	module.exports = __webpack_require__(203);
 
 /***/ },
-/* 202 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41521,8 +41833,8 @@
 
 	'use strict';
 
-	var ReactLink = __webpack_require__(203);
-	var ReactStateSetters = __webpack_require__(204);
+	var ReactLink = __webpack_require__(204);
+	var ReactStateSetters = __webpack_require__(205);
 
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -41545,7 +41857,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 203 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -41619,7 +41931,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports) {
 
 	/**
@@ -41728,14 +42040,14 @@
 	module.exports = ReactStateSetters;
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(18);
 
-	var moment = __webpack_require__(206);
+	var moment = __webpack_require__(207);
 
 	var OpenPageDialog = React.createClass({
 	    displayName: 'OpenPageDialog',
@@ -41843,7 +42155,7 @@
 	module.exports = OpenPageDialog;
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {//! moment.js
@@ -42114,7 +42426,7 @@
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(207)("./" + name);
+	                __webpack_require__(208)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -45044,180 +45356,180 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(184)(module)))
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 208,
-		"./af.js": 208,
-		"./ar": 209,
-		"./ar-ma": 210,
-		"./ar-ma.js": 210,
-		"./ar-sa": 211,
-		"./ar-sa.js": 211,
-		"./ar-tn": 212,
-		"./ar-tn.js": 212,
-		"./ar.js": 209,
-		"./az": 213,
-		"./az.js": 213,
-		"./be": 214,
-		"./be.js": 214,
-		"./bg": 215,
-		"./bg.js": 215,
-		"./bn": 216,
-		"./bn.js": 216,
-		"./bo": 217,
-		"./bo.js": 217,
-		"./br": 218,
-		"./br.js": 218,
-		"./bs": 219,
-		"./bs.js": 219,
-		"./ca": 220,
-		"./ca.js": 220,
-		"./cs": 221,
-		"./cs.js": 221,
-		"./cv": 222,
-		"./cv.js": 222,
-		"./cy": 223,
-		"./cy.js": 223,
-		"./da": 224,
-		"./da.js": 224,
-		"./de": 225,
-		"./de-at": 226,
-		"./de-at.js": 226,
-		"./de.js": 225,
-		"./el": 227,
-		"./el.js": 227,
-		"./en-au": 228,
-		"./en-au.js": 228,
-		"./en-ca": 229,
-		"./en-ca.js": 229,
-		"./en-gb": 230,
-		"./en-gb.js": 230,
-		"./eo": 231,
-		"./eo.js": 231,
-		"./es": 232,
-		"./es.js": 232,
-		"./et": 233,
-		"./et.js": 233,
-		"./eu": 234,
-		"./eu.js": 234,
-		"./fa": 235,
-		"./fa.js": 235,
-		"./fi": 236,
-		"./fi.js": 236,
-		"./fo": 237,
-		"./fo.js": 237,
-		"./fr": 238,
-		"./fr-ca": 239,
-		"./fr-ca.js": 239,
-		"./fr.js": 238,
-		"./fy": 240,
-		"./fy.js": 240,
-		"./gl": 241,
-		"./gl.js": 241,
-		"./he": 242,
-		"./he.js": 242,
-		"./hi": 243,
-		"./hi.js": 243,
-		"./hr": 244,
-		"./hr.js": 244,
-		"./hu": 245,
-		"./hu.js": 245,
-		"./hy-am": 246,
-		"./hy-am.js": 246,
-		"./id": 247,
-		"./id.js": 247,
-		"./is": 248,
-		"./is.js": 248,
-		"./it": 249,
-		"./it.js": 249,
-		"./ja": 250,
-		"./ja.js": 250,
-		"./jv": 251,
-		"./jv.js": 251,
-		"./ka": 252,
-		"./ka.js": 252,
-		"./km": 253,
-		"./km.js": 253,
-		"./ko": 254,
-		"./ko.js": 254,
-		"./lb": 255,
-		"./lb.js": 255,
-		"./lt": 256,
-		"./lt.js": 256,
-		"./lv": 257,
-		"./lv.js": 257,
-		"./me": 258,
-		"./me.js": 258,
-		"./mk": 259,
-		"./mk.js": 259,
-		"./ml": 260,
-		"./ml.js": 260,
-		"./mr": 261,
-		"./mr.js": 261,
-		"./ms": 262,
-		"./ms-my": 263,
-		"./ms-my.js": 263,
-		"./ms.js": 262,
-		"./my": 264,
-		"./my.js": 264,
-		"./nb": 265,
-		"./nb.js": 265,
-		"./ne": 266,
-		"./ne.js": 266,
-		"./nl": 267,
-		"./nl.js": 267,
-		"./nn": 268,
-		"./nn.js": 268,
-		"./pl": 269,
-		"./pl.js": 269,
-		"./pt": 270,
-		"./pt-br": 271,
-		"./pt-br.js": 271,
-		"./pt.js": 270,
-		"./ro": 272,
-		"./ro.js": 272,
-		"./ru": 273,
-		"./ru.js": 273,
-		"./si": 274,
-		"./si.js": 274,
-		"./sk": 275,
-		"./sk.js": 275,
-		"./sl": 276,
-		"./sl.js": 276,
-		"./sq": 277,
-		"./sq.js": 277,
-		"./sr": 278,
-		"./sr-cyrl": 279,
-		"./sr-cyrl.js": 279,
-		"./sr.js": 278,
-		"./sv": 280,
-		"./sv.js": 280,
-		"./ta": 281,
-		"./ta.js": 281,
-		"./th": 282,
-		"./th.js": 282,
-		"./tl-ph": 283,
-		"./tl-ph.js": 283,
-		"./tr": 284,
-		"./tr.js": 284,
-		"./tzl": 285,
-		"./tzl.js": 285,
-		"./tzm": 286,
-		"./tzm-latn": 287,
-		"./tzm-latn.js": 287,
-		"./tzm.js": 286,
-		"./uk": 288,
-		"./uk.js": 288,
-		"./uz": 289,
-		"./uz.js": 289,
-		"./vi": 290,
-		"./vi.js": 290,
-		"./zh-cn": 291,
-		"./zh-cn.js": 291,
-		"./zh-tw": 292,
-		"./zh-tw.js": 292
+		"./af": 209,
+		"./af.js": 209,
+		"./ar": 210,
+		"./ar-ma": 211,
+		"./ar-ma.js": 211,
+		"./ar-sa": 212,
+		"./ar-sa.js": 212,
+		"./ar-tn": 213,
+		"./ar-tn.js": 213,
+		"./ar.js": 210,
+		"./az": 214,
+		"./az.js": 214,
+		"./be": 215,
+		"./be.js": 215,
+		"./bg": 216,
+		"./bg.js": 216,
+		"./bn": 217,
+		"./bn.js": 217,
+		"./bo": 218,
+		"./bo.js": 218,
+		"./br": 219,
+		"./br.js": 219,
+		"./bs": 220,
+		"./bs.js": 220,
+		"./ca": 221,
+		"./ca.js": 221,
+		"./cs": 222,
+		"./cs.js": 222,
+		"./cv": 223,
+		"./cv.js": 223,
+		"./cy": 224,
+		"./cy.js": 224,
+		"./da": 225,
+		"./da.js": 225,
+		"./de": 226,
+		"./de-at": 227,
+		"./de-at.js": 227,
+		"./de.js": 226,
+		"./el": 228,
+		"./el.js": 228,
+		"./en-au": 229,
+		"./en-au.js": 229,
+		"./en-ca": 230,
+		"./en-ca.js": 230,
+		"./en-gb": 231,
+		"./en-gb.js": 231,
+		"./eo": 232,
+		"./eo.js": 232,
+		"./es": 233,
+		"./es.js": 233,
+		"./et": 234,
+		"./et.js": 234,
+		"./eu": 235,
+		"./eu.js": 235,
+		"./fa": 236,
+		"./fa.js": 236,
+		"./fi": 237,
+		"./fi.js": 237,
+		"./fo": 238,
+		"./fo.js": 238,
+		"./fr": 239,
+		"./fr-ca": 240,
+		"./fr-ca.js": 240,
+		"./fr.js": 239,
+		"./fy": 241,
+		"./fy.js": 241,
+		"./gl": 242,
+		"./gl.js": 242,
+		"./he": 243,
+		"./he.js": 243,
+		"./hi": 244,
+		"./hi.js": 244,
+		"./hr": 245,
+		"./hr.js": 245,
+		"./hu": 246,
+		"./hu.js": 246,
+		"./hy-am": 247,
+		"./hy-am.js": 247,
+		"./id": 248,
+		"./id.js": 248,
+		"./is": 249,
+		"./is.js": 249,
+		"./it": 250,
+		"./it.js": 250,
+		"./ja": 251,
+		"./ja.js": 251,
+		"./jv": 252,
+		"./jv.js": 252,
+		"./ka": 253,
+		"./ka.js": 253,
+		"./km": 254,
+		"./km.js": 254,
+		"./ko": 255,
+		"./ko.js": 255,
+		"./lb": 256,
+		"./lb.js": 256,
+		"./lt": 257,
+		"./lt.js": 257,
+		"./lv": 258,
+		"./lv.js": 258,
+		"./me": 259,
+		"./me.js": 259,
+		"./mk": 260,
+		"./mk.js": 260,
+		"./ml": 261,
+		"./ml.js": 261,
+		"./mr": 262,
+		"./mr.js": 262,
+		"./ms": 263,
+		"./ms-my": 264,
+		"./ms-my.js": 264,
+		"./ms.js": 263,
+		"./my": 265,
+		"./my.js": 265,
+		"./nb": 266,
+		"./nb.js": 266,
+		"./ne": 267,
+		"./ne.js": 267,
+		"./nl": 268,
+		"./nl.js": 268,
+		"./nn": 269,
+		"./nn.js": 269,
+		"./pl": 270,
+		"./pl.js": 270,
+		"./pt": 271,
+		"./pt-br": 272,
+		"./pt-br.js": 272,
+		"./pt.js": 271,
+		"./ro": 273,
+		"./ro.js": 273,
+		"./ru": 274,
+		"./ru.js": 274,
+		"./si": 275,
+		"./si.js": 275,
+		"./sk": 276,
+		"./sk.js": 276,
+		"./sl": 277,
+		"./sl.js": 277,
+		"./sq": 278,
+		"./sq.js": 278,
+		"./sr": 279,
+		"./sr-cyrl": 280,
+		"./sr-cyrl.js": 280,
+		"./sr.js": 279,
+		"./sv": 281,
+		"./sv.js": 281,
+		"./ta": 282,
+		"./ta.js": 282,
+		"./th": 283,
+		"./th.js": 283,
+		"./tl-ph": 284,
+		"./tl-ph.js": 284,
+		"./tr": 285,
+		"./tr.js": 285,
+		"./tzl": 286,
+		"./tzl.js": 286,
+		"./tzm": 287,
+		"./tzm-latn": 288,
+		"./tzm-latn.js": 288,
+		"./tzm.js": 287,
+		"./uk": 289,
+		"./uk.js": 289,
+		"./uz": 290,
+		"./uz.js": 290,
+		"./vi": 291,
+		"./vi.js": 291,
+		"./zh-cn": 292,
+		"./zh-cn.js": 292,
+		"./zh-tw": 293,
+		"./zh-tw.js": 293
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -45230,11 +45542,11 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 207;
+	webpackContext.id = 208;
 
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45242,7 +45554,7 @@
 	//! author : Werner Mollentze : https://github.com/wernerm
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45311,7 +45623,7 @@
 	}));
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45321,7 +45633,7 @@
 	//! Native plural forms: forabi https://github.com/forabi
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45451,7 +45763,7 @@
 	}));
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45460,7 +45772,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45514,7 +45826,7 @@
 	}));
 
 /***/ },
-/* 211 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45522,7 +45834,7 @@
 	//! author : Suhail Alkowaileet : https://github.com/xsoh
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45621,14 +45933,14 @@
 	}));
 
 /***/ },
-/* 212 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale  : Tunisian Arabic (ar-tn)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45682,7 +45994,7 @@
 	}));
 
 /***/ },
-/* 213 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45690,7 +46002,7 @@
 	//! author : topchiyev : https://github.com/topchiyev
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45790,7 +46102,7 @@
 	}));
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45800,7 +46112,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -45941,7 +46253,7 @@
 	}));
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -45949,7 +46261,7 @@
 	//! author : Krasen Borisov : https://github.com/kraz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46035,7 +46347,7 @@
 	}));
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46043,7 +46355,7 @@
 	//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46152,7 +46464,7 @@
 	}));
 
 /***/ },
-/* 217 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46160,7 +46472,7 @@
 	//! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46266,7 +46578,7 @@
 	}));
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46274,7 +46586,7 @@
 	//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46377,7 +46689,7 @@
 	}));
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46386,7 +46698,7 @@
 	//! based on (hr) translation by Bojan Marković
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46522,7 +46834,7 @@
 	}));
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46530,7 +46842,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46605,7 +46917,7 @@
 	}));
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46613,7 +46925,7 @@
 	//! author : petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46766,7 +47078,7 @@
 	}));
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46774,7 +47086,7 @@
 	//! author : Anatoly Mironov : https://github.com/mirontoli
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46833,7 +47145,7 @@
 	}));
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46841,7 +47153,7 @@
 	//! author : Robert Allen
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46916,7 +47228,7 @@
 	}));
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46924,7 +47236,7 @@
 	//! author : Ulrik Nielsen : https://github.com/mrbase
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -46980,7 +47292,7 @@
 	}));
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -46989,7 +47301,7 @@
 	//! author: Menelion Elensúle: https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47059,7 +47371,7 @@
 	}));
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47069,7 +47381,7 @@
 	//! author : Martin Groller : https://github.com/MadMG
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47139,7 +47451,7 @@
 	}));
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47147,7 +47459,7 @@
 	//! author : Aggelos Karalias : https://github.com/mehiel
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47237,14 +47549,14 @@
 	}));
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
 	//! locale : australian english (en-au)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47307,7 +47619,7 @@
 	}));
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47315,7 +47627,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47374,7 +47686,7 @@
 	}));
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47382,7 +47694,7 @@
 	//! author : Chris Gedrim : https://github.com/chrisgedrim
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47445,7 +47757,7 @@
 	}));
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47455,7 +47767,7 @@
 	//!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47522,7 +47834,7 @@
 	}));
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47530,7 +47842,7 @@
 	//! author : Julio Napurí : https://github.com/julionc
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47605,7 +47917,7 @@
 	}));
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47614,7 +47926,7 @@
 	//! improvements : Illimar Tambek : https://github.com/ragulka
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47689,7 +48001,7 @@
 	}));
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47697,7 +48009,7 @@
 	//! author : Eneko Illarramendi : https://github.com/eillarra
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47757,7 +48069,7 @@
 	}));
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47765,7 +48077,7 @@
 	//! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47866,7 +48178,7 @@
 	}));
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47874,7 +48186,7 @@
 	//! author : Tarmo Aidantausta : https://github.com/bleadof
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -47977,7 +48289,7 @@
 	}));
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -47985,7 +48297,7 @@
 	//! author : Ragnar Johannesen : https://github.com/ragnar123
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48041,7 +48353,7 @@
 	}));
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48049,7 +48361,7 @@
 	//! author : John Fischer : https://github.com/jfroffice
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48107,7 +48419,7 @@
 	}));
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48115,7 +48427,7 @@
 	//! author : Jonathan Abourbih : https://github.com/jonbca
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48169,7 +48481,7 @@
 	}));
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48177,7 +48489,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48244,7 +48556,7 @@
 	}));
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48252,7 +48564,7 @@
 	//! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48323,7 +48635,7 @@
 	}));
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48333,7 +48645,7 @@
 	//! author : Tal Ater : https://github.com/TalAter
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48409,7 +48721,7 @@
 	}));
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48417,7 +48729,7 @@
 	//! author : Mayank Singhal : https://github.com/mayanksinghal
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48536,7 +48848,7 @@
 	}));
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48544,7 +48856,7 @@
 	//! author : Bojan Marković : https://github.com/bmarkovic
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48680,7 +48992,7 @@
 	}));
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48688,7 +49000,7 @@
 	//! author : Adam Brunner : https://github.com/adambrunner
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48793,7 +49105,7 @@
 	}));
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48801,7 +49113,7 @@
 	//! author : Armendarabyan : https://github.com/armendarabyan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48908,7 +49220,7 @@
 	}));
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -48917,7 +49229,7 @@
 	//! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -48995,7 +49307,7 @@
 	}));
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49003,7 +49315,7 @@
 	//! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49126,7 +49438,7 @@
 	}));
 
 /***/ },
-/* 249 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49135,7 +49447,7 @@
 	//! author: Mattia Larentis: https://github.com/nostalgiaz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49200,7 +49512,7 @@
 	}));
 
 /***/ },
-/* 250 */
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49208,7 +49520,7 @@
 	//! author : LI Long : https://github.com/baryon
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49269,7 +49581,7 @@
 	}));
 
 /***/ },
-/* 251 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49278,7 +49590,7 @@
 	//! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49356,7 +49668,7 @@
 	}));
 
 /***/ },
-/* 252 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49364,7 +49676,7 @@
 	//! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49463,7 +49775,7 @@
 	}));
 
 /***/ },
-/* 253 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49471,7 +49783,7 @@
 	//! author : Kruy Vanna : https://github.com/kruyvanna
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49525,7 +49837,7 @@
 	}));
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49537,7 +49849,7 @@
 	//! - Jeeeyul Lee <jeeeyul@gmail.com>
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49597,7 +49909,7 @@
 	}));
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49605,7 +49917,7 @@
 	//! author : mweimerskirch : https://github.com/mweimerskirch, David Raison : https://github.com/kwisatz
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49735,7 +50047,7 @@
 	}));
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49743,7 +50055,7 @@
 	//! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49864,7 +50176,7 @@
 	}));
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49873,7 +50185,7 @@
 	//! author : Jānis Elmeris : https://github.com/JanisE
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -49964,7 +50276,7 @@
 	}));
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -49972,7 +50284,7 @@
 	//! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50077,7 +50389,7 @@
 	}));
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50085,7 +50397,7 @@
 	//! author : Borislav Mickov : https://github.com/B0k0
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50171,7 +50483,7 @@
 	}));
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50179,7 +50491,7 @@
 	//! author : Floyd Pink : https://github.com/floydpink
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50246,7 +50558,7 @@
 	}));
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50254,7 +50566,7 @@
 	//! author : Harshad Kale : https://github.com/kalehv
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50371,7 +50683,7 @@
 	}));
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50379,7 +50691,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50457,7 +50769,7 @@
 	}));
 
 /***/ },
-/* 263 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50465,7 +50777,7 @@
 	//! author : Weldan Jamili : https://github.com/weldan
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50543,7 +50855,7 @@
 	}));
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50551,7 +50863,7 @@
 	//! author : Squar team, mysquar.com
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50640,7 +50952,7 @@
 	}));
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50649,7 +50961,7 @@
 	//!           Sigurd Gartmann : https://github.com/sigurdga
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50705,7 +51017,7 @@
 	}));
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50713,7 +51025,7 @@
 	//! author : suvash : https://github.com/suvash
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50832,7 +51144,7 @@
 	}));
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50840,7 +51152,7 @@
 	//! author : Joris Röling : https://github.com/jjupiter
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50907,7 +51219,7 @@
 	}));
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50915,7 +51227,7 @@
 	//! author : https://github.com/mechuwind
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -50971,7 +51283,7 @@
 	}));
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -50979,7 +51291,7 @@
 	//! author : Rafal Hirsz : https://github.com/evoL
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51080,7 +51392,7 @@
 	}));
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51088,7 +51400,7 @@
 	//! author : Jefferson : https://github.com/jalex79
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51148,7 +51460,7 @@
 	}));
 
 /***/ },
-/* 271 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51156,7 +51468,7 @@
 	//! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51212,7 +51524,7 @@
 	}));
 
 /***/ },
-/* 272 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51221,7 +51533,7 @@
 	//! author : Valentin Agachi : https://github.com/avaly
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51290,7 +51602,7 @@
 	}));
 
 /***/ },
-/* 273 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51299,7 +51611,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51458,7 +51770,7 @@
 	}));
 
 /***/ },
-/* 274 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51466,7 +51778,7 @@
 	//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51527,7 +51839,7 @@
 	}));
 
 /***/ },
-/* 275 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51536,7 +51848,7 @@
 	//! based on work of petrbela : https://github.com/petrbela
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51689,7 +52001,7 @@
 	}));
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51697,7 +52009,7 @@
 	//! author : Robert Sedovšek : https://github.com/sedovsek
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51853,7 +52165,7 @@
 	}));
 
 /***/ },
-/* 277 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51863,7 +52175,7 @@
 	//! author : Oerd Cukalla : https://github.com/oerd (fixes)
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -51926,7 +52238,7 @@
 	}));
 
 /***/ },
-/* 278 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -51934,7 +52246,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52038,7 +52350,7 @@
 	}));
 
 /***/ },
-/* 279 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52046,7 +52358,7 @@
 	//! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52150,7 +52462,7 @@
 	}));
 
 /***/ },
-/* 280 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52158,7 +52470,7 @@
 	//! author : Jens Alm : https://github.com/ulmus
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52221,7 +52533,7 @@
 	}));
 
 /***/ },
-/* 281 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52229,7 +52541,7 @@
 	//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52320,7 +52632,7 @@
 	}));
 
 /***/ },
-/* 282 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52328,7 +52640,7 @@
 	//! author : Kridsada Thanabulpong : https://github.com/sirn
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52389,7 +52701,7 @@
 	}));
 
 /***/ },
-/* 283 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52397,7 +52709,7 @@
 	//! author : Dan Hagman
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52455,7 +52767,7 @@
 	}));
 
 /***/ },
-/* 284 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52464,7 +52776,7 @@
 	//!           Burak Yiğit Kaya: https://github.com/BYK
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52549,7 +52861,7 @@
 	}));
 
 /***/ },
-/* 285 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52557,7 +52869,7 @@
 	//! author : Robin van der Vliet : https://github.com/robin0van0der0v with the help of Iustì Canun
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52638,7 +52950,7 @@
 	}));
 
 /***/ },
-/* 286 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52646,7 +52958,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52700,7 +53012,7 @@
 	}));
 
 /***/ },
-/* 287 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52708,7 +53020,7 @@
 	//! author : Abdel Said : https://github.com/abdelsaid
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52762,7 +53074,7 @@
 	}));
 
 /***/ },
-/* 288 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52771,7 +53083,7 @@
 	//! Author : Menelion Elensúle : https://github.com/Oire
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52919,7 +53231,7 @@
 	}));
 
 /***/ },
-/* 289 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52927,7 +53239,7 @@
 	//! author : Sardor Muminov : https://github.com/muminoff
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -52981,7 +53293,7 @@
 	}));
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -52989,7 +53301,7 @@
 	//! author : Bang Nguyen : https://github.com/bangnk
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53051,7 +53363,7 @@
 	}));
 
 /***/ },
-/* 291 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53060,7 +53372,7 @@
 	//! author : Zeno Zeng : https://github.com/zenozeng
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53182,7 +53494,7 @@
 	}));
 
 /***/ },
-/* 292 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -53190,7 +53502,7 @@
 	//! author : Ben : https://github.com/ben-lin
 
 	(function (global, factory) {
-	    true ? factory(__webpack_require__(206)) :
+	    true ? factory(__webpack_require__(207)) :
 	   typeof define === 'function' && define.amd ? define(['moment'], factory) :
 	   factory(global.moment)
 	}(this, function (moment) { 'use strict';
@@ -53285,6 +53597,20 @@
 	    return zh_tw;
 
 	}));
+
+/***/ },
+/* 294 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/**
+	 * Created by ���� on 2016/3/4.
+	 */
+	var PageOperation = {
+	  dragging: false
+	};
+	module.exports = PageOperation;
 
 /***/ }
 /******/ ]);

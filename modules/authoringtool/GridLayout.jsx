@@ -62,7 +62,11 @@ var GridLayout = React.createClass({
             this.data = this.props.data;
         }
         this.initGridster();
+        this.subscribeChanel();
+    },
 
+
+    subscribeChanel: function() {
         var layout = this;
         postal.subscribe({
             channel: "activities",
@@ -77,15 +81,13 @@ var GridLayout = React.createClass({
             }
         });
 
-        //gridster->enable
         postal.subscribe({
-            channel: "gridster",
-            topic: "enable",
+            channel: "workspace",
+            topic: "empty.clicked",
             callback: function(data, envelope) {
-                layout.returnGridster();
+                layout.enableGridster();
             }
         });
-
     },
 
 
@@ -127,7 +129,6 @@ var GridLayout = React.createClass({
         return this.data;
     },
 
-
     /**Load gridster widgets from layout.data */
     loadGridData: function() {
         var layout = this;
@@ -165,7 +166,7 @@ var GridLayout = React.createClass({
 
         /**Initialize the grid first*/
         $(".footer").css("position", "initial");
-        if (this.props.doubleScreen) {
+        if (this.props.double) {
             if (this.props.expandMode===1) {  //portrait cut model
                 layout.initPortraitCutMode();
             }
@@ -182,8 +183,9 @@ var GridLayout = React.createClass({
         /**Add blocks to gridster*/
         this.loadGridData();
         this.initBlockEvents();
-
         /**If it is in edit mode , disable gridster resize and movements, init the mce editor*/
+
+        /*
         if(!this.state.layoutable) {
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
             tinymce.init({
@@ -193,29 +195,31 @@ var GridLayout = React.createClass({
                 toolbar: 'undo redo| bold italic underline strikethrough'
             });
         }
+        */
     },
-
     startDraging : false,
 
     initSingleMode: function(screenCount=1) {
         var layout = this;
+        /*
+        style={{
+            width: (this.props.double&&this.props.expandMode===2)? this.props.width*2: this.props.width
+        }}
+        */
+        console.log("init single mode", this.props);
+        $("#main-grid").css("width", this.props.width);
+        $("#main-grid").css("min-height", this.props.height);
 
-        var contentHeight = this.props.pageSetting.height;
-        if (this.props.pageSetting.showHeader) {
-            contentHeight -= this.props.themeConfig.headerHeight;
+        var gridsterWidth = this.props.width;
+        if (this.props.padding) {
+            $("#main-grid").css("padding", this.props.padding.join(" "));
+            $("#main-grid>ul").css("width", "100%");
+            $("#main-grid>ul").css("height", "100%");
         }
-        if (this.props.pageSetting.showFooter) {
-            contentHeight -= this.props.themeConfig.footerHeight;
-        }
-        var contentWidth =  this.props.pageSetting.width*screenCount
-            - this.props.themeConfig.padding[1] - this.props.themeConfig.padding[3];
-
-        $("#main-grid>ul").css("min-height", contentHeight);
-        $("#main-grid>ul").css("margin-left", this.props.themeConfig.padding[3]);
 
         $("#main-grid>ul").gridster(_.extend({
             namespace: '#main-grid',
-            widget_base_dimensions: [(contentWidth) / 12 - 2, (contentHeight) / 10 - 2],
+            widget_base_dimensions: [(this.props.width) / 12 - 2, (this.props.height) / 10 - 2],
             draggable: {
                 start: function() {
                     layout.startDraging = true;
@@ -425,12 +429,18 @@ var GridLayout = React.createClass({
         src.remove_widget(li);
     },
 
-    returnGridster: function() {
+    enableGridster: function() {
         $(".gridster ul").gridster().data('gridster').enable().enable_resize();
         $(".gridster ul li.current").removeClass("current");
     },
 
-    initBlockEvents: function() {
+    initBlockEvents: function(block) {
+        $(block).off("click").on("click", function(event) {
+            event.stopPropagation();
+            $(".gridster ul li.current").removeClass("current");
+            $(this).addClass("current");
+            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
+        });
         var gridlayout = this;
         $(".gridster li").unbind('click').bind("click", function(event) {
             event.stopPropagation();
@@ -444,7 +454,6 @@ var GridLayout = React.createClass({
             //gridlayout.props.editBlock($(this).data("btype"));
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
         });
-
         tinymce.init({
             selector: '.gridster li .rtf',
             inline: true,
@@ -453,16 +462,10 @@ var GridLayout = React.createClass({
         });
     },
 
-    closeEditing: function() {
-
-    },
-
     render: function () {
         return (
             <div className={this.state.layoutable?"layoutable":"editable"}>
-                <div className="gridster" id="main-grid" style={{
-                    width: (this.props.doubleScreen&&this.props.expandMode===2)? this.props.width*2: this.props.width
-                }}>
+                <div className="gridster" id="main-grid">
                     <ul></ul>
                 </div>
                 <div className="gridster" id="extra-grid">

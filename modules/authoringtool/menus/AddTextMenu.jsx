@@ -1,9 +1,10 @@
 var React = require('react');
 
+var postal = require("postal");
+
 var AddTextMenu = React.createClass({
     getInitialState: function () {
         return {
-
         }
     },
 
@@ -25,15 +26,28 @@ var AddTextMenu = React.createClass({
         while(!ele.data("template")) {
             ele = ele.parent();
         }
-        var sizex = ele.data("width");
-        var sizey = ele.data("height");
-        if (sizex) sizex = parseInt(sizex);
-        if (sizey) sizey = parseInt(sizey);
-
+        var size_x = ele.data("width");
+        var size_y = ele.data("height");
+        if (size_x) size_x = parseInt(size_x);
+        if (size_y) size_y = parseInt(size_y);
         var template = ele.data("template");
-        this.props.addBlock(template, sizex, sizey);
-        this.props.parentStateChange({showBlockTypes: false});
+
+        postal.publish({
+            channel: "block",
+            topic: "add",
+            data: {
+                type: "text",
+                html: template,
+                size_x: size_x,
+                size_y: size_y
+            }
+        });
+        postal.publish({
+            channel: "workspace",
+            topic: "reset"
+        });
     },
+
     render: function () {
         return (
             <div className="textTemplateLists" data-show={this.props.show}>
