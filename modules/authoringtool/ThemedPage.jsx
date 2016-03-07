@@ -18,6 +18,7 @@ var PageOperation = require("./PageOperation");
 var ThemedPage = React.createClass({
 
     themeConfig: null,
+    lastProps: null,
 
     getInitialState: function () {
       return {
@@ -94,15 +95,28 @@ var ThemedPage = React.createClass({
 
     componentDidMount: function () {
         this.loadTheme();
+        this.lastProps = this.props;
     },
 
-    componentWillReceiveProps: function(nextProps) {
+    shouldComponentUpdate: function(nextProps, nextState) {
         if (nextProps.themeName!=this.props.themeName) {
             this.loadTheme();
+            return;
         }
+
+        if (this.lastProps.pageSetting.doubleScreen != nextProps.pageSetting.doubleScreen) {
+            /*Switching double screen*/
+            console.log("set screen mode to " +  nextProps.pageSetting.doubleScreen);
+        }
+
+        this.lastProps = nextProps;
+        return true;
+
     },
 
     getPortraitCutLayout: function() {
+        console.log("===================portrait cut mode================================");
+
         $(".footer").css("position", "absolute").css("bottom", 0).css("right", 0).css("width", this.props.pageSetting.width);
         $(".header").css("position", "absolute").css("top", 0).css("left", 0).css("width", this.props.pageSetting.width);
 
@@ -129,6 +143,7 @@ var ThemedPage = React.createClass({
         };
 
         console.log("main style", mainStyle);
+
         var mainGrid = <Gridster ref="main-grid" id="main-grid" style={mainStyle}/>;
         var extraStyle = {
             position: "absolute",
@@ -187,7 +202,7 @@ var ThemedPage = React.createClass({
         var layout = <div ref="layout"/>;
         if (this.state.themeConfig) {
             /*When theme config loaded£¬ reset the layout frame*/
-            console.log("render after theme load ", this.state.themeConfig, this.props.pageSetting);
+            console.log("render loading pages ", this.state.themeConfig, this.props.pageSetting);
             if (this.props.pageSetting.doubleScreen) {
                 if (this.props.pageSetting.expandMode===1) {  //portrait cut model
                     layout = this.getPortraitCutLayout();

@@ -87,7 +87,7 @@ var PageToolWorkspace = React.createClass({
             <div className="tool-workspace" onClick={this.onclick}>
                 <LeftMenu ref="leftmenu" configurationChangedCallback={this.pageSettingChanged} pageSetting={this.state.pageSetting}/>
 
-                <ThemedPage ref="page" data={this.props.data} themeName={this.state.themeName} pageSetting={this.state.pageSetting}/>
+                <ThemedPage ref="page" data={this.props.data} themeName={this.state.themeName} doubleScreen={this.state.pageSetting.doubleScreen} pageSetting={this.state.pageSetting}/>
 
                 <RightPanel display={this.state.showPanel} panel={this.state.panel}/>
 
