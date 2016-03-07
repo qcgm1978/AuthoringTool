@@ -104,15 +104,38 @@ var ThemedPage = React.createClass({
             return;
         }
 
-        if (this.lastProps.pageSetting.doubleScreen != nextProps.pageSetting.doubleScreen) {
+        console.log("should update", nextProps, this.props.doubleScreen);
+        if (this.props.doubleScreen != nextProps.doubleScreen) {
             /*Switching double screen*/
-            console.log("set screen mode to " +  nextProps.pageSetting.doubleScreen);
+            console.log("set screen mode to " +  nextProps.doubleScreen);
+            if(this.props.doubleScreen) {
+                if (this.refs["extra-grid"]) {
+                    PageOperation.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
+                }
+                PageOperation.data.doubleScreenLeftWidgets = this.refs["main-grid"].getGridData();
+            } else {
+                //extrat and save content
+                $("#main-grid ul>li").each(function() {
+                    //use interface factory mode to identify each type of content
+                    var type = $(this).data("type");
+                    if (type==="text") {
+                        PageOperation.data.widgetContents[$(this).data("id")] = $(this).find(".rtf").html();
+                    }
+                });
+                PageOperation.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
+                if(PageOperation.data.doubleScreenLeftWidgets.length===0) {
+                    PageOperation.data.doubleScreenLeftWidgets = PageOperation.data.singleScreenWidgets;
+                }
+            }
         }
 
+        console.log(PageOperation);
         this.lastProps = nextProps;
         return true;
-
     },
+
+
+
 
     getPortraitCutLayout: function() {
         console.log("===================portrait cut mode================================");
