@@ -117,12 +117,7 @@ var Gridster = React.createClass({
             min_cols: 12,
             min_rows: 10,
             serialize_params: function ($w, wgd) {
-                var cli = $w.clone();
-                cli.find(".gs-resize-handle").remove();
-                cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
-                    .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
                 return {
-                    content: cli.html(),
                     id: $w.data('id'),
                     col: wgd.col,
                     row: wgd.row,
@@ -134,34 +129,16 @@ var Gridster = React.createClass({
         $("#" + this.props.id + ">ul").gridster(options);
     },
 
-    /**When propeties and states change */
+    /**
+     * When propeties and states change
+     * */
     componentWillUpdate : function(nextProps, nextState) {
 
     },
 
     /**Extract n save grid data*/
     getGridData: function() {
-        var layout = this;
-        /**cache the state of grids by current screen(s) content*/
-
-        if (this.props.doubleScreen===true) {
-            //current double screen setting
-            this.data.doubleScreenLeftWidgets = pured("#main-grid>ul");
-            this.data.doubleScreenRightWidgets = pured("#extra-grid>ul");
-        } else {
-            //current single screeny setting
-            this.data.singleScreenWidgets = pured("#main-grid>ul");
-        }
-
-        function pured(id) {
-            var wlist =  $("#" + this.props.gid + ">ul").gridster().data('gridster').serialize();
-            $(wlist).each(function() {
-                layout.data.widgetContents[this.id] = this.content;
-                delete this.content;
-            });
-            return wlist;
-        }
-        return this.data;
+        return $("#" + this.props.id + ">ul").gridster().data('gridster').serialize();
     },
 
     /**Load gridster widgets from layout.data */
@@ -217,7 +194,7 @@ var Gridster = React.createClass({
     },
 
     initBlockEvents: function(blockId) {
-        $("li[data-disabled='" + blockId + "']").off("click").on("click", function(event) {
+        $("li[data-id='" + blockId + "']").off("click").on("click", function(event) {
             console.log("clicked");
             event.stopPropagation();
             if (PageOperation.dragging) return;
