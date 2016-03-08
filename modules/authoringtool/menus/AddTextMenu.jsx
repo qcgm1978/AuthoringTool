@@ -52,7 +52,7 @@ var AddTextMenu = React.createClass({
         return (
             <div className="textTemplateLists" data-show={this.props.show}>
                 <div onClick={this.addTextBlock} data-template={this.BLOCK_PARAGRAPH}><span className="glyphicon glyphicon-align-justify"/><div className="rtf">Paragraph</div></div>
-                <div onClick={this.addTextBlock} data-width="12" data-height="1" data-template={this.BLOCK_H1}><span className="glyphicon">H1</span><div className="rtf">Heading 1</div></div>
+                <div onClick={this.addTextBlock} data-template={this.BLOCK_H1}><span className="glyphicon">H1</span><div className="rtf">Heading 1</div></div>
                 <div onClick={this.addTextBlock} data-width="12" data-height="1" data-template={this.BLOCK_H2}><span className="glyphicon">H2</span><div className="rtf">Heading 2</div></div>
                 <div onClick={this.addTextBlock} data-width="12" data-height="1" data-template={this.BLOCK_H3}><span className="glyphicon">H3</span><div className="rtf">Heading 3</div></div>
             </div>

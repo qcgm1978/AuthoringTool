@@ -3694,7 +3694,6 @@
         return this.add_style_tag(styles);
     };
 
-
     /**
     * Injects the given CSS as string to the head of the document.
     *
@@ -3708,6 +3707,10 @@
 
         d.getElementsByTagName('head')[0].appendChild(tag);
         tag.setAttribute('type', 'text/css');
+
+        if(this.options.namespace) {
+            tag.setAttribute("id", "style-" + this.options.namespace.substring(1));
+        }
 
         if (tag.styleSheet) {
             tag.styleSheet.cssText = css;

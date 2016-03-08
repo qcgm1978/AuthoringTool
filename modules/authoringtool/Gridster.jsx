@@ -46,9 +46,11 @@ var Gridster = React.createClass({
     startDraging: false,
 
     componentDidMount: function () {
-        var gridster = this;
         this.initGridster();
+        this.loadGridData();
         this.bindEvent();
+
+        var gridster = this;
         postal.subscribe({
             channel: "workspace",
             topic: "reset",
@@ -57,7 +59,6 @@ var Gridster = React.createClass({
                 $("#" + gridster.props.id + " ul").gridster().data('gridster').enable().enable_resize();
             }
         });
-
     },
 
     /**When mouse over(drag in、dragging) mouse out(drag out) mouseup( dragin effects)*/
@@ -78,20 +79,28 @@ var Gridster = React.createClass({
     },
 
     initGridster: function() {
+        //remove old styles
+        var gridster = this;
+        $("#style-" + this.props.id).remove();
+
+
+        $("#" + this.props.id + ">ul").remove();
+        $("#" + this.props.id).append("<ul/>");
         var options = {
             namespace: '#' + this.props.id,
             widget_margins: [1, 1],
-            widget_base_dimensions: [(this.props.style.width) / 12 - 2, (this.props.style.height) / 10 - 2],
+            widget_base_dimensions: [(this.props.style.width) / 12 - 2, (this.props.style.minHeight) / 10 - 2],
             draggable: {
                 start: function(event, ui) {
-                    PageOperation.dragging = true;
-                    PageOperation.dragged = ui;
-                    console.log("drag of start");
+
                 },
+                drag: function(event, ui) {
+                    console.log("left", ui.pointer.left);
+                    console.log("top", ui.pointer.top);
+                },
+
                 stop: function(event, ui) {
-                    PageOperation.dragging = false;
-                    PageOperation.dragged = null;
-                    console.log("drag of stop");
+                    console.log(event, ui);
                     /**
                      * When on double screen and the expand mode is 'extra' or 'portrait',
                      * Move the widget from left to right
@@ -105,13 +114,10 @@ var Gridster = React.createClass({
             resize: {
                 enabled: true,
                 start: function() {
-                    PageOperation.resizing = true;
                 },
                 resize: function() {
-                    console.log("resizing");
                 },
                 stop: function() {
-                    PageOperation.resizing = false;
                 }
             },
             min_cols: 12,
@@ -119,6 +125,7 @@ var Gridster = React.createClass({
             serialize_params: function ($w, wgd) {
                 return {
                     id: $w.data('id'),
+                    type: $w.data("type"),
                     col: wgd.col,
                     row: wgd.row,
                     size_x: wgd.size_x,
@@ -126,6 +133,8 @@ var Gridster = React.createClass({
                 };
             }
         };
+
+        var gridster = this;
         $("#" + this.props.id + ">ul").gridster(options);
     },
 
@@ -138,34 +147,28 @@ var Gridster = React.createClass({
 
     /**Extract n save grid data*/
     getGridData: function() {
+
         return $("#" + this.props.id + ">ul").gridster().data('gridster').serialize();
     },
 
     /**Load gridster widgets from layout.data */
     loadGridData: function() {
-        var layout = this;
-        if (layout.props.doubleScreen) {
-            foreachAddWidget("#main-grid > ul", layout.data.doubleScreenLeftWidgets);
-            foreachAddWidget("#extra-grid > ul", layout.data.doubleScreenRightWidgets);
-        } else {
-            foreachAddWidget("#main-grid > ul", layout.data.singleScreenWidgets);
-        }
-        function foreachAddWidget(selector, data) {
-            var gridster = $(selector).gridster().data('gridster');
-            $.each(data, function() {
-                var li = "<li data-id='" + this.id + "'>" + layout.data.widgetContents[this.id] + "</li>";
-                gridster.add_widget(li, this.size_x, this.size_y, this.col, this.row);
+        var gridster = this;
+        if (this.props.data) {
+            _.each(this.props.data, function(data) {
+                gridster.addBlock(data.type,PageOperation.data.widgetContents[data.id], data.size_x, data.size_y, data.col, data.row, data.id);
             });
         }
     },
 
     componentDidUpdate: function (prevProps, prevState) {
-
+        this.initGridster();
+        this.loadGridData();
     },
 
-    addBlock: function (type, content, size_x, size_y, pos_x, pos_y) {
+    addBlock: function (type, content, size_x, size_y, pos_x, pos_y, blockId) {
+        console.debug("+block " + type, content, size_x, size_y,pos_x,pos_y);
         var gridster = $("#" + this.props.id + " ul").gridster().data('gridster');
-        console.log(gridster);
         if (!size_x) {
             size_x = 12;
         }
@@ -179,29 +182,26 @@ var Gridster = React.createClass({
         if (!pos_y) {
             pos_y = 10;
         }
-        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
+
+        if (!blockId) {
+            blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
+        }
         gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
         this.initBlockEvents(blockId);
-        /*
-        this.data.doubleScreenLeftWidgets.push({
-            id: blockId,
-            col: 1,
-            row: 100,
-            size_x: sizex,
-            size_y: sizey
-        });
-        */
     },
 
     initBlockEvents: function(blockId) {
         $("li[data-id='" + blockId + "']").off("click").on("click", function(event) {
-            console.log("clicked");
+            console.log($(this).attr("class"));
+            if ($(this).hasClass("player-revert") || $(this).hasClass("resizing")) {
+                console.log("return");
+                return;
+            }
             event.stopPropagation();
-            if (PageOperation.dragging) return;
-
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
+            console.log("click end!");
         });
         tinymce.init({
             selector: '.gridster li .rtf',

@@ -99,15 +99,16 @@ var ThemedPage = React.createClass({
     },
 
     shouldComponentUpdate: function(nextProps, nextState) {
+        if (this.state.themeConfig===null) return true;
+
         if (nextProps.themeName!=this.props.themeName) {
             this.loadTheme();
-            return;
+            return true;
         }
 
-        console.log("should update", nextProps, this.props.doubleScreen);
-        if (this.props.doubleScreen != nextProps.doubleScreen) {
+        console.log("********************************Page Update******************************");
+        //if (this.props.doubleScreen != nextProps.doubleScreen) {
             /*Switching double screen*/
-            console.log("set screen mode to " +  nextProps.doubleScreen);
             if(this.props.doubleScreen) {
                 if (this.refs["extra-grid"]) {
                     PageOperation.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
@@ -118,8 +119,10 @@ var ThemedPage = React.createClass({
                 $("#main-grid ul>li").each(function() {
                     //use interface factory mode to identify each type of content
                     var type = $(this).data("type");
+                    $(this).remove("span.gs-resize-handle");
                     if (type==="text") {
-                        PageOperation.data.widgetContents[$(this).data("id")] = $(this).find(".rtf").html();
+                        $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
+                        PageOperation.data.widgetContents[$(this).data("id")] = $(this).html();
                     }
                 });
                 PageOperation.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
@@ -127,15 +130,10 @@ var ThemedPage = React.createClass({
                     PageOperation.data.doubleScreenLeftWidgets = PageOperation.data.singleScreenWidgets;
                 }
             }
-        }
-
-        console.log(PageOperation);
+        //}
         this.lastProps = nextProps;
         return true;
     },
-
-
-
 
     getPortraitCutLayout: function() {
         console.log("===================portrait cut mode================================");
@@ -162,21 +160,17 @@ var ThemedPage = React.createClass({
             left: this.state.themeConfig.padding[3],
             top: $(".header").height() + parseInt(this.state.themeConfig.padding[0]),
             width: contentWidth,
-            height: mainHeight
+            minHeight: mainHeight
         };
-
-        console.log("main style", mainStyle);
-
-        var mainGrid = <Gridster ref="main-grid" id="main-grid" style={mainStyle}/>;
+        var mainGrid = <Gridster ref="main-grid" id="main-grid" data={PageOperation.data.doubleScreenLeftWidgets} style={mainStyle}/>;
         var extraStyle = {
             position: "absolute",
             right: this.state.themeConfig.padding[1],
             bottom: $(".footer").height() + parseInt(this.state.themeConfig.padding[2]),
             width: contentWidth,
-            height: extraHeight
+            minHeight: extraHeight
         };
-        console.log("extra style", extraStyle);
-        var extraGrid =  <Gridster ref="extra-grid" id="extra-grid" style={extraStyle}/>;
+        var extraGrid =  <Gridster ref="extra-grid" id="extra-grid" data={PageOperation.data.doubleScreenRightWidgets} style={extraStyle}/>;
         return <div>
             {mainGrid}
             {extraGrid}
@@ -193,12 +187,12 @@ var ThemedPage = React.createClass({
         var mainStyle = {
             width: width- parseInt(this.state.themeConfig.padding[0])
             - parseInt(this.state.themeConfig.padding[2]),
-            height: minHeight,
+            minHeight: minHeight,
             marginLeft: this.state.themeConfig.padding[3],
             marginTop: this.state.themeConfig.padding[0],
             marginBottom: this.state.themeConfig.padding[2],
         };
-        return (<Gridster ref="main-grid" id="main-grid" style={mainStyle}/>);
+        return (<Gridster ref="main-grid" id="main-grid" data={PageOperation.data.singleScreenWidgets} style={mainStyle}/>);
     },
 
     getExtraLayout: function() {
@@ -209,7 +203,6 @@ var ThemedPage = React.createClass({
             top: 0,
             width: this.props.pageSetting.width
         };
-
         var main = this.getSingleLayout(this.props.pageSetting.width);
         return <div>
                 {main}
@@ -225,7 +218,12 @@ var ThemedPage = React.createClass({
         var layout = <div ref="layout"/>;
         if (this.state.themeConfig) {
             /*When theme config loaded£¬ reset the layout frame*/
-            console.log("render loading pages ", this.state.themeConfig, this.props.pageSetting);
+
+            console.log("*****************render loading themed page************************")
+            console.log("theme: ", this.state.themeConfig);
+            console.log("preview setting: ", this.props.pageSetting);
+
+
             if (this.props.pageSetting.doubleScreen) {
                 if (this.props.pageSetting.expandMode===1) {  //portrait cut model
                     layout = this.getPortraitCutLayout();
@@ -245,7 +243,7 @@ var ThemedPage = React.createClass({
             <div className="screen" style={{
                 position: "relative",
                 width: this.props.pageSetting.doubleScreen?(this.props.pageSetting.width*2):this.props.pageSetting.width,
-                height: this.props.pageSetting.height
+                minHeight: this.props.pageSetting.height
             }}>
                 <div className="styles"></div>
                 <div className="header" style={{
