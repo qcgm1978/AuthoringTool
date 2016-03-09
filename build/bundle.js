@@ -3474,7 +3474,7 @@
 	    * @method add_style_tag
 	    * @param {String} css The styles to apply.
 	    * @return {Object} Returns the instance of the Gridster class.
-	    */fn.add_style_tag=function(css){var d=document;var tag=d.createElement('style');d.getElementsByTagName('head')[0].appendChild(tag);tag.setAttribute('type','text/css');if(tag.styleSheet){tag.styleSheet.cssText=css;}else {tag.appendChild(document.createTextNode(css));}this.$style_tags=this.$style_tags.add(tag);return this;}; /**
+	    */fn.add_style_tag=function(css){var d=document;var tag=d.createElement('style');d.getElementsByTagName('head')[0].appendChild(tag);tag.setAttribute('type','text/css');if(this.options.namespace){tag.setAttribute("id","style-"+this.options.namespace.substring(1));}if(tag.styleSheet){tag.styleSheet.cssText=css;}else {tag.appendChild(document.createTextNode(css));}this.$style_tags=this.$style_tags.add(tag);return this;}; /**
 	    * Remove the style tag with the associated id from the head of the document
 	    *
 	    * @method  remove_style_tag
@@ -3576,7 +3576,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.tool-workspace {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .tool-workspace .leftMenu {\n    position: absolute;\n    left: 30px;\n    top: 70px;\n    z-index: 1101; }\n    .tool-workspace .leftMenu span.glyphicon {\n      font-size: 18px;\n      display: block;\n      width: 40px;\n      line-height: 40px;\n      text-align: center;\n      background-color: #F5F5F5;\n      color: #5CB85C;\n      cursor: pointer;\n      -webkit-transition: background-color .1s ease-in;\n      transition: background-color .1s ease-in; }\n      .tool-workspace .leftMenu span.glyphicon.ratio {\n        line-height: 16px;\n        font-size: 12px;\n        padding: 5px 0; }\n      .tool-workspace .leftMenu span.glyphicon[data-disabled='true'] {\n        color: gray; }\n      .tool-workspace .leftMenu span.glyphicon[data-clicked='true'] {\n        background-color: #5CB85C;\n        color: #fff; }\n  .tool-workspace .hidder {\n    position: absolute;\n    left: 0;\n    top: 70px;\n    width: 70px;\n    bottom: 0;\n    z-index: 1100;\n    background-color: #F5F5F5; }\n  .tool-workspace .blockType {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 400px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    z-index: 1099;\n    border-left: 3px solid #5CB85C;\n    background: #fffeff;\n    border-right: 1px solid #bbb;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-transition: -webkit-transform .3s ease-out;\n    transition: transform .3s ease-out;\n    -webkit-transform: translateX(-120%);\n    transform: translateX(-120%); }\n    .tool-workspace .blockType.shown {\n      -webkit-transform: translateX(0);\n      transform: translateX(0); }\n    .tool-workspace .blockType ul.category-list {\n      background-color: #5CB85C;\n      display: inline-block;\n      height: 100%;\n      padding: 14px 0;\n      vertical-align: top; }\n      .tool-workspace .blockType ul.category-list li.category {\n        text-align: center;\n        color: #fff;\n        cursor: pointer;\n        font-size: 14px;\n        margin-bottom: 2px;\n        max-height: 30px;\n        min-height: 14px;\n        padding: 0 10px 0 3px;\n        position: relative; }\n        .tool-workspace .blockType ul.category-list li.category span {\n          border-radius: 20px;\n          display: inline-block;\n          height: 100%;\n          overflow: hidden;\n          padding: 0 14px;\n          position: relative; }\n          .tool-workspace .blockType ul.category-list li.category span.current {\n            background-color: rgba(0, 0, 0, 0.2);\n            box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n    .tool-workspace .blockType .textTemplateLists {\n      display: inline-block;\n      padding: 10px;\n      width: 310px; }\n      .tool-workspace .blockType .textTemplateLists > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .textTemplateLists > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .textTemplateLists > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType .chooseImage {\n      display: inline-block;\n      width: 500px;\n      height: 380px; }\n      .tool-workspace .blockType .chooseImage .zone {\n        margin: 10px;\n        border: 2px dashed #999;\n        padding: 10px;\n        height: 370px;\n        text-align: center;\n        font-size: 18px; }\n    .tool-workspace .blockType .menuActivityList {\n      display: inline-block;\n      width: 500px;\n      padding: 10px; }\n      .tool-workspace .blockType .menuActivityList > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .menuActivityList > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .menuActivityList > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType [data-show='false'] {\n      display: none; }\n  .tool-workspace .pageConfig {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 300px;\n    width: 300px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    background-color: #fff;\n    z-index: 1100;\n    padding: 10px; }\n    .tool-workspace .pageConfig > div {\n      padding: 5px; }\n  .tool-workspace .screen {\n    position: relative;\n    background-color: #fff;\n    overflow: hidden; }\n    .tool-workspace .screen > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .tool-workspace .screen > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .tool-workspace .screen > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .tool-workspace .screen > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n  .tool-workspace .rightPanel {\n    position: absolute;\n    background: #FFFEFF;\n    z-index: 110001;\n    display: block;\n    top: 65px;\n    right: 26px;\n    border: 1px solid #bbb;\n    border-radius: 7px;\n    -moz-border-radius: 7px;\n    -webkit-border-radius: 7px;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    min-width: 420px; }\n    .tool-workspace .rightPanel .pn-header {\n      position: relative;\n      line-height: 44px;\n      height: 44px;\n      border-bottom: 1px solid #E2E2E2;\n      padding: 0 30px 0 10px;\n      font-size: 18px;\n      font-weight: 600; }\n      .tool-workspace .rightPanel .pn-header .btn-close {\n        position: absolute;\n        right: 10px;\n        top: 0;\n        line-height: 44px;\n        height: 100%;\n        color: #b3b3b3; }\n    .tool-workspace .rightPanel .pn-body {\n      padding: 10px; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster {\n  background-color: #edfdda; }\n  .gridster ul.dragged {\n    background-color: #FFF694; }\n  .gridster ul li .content {\n    width: 100%;\n    height: 100%; }\n  .gridster ul li:hover {\n    border: 2px dashed green; }\n  .gridster ul li.current {\n    border: 2px solid #FB9221; }\n\n.right-block {\n  float: right; }\n\n.example-enter {\n  opacity: 0.01; }\n\n.example-enter.example-enter-active {\n  opacity: 1;\n  transition: opacity 500ms ease-in; }\n\n.example-leave {\n  opacity: 1; }\n\n.example-leave.example-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in; }\n", ""]);
+	exports.push([module.id, "* {\n  padding: 0;\n  margin: 0;\n  -webkit-tap-highlight-color: transparent;\n  box-sizing: border-box; }\n\nhtml {\n  font-size: 14px;\n  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif; }\n\nbody {\n  background-color: #F5F5F5;\n  overflow-y: scroll; }\n\n.template, .hidden {\n  display: none; }\n\n.tools-bar {\n  background-color: #444;\n  color: #fff;\n  height: 60px;\n  line-height: 60px; }\n  .tools-bar button {\n    background-color: #444; }\n\n.tool-workspace {\n  -webkit-transform-origin: 0 0;\n  margin-top: 70px;\n  margin-left: 70px; }\n  .tool-workspace .leftMenu {\n    position: absolute;\n    left: 30px;\n    top: 70px;\n    z-index: 1101; }\n    .tool-workspace .leftMenu span.glyphicon {\n      font-size: 18px;\n      display: block;\n      width: 40px;\n      line-height: 40px;\n      text-align: center;\n      background-color: #F5F5F5;\n      color: #5CB85C;\n      cursor: pointer;\n      -webkit-transition: background-color .1s ease-in;\n      transition: background-color .1s ease-in; }\n      .tool-workspace .leftMenu span.glyphicon.ratio {\n        line-height: 16px;\n        font-size: 12px;\n        padding: 5px 0; }\n      .tool-workspace .leftMenu span.glyphicon[data-disabled='true'] {\n        color: gray; }\n      .tool-workspace .leftMenu span.glyphicon[data-clicked='true'] {\n        background-color: #5CB85C;\n        color: #fff; }\n  .tool-workspace .hidder {\n    position: absolute;\n    left: 0;\n    top: 70px;\n    width: 70px;\n    bottom: 0;\n    z-index: 1100;\n    background-color: #F5F5F5; }\n  .tool-workspace .blockType {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 400px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    z-index: 1099;\n    border-left: 3px solid #5CB85C;\n    background: #fffeff;\n    border-right: 1px solid #bbb;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-transition: -webkit-transform .3s ease-out;\n    transition: transform .3s ease-out;\n    -webkit-transform: translateX(-120%);\n    transform: translateX(-120%); }\n    .tool-workspace .blockType.shown {\n      -webkit-transform: translateX(0);\n      transform: translateX(0); }\n    .tool-workspace .blockType ul.category-list {\n      background-color: #5CB85C;\n      display: inline-block;\n      height: 100%;\n      padding: 14px 0;\n      vertical-align: top; }\n      .tool-workspace .blockType ul.category-list li.category {\n        text-align: center;\n        color: #fff;\n        cursor: pointer;\n        font-size: 14px;\n        margin-bottom: 2px;\n        max-height: 30px;\n        min-height: 14px;\n        padding: 0 10px 0 3px;\n        position: relative; }\n        .tool-workspace .blockType ul.category-list li.category span {\n          border-radius: 20px;\n          display: inline-block;\n          height: 100%;\n          overflow: hidden;\n          padding: 0 14px;\n          position: relative; }\n          .tool-workspace .blockType ul.category-list li.category span.current {\n            background-color: rgba(0, 0, 0, 0.2);\n            box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.11), inset 1px 1px 2px rgba(0, 0, 0, 0.15); }\n    .tool-workspace .blockType .textTemplateLists {\n      display: inline-block;\n      padding: 10px;\n      width: 310px; }\n      .tool-workspace .blockType .textTemplateLists > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .textTemplateLists > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .textTemplateLists > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType .chooseImage {\n      display: inline-block;\n      width: 500px;\n      height: 380px; }\n      .tool-workspace .blockType .chooseImage .zone {\n        margin: 10px;\n        border: 2px dashed #999;\n        padding: 10px;\n        height: 370px;\n        text-align: center;\n        font-size: 18px; }\n    .tool-workspace .blockType .menuActivityList {\n      display: inline-block;\n      width: 500px;\n      padding: 10px; }\n      .tool-workspace .blockType .menuActivityList > div {\n        display: block;\n        padding: 10px;\n        margin: 10px 0;\n        border-radius: 5px;\n        border: 1px solid #ccc;\n        font-size: 18px;\n        color: #666; }\n        .tool-workspace .blockType .menuActivityList > div span.glyphicon {\n          float: left;\n          margin-right: 10px; }\n        .tool-workspace .blockType .menuActivityList > div:hover {\n          color: #222;\n          cursor: pointer;\n          border: 1px dashed green; }\n    .tool-workspace .blockType [data-show='false'] {\n      display: none; }\n  .tool-workspace .pageConfig {\n    border: 1px solid #ccc;\n    position: fixed;\n    top: 70px;\n    height: 300px;\n    width: 300px;\n    left: 70px;\n    box-sizing: border-box;\n    border-radius: 0 8px 8px 0;\n    overflow: hidden;\n    background-color: #fff;\n    z-index: 1100;\n    padding: 10px; }\n    .tool-workspace .pageConfig > div {\n      padding: 5px; }\n  .tool-workspace .screen {\n    position: relative;\n    background-color: #fff; }\n    .tool-workspace .screen > div .gridpanel {\n      display: none;\n      position: absolute;\n      bottom: 0;\n      left: 0;\n      width: 100%;\n      background: rgba(0, 0, 0, 0.7);\n      line-height: 40px; }\n    .tool-workspace .screen > div.editable .gs-w {\n      border: 1px solid transparent; }\n      .tool-workspace .screen > div.editable .gs-w:hover {\n        border: 1px solid green; }\n        .tool-workspace .screen > div.editable .gs-w:hover .gridpanel {\n          display: block; }\n  .tool-workspace .rightPanel {\n    position: absolute;\n    background: #FFFEFF;\n    z-index: 110001;\n    display: block;\n    top: 65px;\n    right: 26px;\n    border: 1px solid #bbb;\n    border-radius: 7px;\n    -moz-border-radius: 7px;\n    -webkit-border-radius: 7px;\n    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.25);\n    min-width: 420px; }\n    .tool-workspace .rightPanel .pn-header {\n      position: relative;\n      line-height: 44px;\n      height: 44px;\n      border-bottom: 1px solid #E2E2E2;\n      padding: 0 30px 0 10px;\n      font-size: 18px;\n      font-weight: 600; }\n      .tool-workspace .rightPanel .pn-header .btn-close {\n        position: absolute;\n        right: 10px;\n        top: 0;\n        line-height: 44px;\n        height: 100%;\n        color: #b3b3b3; }\n    .tool-workspace .rightPanel .pn-body {\n      padding: 10px; }\n\n.navbar select {\n  padding: 8px;\n  margin: 8px; }\n\n.navbar input {\n  margin: 16px; }\n\n.navbar li.save {\n  margin-left: 100px;\n  margin-right: 30px;\n  line-height: 50px; }\n  .navbar li.save button {\n    margin: 0 10px; }\n\nsvg.gridLines {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 300%;\n  shape-rendering: crispEdges;\n  z-index: 99;\n  pointer-events: none; }\n  svg.gridLines line.frontLine {\n    stroke: #5CB85C;\n    stroke-dasharray: 5 5; }\n  svg.gridLines line {\n    stroke-width: 1; }\n\n.gridster {\n  background-color: #edfdda; }\n  .gridster ul.dragged {\n    background-color: #FFF694; }\n  .gridster ul li .content {\n    width: 100%;\n    height: 100%; }\n  .gridster ul li:hover {\n    border: 2px dashed green; }\n  .gridster ul li.current {\n    border: 2px solid #FB9221; }\n\n.right-block {\n  float: right; }\n\n.example-enter {\n  opacity: 0.01; }\n\n.example-enter.example-enter-active {\n  opacity: 1;\n  transition: opacity 500ms ease-in; }\n\n.example-leave {\n  opacity: 1; }\n\n.example-leave.example-leave-active {\n  opacity: 0.01;\n  transition: opacity 300ms ease-in; }\n", ""]);
 
 	// exports
 
@@ -23664,37 +23664,38 @@
 	    },
 
 	    shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+	        if (this.state.themeConfig === null) return true;
+
 	        if (nextProps.themeName != this.props.themeName) {
 	            this.loadTheme();
-	            return;
+	            return true;
 	        }
 
-	        console.log("should update", nextProps, this.props.doubleScreen);
-	        if (this.props.doubleScreen != nextProps.doubleScreen) {
-	            /*Switching double screen*/
-	            console.log("set screen mode to " + nextProps.doubleScreen);
-	            if (this.props.doubleScreen) {
-	                if (this.refs["extra-grid"]) {
-	                    PageOperation.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
+	        console.log("********************************Page Update******************************");
+	        //if (this.props.doubleScreen != nextProps.doubleScreen) {
+	        /*Switching double screen*/
+	        if (this.props.doubleScreen) {
+	            if (this.refs["extra-grid"]) {
+	                PageOperation.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
+	            }
+	            PageOperation.data.doubleScreenLeftWidgets = this.refs["main-grid"].getGridData();
+	        } else {
+	            //extrat and save content
+	            $("#main-grid ul>li").each(function () {
+	                //use interface factory mode to identify each type of content
+	                var type = $(this).data("type");
+	                $(this).remove("span.gs-resize-handle");
+	                if (type === "text") {
+	                    $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style");
+	                    PageOperation.data.widgetContents[$(this).data("id")] = $(this).html();
 	                }
-	                PageOperation.data.doubleScreenLeftWidgets = this.refs["main-grid"].getGridData();
-	            } else {
-	                //extrat and save content
-	                $("#main-grid ul>li").each(function () {
-	                    //use interface factory mode to identify each type of content
-	                    var type = $(this).data("type");
-	                    if (type === "text") {
-	                        PageOperation.data.widgetContents[$(this).data("id")] = $(this).find(".rtf").html();
-	                    }
-	                });
-	                PageOperation.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
-	                if (PageOperation.data.doubleScreenLeftWidgets.length === 0) {
-	                    PageOperation.data.doubleScreenLeftWidgets = PageOperation.data.singleScreenWidgets;
-	                }
+	            });
+	            PageOperation.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
+	            if (PageOperation.data.doubleScreenLeftWidgets.length === 0) {
+	                PageOperation.data.doubleScreenLeftWidgets = PageOperation.data.singleScreenWidgets;
 	            }
 	        }
-
-	        console.log(PageOperation);
+	        //}
 	        this.lastProps = nextProps;
 	        return true;
 	    },
@@ -23717,21 +23718,17 @@
 	            left: this.state.themeConfig.padding[3],
 	            top: $(".header").height() + parseInt(this.state.themeConfig.padding[0]),
 	            width: contentWidth,
-	            height: mainHeight
+	            minHeight: mainHeight
 	        };
-
-	        console.log("main style", mainStyle);
-
-	        var mainGrid = React.createElement(Gridster, { ref: "main-grid", id: "main-grid", style: mainStyle });
+	        var mainGrid = React.createElement(Gridster, { ref: "main-grid", id: "main-grid", data: PageOperation.data.doubleScreenLeftWidgets, style: mainStyle });
 	        var extraStyle = {
 	            position: "absolute",
 	            right: this.state.themeConfig.padding[1],
 	            bottom: $(".footer").height() + parseInt(this.state.themeConfig.padding[2]),
 	            width: contentWidth,
-	            height: extraHeight
+	            minHeight: extraHeight
 	        };
-	        console.log("extra style", extraStyle);
-	        var extraGrid = React.createElement(Gridster, { ref: "extra-grid", id: "extra-grid", style: extraStyle });
+	        var extraGrid = React.createElement(Gridster, { ref: "extra-grid", id: "extra-grid", data: PageOperation.data.doubleScreenRightWidgets, style: extraStyle });
 	        return React.createElement(
 	            "div",
 	            null,
@@ -23746,12 +23743,12 @@
 	        var minHeight = this.props.pageSetting.height - parseInt(this.state.themeConfig.padding[0]) - parseInt(this.state.themeConfig.padding[2]) - (this.props.pageSetting.showHeader ? $(".header").height() : 0) - (this.props.pageSetting.showFooter ? $(".footer").height() : 0);
 	        var mainStyle = {
 	            width: width - parseInt(this.state.themeConfig.padding[0]) - parseInt(this.state.themeConfig.padding[2]),
-	            height: minHeight,
+	            minHeight: minHeight,
 	            marginLeft: this.state.themeConfig.padding[3],
 	            marginTop: this.state.themeConfig.padding[0],
 	            marginBottom: this.state.themeConfig.padding[2]
 	        };
-	        return React.createElement(Gridster, { ref: "main-grid", id: "main-grid", style: mainStyle });
+	        return React.createElement(Gridster, { ref: "main-grid", id: "main-grid", data: PageOperation.data.singleScreenWidgets, style: mainStyle });
 	    },
 
 	    getExtraLayout: function getExtraLayout() {
@@ -23762,7 +23759,6 @@
 	            top: 0,
 	            width: this.props.pageSetting.width
 	        };
-
 	        var main = this.getSingleLayout(this.props.pageSetting.width);
 	        return React.createElement(
 	            "div",
@@ -23780,7 +23776,11 @@
 	        var layout = React.createElement("div", { ref: "layout" });
 	        if (this.state.themeConfig) {
 	            /*When theme config loaded�� reset the layout frame*/
-	            console.log("render loading pages ", this.state.themeConfig, this.props.pageSetting);
+
+	            console.log("*****************render loading themed page************************");
+	            console.log("theme: ", this.state.themeConfig);
+	            console.log("preview setting: ", this.props.pageSetting);
+
 	            if (this.props.pageSetting.doubleScreen) {
 	                if (this.props.pageSetting.expandMode === 1) {
 	                    //portrait cut model
@@ -23804,7 +23804,7 @@
 	            { className: "screen", style: {
 	                    position: "relative",
 	                    width: this.props.pageSetting.doubleScreen ? this.props.pageSetting.width * 2 : this.props.pageSetting.width,
-	                    height: this.props.pageSetting.height
+	                    minHeight: this.props.pageSetting.height
 	                } },
 	            React.createElement("div", { className: "styles" }),
 	            React.createElement("div", { className: "header", style: {
@@ -39016,9 +39016,11 @@
 	    startDraging: false,
 
 	    componentDidMount: function componentDidMount() {
-	        var gridster = this;
 	        this.initGridster();
+	        this.loadGridData();
 	        this.bindEvent();
+
+	        var gridster = this;
 	        postal.subscribe({
 	            channel: "workspace",
 	            topic: "reset",
@@ -39045,20 +39047,25 @@
 	    },
 
 	    initGridster: function initGridster() {
+	        //remove old styles
+	        var gridster = this;
+	        $("#style-" + this.props.id).remove();
+
+	        $("#" + this.props.id + ">ul").remove();
+	        $("#" + this.props.id).append("<ul/>");
 	        var options = {
 	            namespace: '#' + this.props.id,
 	            widget_margins: [1, 1],
-	            widget_base_dimensions: [this.props.style.width / 12 - 2, this.props.style.height / 10 - 2],
+	            widget_base_dimensions: [this.props.style.width / 12 - 2, this.props.style.minHeight / 10 - 2],
 	            draggable: {
-	                start: function start(event, ui) {
-	                    PageOperation.dragging = true;
-	                    PageOperation.dragged = ui;
-	                    console.log("drag of start");
+	                start: function start(event, ui) {},
+	                drag: function drag(event, ui) {
+	                    console.log("left", ui.pointer.left);
+	                    console.log("top", ui.pointer.top);
 	                },
+
 	                stop: function stop(event, ui) {
-	                    PageOperation.dragging = false;
-	                    PageOperation.dragged = null;
-	                    console.log("drag of stop");
+	                    console.log(event, ui);
 	                    /**
 	                     * When on double screen and the expand mode is 'extra' or 'portrait',
 	                     * Move the widget from left to right
@@ -39071,21 +39078,16 @@
 	            },
 	            resize: {
 	                enabled: true,
-	                start: function start() {
-	                    PageOperation.resizing = true;
-	                },
-	                resize: function resize() {
-	                    console.log("resizing");
-	                },
-	                stop: function stop() {
-	                    PageOperation.resizing = false;
-	                }
+	                start: function start() {},
+	                resize: function resize() {},
+	                stop: function stop() {}
 	            },
 	            min_cols: 12,
 	            min_rows: 10,
 	            serialize_params: function serialize_params($w, wgd) {
 	                return {
 	                    id: $w.data('id'),
+	                    type: $w.data("type"),
 	                    col: wgd.col,
 	                    row: wgd.row,
 	                    size_x: wgd.size_x,
@@ -39093,6 +39095,8 @@
 	                };
 	            }
 	        };
+
+	        var gridster = this;
 	        $("#" + this.props.id + ">ul").gridster(options);
 	    },
 
@@ -39103,32 +39107,28 @@
 
 	    /**Extract n save grid data*/
 	    getGridData: function getGridData() {
+
 	        return $("#" + this.props.id + ">ul").gridster().data('gridster').serialize();
 	    },
 
 	    /**Load gridster widgets from layout.data */
 	    loadGridData: function loadGridData() {
-	        var layout = this;
-	        if (layout.props.doubleScreen) {
-	            foreachAddWidget("#main-grid > ul", layout.data.doubleScreenLeftWidgets);
-	            foreachAddWidget("#extra-grid > ul", layout.data.doubleScreenRightWidgets);
-	        } else {
-	            foreachAddWidget("#main-grid > ul", layout.data.singleScreenWidgets);
-	        }
-	        function foreachAddWidget(selector, data) {
-	            var gridster = $(selector).gridster().data('gridster');
-	            $.each(data, function () {
-	                var li = "<li data-id='" + this.id + "'>" + layout.data.widgetContents[this.id] + "</li>";
-	                gridster.add_widget(li, this.size_x, this.size_y, this.col, this.row);
+	        var gridster = this;
+	        if (this.props.data) {
+	            _.each(this.props.data, function (data) {
+	                gridster.addBlock(data.type, PageOperation.data.widgetContents[data.id], data.size_x, data.size_y, data.col, data.row, data.id);
 	            });
 	        }
 	    },
 
-	    componentDidUpdate: function componentDidUpdate(prevProps, prevState) {},
+	    componentDidUpdate: function componentDidUpdate(prevProps, prevState) {
+	        this.initGridster();
+	        this.loadGridData();
+	    },
 
-	    addBlock: function addBlock(type, content, size_x, size_y, pos_x, pos_y) {
+	    addBlock: function addBlock(type, content, size_x, size_y, pos_x, pos_y, blockId) {
+	        console.debug("+block " + type, content, size_x, size_y, pos_x, pos_y);
 	        var gridster = $("#" + this.props.id + " ul").gridster().data('gridster');
-	        console.log(gridster);
 	        if (!size_x) {
 	            size_x = 12;
 	        }
@@ -39142,29 +39142,26 @@
 	        if (!pos_y) {
 	            pos_y = 10;
 	        }
-	        var blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
+
+	        if (!blockId) {
+	            blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
+	        }
 	        gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
 	        this.initBlockEvents(blockId);
-	        /*
-	        this.data.doubleScreenLeftWidgets.push({
-	            id: blockId,
-	            col: 1,
-	            row: 100,
-	            size_x: sizex,
-	            size_y: sizey
-	        });
-	        */
 	    },
 
 	    initBlockEvents: function initBlockEvents(blockId) {
 	        $("li[data-id='" + blockId + "']").off("click").on("click", function (event) {
-	            console.log("clicked");
+	            console.log($(this).attr("class"));
+	            if ($(this).hasClass("player-revert") || $(this).hasClass("resizing")) {
+	                console.log("return");
+	                return;
+	            }
 	            event.stopPropagation();
-	            if (PageOperation.dragging) return;
-
 	            $(".gridster ul li.current").removeClass("current");
 	            $(this).addClass("current");
 	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
+	            console.log("click end!");
 	        });
 	        tinymce.init({
 	            selector: '.gridster li .rtf',
@@ -41430,7 +41427,7 @@
 	            ),
 	            React.createElement(
 	                "div",
-	                { onClick: this.addTextBlock, "data-width": "12", "data-height": "1", "data-template": this.BLOCK_H1 },
+	                { onClick: this.addTextBlock, "data-template": this.BLOCK_H1 },
 	                React.createElement(
 	                    "span",
 	                    { className: "glyphicon" },
