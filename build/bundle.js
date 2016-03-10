@@ -39032,19 +39032,7 @@
 	    },
 
 	    /**When mouse over(drag in、dragging) mouse out(drag out) mouseup( dragin effects)*/
-	    bindEvent: function bindEvent() {
-	        var gridster = this;
-	        $('#' + this.props.id).hover(function () {
-	            if (PageOperation.dragging) {
-	                $('#' + gridster.props.id).addClass("dragged");
-	            }
-	        }, function () {}).on("mouseup", function () {
-	            if (PageOperation.dragging && PageOperation.dragged) {
-	                console.log("drag mouse up");
-	            }
-	            $('#' + gridster.props.id).removeClass("dragged");
-	        });
-	    },
+	    bindEvent: function bindEvent() {},
 
 	    initGridster: function initGridster() {
 	        //remove old styles
@@ -39059,13 +39047,9 @@
 	            widget_base_dimensions: [this.props.style.width / 12 - 2, this.props.style.minHeight / 10 - 2],
 	            draggable: {
 	                start: function start(event, ui) {},
-	                drag: function drag(event, ui) {
-	                    console.log("left", ui.pointer.left);
-	                    console.log("top", ui.pointer.top);
-	                },
+	                drag: function drag(event, ui) {},
 
 	                stop: function stop(event, ui) {
-	                    console.log(event, ui);
 	                    /**
 	                     * When on double screen and the expand mode is 'extra' or 'portrait',
 	                     * Move the widget from left to right
@@ -39107,7 +39091,6 @@
 
 	    /**Extract n save grid data*/
 	    getGridData: function getGridData() {
-
 	        return $("#" + this.props.id + ">ul").gridster().data('gridster').serialize();
 	    },
 
@@ -39161,7 +39144,14 @@
 	            $(".gridster ul li.current").removeClass("current");
 	            $(this).addClass("current");
 	            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
-	            console.log("click end!");
+
+	            postal.publish({
+	                channel: "block",
+	                topic: "selected",
+	                data: {
+	                    blockId: blockId
+	                }
+	            });
 	        });
 	        tinymce.init({
 	            selector: '.gridster li .rtf',
@@ -39212,6 +39202,7 @@
 
 	var EditTextPanel = __webpack_require__(189);
 	var SingleChoicePanel = __webpack_require__(190);
+	var postal = __webpack_require__(182);
 
 	var RightPanel = React.createClass({
 	    displayName: "RightPanel",
@@ -39219,7 +39210,7 @@
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            subpanel: 'edit-text'
+	            panel: null
 	        };
 	    },
 
@@ -39227,7 +39218,31 @@
 	        this.setState(newstate);
 	    },
 
-	    componentDidMount: function componentDidMount() {},
+	    componentDidMount: function componentDidMount() {
+	        var panel = this;
+	        postal.subscribe({
+	            channel: "block",
+	            topic: "selected",
+	            callback: function callback(data, envelope) {
+	                $(".rightPanel").show();
+	                var li = $("li[data-id='" + data.blockId + "']");
+	                console.log(li);
+	                if (li.data("type") === "text") {
+	                    panel.setState({
+	                        panel: "edit-text"
+	                    });
+	                }
+	            }
+	        });
+
+	        postal.subscribe({
+	            channel: "workspace",
+	            topic: "reset",
+	            callback: function callback(data, envelope) {
+	                $(".rightPanel").hide();
+	            }
+	        });
+	    },
 
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
 
@@ -39241,7 +39256,7 @@
 	        return React.createElement(
 	            "div",
 	            { className: "rightPanel", style: {
-	                    display: this.props.display ? "inherit" : "none"
+	                    display: "none"
 	                }, onClick: this.preventUp },
 	            React.createElement(
 	                "div",
@@ -39249,15 +39264,15 @@
 	                React.createElement(
 	                    "div",
 	                    { className: "pn-title" },
-	                    "Header"
+	                    "Edit Block"
 	                ),
 	                React.createElement("span", { className: "glyphicon glyphicon-remove btn-close", onClick: this.close })
 	            ),
 	            React.createElement(
 	                "div",
 	                { className: "pn-body" },
-	                React.createElement(EditTextPanel, { display: this.props.subpanel === "edit-text" }),
-	                React.createElement(SingleChoicePanel, { display: this.props.subpanel === "edit-single-choice" })
+	                React.createElement(EditTextPanel, { display: this.state.panel === "edit-text" }),
+	                React.createElement(SingleChoicePanel, { display: this.state.panel === "edit-single-choice" })
 	            )
 	        );
 	    }

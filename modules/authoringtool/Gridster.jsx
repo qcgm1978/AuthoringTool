@@ -63,19 +63,7 @@ var Gridster = React.createClass({
 
     /**When mouse over(drag in、dragging) mouse out(drag out) mouseup( dragin effects)*/
     bindEvent: function() {
-        var gridster = this;
-        $('#' + this.props.id).hover(function() {
-            if (PageOperation.dragging) {
-                $('#' + gridster.props.id).addClass("dragged");
-            }
-        }, function() {
 
-        }).on("mouseup", function() {
-            if (PageOperation.dragging && PageOperation.dragged) {
-                console.log("drag mouse up");
-            }
-            $('#' + gridster.props.id).removeClass("dragged");
-        })
     },
 
     initGridster: function() {
@@ -95,12 +83,10 @@ var Gridster = React.createClass({
 
                 },
                 drag: function(event, ui) {
-                    console.log("left", ui.pointer.left);
-                    console.log("top", ui.pointer.top);
+
                 },
 
                 stop: function(event, ui) {
-                    console.log(event, ui);
                     /**
                      * When on double screen and the expand mode is 'extra' or 'portrait',
                      * Move the widget from left to right
@@ -147,7 +133,6 @@ var Gridster = React.createClass({
 
     /**Extract n save grid data*/
     getGridData: function() {
-
         return $("#" + this.props.id + ">ul").gridster().data('gridster').serialize();
     },
 
@@ -201,7 +186,14 @@ var Gridster = React.createClass({
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
-            console.log("click end!");
+
+            postal.publish({
+                channel: "block",
+                topic: "selected",
+                data: {
+                    blockId: blockId
+                }
+            });
         });
         tinymce.init({
             selector: '.gridster li .rtf',
