@@ -89,7 +89,7 @@ var PageToolWorkspace = React.createClass({
 
                 <ThemedPage ref="page" data={this.props.data} themeName={this.state.themeName} doubleScreen={this.state.pageSetting.doubleScreen} pageSetting={this.state.pageSetting}/>
 
-                <RightPanel display={this.state.showPanel} panel={this.state.panel}/>
+                <RightPanel/>
 
                 <AxisLines width={this.state.pageSetting.width} height={this.state.pageSetting.height}
                            doubleScreen={this.state.pageSetting.doubleScreen} expandMode={this.state.pageSetting.expandMode}/>
