@@ -31,7 +31,6 @@ var RightPanel = React.createClass({
                     });
 
                 }
-
             }
         });
 
