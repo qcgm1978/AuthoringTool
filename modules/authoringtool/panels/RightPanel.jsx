@@ -4,6 +4,10 @@ var EditTextPanel = require("./EditTextPanel.jsx");
 var SingleChoicePanel = require("./SingleChoicePanel.jsx");
 var postal = require("postal");
 
+/**
+ * Abstract base panel class
+ */
+
 var RightPanel = React.createClass({
 
     getInitialState: function () {

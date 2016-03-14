@@ -152,7 +152,6 @@ var Gridster = React.createClass({
     },
 
     addBlock: function (type, content, size_x, size_y, pos_x, pos_y, blockId) {
-        console.debug("+block " + type, content, size_x, size_y,pos_x,pos_y);
         var gridster = $("#" + this.props.id + " ul").gridster().data('gridster');
         if (!size_x) {
             size_x = 12;
@@ -177,7 +176,6 @@ var Gridster = React.createClass({
 
     initBlockEvents: function(blockId) {
         $("li[data-id='" + blockId + "']").off("click").on("click", function(event) {
-            console.log($(this).attr("class"));
             if ($(this).hasClass("player-revert") || $(this).hasClass("resizing")) {
                 console.log("return");
                 return;
@@ -191,7 +189,8 @@ var Gridster = React.createClass({
                 channel: "block",
                 topic: "selected",
                 data: {
-                    blockId: blockId
+                    blockId: blockId,
+                    type: $(this).data("type")
                 }
             });
         });

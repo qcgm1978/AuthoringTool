@@ -3,8 +3,8 @@ var React = require('react');
 
 var AxisLines = require("./AxisLines.jsx");
 var ThemedPage = require("./ThemedPage.jsx");
-var RightPanel = require("./panels/RightPanel.jsx");
 var LeftMenu = require("./menus/LeftMenu.jsx");
+var PanelSwitcher = require("./panels/PanelSwitcher.jsx");
 
 var postal = require("postal");
 
@@ -88,9 +88,7 @@ var PageToolWorkspace = React.createClass({
                 <LeftMenu ref="leftmenu" configurationChangedCallback={this.pageSettingChanged} pageSetting={this.state.pageSetting}/>
 
                 <ThemedPage ref="page" data={this.props.data} themeName={this.state.themeName} doubleScreen={this.state.pageSetting.doubleScreen} pageSetting={this.state.pageSetting}/>
-
-                <RightPanel/>
-
+                <PanelSwitcher/>
                 <AxisLines width={this.state.pageSetting.width} height={this.state.pageSetting.height}
                            doubleScreen={this.state.pageSetting.doubleScreen} expandMode={this.state.pageSetting.expandMode}/>
             </div>
