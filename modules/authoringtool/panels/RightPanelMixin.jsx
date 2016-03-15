@@ -12,6 +12,14 @@ var RightPanelMixin = {
 
     },
 
+    sendJSON2Block: function(json) {
+        postal.publish({
+            channel: "block",
+            topic: "update",
+            data: json
+        });
+    },
+
     close: function() {
         $(".rightPanel").hide();
     },

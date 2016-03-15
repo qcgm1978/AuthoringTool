@@ -23572,6 +23572,8 @@
 	var postal = __webpack_require__(182);
 	var PageOperation = __webpack_require__(187);
 
+	var _ = __webpack_require__(181);
+
 	/**
 	 * ����ҳ�������� ������Theme��footer��header���������á������ڲ��ֵ�Layout
 	 * props:
@@ -23585,7 +23587,7 @@
 	var ThemedPage = React.createClass({
 	    displayName: "ThemedPage",
 
-
+	    BLOCK_ID_PREFIX: "block_",
 	    themeConfig: null,
 	    lastProps: null,
 
@@ -23652,7 +23654,9 @@
 	            topic: "add",
 	            callback: function callback(data, envelope) {
 	                if (page.refs["main-grid"]) {
-	                    page.refs["main-grid"].addBlock(data.type, data.html, data.size_x, data.size_y, data.pos_x, data.pos_y);
+	                    var blockId = _.uniqueId(page.BLOCK_ID_PREFIX);
+	                    PageOperation.data.widgetJSON[blockId] = data.json;
+	                    page.refs["main-grid"].addBlock(data.type, data.html, data.size_x, data.size_y, data.pos_x, data.pos_y, blockId);
 	                }
 	            }
 	        });
@@ -23687,6 +23691,9 @@
 	                $(this).remove("span.gs-resize-handle");
 	                if (type === "text") {
 	                    $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style");
+	                    PageOperation.data.widgetContents[$(this).data("id")] = $(this).html();
+	                }
+	                if (type === "single-choice") {
 	                    PageOperation.data.widgetContents[$(this).data("id")] = $(this).html();
 	                }
 	            });
@@ -39029,6 +39036,15 @@
 	                $("#" + gridster.props.id + " ul").gridster().data('gridster').enable().enable_resize();
 	            }
 	        });
+
+	        postal.subscribe({
+	            channel: "block",
+	            topic: "modified",
+	            callback: function callback(data, envelope) {
+	                console.log("block modified", data);
+	                $("li[data-id='" + data.id + "']").html(data.html);
+	            }
+	        });
 	    },
 
 	    /**When mouse over(drag in、dragging) mouse out(drag out) mouseup( dragin effects)*/
@@ -39125,9 +39141,6 @@
 	            pos_y = 10;
 	        }
 
-	        if (!blockId) {
-	            blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
-	        }
 	        gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
 	        this.initBlockEvents(blockId);
 	    },
@@ -39186,7 +39199,8 @@
 	        singleScreenWidgets: [],
 	        doubleScreenLeftWidgets: [],
 	        doubleScreenRightWidgets: [],
-	        widgetContents: {}
+	        widgetContents: {},
+	        widgetJSON: {}
 	    }
 	};
 	module.exports = PageOperation;
@@ -41313,25 +41327,49 @@
 	 */
 
 	var React = __webpack_require__(18);
-	var postal = __webpack_require__(182);
+	var SingleChoicePanel = __webpack_require__(202);
 
-	var channel = postal.channel("activities");
+	var postal = __webpack_require__(182);
 
 	var AddActivityMenu = React.createClass({
 	    displayName: "AddActivityMenu",
 
+
+	    SINGLE_CHOICE_JSON: {
+	        "text": "Single Choice Question",
+	        "choices": [{
+	            "key": "A",
+	            "type": "text",
+	            "text": "First Choice",
+	            "flag": "right"
+	        }, {
+	            "key": "B",
+	            "type": "text",
+	            "text": "Second Choice",
+	            "flag": "wrong"
+	        }, {
+	            "key": "C",
+	            "type": "text",
+	            "text": "Third Choice",
+	            "flag": "wrong"
+	        }],
+	        "label type": "alphabet",
+	        "order type": "0"
+	    },
 
 	    getInitialState: function getInitialState() {
 	        return {};
 	    },
 
 	    addSingleChoice: function addSingleChoice() {
+	        var cloned = _.extend({}, this.SINGLE_CHOICE_JSON);
 	        postal.publish({
 	            channel: "block",
 	            topic: "add",
 	            data: {
 	                type: "single-choice",
-	                html: ''
+	                html: SingleChoicePanel.renderHTML(cloned),
+	                json: cloned
 	            }
 	        });
 	        postal.publish({
@@ -41516,6 +41554,7 @@
 
 	var EditTextPanel = __webpack_require__(200);
 	var SingleChoicePanel = __webpack_require__(202);
+	var PageOperation = __webpack_require__(187);
 
 	var postal = __webpack_require__(182);
 
@@ -41525,7 +41564,8 @@
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            panel: null
+	            panel: null,
+	            json: null
 	        };
 	    },
 
@@ -41542,14 +41582,19 @@
 	            channel: "block",
 	            topic: "selected",
 	            callback: function callback(data, envelope) {
-	                console.log(data);
+	                console.log("selected widget", {
+	                    panel: data.type,
+	                    json: PageOperation.data.widgetJSON[data.blockId],
+	                    blockId: data.blockId
+	                });
 	                $(".panelSwitcher").show();
 	                switcher.setState({
-	                    panel: data.type
+	                    panel: data.type,
+	                    json: PageOperation.data.widgetJSON[data.blockId],
+	                    blockId: data.blockId
 	                });
 	            }
 	        });
-
 	        postal.subscribe({
 	            channel: "workspace",
 	            topic: "reset",
@@ -41564,9 +41609,8 @@
 	        if (this.state.panel === "text") {
 	            panel = React.createElement(EditTextPanel, null);
 	        } else if (this.state.panel === "single-choice") {
-	            panel = React.createElement(SingleChoicePanel, null);
+	            panel = React.createElement(SingleChoicePanel, { json: this.state.json, blockId: this.state.blockId });
 	        }
-
 	        return React.createElement(
 	            "div",
 	            { className: "panelSwitcher", style: {
@@ -41660,6 +41704,14 @@
 	    },
 
 	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+
+	    sendJSON2Block: function sendJSON2Block(json) {
+	        postal.publish({
+	            channel: "block",
+	            topic: "update",
+	            data: json
+	        });
+	    },
 
 	    close: function close() {
 	        $(".rightPanel").hide();
@@ -41756,37 +41808,50 @@
 /* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(18);
 
 	var RightPanelMixin = __webpack_require__(201);
+	var LinkedStateMixin = __webpack_require__(204);
+	var PageOperation = __webpack_require__(187);
+
+	var postal = __webpack_require__(182);
 
 	var SingleChoicePanel = React.createClass({
-	    displayName: "SingleChoicePanel",
+	    displayName: 'SingleChoicePanel',
 
-	    mixins: [RightPanelMixin], // Use the mixin
 
+	    NAME: '',
+
+	    mixins: [RightPanelMixin, LinkedStateMixin], // Use the mixin
+
+	    statics: {
+	        renderHTML: function renderHTML(json) {
+	            /*use handdlebar template later */
+
+	            var html = '<div class="activity_single_choice generated questions_list">';
+	            html += '<div class="list">';
+	            html += '<ul class="check_list right_side">';
+	            html += '<p class="question_tit pb20"><span></span>' + json.text + '</p>';
+	            json.choices.map(function (choice, index) {
+	                html += '<li><i></i>';
+	                html += '<span class="letters">' + index + '</span>';
+	                html += '<a href="javascript:;" class="choose">';
+	                html += '<input type="radio" name="name11"/></a>';
+	                html += '<span>' + choice.text + '</span>';
+	                html += '</li>';
+	            });
+	            html += '</ul>';
+	            html += "</div>";
+	            html += '</div>';
+	            return html;
+	        }
+	    },
 	    getInitialState: function getInitialState() {
 	        return {
-	            answer: {
-	                "text": "Single Choice Question",
-	                "choices": [{
-	                    "type": "text",
-	                    "text": "First Choice",
-	                    "flag": "right"
-	                }, {
-	                    "type": "text",
-	                    "text": "Second Choice",
-	                    "flag": "wrong"
-	                }, {
-	                    "type": "text",
-	                    "text": "Third Choice",
-	                    "flag": "wrong"
-	                }],
-	                "label type": "alphabet",
-	                "order type": "0"
-	            }
+	            width: 640,
+	            answer: this.props.json
 	        };
 	    },
 
@@ -41796,23 +41861,112 @@
 
 	    componentDidMount: function componentDidMount() {},
 
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {},
+	    deleteChoice: function deleteChoice(index) {
+	        this.state.answer.choices.splice(index, 1);
+	        this.setState({
+	            answer: this.state.answer
+	        });
+
+	        this.publishChange(this.state.answer);
+	    },
+
+	    publishChange: function publishChange(json) {
+	        postal.publish({
+	            channel: "block",
+	            topic: "modified",
+	            data: {
+	                id: this.props.blockId,
+	                type: "single-choice",
+	                html: SingleChoicePanel.renderHTML(json)
+	            }
+	        });
+	        PageOperation.data.widgetJSON[this.props.blockId] = json;
+	    },
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        this.setState({
+	            answer: nextProps.json
+	        });
+	    },
+
+	    questionChanged: function questionChanged(event) {
+	        this.state.answer.text = event.target.value;
+	        this.setState({
+	            answer: this.state.answer
+	        });
+	        this.publishChange(this.state.answer);
+	    },
+
+	    choiceChanged: function choiceChanged(event) {
+	        var target = $(event.target);
+	        this.state.answer.choices[parseInt(target.data("index"))].text = event.target.value;
+	        this.setState({
+	            answer: this.state.answer
+	        });
+	        this.publishChange(this.state.answer);
+	    },
+
+	    renderHTML: function renderHTML() {
+	        var mm = React.createElement(
+	            'ul',
+	            { className: 'check_list' },
+	            React.createElement(
+	                'li',
+	                { className: '' },
+	                React.createElement('i', null),
+	                React.createElement(
+	                    'span',
+	                    { className: 'letters' },
+	                    'A'
+	                ),
+	                React.createElement(
+	                    'a',
+	                    { href: 'javascript:;', className: 'choose' },
+	                    React.createElement('input', { type: 'radio', name: 'name11' })
+	                ),
+	                React.createElement(
+	                    'span',
+	                    null,
+	                    'monkeys are not usually right-handed.'
+	                )
+	            )
+	        );
+	        return mm;
+	    },
 
 	    renderEditor: function renderEditor() {
+	        var panel = this;
+
+	        var choices = this.state.answer.choices.map(function (choice, index) {
+	            return React.createElement(
+	                'div',
+	                { className: 'form-group' },
+	                React.createElement('input', { type: 'radio', name: 'sc' }),
+	                ' ',
+	                React.createElement('input', { type: 'text', defaultValue: choice.text, 'data-index': index, onChange: panel.choiceChanged }),
+	                ' ',
+	                React.createElement(
+	                    'a',
+	                    { className: 'delete', onClick: panel.deleteChoice.bind(panel, index) },
+	                    'Del'
+	                )
+	            );
+	        });
+
 	        return React.createElement(
-	            "div",
+	            'div',
 	            null,
 	            React.createElement(
-	                "div",
-	                { className: "form-group" },
+	                'div',
+	                { className: 'form-group' },
 	                React.createElement(
-	                    "label",
+	                    'label',
 	                    null,
-	                    "Question"
+	                    'Question'
 	                ),
-	                React.createElement("textarea", { className: "form-control", value: this.state.answer.text })
+	                React.createElement('textarea', { className: 'form-control', value: this.props.json.text, onChange: this.questionChanged })
 	            ),
-	            React.createElement("div", { className: "form-group" })
+	            choices
 	        );
 	    }
 

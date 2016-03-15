@@ -5,6 +5,8 @@ var Gridster = require("./Gridster.jsx");
 var postal = require("postal");
 var PageOperation = require("./PageOperation");
 
+var _ = require("underscore");
+
 /**
  * 最终页面组件。 包括了Theme、footer、header等相关设置。及用于布局的Layout
  * props:
@@ -16,7 +18,7 @@ var PageOperation = require("./PageOperation");
  * @type {*|Function}
  */
 var ThemedPage = React.createClass({
-
+    BLOCK_ID_PREFIX: "block_",
     themeConfig: null,
     lastProps: null,
 
@@ -86,8 +88,9 @@ var ThemedPage = React.createClass({
             topic: "add",
             callback: function(data, envelope) {
                 if (page.refs["main-grid"]) {
-                    page.refs["main-grid"].addBlock(data.type, data.html,
-                        data.size_x, data.size_y, data.pos_x, data.pos_y);
+                    var  blockId = _.uniqueId(page.BLOCK_ID_PREFIX);
+                    PageOperation.data.widgetJSON[blockId] = data.json;
+                    page.refs["main-grid"].addBlock(data.type, data.html, data.size_x, data.size_y, data.pos_x, data.pos_y, blockId);
                 }
             }
         });
@@ -122,6 +125,9 @@ var ThemedPage = React.createClass({
                     $(this).remove("span.gs-resize-handle");
                     if (type==="text") {
                         $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
+                        PageOperation.data.widgetContents[$(this).data("id")] = $(this).html();
+                    }
+                    if (type==="single-choice") {
                         PageOperation.data.widgetContents[$(this).data("id")] = $(this).html();
                     }
                 });

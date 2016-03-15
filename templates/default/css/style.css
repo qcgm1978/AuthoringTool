@@ -132,3 +132,89 @@ h1 {
 	.site-footer {font-size:18px;}
 }
 
+
+
+
+
+.questions_list {
+	font-size: 17px;
+}
+.questions_list .list {
+	*zoom: 1;
+}
+.questions_list .list:before,
+.questions_list .list:after {
+	display: table;
+	content: "";
+	line-height: 0;
+}
+.questions_list .list:after {
+	clear: both;
+}
+.questions_list .list .bold {
+	font-size: 18px;
+	line-height: 21px;
+}
+.questions_list .list .left_side {
+	float: left;
+	display: inline;
+	margin-right: 12px;
+}
+.questions_list .list .right_side {
+	float: left;
+	display: inline;
+	display: inline-block;
+}
+.questions_list .list .right_side .listen {
+	width: 28px;
+	height: 28px;
+	display: inline-block;
+	background: url('../images/icon.png') -49px 0 no-repeat;
+	margin-right: 12px;
+}
+.questions_list .list .right_side .choose {
+	width: 24px;
+	height: 24px;
+	background: url('../images/icon.png') 0 0 no-repeat;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0 10px;
+}
+.questions_list .list .right_side .choose input {
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+.questions_list .list .right_side .choose_b {
+	background-position: -52px -31px;
+}
+.questions_list .list .right_side li {
+	border: none;
+	margin-bottom: 15px;
+	position: relative;
+}
+.questions_list .list .right_side span {
+	vertical-align: middle;
+}
+.questions_list .list .right_side .mar {
+	display: inline-block;
+	width: 10px;
+}
+.questions_list .list .right_side .icon_r,
+.questions_list .list .right_side .icon_e {
+	position: absolute;
+	left: -25px;
+	background-image: url('../images/icon.png');
+}
+.questions_list .list .right_side .icon_r {
+	width: 22px;
+	height: 22px;
+	background-position: -27px -17px;
+	top: 0px;
+}
+.questions_list .list .right_side .icon_e {
+	width: 15px;
+	height: 15px;
+	background-position: -29px -1px;
+	top: 4px;
+}

@@ -59,6 +59,16 @@ var Gridster = React.createClass({
                 $("#" + gridster.props.id + " ul").gridster().data('gridster').enable().enable_resize();
             }
         });
+
+        postal.subscribe({
+            channel: "block",
+            topic: "modified",
+            callback: function(data, envelope) {
+                console.log("block modified", data);
+                $("li[data-id='" + data.id + "']").html(data.html);
+            }
+        })
+
     },
 
     /**When mouse over(drag in、dragging) mouse out(drag out) mouseup( dragin effects)*/
@@ -167,9 +177,6 @@ var Gridster = React.createClass({
             pos_y = 10;
         }
 
-        if (!blockId) {
-            blockId = _.uniqueId(this.BLOCK_ID_PREFIX);
-        }
         gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
         this.initBlockEvents(blockId);
     },

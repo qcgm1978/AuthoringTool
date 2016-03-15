@@ -2,6 +2,7 @@ var React = require('react');
 
 var EditTextPanel = require("./EditTextPanel.jsx");
 var SingleChoicePanel = require("./SingleChoicePanel.jsx");
+var PageOperation = require("../PageOperation");
 
 var postal = require("postal");
 
@@ -9,7 +10,8 @@ var PanelSwitcher = React.createClass({
 
     getInitialState: function () {
         return {
-            panel: null
+            panel: null,
+            json: null
         }
     },
 
@@ -26,21 +28,26 @@ var PanelSwitcher = React.createClass({
             channel: "block",
             topic: "selected",
             callback: function(data, envelope) {
-                console.log(data);
+                console.log("selected widget", {
+                    panel: data.type,
+                    json:PageOperation.data.widgetJSON[data.blockId],
+                    blockId: data.blockId
+                });
                 $(".panelSwitcher").show();
                 switcher.setState({
-                    panel: data.type
+                    panel: data.type,
+                    json:PageOperation.data.widgetJSON[data.blockId],
+                    blockId: data.blockId
                 });
             }
         });
-
         postal.subscribe({
             channel: "workspace",
             topic: "reset",
             callback: function(data, envelope) {
                 $(".panelSwitcher").hide();
             }
-        })
+        });
     },
 
     render: function () {
@@ -48,11 +55,8 @@ var PanelSwitcher = React.createClass({
         if (this.state.panel==="text") {
             panel = <EditTextPanel/>
         } else if (this.state.panel==="single-choice") {
-            panel = <SingleChoicePanel/>
+            panel = <SingleChoicePanel json={this.state.json}  blockId={this.state.blockId}/>
         }
-
-
-
         return (
             <div className="panelSwitcher" style={{
                     display: "none"
