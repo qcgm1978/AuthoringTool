@@ -2707,7 +2707,7 @@
   \*********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
 	* http://gridster.net/
 	* Copyright (c) 2014 ducksboard; Licensed MIT */;(function(root,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ 14)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_0__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__));}else {root.GridsterCoords=factory(root.$||root.jQuery);}})(undefined,function($){ /**
 	    * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
@@ -42079,25 +42079,53 @@
 	 */
 	
 	var React = __webpack_require__(/*! react */ 18);
-	var postal = __webpack_require__(/*! postal */ 182);
+	var SingleChoicePanel = __webpack_require__(/*! ../panels/SingleChoicePanel.jsx */ 190);
 	
-	var channel = postal.channel("activities");
+	var postal = __webpack_require__(/*! postal */ 182);
 	
 	var AddActivityMenu = React.createClass({
 	    displayName: "AddActivityMenu",
+	
+	    SINGLE_CHOICE_JSON: {
+	        "text": "Single Choice Question",
+	        "choices": [{
+	            "key": "A",
+	            "type": "text",
+	            "text": "First Choice",
+	            "flag": "right"
+	        }, {
+	            "key": "B",
+	            "type": "text",
+	            "text": "Second Choice",
+	            "flag": "wrong"
+	        }, {
+	            "key": "C",
+	            "type": "text",
+	            "text": "Third Choice1",
+	            "flag": "wrong"
+	        }],
+	        "label type": "alphabet",
+	        "order type": "0"
+	    },
 	
 	    getInitialState: function getInitialState() {
 	        return {};
 	    },
 	
 	    addSingleChoice: function addSingleChoice() {
+	        var cloned = _.extend({}, this.SINGLE_CHOICE_JSON);
 	        postal.publish({
-	            channel: "activities",
-	            topic: "single-choice",
-	            data: { /**useless data for later usage*/
-	                sku: "AZDTF4346",
-	                qty: 21
+	            channel: "block",
+	            topic: "add",
+	            data: {
+	                type: "single-choice",
+	                html: SingleChoicePanel.renderHTML(cloned),
+	                json: cloned
 	            }
+	        });
+	        postal.publish({
+	            channel: "workspace",
+	            topic: "reset"
 	        });
 	    },
 	
@@ -42118,76 +42146,6 @@
 	                    "div",
 	                    { className: "activity-name" },
 	                    "Single Choice"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-screenshot" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Multiple Choice"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-saved" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Highlight"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Right or Wrong"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Right or Wrong"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Right or Wrong"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Right or Wrong"
-	                )
-	            ),
-	            React.createElement(
-	                "div",
-	                { onClick: this.addSingleChoice },
-	                React.createElement("span", { className: "glyphicon glyphicon-ok" }),
-	                React.createElement(
-	                    "div",
-	                    { className: "activity-name" },
-	                    "Right or Wrong"
 	                )
 	            )
 	        );
