@@ -3,11 +3,38 @@
  */
 
 var React = require('react');
+var SingleChoicePanel = require("../panels/SingleChoicePanel.jsx");
+
 var postal = require("postal");
 
-var channel = postal.channel("activities");
-
 var AddActivityMenu = React.createClass({
+
+    SINGLE_CHOICE_JSON :  {
+        "text":"Single Choice Question",
+        "choices":
+            [
+                {
+                    "key" : "A",
+                    "type":"text",
+                    "text":"First Choice",
+                    "flag":"right"
+                },
+                {
+                    "key" : "B",
+                    "type":"text",
+                    "text":"Second Choice",
+                    "flag":"wrong"
+                },
+                {
+                    "key" : "C",
+                    "type":"text",
+                    "text":"Third Choice",
+                    "flag":"wrong"
+                }
+            ],
+        "label type":"alphabet",
+        "order type":"0"
+    },
 
     getInitialState: function () {
         return {
@@ -16,13 +43,19 @@ var AddActivityMenu = React.createClass({
     },
 
     addSingleChoice: function() {
+        var cloned = _.extend({}, this.SINGLE_CHOICE_JSON);
         postal.publish({
-            channel: "activities",
-            topic: "single-choice",
-            data: {  /**useless data for later usage*/
-                sku: "AZDTF4346",
-                qty: 21
+            channel: "block",
+            topic: "add",
+            data: {
+                type: "single-choice",
+                html: SingleChoicePanel.renderHTML(cloned),
+                json: cloned
             }
+        });
+        postal.publish({
+            channel: "workspace",
+            topic: "reset"
         });
     },
 
@@ -31,13 +64,6 @@ var AddActivityMenu = React.createClass({
             <div className="menuActivityList" data-show={this.props.show}>
                 <div className="category">choice question</div>
                 <div onClick={this.addSingleChoice}><span className="glyphicon glyphicon-ok-circle"/><div className="activity-name">Single Choice</div></div>
-                <div onClick={this.addSingleChoice}><span className="glyphicon glyphicon-screenshot"/><div className="activity-name">Multiple Choice</div></div>
-                <div onClick={this.addSingleChoice}><span className="glyphicon glyphicon-saved"/><div className="activity-name">Highlight</div></div>
-                <div onClick={this.addSingleChoice}><span className="glyphicon glyphicon-ok"/><div className="activity-name">Right or Wrong</div></div>
-                <div onClick={this.addSingleChoice}><span className="glyphicon glyphicon-ok"/><div className="activity-name">Right or Wrong</div></div>
-                <div onClick={this.addSingleChoice}><span className="glyphicon glyphicon-ok"/><div className="activity-name">Right or Wrong</div></div>
-                <div onClick={this.addSingleChoice}><span className="glyphicon glyphicon-ok"/><div className="activity-name">Right or Wrong</div></div>
-                <div onClick={this.addSingleChoice}><span className="glyphicon glyphicon-ok"/><div className="activity-name">Right or Wrong</div></div>
             </div>
         );
     }

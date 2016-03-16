@@ -7,7 +7,8 @@ var PageOperation = {
         singleScreenWidgets: [],
         doubleScreenLeftWidgets: [],
         doubleScreenRightWidgets: [],
-        widgetContents: {}
+        widgetContents: {},
+        widgetJSON: {}
     }
 };
 module.exports = PageOperation;
