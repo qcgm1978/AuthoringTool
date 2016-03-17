@@ -28,7 +28,7 @@ var AddActivityMenu = React.createClass({
                 {
                     "key" : "C",
                     "type":"text",
-                    "text":"Third Choice1",
+                    "text":"Third Choice",
                     "flag":"wrong"
                 }
             ],

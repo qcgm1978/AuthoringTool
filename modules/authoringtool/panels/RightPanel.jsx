@@ -2,13 +2,17 @@ var React = require('react');
 
 var EditTextPanel = require("./EditTextPanel.jsx");
 var SingleChoicePanel = require("./SingleChoicePanel.jsx");
+var postal = require("postal");
 
+/**
+ * Abstract base panel class
+ */
 
 var RightPanel = React.createClass({
 
     getInitialState: function () {
         return {
-            subpanel: 'edit-text'
+            panel: null
         }
     },
 
@@ -17,7 +21,30 @@ var RightPanel = React.createClass({
     },
 
     componentDidMount: function () {
+        var panel = this;
+        postal.subscribe({
+            channel: "block",
+            topic: "selected",
+            callback: function(data, envelope) {
+                $(".rightPanel").show();
+                var li = $("li[data-id='" + data.blockId + "']");
+                console.log(li);
+                if (li.data("type")==="text") {
+                    panel.setState({
+                        panel: "edit-text"
+                    });
 
+                }
+            }
+        });
+
+        postal.subscribe({
+            channel: "workspace",
+            topic: "reset",
+            callback: function(data, envelope) {
+                $(".rightPanel").hide();
+            }
+        })
     },
 
     componentWillReceiveProps: function(nextProps) {
@@ -35,15 +62,15 @@ var RightPanel = React.createClass({
     render: function () {
         return (
             <div className="rightPanel" style={{
-                    display: this.props.display? "inherit":"none"
+                    display: "none"
             }} onClick={this.preventUp}>
                 <div className="pn-header">
-                    <div className="pn-title">Header</div>
+                    <div className="pn-title">Edit Block</div>
                     <span className="glyphicon glyphicon-remove btn-close" onClick={this.close}></span>
                 </div>
                 <div className="pn-body">
-                    <EditTextPanel display={this.props.subpanel==="edit-text"}/>
-                    <SingleChoicePanel display={this.props.subpanel==="edit-single-choice"}/>
+                    <EditTextPanel display={this.state.panel==="edit-text"}/>
+                    <SingleChoicePanel display={this.state.panel==="edit-single-choice"}/>
                 </div>
             </div>
         );
