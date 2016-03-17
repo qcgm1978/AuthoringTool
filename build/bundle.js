@@ -2651,7 +2651,7 @@
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_1__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_2__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;'use strict'; /*! gridster.js - v0.5.6 - 2014-09-25
 	* http://gridster.net/
 	* Copyright (c) 2014 ducksboard; Licensed MIT */;(function(root,factory){if(true){!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(14)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_LOCAL_MODULE_0__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__));}else {root.GridsterCoords=factory(root.$||root.jQuery);}})(undefined,function($){ /**
 	    * Creates objects with coordinates (x1, y1, x2, y2, cx, cy, width, height)
@@ -23404,7 +23404,23 @@
 
 	    function exportZ() {
 	        var zip = new JSZip();
+
+	        var html = "<!DOCTYPE html>\n<html>\n<head>\n";
+
+	        html += '<meta charset="UTF-8">\n';
+	        html += '<meta http-equiv="X-UA-Compatible" content="IE=edge">\n';
+	        html += '<meta name="viewport" content="width=device-width, initial-scale=1">\n';
+
+	        var themeName = html += '<link rel="stylesheet" type="text/css" href="templates/default/style.css">\n';
+	        copyFile(zip, "templates/default/style.css");
+
+	        html += '<script type="text/javascript" src="build/jquery-1.7.2.min.js"></script>\n';
 	        copyFile(zip, "build/jquery.2.1.4.min.js");
+
+	        html += '</head>';
+	        html += '<body>';
+
+	        html += '</body></html>';
 
 	        setTimeout(function () {
 	            var content = zip.generate({ type: "blob" });
@@ -34945,6 +34961,7 @@
 	var ThemedPage = __webpack_require__(225);
 	var LeftMenu = __webpack_require__(233);
 	var PanelSwitcher = __webpack_require__(250);
+	var AuthoringInfo = __webpack_require__(341);
 
 	var postal = __webpack_require__(228);
 
@@ -34959,15 +34976,8 @@
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            themeName: "default",
-	            pageSetting: { /**the grid layout setting  it will effect the axisline so defined here*/
-	                width: 1024,
-	                height: 768,
-	                doubleScreen: false,
-	                expandMode: 1,
-	                showHeader: true,
-	                showFooter: true
-	            }
+	            themeName: AuthoringInfo.themeName,
+	            pageSetting: AuthoringInfo.setting
 	        };
 	    },
 
@@ -34996,8 +35006,9 @@
 	    },
 
 	    pageSettingChanged: function pageSettingChanged(settings) {
+	        AuthoringInfo.setting = _.extend(this.state.pageSetting, settings);
 	        this.setState({
-	            pageSetting: _.extend(this.state.pageSetting, settings)
+	            pageSetting: AuthoringInfo.setting
 	        });
 	    },
 
@@ -65402,6 +65413,15 @@
 	 */
 	var AuthoringInfo = {
 	    dragging: false,
+	    setting: { /**the grid layout setting  it will effect the axisline so defined here*/
+	        width: 1024,
+	        height: 768,
+	        doubleScreen: false,
+	        expandMode: 1,
+	        showHeader: true,
+	        showFooter: true
+	    },
+	    themeName: "default",
 	    data: {
 	        singleScreenWidgets: [],
 	        doubleScreenLeftWidgets: [],

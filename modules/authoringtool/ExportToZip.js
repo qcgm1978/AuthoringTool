@@ -13,15 +13,35 @@ var ExportToZip = (function() {
 
     function exportZ() {
         var zip = new JSZip();
+
+
+        var html = "<!DOCTYPE html>\n<html>\n<head>\n";
+
+        html += '<meta charset="UTF-8">\n';
+        html += '<meta http-equiv="X-UA-Compatible" content="IE=edge">\n';
+        html += '<meta name="viewport" content="width=device-width, initial-scale=1">\n';
+
+        var themeName =
+        html += '<link rel="stylesheet" type="text/css" href="templates/default/style.css">\n';
+        copyFile(zip, "templates/default/style.css");
+
+        html += '<script type="text/javascript" src="build/jquery-1.7.2.min.js"></script>\n';
         copyFile(zip, "build/jquery.2.1.4.min.js");
+
+        html += '</head>';
+        html += '<body>';
+
+
+
+        html += '</body></html>';
+
+
 
         setTimeout(function() {
             var content = zip.generate({type:"blob"});
             saveAs(content, "example.zip");
         }, 500);
     }
-
-
 
     //将指定路径的文件按 目录方式添加到zip中
     function copyFile(zip, path) {
