@@ -8,9 +8,7 @@ $(function() {
     var w = $(window).width();
     var h = $(window).height();
 
-
-
-    $(".content").css("width", w);
+    $(".content").css("width", w).css("padding", 20);
     $(".content").css("height", h - $("header").height() - $("footer").height());
 
     $(".content").append("<ul/>");
