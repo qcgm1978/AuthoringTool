@@ -8,7 +8,7 @@ $(function() {
     var w = $(window).width();
     var h = $(window).height();
 
-    $(".content").css("width", w).css("padding", 20);
+    $(".content").css("width", w).css("padding", 20).addClass("gridster");
     $(".content").css("height", h - $("header").height() - $("footer").height());
 
     $(".content").append("<ul/>");
@@ -27,6 +27,8 @@ $(function() {
         gridster.add_widget("<li data-id='" + widget.id + "' data-type='" + widget.type + "'>" + data.data.widgetContents[widget.id] + "</li>",
                 widget.size_x, widget.size_y, widget.col, widget.row);
     }
+
+    $('.gridster .gs-w').css("border", "none");
     gridster.disable().disable_resize();
 
 });
