@@ -1,7 +1,7 @@
 /**
  * Created by ¡ı∫≠ on 2016/3/4.
  */
-var PageOperation = {
+var AuthoringInfo = {
     dragging: false,
     data: {
         singleScreenWidgets: [],
@@ -11,4 +11,4 @@ var PageOperation = {
         widgetJSON: {}
     }
 };
-module.exports = PageOperation;
+module.exports = AuthoringInfo;

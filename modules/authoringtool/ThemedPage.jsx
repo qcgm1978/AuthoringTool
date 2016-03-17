@@ -3,7 +3,7 @@ var React = require('react');
 var GridLayout = require("./GridLayout.jsx");
 var Gridster = require("./Gridster.jsx");
 var postal = require("postal");
-var PageOperation = require("./PageOperation");
+var AuthoringInfo = require("./AuthoringInfo");
 
 var _ = require("underscore");
 
@@ -89,7 +89,7 @@ var ThemedPage = React.createClass({
             callback: function(data, envelope) {
                 if (page.refs["main-grid"]) {
                     var  blockId = _.uniqueId(page.BLOCK_ID_PREFIX);
-                    PageOperation.data.widgetJSON[blockId] = data.json;
+                    AuthoringInfo.data.widgetJSON[blockId] = data.json;
                     page.refs["main-grid"].addBlock(data.type, data.html, data.size_x, data.size_y, data.pos_x, data.pos_y, blockId);
                 }
             }
@@ -114,9 +114,9 @@ var ThemedPage = React.createClass({
             /*Switching double screen*/
             if(this.props.doubleScreen) {
                 if (this.refs["extra-grid"]) {
-                    PageOperation.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
+                    AuthoringInfo.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
                 }
-                PageOperation.data.doubleScreenLeftWidgets = this.refs["main-grid"].getGridData();
+                AuthoringInfo.data.doubleScreenLeftWidgets = this.refs["main-grid"].getGridData();
             } else {
                 //extrat and save content
                 $("#main-grid ul>li").each(function() {
@@ -125,15 +125,15 @@ var ThemedPage = React.createClass({
                     $(this).remove("span.gs-resize-handle");
                     if (type==="text") {
                         $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
-                        PageOperation.data.widgetContents[$(this).data("id")] = $(this).html();
+                        AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
                     }
                     if (type==="single-choice") {
-                        PageOperation.data.widgetContents[$(this).data("id")] = $(this).html();
+                        AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
                     }
                 });
-                PageOperation.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
-                if(PageOperation.data.doubleScreenLeftWidgets.length===0) {
-                    PageOperation.data.doubleScreenLeftWidgets = PageOperation.data.singleScreenWidgets;
+                AuthoringInfo.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
+                if(AuthoringInfo.data.doubleScreenLeftWidgets.length===0) {
+                    AuthoringInfo.data.doubleScreenLeftWidgets = AuthoringInfo.data.singleScreenWidgets;
                 }
             }
         //}
@@ -168,7 +168,7 @@ var ThemedPage = React.createClass({
             width: contentWidth,
             minHeight: mainHeight
         };
-        var mainGrid = <Gridster ref="main-grid" id="main-grid" data={PageOperation.data.doubleScreenLeftWidgets} style={mainStyle}/>;
+        var mainGrid = <Gridster ref="main-grid" id="main-grid" data={AuthoringInfo.data.doubleScreenLeftWidgets} style={mainStyle}/>;
         var extraStyle = {
             position: "absolute",
             right: this.state.themeConfig.padding[1],
@@ -176,7 +176,7 @@ var ThemedPage = React.createClass({
             width: contentWidth,
             minHeight: extraHeight
         };
-        var extraGrid =  <Gridster ref="extra-grid" id="extra-grid" data={PageOperation.data.doubleScreenRightWidgets} style={extraStyle}/>;
+        var extraGrid =  <Gridster ref="extra-grid" id="extra-grid" data={AuthoringInfo.data.doubleScreenRightWidgets} style={extraStyle}/>;
         return <div>
             {mainGrid}
             {extraGrid}
@@ -198,7 +198,7 @@ var ThemedPage = React.createClass({
             marginTop: this.state.themeConfig.padding[0],
             marginBottom: this.state.themeConfig.padding[2],
         };
-        return (<Gridster ref="main-grid" id="main-grid" data={PageOperation.data.singleScreenWidgets} style={mainStyle}/>);
+        return (<Gridster ref="main-grid" id="main-grid" data={AuthoringInfo.data.singleScreenWidgets} style={mainStyle}/>);
     },
 
     getExtraLayout: function() {

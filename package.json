@@ -13,10 +13,12 @@
     "webpack": "^1.12.14"
   },
   "dependencies": {
-    "postal": "^1.0.8",
     "bootstrap": "^3.3.6",
     "jquery": "^2.2.1",
+    "jszip": "^2.5.0",
+    "jszip-utils": "0.0.2",
     "moment": "^2.10.6",
+    "postal": "^1.0.8",
     "react": "^0.14.7",
     "react-dropzone": "^3.3.2",
     "superagent": "^1.7.2",

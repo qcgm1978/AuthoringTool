@@ -2,7 +2,7 @@ var React = require('react');
 
 var RightPanelMixin = require("./RightPanelMixin.jsx");
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
-var PageOperation = require("../PageOperation");
+var AuthoringInfo = require("../AuthoringInfo");
 
 var postal = require("postal");
 
@@ -68,7 +68,7 @@ var SingleChoicePanel = React.createClass({
                 html: SingleChoicePanel.renderHTML(json)
             }
         });
-        PageOperation.data.widgetJSON[this.props.blockId] = json;
+        AuthoringInfo.data.widgetJSON[this.props.blockId] = json;
     },
 
     componentWillReceiveProps: function(nextProps) {

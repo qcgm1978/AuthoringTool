@@ -2,7 +2,7 @@ var React = require('react');
 
 var EditTextPanel = require("./EditTextPanel.jsx");
 var SingleChoicePanel = require("./SingleChoicePanel.jsx");
-var PageOperation = require("../PageOperation");
+var AuthoringInfo = require("../AuthoringInfo");
 
 var postal = require("postal");
 
@@ -30,13 +30,13 @@ var PanelSwitcher = React.createClass({
             callback: function(data, envelope) {
                 console.log("selected widget", {
                     panel: data.type,
-                    json:PageOperation.data.widgetJSON[data.blockId],
+                    json:AuthoringInfo.data.widgetJSON[data.blockId],
                     blockId: data.blockId
                 });
                 $(".panelSwitcher").show();
                 switcher.setState({
                     panel: data.type,
-                    json:PageOperation.data.widgetJSON[data.blockId],
+                    json:AuthoringInfo.data.widgetJSON[data.blockId],
                     blockId: data.blockId
                 });
             }
