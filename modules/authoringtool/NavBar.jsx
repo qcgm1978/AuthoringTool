@@ -3,12 +3,18 @@
  * on 2015/12/15.
  */
 var React = require('react');
+var ExportToZip = require("./ExportToZip");
 
 var NavBar = React.createClass({
 
     changeProp: function(state) {
         this.props.onChange(state);
         this.setState(state);
+    },
+
+    exportZip: function() {
+        this.props.saveProject();
+        ExportToZip.exportZ();
     },
 
     render: function() {
@@ -34,7 +40,7 @@ var NavBar = React.createClass({
                 <ul className="nav navbar-nav navbar-right">
                     <li className="save">
                         <button type="button" href="#" onClick={this.props.saveProject} className="btn btn-success" >Save</button>
-                        <button type="button" href="#"  className="btn btn-primary" >Export</button></li>
+                        <button type="button" href="#" onClick={this.exportZip} className="btn btn-primary" >Export</button></li>
                 </ul>
             </nav>
         );

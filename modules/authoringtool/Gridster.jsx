@@ -3,7 +3,7 @@ var React = require('react');
 var _ = require("underscore");
 var postal = require("postal");
 
-var PageOperation = require("./PageOperation");
+var AuthoringInfo = require("./AuthoringInfo");
 
 /***
  * Properties :
@@ -64,7 +64,6 @@ var Gridster = React.createClass({
             channel: "block",
             topic: "modified",
             callback: function(data, envelope) {
-                console.log("block modified", data);
                 $("li[data-id='" + data.id + "']").html(data.html);
             }
         })
@@ -151,7 +150,7 @@ var Gridster = React.createClass({
         var gridster = this;
         if (this.props.data) {
             _.each(this.props.data, function(data) {
-                gridster.addBlock(data.type,PageOperation.data.widgetContents[data.id], data.size_x, data.size_y, data.col, data.row, data.id);
+                gridster.addBlock(data.type,AuthoringInfo.data.widgetContents[data.id], data.size_x, data.size_y, data.col, data.row, data.id);
             });
         }
     },
@@ -184,7 +183,6 @@ var Gridster = React.createClass({
     initBlockEvents: function(blockId) {
         $("li[data-id='" + blockId + "']").off("click").on("click", function(event) {
             if ($(this).hasClass("player-revert") || $(this).hasClass("resizing")) {
-                console.log("return");
                 return;
             }
             event.stopPropagation();
