@@ -13,6 +13,7 @@ var NavBar = React.createClass({
     },
 
     exportZip: function() {
+        this.props.saveProject();
         ExportToZip.exportZ();
     },
 

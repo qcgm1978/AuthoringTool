@@ -3640,14 +3640,21 @@
 	        if (this.state.name === this.NEW_NAME) {
 	            this.newProject();
 	        } else {
+	            this.refs.pageworkspace.refs.page.savePageData();
+	            /**
 	            var layoutData = this.refs.themescreen.refs.layout.getData();
-	            $.post("/authoring/update", { name: tool.state.name,
-	                showHeader: tool.state.showHeader,
-	                showFooter: tool.state.showFooter,
-	                expandMode: tool.state.expandMode,
-	                theme: tool.state.theme,
-	                data: JSON.stringify(layoutData)
-	            }, function () {});
+	            $.post("/authoring/update",
+	                {name: tool.state.name,
+	                    showHeader: tool.state.showHeader,
+	                    showFooter: tool.state.showFooter,
+	                    expandMode: tool.state.expandMode,
+	                    theme: tool.state.theme,
+	                    data: JSON.stringify(layoutData)
+	                },
+	                function() {
+	                 }
+	            );
+	             */
 	        }
 	    },
 
@@ -3659,7 +3666,7 @@
 	        return React.createElement(
 	            'div',
 	            null,
-	            React.createElement(NavBar, { onChange: this.updateState, onAddGrid: this.addGrid,
+	            React.createElement(NavBar, { onChange: this.updateState,
 	                saveProject: this.saveProject,
 	                listProjects: this.listProjects,
 	                newProject: this.newProject,
@@ -23298,6 +23305,7 @@
 	    },
 
 	    exportZip: function exportZip() {
+	        this.props.saveProject();
 	        ExportToZip.exportZ();
 	    },
 
@@ -23402,54 +23410,89 @@
 
 	var ExportToZip = function () {
 
-	    function exportZ() {
-	        var zip = new JSZip();
+	        function exportZ() {
+	                var zip = new JSZip();
+	                var html = "<!DOCTYPE html>\n<html>\n<head>\n";
 
-	        var html = "<!DOCTYPE html>\n<html>\n<head>\n";
+	                html += '<meta charset="UTF-8">\n';
+	                html += '<meta http-equiv="X-UA-Compatible" content="IE=edge">\n';
+	                html += '<meta name="viewport" content="width=device-width, initial-scale=1">\n';
 
-	        html += '<meta charset="UTF-8">\n';
-	        html += '<meta http-equiv="X-UA-Compatible" content="IE=edge">\n';
-	        html += '<meta name="viewport" content="width=device-width, initial-scale=1">\n';
+	                var themeName = AuthoringInfo.themeName;
+	                html += '<link rel="stylesheet" type="text/css" href="templates/' + themeName + '/css/style.css">\n';
 
-	        var themeName = html += '<link rel="stylesheet" type="text/css" href="templates/default/style.css">\n';
-	        copyFile(zip, "templates/default/style.css");
+	                /**����ģ������css��img*/
+	                copyFile(zip, "templates/" + themeName + "/css/style.css");
+	                copyFile(zip, "templates/" + themeName + "/images/icon.png");
+	                copyFile(zip, "templates/" + themeName + "/images/insets_01.png");
+	                copyFile(zip, "templates/" + themeName + "/images/insets_02.png");
+	                copyFile(zip, "templates/" + themeName + "/images/insets_04.png");
+	                copyFile(zip, "templates/" + themeName + "/images/insets_05.jpg");
+	                copyFile(zip, "templates/" + themeName + "/images/insets_06.png");
 
-	        html += '<script type="text/javascript" src="build/jquery-1.7.2.min.js"></script>\n';
-	        copyFile(zip, "build/jquery.2.1.4.min.js");
+	                /**����Jquery*/
+	                html += '<script type="text/javascript" src="build/jquery.2.1.4.min.js"></script>\n';
+	                copyFile(zip, "build/jquery.2.1.4.min.js");
 
-	        html += '</head>';
-	        html += '<body>';
+	                /**link the page data(layout N content)*/
+	                var pageData = 'var data=' + JSON.stringify(AuthoringInfo);
+	                html += '<script type="text/javascript" src="data.js"></script>\n';
+	                zip.file("data.js", pageData);
+	                alert(pageData);
 
-	        html += '</body></html>';
+	                /**copy gridster related (we can use other method to paint the page)*/
+	                html += '<script type="text/javascript" src="modules/gridster/jquery.gridster.js"></script>\n';
+	                copyFile(zip, "modules/gridster/jquery.gridster.js");
+	                html += '<link rel="stylesheet" type="text/css" href="modules/gridster/jquery.gridster.css">\n';
+	                copyFile(zip, "modules/gridster/jquery.gridster.css");
 
-	        setTimeout(function () {
-	            var content = zip.generate({ type: "blob" });
-	            saveAs(content, "example.zip");
-	        }, 500);
-	    }
+	                html += '<script type="text/javascript" src="modules/view.js"></script>\n';
+	                copyFile(zip, "modules/view.js");
 
-	    //��ָ��·�����ļ��� Ŀ¼��ʽ���ӵ�zip��
-	    function copyFile(zip, path) {
-	        var paths = path.split("/");
-	        var folder = null;
-	        for (var i = 0; i < paths.length - 1; i++) {
-	            if (folder == null) {
-	                folder = zip.folder(paths[i]);
-	            } else {
-	                folder = folder.folder(paths[i]);
-	            }
+	                html += '</head>\n';
+	                html += '<body>\n';
+
+	                html += '<header class="site-header">\n';
+	                html += '<div class="A-head"><span class="A-head-bold">2a</span>Interpreting charts, tables, graphs and diagrams</div>\n';
+	                html += '<div><span class="A-head-bor"></span><span class="A-head-line"></span></div>\n';
+	                html += '<div class="B-head"><span>Vocabulary: globalisation<em></em></span></div>\n';
+	                html += '</header>\n';
+
+	                html += '<div class="content"></div>\n';
+	                html += '<footer class="site-footer">Default Template</footer>\n';
+
+	                html += '</body></html>';
+
+	                zip.file("index.html", html);
+
+	                setTimeout(function () {
+	                        var content = zip.generate({ type: "blob" });
+	                        saveAs(content, "example.zip");
+	                }, 500);
 	        }
-	        JSZipUtils.getBinaryContent(path, function (err, data) {
-	            if (err) {
-	                throw err; // or handle err
-	            }
-	            folder.file(paths[paths.length - 1], data);
-	        });
-	    }
 
-	    return {
-	        exportZ: exportZ
-	    };
+	        //��ָ��·�����ļ��� Ŀ¼��ʽ���ӵ�zip��
+	        function copyFile(zip, path) {
+	                var paths = path.split("/");
+	                var folder = null;
+	                for (var i = 0; i < paths.length - 1; i++) {
+	                        if (folder == null) {
+	                                folder = zip.folder(paths[i]);
+	                        } else {
+	                                folder = folder.folder(paths[i]);
+	                        }
+	                }
+	                JSZipUtils.getBinaryContent(path, function (err, data) {
+	                        if (err) {
+	                                throw err; // or handle err
+	                        }
+	                        folder.file(paths[paths.length - 1], data);
+	                });
+	        }
+
+	        return {
+	                exportZ: exportZ
+	        };
 	}();
 
 	module.exports = ExportToZip;
@@ -35233,17 +35276,7 @@
 	        this.lastProps = this.props;
 	    },
 
-	    shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
-	        if (this.state.themeConfig === null) return true;
-
-	        if (nextProps.themeName != this.props.themeName) {
-	            this.loadTheme();
-	            return true;
-	        }
-
-	        console.log("********************************Page Update******************************");
-	        //if (this.props.doubleScreen != nextProps.doubleScreen) {
-	        /*Switching double screen*/
+	    savePageData: function savePageData() {
 	        if (this.props.doubleScreen) {
 	            if (this.refs["extra-grid"]) {
 	                AuthoringInfo.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
@@ -35268,6 +35301,20 @@
 	                AuthoringInfo.data.doubleScreenLeftWidgets = AuthoringInfo.data.singleScreenWidgets;
 	            }
 	        }
+	    },
+
+	    shouldComponentUpdate: function shouldComponentUpdate(nextProps, nextState) {
+	        if (this.state.themeConfig === null) return true;
+
+	        if (nextProps.themeName != this.props.themeName) {
+	            this.loadTheme();
+	            return true;
+	        }
+
+	        console.log("********************************Page Update******************************");
+	        //if (this.props.doubleScreen != nextProps.doubleScreen) {
+	        /*Switching double screen*/
+	        this.savePageData();
 	        //}
 	        this.lastProps = nextProps;
 	        return true;

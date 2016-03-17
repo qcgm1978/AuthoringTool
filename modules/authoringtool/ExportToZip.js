@@ -13,29 +13,58 @@ var ExportToZip = (function() {
 
     function exportZ() {
         var zip = new JSZip();
-
-
         var html = "<!DOCTYPE html>\n<html>\n<head>\n";
 
         html += '<meta charset="UTF-8">\n';
         html += '<meta http-equiv="X-UA-Compatible" content="IE=edge">\n';
         html += '<meta name="viewport" content="width=device-width, initial-scale=1">\n';
 
-        var themeName =
-        html += '<link rel="stylesheet" type="text/css" href="templates/default/style.css">\n';
-        copyFile(zip, "templates/default/style.css");
+        var themeName = AuthoringInfo.themeName;
+        html += '<link rel="stylesheet" type="text/css" href="templates/' + themeName + '/css/style.css">\n';
 
-        html += '<script type="text/javascript" src="build/jquery-1.7.2.min.js"></script>\n';
+        /**¿½±´Ä£°åÏà¹Øcss¡¢img*/
+        copyFile(zip, "templates/" + themeName + "/css/style.css");
+        copyFile(zip, "templates/" + themeName + "/images/icon.png");
+        copyFile(zip, "templates/" + themeName + "/images/insets_01.png");
+        copyFile(zip, "templates/" + themeName + "/images/insets_02.png");
+        copyFile(zip, "templates/" + themeName + "/images/insets_04.png");
+        copyFile(zip, "templates/" + themeName + "/images/insets_05.jpg");
+        copyFile(zip, "templates/" + themeName + "/images/insets_06.png");
+
+        /**¿½±´Jquery*/
+        html += '<script type="text/javascript" src="build/jquery.2.1.4.min.js"></script>\n';
         copyFile(zip, "build/jquery.2.1.4.min.js");
 
-        html += '</head>';
-        html += '<body>';
+        /**link the page data(layout N content)*/
+        var pageData = 'var data=' + JSON.stringify(AuthoringInfo);
+        html += '<script type="text/javascript" src="data.js"></script>\n';
+        zip.file("data.js", pageData);
+        alert(pageData);
 
+        /**copy gridster related (we can use other method to paint the page)*/
+        html += '<script type="text/javascript" src="modules/gridster/jquery.gridster.js"></script>\n';
+        copyFile(zip, "modules/gridster/jquery.gridster.js");
+        html += '<link rel="stylesheet" type="text/css" href="modules/gridster/jquery.gridster.css">\n';
+        copyFile(zip, "modules/gridster/jquery.gridster.css");
 
+        html += '<script type="text/javascript" src="modules/view.js"></script>\n';
+        copyFile(zip, "modules/view.js");
+
+        html += '</head>\n';
+        html += '<body>\n';
+
+        html += '<header class="site-header">\n';
+        html += '<div class="A-head"><span class="A-head-bold">2a</span>Interpreting charts, tables, graphs and diagrams</div>\n';
+        html += '<div><span class="A-head-bor"></span><span class="A-head-line"></span></div>\n';
+        html += '<div class="B-head"><span>Vocabulary: globalisation<em></em></span></div>\n';
+        html += '</header>\n';
+
+        html += '<div class="content"></div>\n';
+        html += '<footer class="site-footer">Default Template</footer>\n';
 
         html += '</body></html>';
 
-
+        zip.file("index.html", html);
 
         setTimeout(function() {
             var content = zip.generate({type:"blob"});

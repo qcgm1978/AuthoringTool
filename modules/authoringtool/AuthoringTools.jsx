@@ -54,6 +54,8 @@ var AuthoringTool = React.createClass({
         if (this.state.name===this.NEW_NAME) {
             this.newProject();
         } else {
+            this.refs.pageworkspace.refs.page.savePageData();
+            /**
             var layoutData = this.refs.themescreen.refs.layout.getData();
             $.post("/authoring/update",
                 {name: tool.state.name,
@@ -67,6 +69,7 @@ var AuthoringTool = React.createClass({
 
                 }
             );
+             */
         }
     },
 
@@ -77,7 +80,7 @@ var AuthoringTool = React.createClass({
         }
         return (
             <div>
-                <NavBar onChange={this.updateState} onAddGrid={this.addGrid}
+                <NavBar onChange={this.updateState}
                         saveProject={this.saveProject}
                         listProjects={this.listProjects}
                         newProject={this.newProject}

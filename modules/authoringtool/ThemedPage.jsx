@@ -101,6 +101,33 @@ var ThemedPage = React.createClass({
         this.lastProps = this.props;
     },
 
+    savePageData: function() {
+        if(this.props.doubleScreen) {
+            if (this.refs["extra-grid"]) {
+                AuthoringInfo.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
+            }
+            AuthoringInfo.data.doubleScreenLeftWidgets = this.refs["main-grid"].getGridData();
+        } else {
+            //extrat and save content
+            $("#main-grid ul>li").each(function() {
+                //use interface factory mode to identify each type of content
+                var type = $(this).data("type");
+                $(this).remove("span.gs-resize-handle");
+                if (type==="text") {
+                    $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
+                    AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
+                }
+                if (type==="single-choice") {
+                    AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
+                }
+            });
+            AuthoringInfo.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
+            if(AuthoringInfo.data.doubleScreenLeftWidgets.length===0) {
+                AuthoringInfo.data.doubleScreenLeftWidgets = AuthoringInfo.data.singleScreenWidgets;
+            }
+        }
+    },
+
     shouldComponentUpdate: function(nextProps, nextState) {
         if (this.state.themeConfig===null) return true;
 
@@ -112,30 +139,7 @@ var ThemedPage = React.createClass({
         console.log("********************************Page Update******************************");
         //if (this.props.doubleScreen != nextProps.doubleScreen) {
             /*Switching double screen*/
-            if(this.props.doubleScreen) {
-                if (this.refs["extra-grid"]) {
-                    AuthoringInfo.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
-                }
-                AuthoringInfo.data.doubleScreenLeftWidgets = this.refs["main-grid"].getGridData();
-            } else {
-                //extrat and save content
-                $("#main-grid ul>li").each(function() {
-                    //use interface factory mode to identify each type of content
-                    var type = $(this).data("type");
-                    $(this).remove("span.gs-resize-handle");
-                    if (type==="text") {
-                        $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
-                        AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
-                    }
-                    if (type==="single-choice") {
-                        AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
-                    }
-                });
-                AuthoringInfo.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
-                if(AuthoringInfo.data.doubleScreenLeftWidgets.length===0) {
-                    AuthoringInfo.data.doubleScreenLeftWidgets = AuthoringInfo.data.singleScreenWidgets;
-                }
-            }
+           this.savePageData();
         //}
         this.lastProps = nextProps;
         return true;
