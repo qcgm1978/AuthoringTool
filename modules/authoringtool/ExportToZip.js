@@ -3,7 +3,10 @@
  * on 2015/12/15.
  */
 var React = require('react');
+//JSZip is a javascript library for creating, reading and editing .zip files, with a lovely and simple API.
+
 var JSZip = require("jszip");
+//A collection of cross-browser utilities to go along with JSZip
 var JSZipUtils = require("jszip-utils");
 var saveAs = require("./SaveAs");
 
@@ -22,7 +25,7 @@ var ExportToZip = (function() {
         var themeName = AuthoringInfo.themeName;
         html += '<link rel="stylesheet" type="text/css" href="templates/' + themeName + '/css/style.css">\n';
 
-        /**¿½±´Ä£°åÏà¹Øcss¡¢img*/
+        /**ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½cssï¿½ï¿½img*/
         copyFile(zip, "templates/" + themeName + "/css/style.css");
         copyFile(zip, "templates/" + themeName + "/images/icon.png");
         copyFile(zip, "templates/" + themeName + "/images/insets_01.png");
@@ -31,7 +34,7 @@ var ExportToZip = (function() {
         copyFile(zip, "templates/" + themeName + "/images/insets_05.jpg");
         copyFile(zip, "templates/" + themeName + "/images/insets_06.png");
 
-        /**¿½±´Jquery*/
+        /**ï¿½ï¿½ï¿½ï¿½Jquery*/
         html += '<script type="text/javascript" src="build/jquery.2.1.4.min.js"></script>\n';
         copyFile(zip, "build/jquery.2.1.4.min.js");
 
@@ -72,7 +75,7 @@ var ExportToZip = (function() {
         }, 500);
     }
 
-    //½«Ö¸¶¨Â·¾¶µÄÎÄ¼þ°´ Ä¿Â¼·½Ê½Ìí¼Óµ½zipÖÐ
+    //ï¿½ï¿½Ö¸ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ Ä¿Â¼ï¿½ï¿½Ê½ï¿½ï¿½Óµï¿½zipï¿½ï¿½
     function copyFile(zip, path) {
         var paths = path.split("/");
         var folder = null;

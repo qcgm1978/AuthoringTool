@@ -28,10 +28,10 @@ module.exports = {
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel', // 'babel-loader' is also a legal name to reference
                 //Given passing a query string like this isn't particularly readable, another way is to use the combination of loader and query fields:
-                query: {
-                    presets: ['react', 'es2015']
-                },
-                "plugins": ["syntax-object-rest-spread"]
+                //query: {
+                //    presets: ['react', 'es2015']
+                //},
+                //"plugins": ["syntax-object-rest-spread"]
 
             },
             {

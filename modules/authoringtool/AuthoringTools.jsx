@@ -19,7 +19,7 @@ var AuthoringTool = React.createClass({//Create a component class
     },
     //Invoked once, only on the client (not on the server), immediately after the initial rendering occurs.
     componentDidMount: function () {
-        console.log('it is initial rendering')
+        //console.log('it is initial rendering')
     },
     configurationChanged: function (config) {
         if (config.name !== "") {
@@ -31,7 +31,10 @@ var AuthoringTool = React.createClass({//Create a component class
         }
     },
     newProject: function () {
-        this.refs.fndialog.show();
+        //debugger;
+        if (this.refs.fndialog) {
+            this.refs.fndialog.show();
+        }
     },
     listProjects: function () {
         debugger;

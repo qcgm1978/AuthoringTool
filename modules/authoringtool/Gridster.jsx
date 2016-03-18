@@ -161,6 +161,7 @@ var Gridster = React.createClass({
     },
 
     addBlock: function (type, content, size_x, size_y, pos_x, pos_y, blockId) {
+        //Using the gridster API that allows building intuitive draggable layouts from elements spanning multiple columns.
         var gridster = $("#" + this.props.id + " ul").gridster().data('gridster');
         if (!size_x) {
             size_x = 12;
