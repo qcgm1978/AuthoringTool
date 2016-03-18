@@ -14,6 +14,11 @@ var FileNameDialog = React.createClass({
     show: function () {
         $('#save-file-name-dialog').modal('show');
     },
+    handleKeyUp:function(evt){
+        if(evt.keyCode==13){
+            this.saveDialog();
+        }
+    },
     saveDialog: function () {
         if (this.state.name !== "") {
             $('#save-file-name-dialog').modal('toggle');
@@ -37,7 +42,7 @@ var FileNameDialog = React.createClass({
                             <h4 className="modal-title">New Project Name</h4>
                         </div>
                         <div className="modal-body">
-                            <p><input type="text" className="form-control" valueLink={this.linkState('name')}/></p>
+                            <p><input type="text" className="form-control" valueLink={this.linkState('name')} onKeyUp={this.handleKeyUp} /></p>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
