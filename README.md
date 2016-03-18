@@ -78,5 +78,10 @@ plugins: [
 babel --presets react comments-box/src/components/ --watch --out-dir comments-box/public/scripts/ -s
 ```
 
+### execute tests:
+
+```
+npm test
+```
 
 
