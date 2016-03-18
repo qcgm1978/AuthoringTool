@@ -107,13 +107,15 @@ var SingleChoicePanel = React.createClass({
             </ul>);
         return mm;
     },
-
+    getUniqueId:()=>{
+      return Math.random()
+    },
     renderEditor: function() {
         var panel = this;
 
         var choices = this.state.answer.choices.map(function(choice, index) {
             return <div className="form-group">
-                   <input type="radio" name="sc"/> <input type="text" defaultValue={choice.text} data-index={index} onChange={panel.choiceChanged}/> <a className="delete" onClick={panel.deleteChoice.bind(panel, index)}>Del</a>
+                   <input type="radio" name="sc"/> <input type="text" key={panel.getUniqueId} defaultValue={choice.text} data-index={index} onChange={panel.choiceChanged}/> <a className="delete" onClick={panel.deleteChoice.bind(panel, index)}>Del</a>
                 </div>
         });
 
