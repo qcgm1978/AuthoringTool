@@ -5,6 +5,8 @@ var AxisLines = require("./AxisLines.jsx");
 var ThemedPage = require("./ThemedPage.jsx");
 var LeftMenu = require("./menus/LeftMenu.jsx");
 var PanelSwitcher = require("./panels/PanelSwitcher.jsx");
+var AuthoringInfo = require("./AuthoringInfo");
+
 
 var postal = require("postal");
 
@@ -17,15 +19,8 @@ var PageToolWorkspace = React.createClass({
 
     getInitialState: function () {
         return {
-            themeName: "default",
-            pageSetting: {   /**the grid layout setting  it will effect the axisline so defined here*/
-                width: 1024,
-                height:768,
-                doubleScreen: false,
-                expandMode: 1,
-                showHeader: true,
-                showFooter: true
-            }
+            themeName: AuthoringInfo.themeName,
+            pageSetting: AuthoringInfo.setting
         }
     },
 
@@ -56,8 +51,9 @@ var PageToolWorkspace = React.createClass({
     },
 
     pageSettingChanged: function(settings) {
+        AuthoringInfo.setting =  _.extend(this.state.pageSetting,settings);
         this.setState({
-            pageSetting: _.extend(this.state.pageSetting,settings)
+            pageSetting: AuthoringInfo.setting
         });
     },
 
