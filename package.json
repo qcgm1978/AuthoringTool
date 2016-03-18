@@ -31,6 +31,15 @@
   "scripts": {
     "test": "jest"
   },
+  "jest": {
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react",
+      "<rootDir>/node_modules/react-dom",
+      "<rootDir>/node_modules/react-addons-test-utils",
+      "<rootDir>/node_modules/postal"
+
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "ssh://liuhan@114.215.134.126:29418/AuthoringTool.git"
