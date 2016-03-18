@@ -27,9 +27,9 @@ var BlockTypeMenu = React.createClass({
     },
     showAddActivity: function (event) {
         event.stopPropagation();
-        this.setState({
-            page: "addActivity"
-        });
+        //this.setState({
+        //    page: "addActivity"
+        //});
     },
     adddActivity: function (prop) {
         event.stopPropagation();
