@@ -52,7 +52,6 @@ var RightPanel = React.createClass({
     },
 
     close: function() {
-
     },
 
     preventUp: function(event) {

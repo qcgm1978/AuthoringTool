@@ -22,6 +22,8 @@ var RightPanelMixin = {
 
     close: function() {
         $(".rightPanel").hide();
+        $(".panelSwitcher").hide()
+
     },
 
     preventUp: function(event) {
