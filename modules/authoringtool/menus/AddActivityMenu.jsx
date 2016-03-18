@@ -8,7 +8,7 @@ var SingleChoicePanel = require("../panels/SingleChoicePanel.jsx");
 var postal = require("postal");
 
 var AddActivityMenu = React.createClass({
-
+    //template code for single choice
     SINGLE_CHOICE_JSON :  {
         "text":"Single Choice Question",
         "choices":
