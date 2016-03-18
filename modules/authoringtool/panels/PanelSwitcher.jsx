@@ -1,3 +1,4 @@
+//editor component
 var React = require('react');
 
 var EditTextPanel = require("./EditTextPanel.jsx");
