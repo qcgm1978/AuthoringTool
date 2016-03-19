@@ -20,7 +20,7 @@ var NavBar = React.createClass({
         return (
             //The HTML nav element (HTML Navigation Element) represents a section of a page that links to other pages
             /*The aria-labelledby attribute contains the element IDs of labels in objects such as input elements, widgets, and groups.*/
-            <nav className="navbar navbar-default navbar-fixed-top">
+            <nav className="navbar navbar-default navbar-fixed-top ">
                 <a className="navbar-brand" href="javascript:void(0)">Authoring Tool</a>
 
                 <ul className="nav navbar-nav navbar-left">

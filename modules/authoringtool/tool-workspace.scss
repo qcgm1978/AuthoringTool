@@ -6,8 +6,8 @@
   .leftMenu {
     position: absolute;
     left: 30px;
-    top: 70px;
-    z-index: 1101;
+    top: 110px;
+    //z-index: 1101;
     span.glyphicon {
       font-size: 18px;
       display: block;
@@ -42,7 +42,7 @@
     top: 70px;
     width: 70px;
     bottom: 0;
-    z-index: 1100;
+    z-index: -1;
     background-color: $basic_bg_color;
   }
 

@@ -3,6 +3,8 @@ var RightPanelMixin = require("./RightPanelMixin.jsx");
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var AuthoringInfo = require("../AuthoringInfo");
 var postal = require("postal");
+require('../../../src/styles/SingleChoicePanel.css');
+
 var SingleChoicePanel = React.createClass({
     NAME: '',
     mixins: [RightPanelMixin, LinkedStateMixin], // Use the mixin
