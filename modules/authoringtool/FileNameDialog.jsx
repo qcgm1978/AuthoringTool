@@ -6,7 +6,7 @@ var FileNameDialog = React.createClass({
     mixins: [LinkedStateMixin],
     getInitialState: function () {
         return {
-            name: ""
+            name: "Section"
         }
     },
     componentDidMount: function () {
