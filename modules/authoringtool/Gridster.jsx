@@ -163,7 +163,7 @@ var Gridster = React.createClass({
     addBlock: function (type, content, size_x, size_y, pos_x, pos_y, blockId) {
         //Using the gridster API that allows building intuitive draggable layouts from elements spanning multiple columns.
         var gridster = $("#" + this.props.id + " ul").gridster({
-            widget_margins: [10, 10]
+            //widget_margins: [10, 10]
         }).data('gridster');
         if (!size_x) {
             size_x = 12;
@@ -171,7 +171,7 @@ var Gridster = React.createClass({
         //The number of columns that the widget occupies. Defaults to 1.
 
         if (!size_y) {
-            size_y = 4;
+            size_y = 3;
         }
 
         if (!pos_x) {
