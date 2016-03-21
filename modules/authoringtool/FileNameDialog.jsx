@@ -6,16 +6,18 @@ var FileNameDialog = React.createClass({
     mixins: [LinkedStateMixin],
     getInitialState: function () {
         return {
-            name: "Section"
+            name: "Lesson"
         }
     },
     componentDidMount: function () {
+        $('.form-control').focus()
+
     },
     show: function () {
         $('#save-file-name-dialog').modal('show');
     },
-    handleKeyUp:function(evt){
-        if(evt.keyCode==13){
+    handleKeyUp: function (evt) {
+        if (evt.keyCode == 13) {
             this.saveDialog();
         }
     },
@@ -28,6 +30,8 @@ var FileNameDialog = React.createClass({
         }
     },
     componentWillReceiveProps: function (nextProps) {
+    },
+    componentDidUpdate: ()=> {
     },
     render: function () {
         return (
@@ -42,7 +46,8 @@ var FileNameDialog = React.createClass({
                             <h4 className="modal-title">New Project Name</h4>
                         </div>
                         <div className="modal-body">
-                            <p><input type="text" className="form-control" valueLink={this.linkState('name')} onKeyUp={this.handleKeyUp} /></p>
+                            <p><input type="text" className="form-control" valueLink={this.linkState('name')}
+                                      onKeyUp={this.handleKeyUp}/></p>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>

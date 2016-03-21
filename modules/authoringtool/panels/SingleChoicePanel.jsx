@@ -99,7 +99,7 @@ var SingleChoicePanel = React.createClass({
         var panel = this;
         var choices = this.state.answer.choices.map(function (choice, index) {
             return <div key={panel.getUniqueId(choice)} className="form-group">
-                <input type="radio" name="sc"/> <input type="text"  defaultValue={choice.text}
+                <input type="radio" name="sc"/> <input type="text"  placeholder={choice.text}
                                                        data-index={index} onChange={panel.choiceChanged}/> <a
                 className="delete" onClick={panel.deleteChoice.bind(panel, index)}>Del</a>
             </div>
