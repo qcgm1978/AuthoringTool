@@ -24,23 +24,32 @@ var ThemedPage = React.createClass({
         }
     },
     getThemeConfig: function () {
-        var remote = $.ajax({
+        var dfd = jQuery.Deferred(),that=this;
+        $.ajax({
             type: "GET",
             url: "templates/" + this.props.themeName + "/config.json",
-            async: false
-        }).responseText;
-        this.themeConfig = JSON.parse(remote);
-        return this.themeConfig;
+            //async: false
+            success: (responseText)=> {
+                var remote = responseText
+                that.themeConfig = remote;
+                dfd.resolve(that.themeConfig);
+            }
+        });
+        return dfd;
     },
     //create a new ajax request
     loadTheme: function () {
-        var themeConfig = this.getThemeConfig();  //synchronize loading
-        $.ajax({
-            type: "GET",
-            url: "templates/" + this.props.themeName + "/" + themeConfig.default.html,
-            dataType: 'html',
-            success: this.handleTemplateLoaded
-        });
+        this.getThemeConfig().then(
+            (data)=> {
+                var themeConfig=data;
+                $.ajax({
+                    type: "GET",
+                    url: "templates/" + this.props.themeName + "/" + themeConfig.default.html,
+                    dataType: 'html',
+                    success: this.handleTemplateLoaded
+                });
+            }
+        )
     },
     moreGrid: function () {
         this.refs["layout"].addBlock();

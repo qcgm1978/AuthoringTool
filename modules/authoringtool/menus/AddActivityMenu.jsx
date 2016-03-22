@@ -10,46 +10,48 @@ var AddActivityMenu = React.createClass({
     getInitialState: function () {
         return {}
     },
-    addSingleChoice: function () {
-        var SINGLE_CHOICE_JSON = {
-            "text": "Single Choice Question",
-            "choices": [
-                {
-                    "key": "A",
-                    "type": "text",
-                    "text": "First Choice",
-                    "flag": "right"
-                },
-                {
-                    "key": "B",
-                    "type": "text",
-                    "text": "Second Choice",
-                    "flag": "wrong"
-                },
-                {
-                    "key": "C",
-                    "type": "text",
-                    "text": "Third Choice",
-                    "flag": "wrong"
+    addSingleChoice: function (select) {
+        if (select.currentTarget.value === "Single Choice") {
+            var SINGLE_CHOICE_JSON = {
+                "text": "Single Choice Question",
+                "choices": [
+                    {
+                        "key": "A",
+                        "type": "text",
+                        "text": "First Choice",
+                        "flag": "right"
+                    },
+                    {
+                        "key": "B",
+                        "type": "text",
+                        "text": "Second Choice",
+                        "flag": "wrong"
+                    },
+                    {
+                        "key": "C",
+                        "type": "text",
+                        "text": "Third Choice",
+                        "flag": "wrong"
+                    }
+                ],
+                "label type": "alphabet",
+                "order type": "0"
+            };
+            var cloned = $.extend({}, SINGLE_CHOICE_JSON);
+            postal.publish({
+                channel: "block",
+                topic: "add",
+                data: {
+                    type: "single-choice",
+                    html: SingleChoicePanel.renderHTML(cloned),
+                    json: cloned
                 }
-            ],
-            "label type": "alphabet",
-            "order type": "0"
-        };
-        var cloned = $.extend({}, SINGLE_CHOICE_JSON);
-        postal.publish({
-            channel: "block",
-            topic: "add",
-            data: {
-                type: "single-choice",
-                html: SingleChoicePanel.renderHTML(cloned),
-                json: cloned
-            }
-        });
-        postal.publish({
-            channel: "workspace",
-            topic: "reset"
-        });
+            });
+            postal.publish({
+                channel: "workspace",
+                topic: "reset"
+            });
+        }
     },
     render: function () {
         return (
