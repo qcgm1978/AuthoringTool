@@ -4,46 +4,39 @@
 
 var React = require('react');
 var SingleChoicePanel = require("../panels/SingleChoicePanel.jsx");
-
 var postal = require("postal");
-
 var AddActivityMenu = React.createClass({
     //template code for single choice
-    SINGLE_CHOICE_JSON :  {
-        "text":"Single Choice Question",
-        "choices":
-            [
+    getInitialState: function () {
+        return {}
+    },
+    addSingleChoice: function () {
+        var SINGLE_CHOICE_JSON = {
+            "text": "Single Choice Question",
+            "choices": [
                 {
-                    "key" : "A",
-                    "type":"text",
-                    "text":"First Choice",
-                    "flag":"right"
+                    "key": "A",
+                    "type": "text",
+                    "text": "First Choice",
+                    "flag": "right"
                 },
                 {
-                    "key" : "B",
-                    "type":"text",
-                    "text":"Second Choice",
-                    "flag":"wrong"
+                    "key": "B",
+                    "type": "text",
+                    "text": "Second Choice",
+                    "flag": "wrong"
                 },
                 {
-                    "key" : "C",
-                    "type":"text",
-                    "text":"Third Choice",
-                    "flag":"wrong"
+                    "key": "C",
+                    "type": "text",
+                    "text": "Third Choice",
+                    "flag": "wrong"
                 }
             ],
-        "label type":"alphabet",
-        "order type":"0"
-    },
-
-    getInitialState: function () {
-        return {
-
-        }
-    },
-
-    addSingleChoice: function() {
-        var cloned = _.extend({}, this.SINGLE_CHOICE_JSON);
+            "label type": "alphabet",
+            "order type": "0"
+        };
+        var cloned = $.extend({}, SINGLE_CHOICE_JSON);
         postal.publish({
             channel: "block",
             topic: "add",
@@ -58,15 +51,25 @@ var AddActivityMenu = React.createClass({
             topic: "reset"
         });
     },
-
-    render: function() {
+    render: function () {
         return (
             <div className="menuActivityList" data-show={this.props.show}>
                 <div className="category">choice question</div>
-                <div onClick={this.addSingleChoice}><span className="glyphicon glyphicon-ok-circle"/><div className="activity-name">Single Choice</div></div>
+                <select defaultValue='choice question' onChange={this.addSingleChoice}>
+                    <option>choice question</option>
+
+                    <option>
+                        Single Choice
+                    </option>
+                    <option>multiple-choice question</option>
+                    <option>highlight</option>
+                    <option>right or wrong</option>
+                    <option>listening</option>
+                </select>
+
+
             </div>
         );
     }
 });
-
 module.exports = AddActivityMenu;

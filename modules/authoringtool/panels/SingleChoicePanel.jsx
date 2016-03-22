@@ -48,7 +48,7 @@ var SingleChoicePanel = React.createClass({
         this.publishChange(this.state.answer);
     },
     publishChange: function (json) {
-        postal.publish({
+        var obj = {
             channel: "block",
             topic: "modified",
             data: {
@@ -56,7 +56,8 @@ var SingleChoicePanel = React.createClass({
                 type: "single-choice",
                 html: SingleChoicePanel.renderHTML(json)
             }
-        });
+        };
+        postal.publish(obj);
         AuthoringInfo.data.widgetJSON[this.props.blockId] = json;
     },
     componentWillReceiveProps: function (nextProps) {

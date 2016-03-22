@@ -1,14 +1,11 @@
 var React = require('react');
-
 var GridLayout = require("./GridLayout.jsx");
 var Gridster = require("./Gridster.jsx");
 var postal = require("postal");
 var AuthoringInfo = require("./AuthoringInfo");
-
 var _ = require("underscore");
-
 /**
- * ×îÖÕÒ³Ãæ×é¼þ¡£ °üÀ¨ÁËTheme¡¢footer¡¢headerµÈÏà¹ØÉèÖÃ¡£¼°ÓÃÓÚ²¼¾ÖµÄLayout
+ * ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Themeï¿½ï¿½footerï¿½ï¿½headerï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½Öµï¿½Layout
  * props:
  * data : project info
  * themeName: theme for display
@@ -21,58 +18,51 @@ var ThemedPage = React.createClass({
     BLOCK_ID_PREFIX: "block_",
     themeConfig: null,
     lastProps: null,
-
     getInitialState: function () {
-      return {
-          themeConfig: null
-      }
+        return {
+            themeConfig: null
+        }
     },
-
-    getThemeConfig: function() {
+    getThemeConfig: function () {
         var remote = $.ajax({
             type: "GET",
-            url: "templates/" + this.props.themeName +  "/config.json",
+            url: "templates/" + this.props.themeName + "/config.json",
             async: false
         }).responseText;
-
-        this.themeConfig = JSON .parse(remote);
+        this.themeConfig = JSON.parse(remote);
         return this.themeConfig;
     },
-
     //create a new ajax request
-    loadTheme: function() {
+    loadTheme: function () {
         var themeConfig = this.getThemeConfig();  //synchronize loading
         $.ajax({
             type: "GET",
             url: "templates/" + this.props.themeName + "/" + themeConfig.default.html,
-            dataType : 'html',
+            dataType: 'html',
             success: this.handleTemplateLoaded
         });
     },
-
-    moreGrid: function() {
+    moreGrid: function () {
         this.refs["layout"].addBlock();
     },
-
     /**
-     * Õâ¸ö·½·¨»áÔÚÒ³Ãæ¼ÓÔØheaderºÍfooter£¬ ¸ù¾ÝÉèÖÃ¼ÆËãºÃËûÃÇËùÕ¼µÄ¸ß¶È£¬
-     * È»ºó¸ù¾ÝÊ£Óà¸ß¶È¸üÐÂstate£¬ ÖØ»æLayoutºÍ²Î¿¼Ïß
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½headerï¿½ï¿½footerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½Ä¸ß¶È£ï¿½
+     * È»ï¿½ï¿½ï¿½ï¿½Ê£ï¿½ï¿½ß¶È¸ï¿½ï¿½ï¿½stateï¿½ï¿½ ï¿½Ø»ï¿½Layoutï¿½Í²Î¿ï¿½ï¿½ï¿½
      * @param html
      */
-    handleTemplateLoaded: function(html) {
+    handleTemplateLoaded: function (html) {
         $(".styles").empty();
         $(".header").empty().append($(html).filter("header"));
         $(".footer").empty().append($(html).filter("footer"));
-        $(html).filter("link").each(function() {
-            $('<link>').attr('rel','stylesheet')
-                .attr('type','text/css')
-                .attr('href',"templates/default/" + $(this).attr("href"))
+        $(html).filter("link").each(function () {
+            $('<link>').attr('rel', 'stylesheet')
+                .attr('type', 'text/css')
+                .attr('href', "templates/default/" + $(this).attr("href"))
                 .appendTo('.styles');
         });
         setTimeout(this.themeReady, 300);
     },
-
-    themeReady: function( ) {
+    themeReady: function () {
         this.setState({
             themeConfig: {
                 headerHeight: $(".header").height(),
@@ -80,88 +70,77 @@ var ThemedPage = React.createClass({
                 padding: this.themeConfig.default.padding
             }
         });
-
         var page = this;
-
         postal.subscribe({
             channel: "block",
             topic: "add",
-            callback: function(data, envelope) {
+            callback: function (data, envelope) {
                 if (page.refs["main-grid"]) {
-                    var  blockId = _.uniqueId(page.BLOCK_ID_PREFIX);
+                    var blockId = _.uniqueId(page.BLOCK_ID_PREFIX);
                     AuthoringInfo.data.widgetJSON[blockId] = data.json;
                     page.refs["main-grid"].addBlock(data.type, data.html, data.size_x, data.size_y, data.pos_x, data.pos_y, blockId);
                 }
             }
         });
     },
-
     componentDidMount: function () {
         this.loadTheme();
         this.lastProps = this.props;
     },
-
-    savePageData: function() {
-        if(this.props.doubleScreen) {
+    savePageData: function () {
+        if (this.props.doubleScreen) {
             if (this.refs["extra-grid"]) {
                 AuthoringInfo.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
             }
             AuthoringInfo.data.doubleScreenLeftWidgets = this.refs["main-grid"].getGridData();
         } else {
             //extrat and save content
-            $("#main-grid ul>li").each(function() {
+            $("#main-grid ul>li").each(function () {
                 //use interface factory mode to identify each type of content
                 var type = $(this).data("type");
                 $(this).remove("span.gs-resize-handle");
-                if (type==="text") {
+                if (type === "text") {
                     $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
                     AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
                 }
-                if (type==="single-choice") {
+                if (type === "single-choice") {
                     AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
                 }
             });
             AuthoringInfo.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
-            if(AuthoringInfo.data.doubleScreenLeftWidgets.length===0) {
+            if (AuthoringInfo.data.doubleScreenLeftWidgets.length === 0) {
                 AuthoringInfo.data.doubleScreenLeftWidgets = AuthoringInfo.data.singleScreenWidgets;
             }
         }
     },
-
-    shouldComponentUpdate: function(nextProps, nextState) {
-        if (this.state.themeConfig===null) return true;
-
-        if (nextProps.themeName!=this.props.themeName) {
+    shouldComponentUpdate: function (nextProps, nextState) {
+        if (this.state.themeConfig === null) return true;
+        if (nextProps.themeName != this.props.themeName) {
             this.loadTheme();
             return true;
         }
-
         console.log("********************************Page Update******************************");
         //if (this.props.doubleScreen != nextProps.doubleScreen) {
-            /*Switching double screen*/
-           this.savePageData();
+        /*Switching double screen*/
+        this.savePageData();
         //}
         this.lastProps = nextProps;
         return true;
     },
-
-    getPortraitCutLayout: function() {
+    getPortraitCutLayout: function () {
         console.log("===================portrait cut mode================================");
-
         $(".footer").css("position", "absolute").css("bottom", 0).css("right", 0).css("width", this.props.pageSetting.width);
         $(".header").css("position", "absolute").css("top", 0).css("left", 0).css("width", this.props.pageSetting.width);
-
         var contentWidth = this.props.pageSetting.width
             - parseInt(this.state.themeConfig.padding[1])
             - parseInt(this.state.themeConfig.padding[3]);
         var mainHeight = this.props.pageSetting.height
             - parseInt(this.state.themeConfig.padding[0])
             - parseInt(this.state.themeConfig.padding[2])
-            - (this.props.pageSetting.showHeader?$(".header").height():0);
-        var extraHeight =  this.props.pageSetting.height
+            - (this.props.pageSetting.showHeader ? $(".header").height() : 0);
+        var extraHeight = this.props.pageSetting.height
             - parseInt(this.state.themeConfig.padding[0])
             - parseInt(this.state.themeConfig.padding[2]);
-
         if (this.props.pageSetting.showFooter) {
             extraHeight -= $(".footer").height();
         }
@@ -172,7 +151,8 @@ var ThemedPage = React.createClass({
             width: contentWidth,
             minHeight: mainHeight
         };
-        var mainGrid = <Gridster ref="main-grid" id="main-grid" data={AuthoringInfo.data.doubleScreenLeftWidgets} style={mainStyle}/>;
+        var mainGrid = <Gridster ref="main-grid" id="main-grid" data={AuthoringInfo.data.doubleScreenLeftWidgets}
+                                 style={mainStyle}/>;
         var extraStyle = {
             position: "absolute",
             right: this.state.themeConfig.padding[1],
@@ -180,32 +160,32 @@ var ThemedPage = React.createClass({
             width: contentWidth,
             minHeight: extraHeight
         };
-        var extraGrid =  <Gridster ref="extra-grid" id="extra-grid" data={AuthoringInfo.data.doubleScreenRightWidgets} style={extraStyle}/>;
+        var extraGrid = <Gridster ref="extra-grid" id="extra-grid" data={AuthoringInfo.data.doubleScreenRightWidgets}
+                                  style={extraStyle}/>;
         return <div>
             {mainGrid}
             {extraGrid}
         </div>;
     },
-
-    getSingleLayout: function(width) {
+    getSingleLayout: function (width) {
         $(".header").css("position", "inherit").css("width", width);
         $(".footer").css("position", "inherit").css("width", width);
         var minHeight = this.props.pageSetting.height - parseInt(this.state.themeConfig.padding[0])
             - parseInt(this.state.themeConfig.padding[2])
-            - (this.props.pageSetting.showHeader?$(".header").height():0)
-            - (this.props.pageSetting.showFooter?$(".footer").height():0);
+            - (this.props.pageSetting.showHeader ? $(".header").height() : 0)
+            - (this.props.pageSetting.showFooter ? $(".footer").height() : 0);
         var mainStyle = {
-            width: width- parseInt(this.state.themeConfig.padding[0])
+            width: width - parseInt(this.state.themeConfig.padding[0])
             - parseInt(this.state.themeConfig.padding[2]),
             minHeight: minHeight,
             marginLeft: this.state.themeConfig.padding[3],
             marginTop: this.state.themeConfig.padding[0],
             marginBottom: this.state.themeConfig.padding[2],
         };
-        return (<Gridster ref="main-grid" id="main-grid" data={AuthoringInfo.data.singleScreenWidgets} style={mainStyle}/>);
+        return (
+            <Gridster ref="main-grid" id="main-grid" data={AuthoringInfo.data.singleScreenWidgets} style={mainStyle}/>);
     },
-
-    getExtraLayout: function() {
+    getExtraLayout: function () {
         var extraStyle = {
             position: "absolute",
             right: 0,
@@ -215,40 +195,31 @@ var ThemedPage = React.createClass({
         };
         var main = this.getSingleLayout(this.props.pageSetting.width);
         return <div>
-                {main}
-                <Gridster ref="extra-grid" id="extra-grid" style={extraStyle}/>
-            </div>;
+            {main}
+            <Gridster ref="extra-grid" id="extra-grid" style={extraStyle}/>
+        </div>;
     },
-
-    getExpandLayout: function() {
-        return this.getSingleLayout(this.props.pageSetting.width*2);
+    getExpandLayout: function () {
+        return this.getSingleLayout(this.props.pageSetting.width * 2);
     },
-
     render: function () {
         var layout = <div ref="layout"/>;
         if (this.state.themeConfig) {
-            /*When theme config loaded£¬ reset the layout frame*/
-
-            console.log("*****************render loading themed page************************")
-            console.log("theme: ", this.state.themeConfig);
-            console.log("preview setting: ", this.props.pageSetting);
-
-
+            /*When theme config loadedï¿½ï¿½ reset the layout frame*/
             if (this.props.pageSetting.doubleScreen) {
-                if (this.props.pageSetting.expandMode===1) {  //portrait cut model
+                if (this.props.pageSetting.expandMode === 1) {  //portrait cut model
                     layout = this.getPortraitCutLayout();
                 }
-                if (this.props.pageSetting.expandMode===2) {  //expand mode
+                if (this.props.pageSetting.expandMode === 2) {  //expand mode
                     layout = this.getExpandLayout();
                 }
-                if (this.props.pageSetting.expandMode===3) {  //extra mode
+                if (this.props.pageSetting.expandMode === 3) {  //extra mode
                     layout = this.getExtraLayout();
                 }
             } else {
                 layout = this.getSingleLayout(this.props.pageSetting.width);
             }
         }
-
         return (
             <div className="screen" style={{
                 position: "relative",
@@ -267,7 +238,6 @@ var ThemedPage = React.createClass({
         );
     }
 });
-
 module.exports = ThemedPage;
 
 

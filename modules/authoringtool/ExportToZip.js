@@ -42,7 +42,7 @@ var ExportToZip = (function() {
         var pageData = 'var data=' + JSON.stringify(AuthoringInfo);
         html += '<script type="text/javascript" src="data.js"></script>\n';
         zip.file("data.js", pageData);
-        alert(pageData);
+        console.log(pageData);
 
         /**copy gridster related (we can use other method to paint the page)*/
         html += '<script type="text/javascript" src="modules/gridster/jquery.gridster.js"></script>\n';
@@ -71,7 +71,7 @@ var ExportToZip = (function() {
 
         setTimeout(function() {
             var content = zip.generate({type:"blob"});
-            saveAs(content, "example.zip");
+            //saveAs(content, "example.zip");
         }, 500);
     }
 
