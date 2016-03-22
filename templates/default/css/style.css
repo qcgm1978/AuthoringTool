@@ -190,6 +190,9 @@ h1 {
 	vertical-align: middle;
 	margin: 0 10px;
 }
+.questions_list .list .right_side .active{
+    background-position-y: -26px;
+}
 .questions_list .list .right_side .choose input {
 	width: 100%;
 	height: 100%;

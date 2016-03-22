@@ -4,7 +4,6 @@ var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var AuthoringInfo = require("../AuthoringInfo");
 var postal = require("postal");
 require('../../../src/styles/SingleChoicePanel.css');
-
 var SingleChoicePanel = React.createClass({
     NAME: '',
     mixins: [RightPanelMixin, LinkedStateMixin], // Use the mixin
@@ -18,7 +17,9 @@ var SingleChoicePanel = React.createClass({
             json.choices.map(function (choice, index) {
                 html += '<li><i></i>';
                 html += '<span class="letters">' + index + '</span>';
-                html += '<a href="javascript:;" class="choose">';
+                html += '<a href="javascript:;" class="choose' +
+                    (choice.flag=='right'?' active':'') +
+                    '">';
                 html += '<input type="radio" name="name11"/></a>'
                 html += '<span>' + choice.text + '</span>';
                 html += '</li>';
@@ -72,6 +73,22 @@ var SingleChoicePanel = React.createClass({
         });
         this.publishChange(this.state.answer);
     },
+    answerChanged: function (event) {
+        var target = $(event.target);
+        var selected=target.nextAll('input').data('index')
+        var choices = this.state.answer.choices;
+        choices.map(function (choice,index) {
+            if(index==selected){
+                choices[index].flag = 'right';
+            }else{
+                choices[index].flag='wrong'
+            }
+        });
+        this.setState({
+            answer: this.state.answer
+        });
+        this.publishChange(this.state.answer);
+    },
     choiceChanged: function (event) {
         var target = $(event.target);
         this.state.answer.choices[parseInt(target.data("index"))].text = event.target.value;
@@ -100,7 +117,7 @@ var SingleChoicePanel = React.createClass({
         var panel = this;
         var choices = this.state.answer.choices.map(function (choice, index) {
             return <div key={panel.getUniqueId(choice)} className="form-group">
-                <input type="radio" name="sc"/> <input type="text"  placeholder={choice.text}
+                <input type="radio" name="sc" defaultChecked={choice.flag=='right'?'checked':false} onClick={panel.answerChanged} /> <input type="text" value={choice.text}
                                                        data-index={index} onChange={panel.choiceChanged}/> <a
                 className="delete" onClick={panel.deleteChoice.bind(panel, index)}>Del</a>
             </div>
