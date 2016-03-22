@@ -22,7 +22,7 @@ var RightPanel = React.createClass({
 
     componentDidMount: function () {
         var panel = this;
-        postal.subscribe({
+            postal.subscribe({
             channel: "block",
             topic: "selected",
             callback: function(data, envelope) {
