@@ -18,7 +18,7 @@ var SingleChoicePanel = React.createClass({
                 html += '<li><i></i>';
                 html += '<span class="letters">' + index + '</span>';
                 html += '<a href="javascript:;" class="choose' +
-                    (choice.flag=='right'?' active':'') +
+                    //(choice.flag=='right'?' active':'') +
                     '">';
                 html += '<input type="radio" name="name11"/></a>'
                 html += '<span>' + choice.text + '</span>';
@@ -117,7 +117,7 @@ var SingleChoicePanel = React.createClass({
         var panel = this;
         var choices = this.state.answer.choices.map(function (choice, index) {
             return <div key={panel.getUniqueId(choice)} className="form-group">
-                <input type="radio" name="sc" defaultChecked={choice.flag=='right'?'checked':false} onClick={panel.answerChanged} /> <input type="text" value={choice.text}
+                <input type="radio" name="sc" defaultChecked={choice.flag=='right'?'checked':false}  /> <input type="text" value={choice.text}
                                                        data-index={index} onChange={panel.choiceChanged}/> <a
                 className="delete" onClick={panel.deleteChoice.bind(panel, index)}>Del</a>
             </div>

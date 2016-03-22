@@ -64,6 +64,8 @@ var ExportToZip = (function() {
 
         html += '<div class="content"></div>\n';
         html += '<footer class="site-footer">Default Template</footer>\n';
+        html += '<script src="modules/common.js"></script>\n';
+        copyFile(zip, "modules/common.js");
 
         html += '</body></html>';
 
@@ -71,7 +73,8 @@ var ExportToZip = (function() {
 
         setTimeout(function() {
             var content = zip.generate({type:"blob"});
-            //saveAs(content, "example.zip");
+            //todo for test
+            saveAs(content, "example.zip");
         }, 500);
     }
 

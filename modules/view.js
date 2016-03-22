@@ -1,5 +1,5 @@
 /**
- * Created by Áõº­ on 2016/3/17.
+ * Created by ï¿½ï¿½ï¿½ï¿½ on 2016/3/17.
  */
 
 
@@ -29,6 +29,6 @@ $(function() {
     }
 
     $('.gridster .gs-w').css("border", "none");
-    gridster.disable().disable_resize();
+    gridster.disable()/*.disable_resize()*/;
 
 });
