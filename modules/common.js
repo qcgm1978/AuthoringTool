@@ -54,32 +54,42 @@ function loadComponent(selector, func, data) {
  * 只有在检查答案的时候需要额外考虑这点。或者打分时考虑这一点
  */
 function checkFn(param) {
-    var num = activityComponents.length;
+    //var num = activityComponents.length;
     var answers;
-    if (typeof param == 'undefined') {
-        answers = JSON.parse(readFn());
-    } else if (param instanceof Array) {
-        answers = param;
-    } else if (typeof param == 'string') {
-        answers = JSON.parse(param);
+    if(typeof param == 'undefined'){
+        answers=JSON.parse(readFn());
+    }else if(param instanceof Array){
+        answers=param;
+    }else if(typeof param== 'string'){
+        answers=JSON.parse(param);
     }
-    var arr = [];
-    for (var i = 0; i < num; i++) {
-        var actComponent = activityComponents[i];
-        if (actComponent.checkFn) {
-            var result = actComponent.checkFn(answers[i]);
-            if (result instanceof Array) {
-                for (var jj = 0; jj < result.length; jj++) {
-                    arr.push(result[jj]);
-                }
-            } else {
-                arr.push(result);
-            }
-        } else {
-            arr.push(-1);
+    //var arr = [];
+    //for (var i = 0; i < num; i++) {
+    //    var actComponent = activityComponents[i];
+    //    if(actComponent.checkFn){
+    //        var result=actComponent.checkFn(answers[i]);
+    //        if(result instanceof Array){
+    //            for(var jj=0;jj<result.length;jj++){
+    //                arr.push(result[jj]);
+    //            }
+    //        }else{
+    //            arr.push(result);
+    //        }
+    //    }else{
+    //        arr.push(-1);
+    //    }
+    //}
+    //return JSON.stringify(arr);
+    var checkArr=[];
+    $.each(answers, function (i,n) {
+        var $ul = $('.list ul').eq(i);
+        if(n==$ul.find('.active').parent().index()-1){
+            checkArr.push(1)
+        }else{
+            checkArr.push(0)
         }
-    }
-    return JSON.stringify(arr);
+    })
+    return JSON.stringify(checkArr);
 }
 /*
  *读取当前页面的题目答案
