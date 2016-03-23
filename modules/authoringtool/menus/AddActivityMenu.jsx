@@ -10,54 +10,60 @@ var AddActivityMenu = React.createClass({
     getInitialState: function () {
         return {}
     },
-    addSingleChoice: function (select) {
-        if (select.currentTarget.value === "Single Choice") {
-            var SINGLE_CHOICE_JSON = {
-                "text": "Single Choice Question",
-                "choices": [
-                    {
-                        "key": "A",
-                        "type": "text",
-                        "text": "First Choice",
-                        "flag": "right"
-                    },
-                    {
-                        "key": "B",
-                        "type": "text",
-                        "text": "Second Choice",
-                        "flag": "wrong"
-                    },
-                    {
-                        "key": "C",
-                        "type": "text",
-                        "text": "Third Choice",
-                        "flag": "wrong"
-                    }
-                ],
-                "label type": "alphabet",
-                "order type": "0"
-            };
-            var cloned = $.extend({}, SINGLE_CHOICE_JSON);
-            postal.publish({
-                channel: "block",
-                topic: "add",
-                data: {
-                    type: "single-choice",
-                    html: SingleChoicePanel.renderHTML(cloned),
-                    json: cloned
-                }
-            });
-            postal.publish({
-                channel: "workspace",
-                topic: "reset"
-            });
+    singleChoiceCallback: function (data) {
+        postal.publish({
+            channel: "block",
+            topic: "add",
+            data: {
+                type: "single-choice",
+                html: SingleChoicePanel.renderHTML(data),
+                json: data
+            }
+        });
+        postal.publish({
+            channel: "workspace",
+            topic: "reset"
+        });
+    },
+    handleActivity: function (url, callback) {
+        $.getJSON(url, (data)=> {
+            callback(data);
+        })
+    },
+    hightlightCallback: function (data) {
+        postal.publish({
+            channel: "block",
+            topic: "add",
+            data: {
+                type: "single-choice",
+                html: SingleChoicePanel.renderHTML(data),
+                json: data
+            }
+        });
+        postal.publish({
+            channel: "workspace",
+            topic: "reset"
+        });
+    },
+    addActivity: function (select) {
+        var value = select.currentTarget.value;
+        var url = '', callback = $.noop;
+        if (value === "Single Choice") {
+            url = 'json/single-choice.json';
+            callback = this.singleChoiceCallback
+        } else if (value == 'highlight') {
+            url='json/highlight.json'
+            callback=this.hightlightCallback
+        }
+        if (url!='') {
+            this.handleActivity(url, callback);
         }
     },
     render: function () {
         return (
             <div className="menuActivityList" data-show={this.props.show}>
                 <div className="category">choice question</div>
-                <select defaultValue='choice question' onChange={this.addSingleChoice}>
+                <select defaultValue='choice question' onChange={this.addActivity}>
                     <option>choice question</option>
 
                     <option>
