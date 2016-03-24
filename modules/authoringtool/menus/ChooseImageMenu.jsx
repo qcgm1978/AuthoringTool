@@ -1,35 +1,28 @@
 var React = require('react');
 var Dropzone = require('react-dropzone');
-
 var request = require('superagent');
-
 var ChooseImageMenu = React.createClass({
     getInitialState: function () {
-        return {
-        }
+        return {}
     },
-
     componentDidMount: function () {
     },
-
-    componentWillReceiveProps: function(nextProps) {
-
+    componentWillReceiveProps: function (nextProps) {
     },
-
     onDrop: function (files) {
-        console.log('Received files: ', files);
-
-        request.post('/attach/upload')
-            .attach(files[0].name, files[0])
-            .end(function(err, res) {
-
-            });
+        $('<img>')
+            .attr('src', files[0].preview)
+            .height(300)
+            .css('max-width',400)
+            .appendTo('.zone')
+        //request.post('/attach/upload')
+        //    .attach(files[0].name, files[0])
+        //    .end(function(err, res) {
+        //
+        //    });
     },
-
-    handleFile: function(file) {
-
+    handleFile: function (file) {
     },
-
     render: function () {
         return (
             <div className="chooseImage" data-show={this.props.show}>
@@ -40,5 +33,4 @@ var ChooseImageMenu = React.createClass({
         );
     }
 });
-
 module.exports = ChooseImageMenu;
