@@ -38,7 +38,7 @@ var RightPanelMixin = {
                     <span className="glyphicon glyphicon-remove btn-close" onClick={this.close}></span>
                 </div>
                 <div className="pn-body">
-                    <div className="basic page">
+                    {/*<div className="basic page">
                         <form className="form-horizontal">
                             <div className="form-group">
                                 <label className="col-xs-5 control-label">Horizontal Align</label>
@@ -65,7 +65,7 @@ var RightPanelMixin = {
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div>*/}
 
                     <div className="content page">
                         {editor}
