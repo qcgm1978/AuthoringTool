@@ -151,9 +151,10 @@ var Gridster = React.createClass({
             pos_y = 10;
         }
         gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
-        this.initBlockEvents(blockId);
+        this.initBlockEvents(blockId,type);
     },
-    initBlockEvents: function (blockId) {
+    initBlockEvents: function (blockId,type) {
+        //var type = $(this).data("type");
         $("li[data-id='" + blockId + "']").off("click").on("click", function (event) {
             if ($(this).hasClass("player-revert") || $(this).hasClass("resizing")) {
                 return;
@@ -162,23 +163,25 @@ var Gridster = React.createClass({
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
             $(".gridster ul").gridster().data('gridster').disable().disable_resize();
-            if ($(this).data("type") !== 'text') {
+            if (type !== 'text'&&type !== 'img') {
                 postal.publish({
                     channel: "block",
                     topic: "selected",
                     data: {
                         blockId: blockId,
-                        type: $(this).data("type")
+                        type: type
                     }
                 });
             }
         });
-        tinymce.init({
-            selector: '.gridster li .rtf',
-            inline: true,
-            menubar: false,
-            toolbar: 'undo redo| bold italic underline strikethrough'
-        });
+        if (type !== 'img') {
+            tinymce.init({
+                selector: '.gridster li .rtf',
+                inline: true,
+                menubar: false,
+                toolbar: 'undo redo| bold italic underline strikethrough'
+            });
+        }
     },
     render: function () {
         return (<div className="gridster" id={this.props.id} style={this.props.style}>
