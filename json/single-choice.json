@@ -1,0 +1,25 @@
+{
+  "text": "Single Choice Question",
+  "choices": [
+    {
+      "key": "A",
+      "type": "text",
+      "text": "First Choice",
+      "flag": "right"
+    },
+    {
+      "key": "B",
+      "type": "text",
+      "text": "Second Choice",
+      "flag": "wrong"
+    },
+    {
+      "key": "C",
+      "type": "text",
+      "text": "Third Choice",
+      "flag": "wrong"
+    }
+  ],
+  "label type": "alphabet",
+  "order type": "0"
+}

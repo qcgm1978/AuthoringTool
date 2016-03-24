@@ -56,6 +56,7 @@ var ExportToZip = (function () {
         copyFile(zip, "modules/common.js");
         html += '</body></html>';
         zip.file("index.html", html);
+        zip.folder('json')
         setTimeout(function () {
             var content = zip.generate({type: "blob"});
             //todo for test

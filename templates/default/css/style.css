@@ -26,22 +26,22 @@ ul, li {
 .site-header .A-head-line {background:url(../images/insets_01.png) left top no-repeat; width:62px; height:3px; display:inline-block; vertical-align:3px;}
 .site-header .A-head-bor {display:inline-block;height:3px;border: 0;border-top:3px solid #236096;width:70%;}
 .B-head {
-	background:url(../images/insets_05.jpg) left top no-repeat; 
+	background:url(../images/insets_05.jpg) left top no-repeat;
 	padding-left:51px;
-	margin-top:5px; 
+	margin-top:5px;
 	margin-left:15px;
 }
 .B-head span {
-	display:inline-block; 
-	position:relative; 
+	display:inline-block;
+	position:relative;
 	padding: 0 16px 0 6px;
 	background: #1E63A4;/* ie */
 	background-image: -moz-linear-gradient(left, #6192c0, #3574ae);/* Firefox */
 	background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0, #6192c0), color-stop(1, #3574ae)); /* Saf4+, Chrome */
 	vertical-align: top;
-	height: 25px; 
-	line-height: 25px; 
-	font-size: 20px; 
+	height: 25px;
+	line-height: 25px;
+	font-size: 20px;
 	color: #feffff;
 }
 .B-head em {display:inline-block; background:url(../images/insets_06.png) left top no-repeat; position:absolute; right:0px; bottom:0px; width:10px; height:10px;}
@@ -120,22 +120,22 @@ h1 {
 	.site-header .A-head-line {background:url(../images/insets_01.png) left top no-repeat; width:62px; height:3px; display:inline-block; vertical-align:3px;}
 	.site-header .A-head-bor {display:inline-block;height:3px;border: 0;border-top:3px solid #236096;width:70%;}
 	.B-head {
-		background:url(../images/insets_05.jpg) left top no-repeat; 
+		background:url(../images/insets_05.jpg) left top no-repeat;
 		padding-left:51px;
-		margin-top:5px; 
+		margin-top:5px;
 		margin-left:15px;
 	}
 	.B-head span {
-		display:inline-block; 
-		position:relative; 
+		display:inline-block;
+		position:relative;
 		padding: 0 16px 0 6px;
 		background: #1E63A4;/* ie */
 		background-image: -moz-linear-gradient(left, #6192c0, #3574ae);/* Firefox */
 		background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0, #6192c0), color-stop(1, #3574ae)); /* Saf4+, Chrome */
 		vertical-align: top;
-		height: 25px; 
-		line-height: 25px; 
-		font-size: 20px; 
+		height: 25px;
+		line-height: 25px;
+		font-size: 20px;
 		color: #feffff;
 	}
 	.B-head em {display:inline-block; background:url(../images/insets_06.png) left top no-repeat; position:absolute; right:0px; bottom:0px; width:10px; height:10px;}

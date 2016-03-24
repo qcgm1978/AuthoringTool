@@ -4,6 +4,8 @@
 
 var React = require('react');
 var SingleChoicePanel = require("../panels/SingleChoicePanel.jsx");
+var HighLightComponent = require("../panels/HighLightComponent.js");
+
 var postal = require("postal");
 var AddActivityMenu = React.createClass({
     //template code for single choice
@@ -35,8 +37,8 @@ var AddActivityMenu = React.createClass({
             channel: "block",
             topic: "add",
             data: {
-                type: "single-choice",
-                html: SingleChoicePanel.renderHTML(data),
+                type: "highlight",
+                html: HighLightComponent.renderHTML(data),
                 json: data
             }
         });

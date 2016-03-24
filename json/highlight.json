@@ -1,0 +1,53 @@
+{
+  "id": "jalsdfkjl300lj230jl-2342jl23",
+  "name": "",
+  "image": "",
+  "type": "highlight",
+  "type id": "1125",
+  "version":"1.1",
+  "creator": "Hugo",
+  "date of birth": "2015-01-01",
+  "description": "",
+  "tags":
+  [
+    "exercise", "test", "highlight"
+  ],
+  "estimated duration": "4",
+  "content":
+  [
+    {
+      "order":"0",
+      "label":"10",
+      "mark type":"automatic",
+      "question":
+      {
+        "title":"Multiple words can be chosen.",
+        "rubric":"Please highlight the correct answers in the passages.",
+        "resources":[]
+      },
+      "answer":
+      {
+        "highlight flag":"",
+        "highlight type":"multiple",
+        "text":"Children who #answer1#experience a rewarding friendship#answer1# before the birth of a sibling are likely to have a better relationship with that brother or sister that endures throughout their childhood, said Laurie Kramer in a University of Illinois study published in December's Journal of Family Psychology."
+      }
+    },
+    {
+      "order":"1",
+      "label":"11",
+      "mark type":"automatic",
+      "question":
+      {
+        "title":"Only one word can be chosen.",
+        "rubric":"Please highlight the correct answers in the passages.",
+        "resources":[]
+      },
+      "answer":
+      {
+        "highlight flag":"|",
+        "highlight type":"single",
+        "text":"'#answer1#When early friendships are successful|#answer1#When parents relate to a child|this is not usually the case when two children are interacting."
+      }
+    }
+  ]
+}
