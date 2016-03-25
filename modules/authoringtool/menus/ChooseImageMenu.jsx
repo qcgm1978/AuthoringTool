@@ -39,7 +39,7 @@ var ChooseImageMenu = React.createClass({
                 var size_y = widthHeight.height;
                 if (size_x) {
                     var number = parseInt(size_x);
-                    size_x = number>984?984:number;
+                    //size_x = number>984?984:number;
                 }
                 if (size_y) size_y = parseInt(size_y);
                 var template = ele.data("template");
@@ -49,8 +49,8 @@ var ChooseImageMenu = React.createClass({
                     data: {
                         type: "img",
                         html: template,
-                        size_x: size_x,
-                        size_y: size_y
+                        //size_x: size_x,
+                        //size_y: size_y
                     }
                 });
                 postal.publish({

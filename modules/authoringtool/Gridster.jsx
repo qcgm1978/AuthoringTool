@@ -55,6 +55,13 @@ var Gridster = React.createClass({
                 $("li[data-id='" + data.id + "']").html(data.html);
             }
         })
+        postal.subscribe({
+            channel: "block",
+            topic: "remove",
+            callback:  (data, envelope)=> {
+                this.removeBlock();
+            }
+        })
     },
     /**When mouse over(drag in、dragging) mouse out(drag out) mouseup( dragin effects)*/
     bindEvent: function () {
@@ -132,11 +139,21 @@ var Gridster = React.createClass({
         this.initGridster();
         this.loadGridData();
     },
+    removeBlock: function () {
+        var $curEle = $('#main-grid ul li.current');
+        if ($curEle.length>0) {
+            this.gridster.remove_widget($curEle, function () {
+                debugger;
+            })
+        }
+    },
     addBlock: function (type, content, size_x, size_y, pos_x, pos_y, blockId) {
         //Using the gridster API that allows building intuitive draggable layouts from elements spanning multiple columns.
-        var gridster = $("#" + this.props.id + " ul").gridster({
-            //widget_margins: [10, 10]
-        }).data('gridster');
+        if (!this.gridster) {
+            this.gridster = $("#" + this.props.id + " ul").gridster({
+                //widget_margins: [10, 10]
+            }).data('gridster');
+        }
         if (!size_x) {
             size_x = 12;
         }
@@ -150,7 +167,7 @@ var Gridster = React.createClass({
         if (!pos_y) {
             pos_y = 10;
         }
-        gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
+        this.gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
         this.initBlockEvents(blockId,type);
     },
     initBlockEvents: function (blockId,type) {
