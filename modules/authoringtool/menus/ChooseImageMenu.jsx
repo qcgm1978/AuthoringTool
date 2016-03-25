@@ -25,7 +25,7 @@ var ChooseImageMenu = React.createClass({
                     height: this.height
                 }
                 $(this)
-                    .height(300)
+                    .css('max-height',300)
                     .css('max-width', 400)
             })
             .appendTo('.zone')
@@ -37,7 +37,10 @@ var ChooseImageMenu = React.createClass({
                 }
                 var size_x = widthHeight.width;
                 var size_y = widthHeight.height;
-                if (size_x) size_x = parseInt(size_x);
+                if (size_x) {
+                    var number = parseInt(size_x);
+                    size_x = number>984?984:number;
+                }
                 if (size_y) size_y = parseInt(size_y);
                 var template = ele.data("template");
                 postal.publish({
