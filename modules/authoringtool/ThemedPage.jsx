@@ -128,7 +128,6 @@ var ThemedPage = React.createClass({
             this.loadTheme();
             return true;
         }
-        console.log("********************************Page Update******************************");
         //if (this.props.doubleScreen != nextProps.doubleScreen) {
         /*Switching double screen*/
         this.savePageData();
@@ -137,7 +136,6 @@ var ThemedPage = React.createClass({
         return true;
     },
     getPortraitCutLayout: function () {
-        console.log("===================portrait cut mode================================");
         $(".footer").css("position", "absolute").css("bottom", 0).css("right", 0).css("width", this.props.pageSetting.width);
         $(".header").css("position", "absolute").css("top", 0).css("left", 0).css("width", this.props.pageSetting.width);
         var contentWidth = this.props.pageSetting.width

@@ -56,7 +56,7 @@ var ExportToZip = (function () {
             '</footer>\n';
         //html += '<script type="text/javascript" src="build/jquery.2.1.4.min.js"></script>\n';
         html += '<script src="modules/common.js"></script>\n';
-        //copyFile(zip, 'build/jquery.2.1.4.min.js')
+        copyFile(zip, 'build/jquery.2.1.4.min.js')
         copyFile(zip, "modules/common.js");
         html += '</body></html>';
         zip.file("index.html", html);
