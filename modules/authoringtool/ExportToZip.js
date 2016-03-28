@@ -46,10 +46,14 @@ var ExportToZip = (function () {
         html += '<header class="site-header">\n';
         html += '<div class="A-head"><span class="A-head-bold">2a</span>Interpreting charts, tables, graphs and diagrams</div>\n';
         html += '<div><span class="A-head-bor"></span><span class="A-head-line"></span></div>\n';
-        html += '<div class="B-head"><span>Vocabulary: globalisation<em></em></span></div>\n';
+        html += '<div class="B-head"><span>' +
+            $('.B-head span').text() +
+            '<em></em></span></div>\n';
         html += '</header>\n';
         html += '<div class="content"></div>\n';
-        html += '<footer class="site-footer">Default Template</footer>\n';
+        html += '<footer class="site-footer">' +
+            $('.site-footer').text() +
+            '</footer>\n';
         //html += '<script type="text/javascript" src="build/jquery.2.1.4.min.js"></script>\n';
         html += '<script src="modules/common.js"></script>\n';
         //copyFile(zip, 'build/jquery.2.1.4.min.js')
@@ -59,7 +63,7 @@ var ExportToZip = (function () {
         zip.folder('json')
         setTimeout(function () {
             var content = zip.generate({type: "blob"});
-            //todo for test
+            //todo comment for test
             saveAs(content, "example.zip");
         }, 500);
     }
