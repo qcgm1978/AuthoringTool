@@ -72,7 +72,7 @@ var PageConfigMenu = React.createClass({
                 <div><input checked={this.props.pageSetting.showFooter} type="checkbox"
                             onChange={this.toggleFooter}/><span>Show Footer</span></div>
                 <div><span>Double Screen</span>
-                    <select onChange={this.expandModeChanged}>
+                    <select onChange={this.expandModeChanged} disabled={this.props.pageSetting.doubleScreen?false:'disabled'}>
                         <option value="1">{this.SCREEN_MODEL_PORTRAIT}</option>
                         <option value="2">{this.SCREEN_MODEL_EXPAND}</option>
                         <option value="3">{this.SCREEN_MODEL_EXTRA}</option>
