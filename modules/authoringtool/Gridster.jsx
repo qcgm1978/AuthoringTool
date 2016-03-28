@@ -39,13 +39,12 @@ var Gridster = React.createClass({
         this.initGridster();
         this.loadGridData();
         this.bindEvent();
-        var gridster = this;
         postal.subscribe({
             channel: "workspace",
             topic: "reset",
-            callback: function (data, envelope) {
-                $("#" + gridster.props.id + " ul").find("li.current").removeClass("current");
-                $("#" + gridster.props.id + " ul").gridster().data('gridster').enable().enable_resize();
+            callback: (data, envelope) => {
+                $("#" + this.props.id + " ul").find("li.current").removeClass("current");
+                this.gridster.enable().enable_resize();
             }
         });
         postal.subscribe({
@@ -58,7 +57,7 @@ var Gridster = React.createClass({
         postal.subscribe({
             channel: "block",
             topic: "remove",
-            callback:  (data, envelope)=> {
+            callback: (data, envelope)=> {
                 this.removeBlock();
             }
         })
@@ -68,7 +67,6 @@ var Gridster = React.createClass({
     },
     initGridster: function () {
         //remove old styles
-        var gridster = this;
         $("#style-" + this.props.id).remove();
         $("#" + this.props.id + ">ul").remove();
         $("#" + this.props.id).append("<ul/>");
@@ -114,8 +112,7 @@ var Gridster = React.createClass({
                 };
             }
         };
-        var gridster = this;
-        $("#" + this.props.id + ">ul").gridster(options);
+        this.gridster = $("#" + this.props.id + ">ul").gridster(options).data('gridster');
     },
     /**
      * When propeties and states change
@@ -124,14 +121,13 @@ var Gridster = React.createClass({
     },
     /**Extract n save grid data*/
     getGridData: function () {
-        return $("#" + this.props.id + ">ul").gridster().data('gridster').serialize();
+        return this.gridster.serialize();
     },
     /**Load gridster widgets from layout.data */
     loadGridData: function () {
-        var gridster = this;
         if (this.props.data) {
-            _.each(this.props.data, function (data) {
-                gridster.addBlock(data.type, AuthoringInfo.data.widgetContents[data.id], data.size_x, data.size_y, data.col, data.row, data.id);
+            _.each(this.props.data, (data)=> {
+                this.addBlock(data.type, AuthoringInfo.data.widgetContents[data.id], data.size_x, data.size_y, data.col, data.row, data.id);
             });
         }
     },
@@ -141,7 +137,7 @@ var Gridster = React.createClass({
     },
     removeBlock: function () {
         var $curEle = $('#main-grid ul li.current');
-        if ($curEle.length>0) {
+        if ($curEle.length > 0) {
             this.gridster.remove_widget($curEle, function () {
                 debugger;
             })
@@ -168,9 +164,9 @@ var Gridster = React.createClass({
             pos_y = 10;
         }
         this.gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
-        this.initBlockEvents(blockId,type);
+        this.initBlockEvents(blockId, type);
     },
-    initBlockEvents: function (blockId,type) {
+    initBlockEvents: function (blockId, type) {
         //var type = $(this).data("type");
         $("li[data-id='" + blockId + "']").off("click").on("click", function (event) {
             if ($(this).hasClass("player-revert") || $(this).hasClass("resizing")) {
@@ -179,8 +175,8 @@ var Gridster = React.createClass({
             event.stopPropagation();
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
-            $(".gridster ul").gridster().data('gridster').disable().disable_resize();
-            if (type !== 'text'&&type !== 'img') {
+            this.gridster.disable().disable_resize();
+            if (type !== 'text' && type !== 'img') {
                 postal.publish({
                     channel: "block",
                     topic: "selected",

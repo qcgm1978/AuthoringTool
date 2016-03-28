@@ -33,7 +33,6 @@ var ExportToZip = (function () {
         var pageData = 'var data=' + JSON.stringify(AuthoringInfo);
         html += '<script type="text/javascript" src="data.js"></script>\n';
         zip.file("data.js", pageData);
-        console.log(pageData);
         /**copy gridster related (we can use other method to paint the page)*/
         html += '<script type="text/javascript" src="modules/gridster/jquery.gridster.js"></script>\n';
         copyFile(zip, "modules/gridster/jquery.gridster.js");
