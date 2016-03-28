@@ -83,11 +83,12 @@ var Gridster = React.createClass({
                     /**
                      * When on double screen and the expand mode is 'extra' or 'portrait',
                      * Move the widget from left to right
-                     if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode===1||layout.props.pageSetting.expandMode===3)
-                     && ui.pointer.left>=layout.props.pageSetting.width+70) {
-                            layout.moveBlock(ui.$player, true);
-                        }
                      * */
+                    debugger;
+                    if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode === 1 || layout.props.pageSetting.expandMode === 3)
+                        && ui.pointer.left >= layout.props.pageSetting.width + 70) {
+                        layout.moveBlock(ui.$player, true);
+                    }
                 }
             },
             resize: {
