@@ -33,13 +33,29 @@ var PageConfigMenu = React.createClass({
         });
     },
     componentDidMount: function () {
+        postal.subscribe({
+            channel: "workspace",
+            topic: "empty.clicked",
+            callback:  (data, envelope)=> {
+                this.enableGridster();
+            }
+        });
     },
+    enableGridster: function () {
+        $(".gridster ul").gridster().data('gridster').enable().enable_resize();
+        $(".gridster ul li.current").removeClass("current");
+    },
+
     componentWillReceiveProps: function (nextProps) {
     },
     closeMe: function () {
         postal.publish({
             channel: "workspace",
             topic: "empty.clicked"
+        });
+        postal.publish({
+            channel: "workspace",
+            topic: "reset"
         });
     },
     stopPropagation: function (event) {

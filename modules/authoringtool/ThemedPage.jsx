@@ -112,7 +112,7 @@ var ThemedPage = React.createClass({
                     $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
                     AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
                 }
-                if (type === "single-choice") {
+                if (type === "single-choice"||type==='img') {
                     AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
                 }
             });
@@ -243,6 +243,7 @@ var ThemedPage = React.createClass({
                 <div className="footer" style={{
                     display: this.props.pageSetting.showFooter?"inherit": "none"
                 }}></div>
+                {/*<GridLayout data={this.state} />*/}
             </div>
         );
     }
