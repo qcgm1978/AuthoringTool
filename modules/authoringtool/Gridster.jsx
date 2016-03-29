@@ -189,6 +189,7 @@ var Gridster = React.createClass({
     },
     initBlockEvents: function (blockId, type) {
         //var type = $(this).data("type");
+        var that=this
         $("li[data-id='" + blockId + "']").off("click").on("click", function (event) {
             if ($(this).hasClass("player-revert") || $(this).hasClass("resizing")) {
                 return;
@@ -196,7 +197,7 @@ var Gridster = React.createClass({
             event.stopPropagation();
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
-            this.gridster.disable().disable_resize();
+            that.gridster.disable().disable_resize();
             if (type !== 'text' && type !== 'img') {
                 postal.publish({
                     channel: "block",

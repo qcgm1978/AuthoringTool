@@ -191,7 +191,8 @@ var ThemedPage = React.createClass({
             marginBottom: this.state.themeConfig.padding[2],
         };
         return (
-            <Gridster ref="main-grid" id="main-grid" data={AuthoringInfo.data.singleScreenWidgets} style={mainStyle}/>);
+            <Gridster ref="main-grid" id="main-grid" data={AuthoringInfo.data.singleScreenWidgets}
+                      setting={AuthoringInfo.setting} style={mainStyle}/>);
     },
     getExtraLayout: function () {
         var extraStyle = {
