@@ -15,50 +15,43 @@ var ChooseImageMenu = React.createClass({
     },
     componentWillReceiveProps: function (nextProps) {
     },
+    addImgToWorkspace: function (event) {
+        var template = this.getTemplate(this.src);
+
+        var size_x = $('.zone img').width();
+        var size_y = $('.zone img').height();
+        if (size_x) {
+            var number = parseInt(size_x);
+            //size_x = number>984?984:number;
+        }
+        if (size_y) size_y = parseInt(size_y);
+        postal.publish({
+            channel: "block",
+            topic: "add",
+            data: {
+                type: "img",
+                html: template,
+                //size_x: size_x,
+                //size_y: size_y
+            }
+        });
+        postal.publish({
+            channel: "workspace",
+            topic: "reset"
+        });
+        return false;
+    },
     onDrop: function (files) {
-        var src = files[0].preview, widthHeight = {};
+        this.src = files[0].preview
         $('<img>')
-            .attr('src', src)
+            .attr('src', this.src)
             .load(function () {
-                widthHeight = {
-                    width: this.width,
-                    height: this.height
-                }
+
                 $(this)
-                    .css('max-height',300)
+                    .css('max-height', 300)
                     .css('max-width', 400)
             })
             .appendTo('.zone')
-            .data('template', this.getTemplate(src))
-            .click(function (event) {
-                var ele = $(event.target);
-                while (!ele.data("template")) {
-                    ele = ele.parent();
-                }
-                var size_x = widthHeight.width;
-                var size_y = widthHeight.height;
-                if (size_x) {
-                    var number = parseInt(size_x);
-                    //size_x = number>984?984:number;
-                }
-                if (size_y) size_y = parseInt(size_y);
-                var template = ele.data("template");
-                postal.publish({
-                    channel: "block",
-                    topic: "add",
-                    data: {
-                        type: "img",
-                        html: template,
-                        //size_x: size_x,
-                        //size_y: size_y
-                    }
-                });
-                postal.publish({
-                    channel: "workspace",
-                    topic: "reset"
-                });
-                return false;
-            })
         //request.post('/attach/upload')
         //    .attach(files[0].name, files[0])
         //    .end(function(err, res) {
@@ -69,10 +62,11 @@ var ChooseImageMenu = React.createClass({
     },
     render: function () {
         return (
-            <div className="chooseImage" data-show={this.props.show}>
+            <div className="chooseImage text-center" data-show={this.props.show}>
                 <Dropzone className="zone" onDrop={this.onDrop} multiple={false}>
                     <div>Try dropping some files here, or click to select files to upload.</div>
                 </Dropzone>
+                <span className="glyphicon glyphicon-ok" aria-hidden="true" onClick={this.addImgToWorkspace}></span>
             </div>
         );
     }
