@@ -1,5 +1,5 @@
 var React = require('react');
-var GridLayout = require("./GridLayout.jsx");
+//var GridLayout = require("./GridLayout.jsx");
 var Gridster = require("./Gridster.jsx");
 var postal = require("postal");
 var AuthoringInfo = require("./AuthoringInfo");
@@ -24,7 +24,7 @@ var ThemedPage = React.createClass({
         }
     },
     getThemeConfig: function () {
-        var dfd = jQuery.Deferred(),that=this;
+        var dfd = jQuery.Deferred(), that = this;
         $.ajax({
             type: "GET",
             url: "templates/" + this.props.themeName + "/config.json",
@@ -41,7 +41,7 @@ var ThemedPage = React.createClass({
     loadTheme: function () {
         this.getThemeConfig().then(
             (data)=> {
-                var themeConfig=data;
+                var themeConfig = data;
                 $.ajax({
                     type: "GET",
                     url: "templates/" + this.props.themeName + "/" + themeConfig.default.html,
@@ -112,7 +112,7 @@ var ThemedPage = React.createClass({
                     $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
                     AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
                 }
-                if (type === "single-choice"||type==='img') {
+                if (type === "single-choice" || type === 'img') {
                     AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
                 }
             });
@@ -158,7 +158,8 @@ var ThemedPage = React.createClass({
             width: contentWidth,
             minHeight: mainHeight
         };
-        var mainGrid = <Gridster ref="main-grid" id="main-grid" data={AuthoringInfo.data.doubleScreenLeftWidgets}
+        var mainGrid = <Gridster ref="main-grid" id="main-grid"
+                                 data={AuthoringInfo.data.doubleScreenLeftWidgets   } setting={AuthoringInfo.setting}
                                  style={mainStyle}/>;
         var extraStyle = {
             position: "absolute",

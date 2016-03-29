@@ -2,6 +2,8 @@ var React = require('react');
 var _ = require("underscore");
 var postal = require("postal");
 var AuthoringInfo = require("./AuthoringInfo");
+//var GridLayout = require("./GridLayout.jsx");
+
 /***
  * Properties :
  * id : grid id
@@ -70,6 +72,7 @@ var Gridster = React.createClass({
         $("#style-" + this.props.id).remove();
         $("#" + this.props.id + ">ul").remove();
         $("#" + this.props.id).append("<ul/>");
+        var that=this;
         var options = {
             namespace: '#' + this.props.id,
             widget_margins: [1, 1],
@@ -79,15 +82,15 @@ var Gridster = React.createClass({
                 },
                 drag: function (event, ui) {
                 },
-                stop: function (event, ui) {
+                stop:  (event, ui)=> {
                     /**
                      * When on double screen and the expand mode is 'extra' or 'portrait',
                      * Move the widget from left to right
                      * */
                     debugger;
-                    if (layout.props.pageSetting.doubleScreen && (layout.props.pageSetting.expandMode === 1 || layout.props.pageSetting.expandMode === 3)
-                        && ui.pointer.left >= layout.props.pageSetting.width + 70) {
-                        layout.moveBlock(ui.$player, true);
+                    if (that.props.data.length>0&&that.props.setting.doubleScreen && (that.props.setting.expandMode === 1 || that.props.setting.expandMode === 3)
+                        && ui.pointer.left >= that.props.setting.width + 70) {
+                        that.moveBlock(ui.$player, true);
                     }
                 }
             },
@@ -114,6 +117,23 @@ var Gridster = React.createClass({
             }
         };
         this.gridster = $("#" + this.props.id + ">ul").gridster(options).data('gridster');
+    },
+    moveBlock: function (li, direction) {
+        var src, target;
+        if (direction) {
+            src = $("#main-grid>ul").gridster().data('gridster');
+            target = $("#extra-grid>ul").gridster().data('gridster');
+        } else {
+            target = $("#main-grid>ul").gridster().data('gridster');
+            src = $("#extra-grid>ul").gridster().data('gridster');
+        }
+        var cli = li.clone();
+        cli.find(".gs-resize-handle").remove();
+        cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
+            .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+        target.add_widget("<li data-id='" + li.data("id") + "'>" + li.html() + "</li>",
+            li.data("sizex"), li.data("sizey"), 1, 100);
+        src.remove_widget(li);
     },
     /**
      * When propeties and states change
