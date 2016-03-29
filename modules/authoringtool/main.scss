@@ -3,16 +3,16 @@
 * {
   padding: 0;
   margin: 0;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   box-sizing: border-box;
 }
 
 $basefont: 14px;
-$basic_bg_color:  #F5F5F5;
+$basic_bg_color: #F5F5F5;
 
 html {
   font-size: $basefont;
-  font-family: 'Microsoft YaHei UI','Microsoft YaHei',sans-serif;
+  font-family: 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
 }
 
 body {
@@ -67,7 +67,7 @@ body {
         color: gray;
       }
 
-      &[data-clicked='true']{
+      &[data-clicked='true'], &.glyphicon-minus:hover {
         background-color: #5CB85C;
         color: #fff;
       }
@@ -83,7 +83,6 @@ body {
     background-color: $basic_bg_color;
   }
 
-
   .blockType {
     border: 1px solid #ccc;
     position: fixed;
@@ -98,9 +97,9 @@ body {
 
     background: #fffeff;
     border-right: 1px solid #bbb;
-    -moz-box-shadow: 2px 2px 5px 0 rgba(0,0,0,.25);
-    -webkit-box-shadow: 2px 2px 5px 0 rgba(0,0,0,.25);
-    box-shadow: 2px 2px 5px 0 rgba(0,0,0,.25);
+    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .25);
+    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .25);
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .25);
 
     -webkit-transition: -webkit-transform .3s ease-out;
     transition: transform .3s ease-out;
@@ -112,7 +111,6 @@ body {
       -webkit-transform: translateX(0);
       transform: translateX(0);
     }
-
 
     ul.category-list {
       background-color: #5CB85C;
@@ -152,7 +150,7 @@ body {
       padding: 10px;
       width: 310px;
 
-      >div {
+      > div {
         display: block;
         padding: 10px;
         margin: 10px 0;
@@ -160,7 +158,6 @@ body {
         border: 1px solid #ccc;
         font-size: 18px;
         color: #666;
-
 
         span.glyphicon {
           float: left;
@@ -194,7 +191,7 @@ body {
       display: inline-block;
       width: 500px;
       padding: 10px;
-      >div {
+      > div {
         display: block;
         padding: 10px;
         margin: 10px 0;
@@ -234,9 +231,8 @@ body {
     background-color: #fff;
     z-index: 1100;
 
-
     padding: 10px;
-    >div {
+    > div {
       padding: 5px;
     }
   }
@@ -252,7 +248,7 @@ body {
         bottom: 0;
         left: 0;
         width: 100%;
-        background: rgba(0,0,0,.7);
+        background: rgba(0, 0, 0, .7);
         line-height: 40px;
       }
 
@@ -283,9 +279,9 @@ body {
     border-radius: 7px;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;
-    -moz-box-shadow: 2px 2px 5px 0 rgba(0,0,0,.25);
-    -webkit-box-shadow: 2px 2px 5px 0 rgba(0,0,0,.25);
-    box-shadow: 2px 2px 5px 0 rgba(0,0,0,.25);
+    -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .25);
+    -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .25);
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, .25);
 
     min-width: 420px;
 
@@ -315,7 +311,7 @@ body {
     }
   }
 
- // background-color: #2c3e50;
+  // background-color: #2c3e50;
 }
 
 .navbar {
@@ -358,8 +354,7 @@ svg.gridLines {
   }
 }
 
-
-.gridster  {
+.gridster {
   background-color: rgb(237, 253, 218);
 
   ul {
@@ -385,6 +380,7 @@ svg.gridLines {
 
   }
 }
+
 .default {
   p {
 

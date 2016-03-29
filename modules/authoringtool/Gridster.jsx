@@ -119,21 +119,19 @@ var Gridster = React.createClass({
         this.gridster = $("#" + this.props.id + ">ul").gridster(options).data('gridster');
     },
     moveBlock: function (li, direction) {
-        var src, target;
         if (direction) {
-            src = $("#main-grid>ul").gridster().data('gridster');
-            target = $("#extra-grid>ul").gridster().data('gridster');
+            this.target = $("#extra-grid>ul").gridster().data('gridster');
         } else {
-            target = $("#main-grid>ul").gridster().data('gridster');
-            src = $("#extra-grid>ul").gridster().data('gridster');
+            this.target = this.gridster;
+            this.gridster = $("#extra-grid>ul").gridster().data('gridster');
         }
         var cli = li.clone();
         cli.find(".gs-resize-handle").remove();
         cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
             .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
-        target.add_widget("<li data-id='" + li.data("id") + "'>" + li.html() + "</li>",
+        this.target.add_widget("<li data-id='" + li.data("id") + "'>" + li.html() + "</li>",
             li.data("sizex"), li.data("sizey"), 1, 100);
-        src.remove_widget(li);
+        this.gridster.remove_widget(li);
     },
     /**
      * When propeties and states change

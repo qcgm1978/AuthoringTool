@@ -22,7 +22,7 @@ var LeftMenu = React.createClass({
             ratio: "1024x768",
             showBlockTypes: false,
             showConfigMenu: false,
-            showMinusBtn:false
+            showMinusBtn: false
         }
     },
     componentDidMount: function () {
@@ -64,13 +64,13 @@ var LeftMenu = React.createClass({
                 showBlockTypes: !this.state.showBlockTypes,
                 showConfigMenu: false
             });
-        }else{
+        } else {
             debugger;
         }
     },
     removeBlockType: function () {
         this.setState({
-            showMinusBtn:!this.state.showMinusBtn
+            showMinusBtn: !this.state.showMinusBtn
         })
         postal.publish({
             channel: "block",
@@ -86,7 +86,6 @@ var LeftMenu = React.createClass({
             channel: "workspace",
             topic: "reset"
         });
-
     },
     showConfigMenu: function (event) {
         this.setState({
@@ -115,7 +114,7 @@ var LeftMenu = React.createClass({
                     <span className="glyphicon glyphicon-plus" data-clicked={this.state.showBlockTypes}
                           data-disabled={this.state.doubleScreen} id="btn-add-block"
                           onClick={this.showBlockTypes}></span>
-                    <span className="glyphicon glyphicon-minus" data-clicked={this.state.showMinusBtn}
+                    <span className="glyphicon glyphicon-minus"
                           data-disabled={this.state.doubleScreen} id="btn-remove-block"
                           onClick={this.removeBlockType}></span>
                     <span className="glyphicon glyphicon-cog" data-clicked={this.state.showConfigMenu}
