@@ -46,6 +46,8 @@ var Gridster = React.createClass({
             topic: "reset",
             callback: (data, envelope) => {
                 $("#" + this.props.id + " ul").find("li.current").removeClass("current");
+                $('.glyphicon-minus').attr('data-disabled',true)
+
                 this.gridster.enable().enable_resize();
             }
         });
@@ -195,6 +197,7 @@ var Gridster = React.createClass({
             event.stopPropagation();
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
+            $('.glyphicon-minus').attr('data-disabled',false)
             that.gridster.disable().disable_resize();
             if (type !== 'text' && type !== 'img') {
                 postal.publish({

@@ -115,7 +115,8 @@ var LeftMenu = React.createClass({
                           data-disabled={this.state.doubleScreen} id="btn-add-block"
                           onClick={this.showBlockTypes}></span>
                     <span className="glyphicon glyphicon-minus"
-                          data-disabled={this.state.doubleScreen} id="btn-remove-block"
+                          data-disabled={this.state.doubleScreen || $('#main-grid ul li.current').length==0}
+                          id="btn-remove-block"
                           onClick={this.removeBlockType}></span>
                     <span className="glyphicon glyphicon-cog" data-clicked={this.state.showConfigMenu}
                           onClick={this.showConfigMenu}></span>
