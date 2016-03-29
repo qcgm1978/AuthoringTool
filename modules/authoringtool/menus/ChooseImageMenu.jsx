@@ -15,9 +15,11 @@ var ChooseImageMenu = React.createClass({
     },
     componentWillReceiveProps: function (nextProps) {
     },
-    addImgToWorkspace: function (event) {
+    addImgToWorkspace: function () {
+        if (!this.hasImg) {
+            return;
+        }
         var template = this.getTemplate(this.src);
-
         var size_x = $('.zone img').width();
         var size_y = $('.zone img').height();
         if (size_x) {
@@ -43,15 +45,21 @@ var ChooseImageMenu = React.createClass({
     },
     onDrop: function (files) {
         this.src = files[0].preview
+        $('.zone')
+            .find('img')
+            .remove()
+            .end()
+            .next('span')
+            .addClass('btn-high-color')
         $('<img>')
             .attr('src', this.src)
             .load(function () {
-
                 $(this)
-                    .css('max-height', 300)
+                    .css('max-height', 280)
                     .css('max-width', 400)
             })
             .appendTo('.zone')
+        this.hasImg = true;
         //request.post('/attach/upload')
         //    .attach(files[0].name, files[0])
         //    .end(function(err, res) {
