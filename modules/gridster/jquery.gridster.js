@@ -3598,7 +3598,7 @@
         }
 
         this.container_height = height;
-        this.$el.css('height', this.container_height);
+        this.$el.css('height', this.container_height+150);
         return this;
     };
 

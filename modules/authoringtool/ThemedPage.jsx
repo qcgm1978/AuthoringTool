@@ -112,8 +112,23 @@ var ThemedPage = React.createClass({
                     $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
                     AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
                 }
-                if (type === "single-choice" || type === 'img') {
+                else if (type === "single-choice" ) {
                     AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
+                }else if(type === 'img'){
+                    var bannerImage = $(this).find('img')[0]
+                    var imgData = getBase64Image(bannerImage);
+                    var html = "data:image/png;base64," + imgData
+                    AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html().replace(/blob.+?(?=")/,html)
+                    function getBase64Image(img) {
+                        var canvas = document.createElement("canvas");
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        var ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0);
+                        var dataURL = canvas.toDataURL("image/png");
+                        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+                    }
+
                 }
             });
             AuthoringInfo.data.singleScreenWidgets = this.refs["main-grid"].getGridData();

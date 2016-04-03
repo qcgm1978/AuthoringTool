@@ -81,6 +81,7 @@ var Gridster = React.createClass({
             widget_base_dimensions: [(this.props.style.width) / 12 - 2, (this.props.style.minHeight) / 10 - 2],
             draggable: {
                 start: function (event, ui) {
+                    debugger;
                 },
                 drag: function (event, ui) {
                 },
@@ -119,6 +120,7 @@ var Gridster = React.createClass({
             }
         };
         this.gridster = $("#" + this.props.id + ">ul").gridster(options).data('gridster');
+
     },
     moveBlock: function (li, direction) {
         if (direction) {

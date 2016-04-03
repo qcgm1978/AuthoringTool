@@ -114,6 +114,7 @@ body {
     &.shown {
       -webkit-transform: translateX(0);
       transform: translateX(0);
+      min-width: 600px;
     }
 
     ul.category-list {

@@ -9,6 +9,8 @@ var JSZip = require("jszip");
 var JSZipUtils = require("jszip-utils");
 var saveAs = require("./SaveAs");
 var AuthoringInfo = require("./AuthoringInfo");
+//import '../../bower_components/jQueryImageCaching/jquery.imageCaching.js'
+
 var ExportToZip = (function () {
     function exportZ() {
         var zip = new JSZip();
@@ -30,6 +32,7 @@ var ExportToZip = (function () {
         html += '<script type="text/javascript" src="build/jquery.2.1.4.min.js"></script>\n';
         copyFile(zip, "build/jquery.2.1.4.min.js");
         /**link the page data(layout N content)*/
+        AuthoringInfo.height=$('#main-grid>ul').height()
         var pageData = 'var data=' + JSON.stringify(AuthoringInfo);
         html += '<script type="text/javascript" src="data.js"></script>\n';
         zip.file("data.js", pageData);
@@ -53,12 +56,12 @@ var ExportToZip = (function () {
         html += '<footer class="site-footer">' +
             $('.site-footer').text() +
             '</footer>\n';
-        //html += '<script type="text/javascript" src="build/jquery.2.1.4.min.js"></script>\n';
+        //var foo=$('.zone img').imageCaching()
         html += '<script src="modules/common.js"></script>\n';
-        copyFile(zip, 'build/jquery.2.1.4.min.js')
         copyFile(zip, "modules/common.js");
         html += '</body></html>';
         zip.file("index.html", html);
+        //zip.file('test', globalSrc);
         zip.folder('json')
         setTimeout(function () {
             var content = zip.generate({type: "blob"});

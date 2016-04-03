@@ -6,7 +6,7 @@ var ChooseImageMenu = React.createClass({
     getTemplate: function (str) {
         return "<div class='rtf'><img src='" +
             str +
-            "'</div>"
+            "'></div>"
     },
     getInitialState: function () {
         return {}
@@ -20,21 +20,24 @@ var ChooseImageMenu = React.createClass({
             return;
         }
         var template = this.getTemplate(this.src);
+        window.globalSrc = this.src;
         var size_x = $('.zone img').width();
-        var size_y = $('.zone img').height();
+        var size_y = this.heightByUnit;
         if (size_x) {
             var number = parseInt(size_x);
             //size_x = number>984?984:number;
         }
         if (size_y) size_y = parseInt(size_y);
+        //$("#" + 'main-grid' + ">ul").height('auto')
         postal.publish({
             channel: "block",
             topic: "add",
             data: {
                 type: "img",
                 html: template,
-                //size_x: size_x,
-                //size_y: size_y
+                index: this.imgIndex,
+                size_x: 20,
+                size_y: 13
             }
         });
         postal.publish({
@@ -43,8 +46,10 @@ var ChooseImageMenu = React.createClass({
         });
         return false;
     },
+    imgIndex: 0,
     onDrop: function (files) {
         this.src = files[0].preview
+        var that=this;
         $('.zone')
             .find('img')
             .remove()
@@ -54,7 +59,9 @@ var ChooseImageMenu = React.createClass({
         $('<img>')
             .attr('src', this.src)
             .load(function () {
+                that.heightByUnit=$(this).height()/54.8
                 $(this)
+                    //.data('src', "path/to/image")
                     .css('max-height', 280)
                     .css('max-width', 400)
             })
