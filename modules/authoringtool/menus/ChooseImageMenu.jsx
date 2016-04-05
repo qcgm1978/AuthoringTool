@@ -27,7 +27,7 @@ var ChooseImageMenu = React.createClass({
             var number = parseInt(size_x);
             //size_x = number>984?984:number;
         }
-        if (size_y) size_y = parseInt(size_y);
+        if (size_y) size_y = Math.round(size_y);
         //$("#" + 'main-grid' + ">ul").height('auto')
         postal.publish({
             channel: "block",
@@ -36,8 +36,8 @@ var ChooseImageMenu = React.createClass({
                 type: "img",
                 html: template,
                 index: this.imgIndex,
-                size_x: 20,
-                size_y: 13
+                size_x: Math.round(this.widthByUnit),
+                size_y: size_y
             }
         });
         postal.publish({
@@ -60,6 +60,7 @@ var ChooseImageMenu = React.createClass({
             .attr('src', this.src)
             .load(function () {
                 that.heightByUnit=$(this).height()/54.8
+                that.widthByUnit=$(this).width()/80
                 $(this)
                     //.data('src', "path/to/image")
                     .css('max-height', 280)
