@@ -46,7 +46,11 @@ var ExportToZip = (function () {
         html += '</head>\n';
         html += '<body>\n';
         html += '<header class="site-header">\n';
-        html += '<div class="A-head"><span class="A-head-bold">2a</span>Interpreting charts, tables, graphs and diagrams</div>\n';
+        html += '<div class="A-head"><span class="A-head-bold">' +
+            $('.A-head-bold').text() +
+            '</span><span id="header-title">' +
+            $('#header-title').text() +
+            '</span></div>\n';
         html += '<div><span class="A-head-bor"></span><span class="A-head-line"></span></div>\n';
         html += '<div class="B-head"><span>' +
             $('.B-head span').text() +

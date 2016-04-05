@@ -36,7 +36,7 @@ var ChooseImageMenu = React.createClass({
                 type: "img",
                 html: template,
                 index: this.imgIndex,
-                size_x: Math.round(this.widthByUnit),
+                size_x: Math.ceil(this.widthByUnit),
                 size_y: size_y
             }
         });

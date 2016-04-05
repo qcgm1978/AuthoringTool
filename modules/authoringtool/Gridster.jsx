@@ -73,10 +73,12 @@ var Gridster = React.createClass({
         $("#" + this.props.id + ">ul").remove();
         $("#" + this.props.id).append("<ul/>");
         var that = this;
+        var numberCols = 12;
+        var numberRows = 10;
         var options = {
             namespace: '#' + this.props.id,
             widget_margins: [1, 1],
-            widget_base_dimensions: [(this.props.style.width) / 12 - 2, (this.props.style.minHeight) / 10 - 2],
+            widget_base_dimensions: [(this.props.style.width) / numberCols - 2, (this.props.style.minHeight) / numberRows - 2],
             draggable: {
                 start: function (event, ui) {
                 },
@@ -103,8 +105,8 @@ var Gridster = React.createClass({
                 stop: function () {
                 }
             },
-            min_cols: 12,
-            min_rows: 10,
+            min_cols: numberCols,
+            min_rows: numberRows,
             serialize_params: function ($w, wgd) {
                 return {
                     id: $w.data('id'),
