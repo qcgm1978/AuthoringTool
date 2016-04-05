@@ -148,7 +148,7 @@ var Gridster = React.createClass({
     },
     /**Load gridster widgets from layout.data */
     loadGridData: function () {
-        if (this.props.data) {
+        if (this.props.data&&this.props.id!='extra-grid') {
             _.each(this.props.data, (data)=> {
                 this.addBlock(data.type, AuthoringInfo.data.widgetContents[data.id], data.size_x, data.size_y, data.col, data.row, data.id);
             });
