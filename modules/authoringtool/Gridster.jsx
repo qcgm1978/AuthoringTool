@@ -3,7 +3,6 @@ var _ = require("underscore");
 var postal = require("postal");
 var AuthoringInfo = require("./AuthoringInfo");
 //var GridLayout = require("./GridLayout.jsx");
-
 /***
  * Properties :
  * id : grid id
@@ -46,8 +45,7 @@ var Gridster = React.createClass({
             topic: "reset",
             callback: (data, envelope) => {
                 $("#" + this.props.id + " ul").find("li.current").removeClass("current");
-                $('.glyphicon-minus').attr('data-disabled',true)
-
+                $('.glyphicon-minus').attr('data-disabled', true)
                 this.gridster.enable().enable_resize();
             }
         });
@@ -74,26 +72,25 @@ var Gridster = React.createClass({
         $("#style-" + this.props.id).remove();
         $("#" + this.props.id + ">ul").remove();
         $("#" + this.props.id).append("<ul/>");
-        var that=this;
+        var that = this;
         var options = {
             namespace: '#' + this.props.id,
             widget_margins: [1, 1],
             widget_base_dimensions: [(this.props.style.width) / 12 - 2, (this.props.style.minHeight) / 10 - 2],
             draggable: {
                 start: function (event, ui) {
-                    debugger;
                 },
                 drag: function (event, ui) {
                 },
-                stop:  (event, ui)=> {
+                stop: (event, ui)=> {
                     /**
                      * When on double screen and the expand mode is 'extra' or 'portrait',
                      * Move the widget from left to right
                      * */
                     debugger;
-                    if (that.props.data.length>0&&that.props.setting.doubleScreen && (that.props.setting.expandMode === 1 || that.props.setting.expandMode === 3)
-                        && ui.pointer.left >= that.props.setting.width + 70) {
-                        that.moveBlock(ui.$player, true);
+                    if (/*that.props.data.length>0&&*/that.props.setting.doubleScreen && (that.props.setting.expandMode === 1 || that.props.setting.expandMode === 3)
+                    ) {
+                        that.moveBlock(ui.$player, ui.pointer.left >= that.props.setting.width + 70 );
                     }
                 }
             },
@@ -120,14 +117,13 @@ var Gridster = React.createClass({
             }
         };
         this.gridster = $("#" + this.props.id + ">ul").gridster(options).data('gridster');
-
     },
     moveBlock: function (li, direction) {
         if (direction) {
             this.target = $("#extra-grid>ul").gridster().data('gridster');
         } else {
-            this.target = this.gridster;
-            this.gridster = $("#extra-grid>ul").gridster().data('gridster');
+            this.target = $("#main-grid>ul").gridster().data('gridster');
+            //this.gridster = $("#extra-grid>ul").gridster().data('gridster');
         }
         var cli = li.clone();
         cli.find(".gs-resize-handle").remove();
@@ -148,7 +144,7 @@ var Gridster = React.createClass({
     },
     /**Load gridster widgets from layout.data */
     loadGridData: function () {
-        if (this.props.data&&this.props.id!='extra-grid') {
+        if (this.props.data && this.props.id != 'extra-grid') {
             _.each(this.props.data, (data)=> {
                 this.addBlock(data.type, AuthoringInfo.data.widgetContents[data.id], data.size_x, data.size_y, data.col, data.row, data.id);
             });
@@ -191,7 +187,7 @@ var Gridster = React.createClass({
     },
     initBlockEvents: function (blockId, type) {
         //var type = $(this).data("type");
-        var that=this
+        var that = this
         $("li[data-id='" + blockId + "']").off("click").on("click", function (event) {
             if ($(this).hasClass("player-revert") || $(this).hasClass("resizing")) {
                 return;
@@ -199,7 +195,7 @@ var Gridster = React.createClass({
             event.stopPropagation();
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
-            $('.glyphicon-minus').attr('data-disabled',false)
+            $('.glyphicon-minus').attr('data-disabled', false)
             that.gridster.disable().disable_resize();
             if (type !== 'text' && type !== 'img') {
                 postal.publish({

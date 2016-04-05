@@ -112,13 +112,13 @@ var ThemedPage = React.createClass({
                     $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
                     AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
                 }
-                else if (type === "single-choice" ) {
+                else if (type === "single-choice") {
                     AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
-                }else if(type === 'img'){
+                } else if (type === 'img') {
                     var bannerImage = $(this).find('img')[0]
                     var imgData = getBase64Image(bannerImage);
                     var html = "data:image/png;base64," + imgData
-                    AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html().replace(/blob.+?(?=")/,html)
+                    AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html().replace(/blob.+?(?=")/, html)
                     function getBase64Image(img) {
                         var canvas = document.createElement("canvas");
                         canvas.width = img.width;
@@ -128,7 +128,6 @@ var ThemedPage = React.createClass({
                         var dataURL = canvas.toDataURL("image/png");
                         return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
                     }
-
                 }
             });
             AuthoringInfo.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
@@ -184,6 +183,7 @@ var ThemedPage = React.createClass({
             minHeight: extraHeight
         };
         var extraGrid = <Gridster ref="extra-grid" id="extra-grid" data={AuthoringInfo.data.doubleScreenRightWidgets}
+                                  setting={AuthoringInfo.setting}
                                   style={extraStyle}/>;
         return <div>
             {mainGrid}
