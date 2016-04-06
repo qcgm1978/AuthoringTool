@@ -65,7 +65,6 @@ var LeftMenu = React.createClass({
                 showConfigMenu: false
             });
         } else {
-            debugger;
         }
     },
     removeBlockType: function () {

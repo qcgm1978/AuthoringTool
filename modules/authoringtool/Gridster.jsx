@@ -131,7 +131,9 @@ var Gridster = React.createClass({
         cli.find(".gs-resize-handle").remove();
         cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
             .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
-        this.target.add_widget("<li data-id='" + li.data("id") + "'>" + li.html() + "</li>",
+        this.target.add_widget("<li data-id='" + li.data("id") + "'"
+            + " data-type='" + li.data("type") +
+            "'>" + li.html() + "</li>",
             li.data("sizex"), li.data("sizey"), 1, 100);
         this.gridster.remove_widget(li);
     },
