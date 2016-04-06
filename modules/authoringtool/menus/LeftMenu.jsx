@@ -94,6 +94,10 @@ var LeftMenu = React.createClass({
         });
     },
     toggleDoubleScreen: function () {
+        //if(!this.state.doubleScreen){
+        //    alert('Please save the current effect')
+        //    return;
+        //}
         var screen = !this.state.doubleScreen;
         this.setState({
             doubleScreen: screen

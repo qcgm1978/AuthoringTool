@@ -90,9 +90,9 @@ var Gridster = React.createClass({
                      * Move the widget from left to right
                      * */
                     debugger;
-                    if (/*that.props.data.length>0&&*/that.props.setting.doubleScreen && (that.props.setting.expandMode === 1 || that.props.setting.expandMode === 3)
+                    if (/*that.props.data.length>0&&*/that.props.setting.doubleScreen && (that.props.setting.expandMode === 1 || that.props.setting.expandMode === 3)&&Math.abs(ui.pointer.diff_left) >= 20*2
                     ) {
-                        that.moveBlock(ui.$player, ui.pointer.left >= that.props.setting.width + 70 );
+                        that.moveBlock(ui.$player, ui.pointer.diff_left>0 );
                     }
                 }
             },
