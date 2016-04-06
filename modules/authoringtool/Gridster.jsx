@@ -90,9 +90,9 @@ var Gridster = React.createClass({
                      * Move the widget from left to right
                      * */
                     debugger;
-                    if (/*that.props.data.length>0&&*/that.props.setting.doubleScreen && (that.props.setting.expandMode === 1 || that.props.setting.expandMode === 3)&&Math.abs(ui.pointer.diff_left) >= 20*2
+                    if (/*that.props.data.length>0&&*/that.props.setting.doubleScreen && (that.props.setting.expandMode === 1 || that.props.setting.expandMode === 3) && Math.abs(ui.pointer.diff_left) >= 20 * 2
                     ) {
-                        that.moveBlock(ui.$player, ui.pointer.diff_left>0 );
+                        that.moveBlock(ui.$player, ui.pointer.diff_left > 0);
                     }
                 }
             },
@@ -146,7 +146,7 @@ var Gridster = React.createClass({
     },
     /**Load gridster widgets from layout.data */
     loadGridData: function () {
-        if (this.props.data && this.props.id != 'extra-grid') {
+        if (this.props.data) {
             _.each(this.props.data, (data)=> {
                 this.addBlock(data.type, AuthoringInfo.data.widgetContents[data.id], data.size_x, data.size_y, data.col, data.row, data.id);
             });
