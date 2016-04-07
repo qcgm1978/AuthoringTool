@@ -45,16 +45,23 @@ $(function () {
 
     $(window).resize(function () {
         var doubleWidth = isDoubleMode();
-        if ($(".content ul").length == 1 && doubleWidth) {
-            var width = $('ul').width()
-            $(".content").empty().append("<ul/>").append("<ul/>");
-            //gridster.remove_all_widgets()
-            $('ul').width(width / 2-5).css('float', 'left')
-            var options = getOption($('ul:first'))
-            var gridsterLeft = $(".content>ul:eq(0)").gridster(options).data('gridster');
-            var gridsterRight = $(".content>ul:eq(1)").gridster(options).data('gridster');
-            renderData(gridsterLeft, data.data.doubleScreenLeftWidgets);
-            renderData(gridsterRight, data.data.doubleScreenRightWidgets);
+        if ( doubleWidth) {
+            if ($(".content ul").length == 1) {
+                var width = $('ul').width()
+                $(".content").find('ul').hide().end().append("<ul/>").append("<ul/>");
+                //gridster.remove_all_widgets()
+                $('ul:gt(0)').width(width / 2 - 5).css('float', 'left')
+                var options = getOption($('ul:eq(1)'))
+                var gridsterLeft = $(".content>ul:eq(1)").gridster(options).data('gridster');
+                var gridsterRight = $(".content>ul:eq(2)").gridster(options).data('gridster');
+                renderData(gridsterLeft, data.data.doubleScreenLeftWidgets);
+                renderData(gridsterRight, data.data.doubleScreenRightWidgets);
+            } else {
+                $('ul:first').hide().siblings().show();
+
+            }
+        }else{
+            $('ul:first').show().siblings().hide();
         }
     })
 });
