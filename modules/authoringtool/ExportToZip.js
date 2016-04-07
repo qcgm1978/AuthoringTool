@@ -70,7 +70,7 @@ var ExportToZip = (function () {
         setTimeout(function () {
             var content = zip.generate({type: "blob"});
             //todo comment for test
-            //saveAs(content, "example.zip");
+            saveAs(content, "example.zip");
         }, 500);
     }
 

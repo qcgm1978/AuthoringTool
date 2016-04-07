@@ -39,7 +39,7 @@ $(function () {
             var width=$('ul').width()
             $(".content").empty().append("<ul/>").append("<ul/>");
             //gridster.remove_all_widgets()
-            $('ul').width(width/2)
+            $('ul').width(width/2).css('float','left')
             var options=getOption($('ul:first'))
             var gridsterLeft = $(".content>ul:eq(0)").gridster(options).data('gridster');
             var gridsterRight = $(".content>ul:eq(1)").gridster(options).data('gridster');
