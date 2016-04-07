@@ -79,15 +79,17 @@ var ThemedPage = React.createClass({
                 padding: this.themeConfig.default.padding
             }
         });
-        var page = this;
+        var that = this;
         postal.subscribe({
             channel: "block",
             topic: "add",
-            callback: function (data, envelope) {
-                if (page.refs["main-grid"]) {
-                    var blockId = _.uniqueId(page.BLOCK_ID_PREFIX);
+            callback: (data, envelope)=> {
+                if (that.refs["main-grid"]) {
+                    var blockId = _.uniqueId(that.BLOCK_ID_PREFIX);
                     AuthoringInfo.data.widgetJSON[blockId] = data.json;
-                    page.refs["main-grid"].addBlock(data.type, data.html, data.size_x, data.size_y, data.pos_x, data.pos_y, blockId);
+                    that.refs["main-grid"].addBlock(data.type, data.html, data.size_x, data.size_y, data.pos_x, data.pos_y, blockId);
+                    var gridData = this.refs["main-grid"].getGridData();
+                    AuthoringInfo.data.doubleScreenLeftWidgets.push(gridData[gridData.length-1]);
                 }
             }
         });
@@ -133,8 +135,13 @@ var ThemedPage = React.createClass({
             AuthoringInfo.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
             if (AuthoringInfo.data.doubleScreenLeftWidgets.length === 0) {
                 AuthoringInfo.data.doubleScreenLeftWidgets = AuthoringInfo.data.singleScreenWidgets;
+            } else {
+                setTimeout(()=> {
+                }, 10);
             }
         }
+    },
+    componentDidUpdate: function () {
     },
     shouldComponentUpdate: function (nextProps, nextState) {
         if (this.state.themeConfig === null) return true;
@@ -178,7 +185,7 @@ var ThemedPage = React.createClass({
         var extraStyle = {
             position: "absolute",
             right: this.state.themeConfig.padding[1],
-            bottom: $(".footer").height() + parseInt(this.state.themeConfig.padding[2]),
+            //bottom: $(".footer").height() + parseInt(this.state.themeConfig.padding[2]),
             width: contentWidth,
             minHeight: extraHeight
         };
@@ -256,7 +263,8 @@ var ThemedPage = React.createClass({
                 }}></div>
                 {layout}
                 <div className="footer" style={{
-                    display: this.props.pageSetting.showFooter?"inherit": "none"
+                    display: this.props.pageSetting.showFooter?"inherit": "none",
+                    zIndex:10
                 }}></div>
                 {/*<GridLayout data={this.state} />*/}
             </div>
