@@ -7,7 +7,7 @@ $(function () {
     var menuWidth = 120;
     var w = $(window).width() - menuWidth;
     var h = $(window).height();
-    $(".content").css("width", w).css("padding", 20).addClass("gridsterLeft");
+    $(".content").css("width", w).css("padding", 20).addClass("gridster");
     $(".content").css("height", h - $("header").height() - $("footer").height());
     $(".content").append("<ul/>");
     function getOption($ele) {

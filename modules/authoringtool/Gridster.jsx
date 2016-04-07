@@ -75,6 +75,7 @@ var Gridster = React.createClass({
         var that = this;
         var numberCols = 12;
         var numberRows = 10;
+        that.authoring=AuthoringInfo;
         var options = {
             namespace: '#' + this.props.id,
             widget_margins: [1, 1],
@@ -94,6 +95,7 @@ var Gridster = React.createClass({
                     ) {
                         that.moveBlock(ui.$player, ui.pointer.diff_left > 0);
                     }
+                    //that.authoring.data.doubleScreenLeftWidgets=that.gridster.serialize()
                 }
             },
             resize: {
