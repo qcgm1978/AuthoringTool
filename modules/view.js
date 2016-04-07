@@ -4,7 +4,8 @@
 
 
 $(function () {
-    var w = $(window).width();
+    var menuWidth = 120;
+    var w = $(window).width() - menuWidth;
     var h = $(window).height();
     $(".content").css("width", w).css("padding", 20).addClass("gridsterLeft");
     $(".content").css("height", h - $("header").height() - $("footer").height());
@@ -34,13 +35,22 @@ $(function () {
     $('.gridster .gs-w').css("border", "none")
     $('ul').parent().height(data.height);
     gridster.disable()/*.disable_resize()*/;
+    function isDoubleMode() {
+        var doubleSize = [1024, 1280, 1920];
+        var doubleWidth = doubleSize.map(function (currentValue) {
+            return currentValue * 2 - menuWidth
+        });
+        return $.inArray($(window).width(), doubleWidth) != -1;
+    }
+
     $(window).resize(function () {
-        if ($(".content ul").length == 1&& $(window).width()==2048) {
-            var width=$('ul').width()
+        var doubleWidth = isDoubleMode();
+        if ($(".content ul").length == 1 && doubleWidth) {
+            var width = $('ul').width()
             $(".content").empty().append("<ul/>").append("<ul/>");
             //gridster.remove_all_widgets()
-            $('ul').width(width/2).css('float','left')
-            var options=getOption($('ul:first'))
+            $('ul').width(width / 2-5).css('float', 'left')
+            var options = getOption($('ul:first'))
             var gridsterLeft = $(".content>ul:eq(0)").gridster(options).data('gridster');
             var gridsterRight = $(".content>ul:eq(1)").gridster(options).data('gridster');
             renderData(gridsterLeft, data.data.doubleScreenLeftWidgets);
