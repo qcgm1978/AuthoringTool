@@ -7,8 +7,9 @@ $(function () {
     var menuWidth = 120;
     var w = $(window).width() - menuWidth;
     var h = $(window).height();
+    $('ul').parent().height(data.height);
     $(".content").css("width", w).css("padding", 20).addClass("gridster");
-    $(".content").css("height", h - $("header").height() - $("footer").height());
+    //$(".content").css("height", h - $("header").height() - $("footer").height());
     $(".content").append("<ul/>");
     function getOption($ele) {
         var options = {
@@ -33,7 +34,6 @@ $(function () {
 
     renderData(gridster, data.data.singleScreenWidgets);
     $('.gridster .gs-w').css("border", "none")
-    $('ul').parent().height(data.height);
     gridster.disable()/*.disable_resize()*/;
     function isDoubleMode() {
         var doubleSize = [1024, 1280, 1920];
@@ -44,8 +44,8 @@ $(function () {
     }
 
     $(window).resize(function () {
-        var doubleWidth = isDoubleMode();
-        if ( doubleWidth) {
+        var isDouble = isDoubleMode();
+        if (isDouble) {
             if ($(".content ul").length == 1) {
                 var width = $('ul').width()
                 $(".content").find('ul').hide().end().append("<ul/>").append("<ul/>");
@@ -58,9 +58,8 @@ $(function () {
                 renderData(gridsterRight, data.data.doubleScreenRightWidgets);
             } else {
                 $('ul:first').hide().siblings().show();
-
             }
-        }else{
+        } else {
             $('ul:first').show().siblings().hide();
         }
     })

@@ -264,7 +264,7 @@ var ThemedPage = React.createClass({
                 {layout}
                 <div className="footer" style={{
                     display: this.props.pageSetting.showFooter?"inherit": "none",
-                    zIndex:10
+
                 }}></div>
                 {/*<GridLayout data={this.state} />*/}
             </div>

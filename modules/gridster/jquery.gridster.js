@@ -597,7 +597,8 @@
                 top: mouse_actual_pos.top,
                 diff_left: diff_x + ($(window).scrollLeft() - this.win_offset_x),
                 diff_top: diff_y + ($(window).scrollTop() - this.win_offset_y)
-            }
+            },
+            targetLeft:this.$player.position().left
         };
     };
 
