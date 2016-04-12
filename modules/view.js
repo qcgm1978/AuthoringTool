@@ -9,7 +9,7 @@ $(function () {
     var h = $(window).height();
     $('ul').parent().height(data.height);
     $(".content").css("width", w).css("padding", 20).addClass("gridster");
-    //$(".content>ul").css("height", data.height);
+    $(".content").css("min-height", data.height);
     $(".content").append("<ul/>");
     function getOption($ele) {
         var height = 568;
@@ -41,10 +41,11 @@ $(function () {
         var doubleWidth = doubleSize.map(function (currentValue) {
             return currentValue * 2 - menuWidth
         });
+        //doubleWidth: [1928, 2440, 3720]
         return $.inArray($(window).width(), doubleWidth) != -1;
     }
 
-    $(window).resize(function () {
+    function layoutPage() {
         var isDouble = isDoubleMode();
         if (isDouble) {
             if ($(".content ul").length == 1) {
@@ -63,5 +64,10 @@ $(function () {
         } else {
             $('ul:first').show().siblings().hide();
         }
+    }
+
+    layoutPage();
+    $(window).resize(function () {
+        layoutPage();
     })
 });
