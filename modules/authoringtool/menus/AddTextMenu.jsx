@@ -4,7 +4,7 @@ var AddTextMenu = React.createClass({
     getInitialState: function () {
         return {}
     },
-    BLOCK_PARAGRAPH: "<div class='rtf'>You can edit text on your website by double clicking on a text box on your website. Alternatively, when you select a text box a settings menu will appear. Selecting 'Edit Text' from this menu will also allow you to edit the text within this text box. Remember to keep your wording friendly, approachable and easy to understand as if you were talking to your customer</div>",
+    BLOCK_PARAGRAPH: "<div class='rtf'>Please input text</div>",
     BLOCK_H1: "<h1 class='rtf'>Heading 1</h1>",
     BLOCK_H2: "<h2 class='rtf'>Heading 2</h2>",
     BLOCK_H3: "<h3 class='rtf'>Heading 3</h3>",

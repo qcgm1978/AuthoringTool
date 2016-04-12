@@ -195,10 +195,13 @@ var Gridster = React.createClass({
         //var type = $(this).data("type");
         var that = this
         $("li[data-id='" + blockId + "']").off("click").on("click", function (event) {
-            if ($(this).hasClass("player-revert") || $(this).hasClass("resizing")) {
+            if (/*$(this).hasClass("player-revert") ||*/ $(this).hasClass("resizing")) {
                 return;
             }
             event.stopPropagation();
+            if($(this).text()=="Please input text"){
+                $(this).find('p').text('').height(20)
+            }
             $(".gridster ul li.current").removeClass("current");
             $(this).addClass("current");
             $('.glyphicon-minus').attr('data-disabled', false)
