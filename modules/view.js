@@ -9,12 +9,13 @@ $(function () {
     var h = $(window).height();
     $('ul').parent().height(data.height);
     $(".content").css("width", w).css("padding", 20).addClass("gridster");
-    //$(".content").css("height", h - $("header").height() - $("footer").height());
+    //$(".content>ul").css("height", data.height);
     $(".content").append("<ul/>");
     function getOption($ele) {
+        var height = 568;
         var options = {
             widget_margins: [1, 1],
-            widget_base_dimensions: [($ele.width()) / 12 - 2, ($(".content").height()) / 10 - 2],
+            widget_base_dimensions: [($ele.width()) / 12 - 2, height / 10 - 2],
             min_cols: 12,
             min_rows: 10
         };
