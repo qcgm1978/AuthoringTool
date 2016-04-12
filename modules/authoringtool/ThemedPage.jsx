@@ -135,9 +135,6 @@ var ThemedPage = React.createClass({
             AuthoringInfo.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
             if (AuthoringInfo.data.doubleScreenLeftWidgets.length === 0) {
                 AuthoringInfo.data.doubleScreenLeftWidgets = AuthoringInfo.data.singleScreenWidgets;
-            } else {
-                setTimeout(()=> {
-                }, 10);
             }
         }
     },

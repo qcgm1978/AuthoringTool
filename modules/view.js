@@ -9,7 +9,7 @@ $(function () {
     var h = $(window).height();
     $('ul').parent().height(data.height);
     $(".content").css("width", w).css("padding", 20).addClass("gridster");
-    $(".content").css("min-height", data.height);
+    $(".content").css("min-height", data.height).css('min-width',data.minWidth);
     $(".content").append("<ul/>");
     function getOption($ele) {
         var height = 568;

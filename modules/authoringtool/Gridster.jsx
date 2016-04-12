@@ -199,11 +199,12 @@ var Gridster = React.createClass({
                 return;
             }
             event.stopPropagation();
-            if($(this).text()=="Please input text"){
+            var text = $(this).text();
+            if(text=="Please input text"){
                 $(this).find('p').text('').height(20)
             }
             $(".gridster ul li.current").removeClass("current");
-            $(this).addClass("current");
+              $(this).addClass("current");
             $('.glyphicon-minus').attr('data-disabled', false)
             that.gridster.disable().disable_resize();
             if (type !== 'text' && type !== 'img') {
