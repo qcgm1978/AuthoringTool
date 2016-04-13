@@ -69,7 +69,7 @@ var AuthoringTool = React.createClass({//Create a component class
 // implements a render method which returns one single child.
 //    When called, it should examine this.props and this.state and return a single child element.
     render: function () {
-        var pageWorkspace = "<div/>";
+        var pageWorkspace /*= "<div />"*/;
         if (this.state.work === "authoring") {
             pageWorkspace = <PageToolWorkspace data={this.state.data} ref="pageworkspace"/>;
         }
@@ -84,7 +84,7 @@ var AuthoringTool = React.createClass({//Create a component class
                 {pageWorkspace}
                 <FileNameDialog configurationChange={this.configurationChanged} />
                 <OpenPageDialog ref="openfile" configurationChange={this.configurationChanged}
-                                loadLayoutData={this.loadLayoutData}/>
+                                loadLayoutData={this.loadLayoutData} />
             </div>
         );
     }

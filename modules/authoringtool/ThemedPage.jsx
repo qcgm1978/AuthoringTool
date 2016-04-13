@@ -89,7 +89,7 @@ var ThemedPage = React.createClass({
                     AuthoringInfo.data.widgetJSON[blockId] = data.json;
                     that.refs["main-grid"].addBlock(data.type, data.html, data.size_x, data.size_y, data.pos_x, data.pos_y, blockId);
                     var gridData = this.refs["main-grid"].getGridData();
-                    AuthoringInfo.data.doubleScreenLeftWidgets.push(gridData[gridData.length-1]);
+                    AuthoringInfo.data.doubleScreenLeftWidgets.push(gridData[gridData.length - 1]);
                 }
             }
         });
@@ -98,40 +98,45 @@ var ThemedPage = React.createClass({
         this.loadTheme();
         this.lastProps = this.props;
     },
+    saveContents: function ($container) {
+        //extrat and save content
+        $container.each(function () {
+            //use interface factory mode to identify each type of content
+            var type = $(this).data("type");
+            $(this).remove("span.gs-resize-handle");
+            if (type === "text") {
+                $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
+                AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
+            }
+            else if (type === "single-choice") {
+                AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
+            } else if (type === 'img') {
+                var bannerImage = $(this).find('img')[0]
+                var imgData = getBase64Image(bannerImage);
+                var html = "data:image/png;base64," + imgData
+                AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html().replace(/blob.+?(?=")/, html)
+                function getBase64Image(img) {
+                    var canvas = document.createElement("canvas");
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0);
+                    var dataURL = canvas.toDataURL("image/png");
+                    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+                }
+            }
+        });
+    },
     savePageData: function () {
         if (this.props.doubleScreen) {
             if (this.refs["extra-grid"]) {
                 AuthoringInfo.data.doubleScreenRightWidgets = this.refs["extra-grid"].getGridData();
             }
             AuthoringInfo.data.doubleScreenLeftWidgets = this.refs["main-grid"].getGridData();
+            this.saveContents($("#extra-grid ul>li"));
+            this.saveContents($("#main-grid ul>li"));
         } else {
-            //extrat and save content
-            $("#main-grid ul>li").each(function () {
-                //use interface factory mode to identify each type of content
-                var type = $(this).data("type");
-                $(this).remove("span.gs-resize-handle");
-                if (type === "text") {
-                    $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
-                    AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
-                }
-                else if (type === "single-choice") {
-                    AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
-                } else if (type === 'img') {
-                    var bannerImage = $(this).find('img')[0]
-                    var imgData = getBase64Image(bannerImage);
-                    var html = "data:image/png;base64," + imgData
-                    AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html().replace(/blob.+?(?=")/, html)
-                    function getBase64Image(img) {
-                        var canvas = document.createElement("canvas");
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        var ctx = canvas.getContext("2d");
-                        ctx.drawImage(img, 0, 0);
-                        var dataURL = canvas.toDataURL("image/png");
-                        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-                    }
-                }
-            });
+            this.saveContents($("#main-grid ul>li"));
             AuthoringInfo.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
             if (AuthoringInfo.data.doubleScreenLeftWidgets.length === 0) {
                 AuthoringInfo.data.doubleScreenLeftWidgets = AuthoringInfo.data.singleScreenWidgets;
