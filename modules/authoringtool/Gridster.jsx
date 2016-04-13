@@ -23,8 +23,8 @@ var Gridster = React.createClass({
         serialize_params: function ($w, wgd) {
             var cli = $w.clone();
             cli.find(".gs-resize-handle").remove();
-            cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
-                .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+            //cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
+            //    .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
             return {
                 content: cli.html(),
                 id: $w.data('id'),
@@ -128,14 +128,16 @@ var Gridster = React.createClass({
             this.target = $("#main-grid>ul").gridster().data('gridster');
             //this.gridster = $("#extra-grid>ul").gridster().data('gridster');
         }
-        var cli = li.clone();
+        //var cli = li.clone();
         //cli.find(".gs-resize-handle").remove();
         //cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
         //    .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
         var id = li.data("id");
         var type = li.data("type");
         var editorId=li.find('.rtf').attr('id');
-        tinymce.get(editorId).remove()
+        if (editorId) {
+            tinymce.get(editorId).remove()
+        }
         this.gridster.remove_widget(li);
         this.target.add_widget("<li data-id='" + id + "'"
             + " data-type='" + type +
