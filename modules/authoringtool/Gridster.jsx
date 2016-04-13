@@ -75,7 +75,7 @@ var Gridster = React.createClass({
         var that = this;
         var numberCols = 12;
         var numberRows = 10;
-        that.authoring=AuthoringInfo;
+        that.authoring = AuthoringInfo;
         var options = {
             namespace: '#' + this.props.id,
             widget_margins: [1, 1],
@@ -90,8 +90,7 @@ var Gridster = React.createClass({
                      * When on double screen and the expand mode is 'extra' or 'portrait',
                      * Move the widget from left to right
                      * */
-                    debugger;
-                    if (/*that.props.data.length>0&&*/that.props.setting.doubleScreen && (that.props.setting.expandMode === 1 || that.props.setting.expandMode === 3) && (ui.targetLeft+ui.$player.width()>$('#main-grid').width()+20||ui.targetLeft<-20)
+                    if (/*that.props.data.length>0&&*/that.props.setting.doubleScreen && (that.props.setting.expandMode === 1 || that.props.setting.expandMode === 3) && (ui.targetLeft + ui.$player.width() > $('#main-grid').width() + 20 || ui.targetLeft < -20)
                     ) {
                         that.moveBlock(ui.$player, ui.pointer.diff_left > 0);
                     }
@@ -130,14 +129,21 @@ var Gridster = React.createClass({
             //this.gridster = $("#extra-grid>ul").gridster().data('gridster');
         }
         var cli = li.clone();
-        cli.find(".gs-resize-handle").remove();
-        cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
-            .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
-        this.target.add_widget("<li data-id='" + li.data("id") + "'"
-            + " data-type='" + li.data("type") +
+        //cli.find(".gs-resize-handle").remove();
+        //cli.find(".mce-content-body").removeAttr("id").removeAttr("contenteditable")
+        //    .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
+        var id = li.data("id");
+        var type = li.data("type");
+        var editorId=li.find('.rtf').attr('id');
+        tinymce.get(editorId).remove()
+        this.gridster.remove_widget(li);
+        this.target.add_widget("<li data-id='" + id + "'"
+            + " data-type='" + type +
             "'>" + li.html() + "</li>",
             li.data("sizex"), li.data("sizey"), 1, 100);
-        this.gridster.remove_widget(li);
+        //var selector = "li[data-id='" + id + "']";
+        this.initBlockEvents(id, type);
+        //this.bindEditor(selector)
     },
     /**
      * When propeties and states change
@@ -191,22 +197,33 @@ var Gridster = React.createClass({
         this.gridster.add_widget("<li data-id='" + blockId + "' data-type='" + type + "'>" + content + "</li>", size_x, size_y, pos_x, pos_y);
         this.initBlockEvents(blockId, type);
     },
+    bindEditor: function (selector) {
+            tinymce.init({
+                selector: selector + ' .rtf',
+                inline: true,
+                menubar: false,
+                toolbar: 'undo redo| bold italic underline strikethrough'
+            });
+    },
     initBlockEvents: function (blockId, type) {
-        //var type = $(this).data("type");
         var that = this
-        $("li[data-id='" + blockId + "']").off("click").on("click", function (event) {
+        var selector = "li[data-id='" + blockId + "']";
+        $(selector).off("click").on("click", function (event) {
             if (/*$(this).hasClass("player-revert") ||*/ $(this).hasClass("resizing")) {
                 return;
             }
             event.stopPropagation();
             var text = $(this).text();
-            if(text=="Please input text"){
+            if (text == "Please input text") {
                 $(this).find('p').text('').height(20)
             }
             $(".gridster ul li.current").removeClass("current");
-              $(this).addClass("current");
+            $(this).addClass("current");
             $('.glyphicon-minus').attr('data-disabled', false)
             that.gridster.disable().disable_resize();
+            if (that.props.setting.doubleScreen && that.target) {
+                that.target.disable().disable_resize();
+            }
             if (type !== 'text' && type !== 'img') {
                 postal.publish({
                     channel: "block",
@@ -219,12 +236,7 @@ var Gridster = React.createClass({
             }
         });
         if (type !== 'img') {
-            tinymce.init({
-                selector: '.gridster li .rtf',
-                inline: true,
-                menubar: false,
-                toolbar: 'undo redo| bold italic underline strikethrough'
-            });
+            that.bindEditor(selector);
         }
     },
     render: function () {

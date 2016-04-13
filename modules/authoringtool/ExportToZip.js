@@ -31,7 +31,7 @@ var ExportToZip = (function () {
         html += '<script type="text/javascript" src="build/jquery.2.1.4.min.js"></script>\n';
         copyFile(zip, "build/jquery.2.1.4.min.js");
         /**link the page data(layout N content)*/
-        AuthoringInfo.height = $('#main-grid>ul').height()
+        AuthoringInfo.height = $('.screen').height()
         AuthoringInfo.minWidth = $('#main-grid>ul').width()
         var pageData = 'var data=' + JSON.stringify(AuthoringInfo);
         html += '<script type="text/javascript" src="data.js"></script>\n';
