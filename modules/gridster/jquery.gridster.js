@@ -3710,6 +3710,7 @@
         tag.setAttribute('type', 'text/css');
 
         if(this.options.namespace) {
+            //debugger;//if invoked, the style- maybe del
             tag.setAttribute("id", "style-" + this.options.namespace.substring(1));
         }
 

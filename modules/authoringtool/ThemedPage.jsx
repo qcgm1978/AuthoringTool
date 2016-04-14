@@ -103,9 +103,9 @@ var ThemedPage = React.createClass({
         $container.each(function () {
             //use interface factory mode to identify each type of content
             var type = $(this).data("type");
-            $(this).remove("span.gs-resize-handle");
+            //$(this).remove("span.gs-resize-handle");
             if (type === "text") {
-                $(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
+                //$(this).find(".rtf").removeClass("mce-content-body").removeAttr("id").removeAttr("contenteditable").removeAttr("contenteditable").removeAttr("spellcheck").removeAttr("style")
                 AuthoringInfo.data.widgetContents[$(this).data("id")] = $(this).html();
             }
             else if (type === "single-choice") {

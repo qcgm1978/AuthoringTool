@@ -67,7 +67,11 @@ var Gridster = React.createClass({
     /**When mouse over(drag in、dragging) mouse out(drag out) mouseup( dragin effects)*/
     bindEvent: function () {
     },
+    generateGridster: function (options, id) {
+        return $("#" + id + ">ul").gridster(options).data('gridster');
+    },
     initGridster: function () {
+
         //remove old styles
         $("#style-" + this.props.id).remove();
         $("#" + this.props.id + ">ul").remove();
@@ -109,23 +113,30 @@ var Gridster = React.createClass({
             min_cols: numberCols,
             min_rows: numberRows,
             serialize_params: function ($w, wgd) {
-                return {
-                    id: $w.data('id'),
-                    type: $w.data("type"),
-                    col: wgd.col,
-                    row: wgd.row,
-                    size_x: wgd.size_x,
-                    size_y: wgd.size_y
-                };
+                if (wgd) {
+                    return {
+                        id: $w.data('id'),
+                        type: $w.data("type"),
+                        col: wgd.col,
+                        row: wgd.row,
+                        size_x: wgd.size_x,
+                        size_y: wgd.size_y
+                    };
+                }
             }
         };
-        this.gridster = $("#" + this.props.id + ">ul").gridster(options).data('gridster');
+        this.gridster = this.generateGridster(options, this.props.id);
     },
-    moveBlock: function (li, direction) {
+    unbindEditor: function ($li) {
+        var editorId = $li.find('.rtf').attr('id');
+        if (editorId&& tinymce.get(editorId)) {
+            tinymce.get(editorId).remove()
+        }
+    }, moveBlock: function (li, direction) {
         if (direction) {
-            this.target = $("#extra-grid>ul").gridster().data('gridster');
+            this.target = this.generateGridster({}, 'extra-grid');
         } else {
-            this.target = $("#main-grid>ul").gridster().data('gridster');
+            this.target = this.generateGridster({}, 'main-grid');
             //this.gridster = $("#extra-grid>ul").gridster().data('gridster');
         }
         //var cli = li.clone();
@@ -134,10 +145,7 @@ var Gridster = React.createClass({
         //    .removeAttr("spellcheck").removeAttr("style").removeClass("mce-content-body");
         var id = li.data("id");
         var type = li.data("type");
-        var editorId=li.find('.rtf').attr('id');
-        if (editorId) {
-            tinymce.get(editorId).remove()
-        }
+        this.unbindEditor(li);
         this.gridster.remove_widget(li);
         this.target.add_widget("<li data-id='" + id + "'"
             + " data-type='" + type +
@@ -169,19 +177,23 @@ var Gridster = React.createClass({
         this.loadGridData();
     },
     removeBlock: function () {
-        var $curEle = $('#main-grid ul li.current');
+        var $curEle = $('#main-grid ul li.current,#extra-grid ul li.current');
         if ($curEle.length > 0) {
-            this.gridster.remove_widget($curEle, function () {
+            var that = this
+            this.gridster.remove_widget($curEle, () => {
                 debugger;
+                that.props.data.map(function (i, n) {
+                    if (n.id) {
+                    }
+                })
             })
+            //this.initGridster()
         }
     },
     addBlock: function (type, content, size_x, size_y, pos_x, pos_y, blockId) {
         //Using the gridster API that allows building intuitive draggable layouts from elements spanning multiple columns.
         if (!this.gridster) {
-            this.gridster = $("#" + this.props.id + " ul").gridster({
-                //widget_margins: [10, 10]
-            }).data('gridster');
+            this.gridster = this.generateGridster({}, this.props.id);
         }
         if (!size_x) {
             size_x = 12;
@@ -200,12 +212,13 @@ var Gridster = React.createClass({
         this.initBlockEvents(blockId, type);
     },
     bindEditor: function (selector) {
-            tinymce.init({
-                selector: selector + ' .rtf',
-                inline: true,
-                menubar: false,
-                toolbar: 'undo redo| bold italic underline strikethrough'
-            });
+        this.unbindEditor($(selector));
+        tinymce.init({
+            selector: selector + ' .rtf',
+            inline: true,
+            menubar: false,
+            toolbar: 'undo redo| bold italic underline strikethrough'
+        });
     },
     initBlockEvents: function (blockId, type) {
         var that = this
