@@ -129,10 +129,11 @@ var Gridster = React.createClass({
     },
     unbindEditor: function ($li) {
         var editorId = $li.find('.rtf').attr('id');
-        if (editorId&& tinymce.get(editorId)) {
+        if (editorId && tinymce.get(editorId)) {
             tinymce.get(editorId).remove()
         }
-    }, moveBlock: function (li, direction) {
+    },
+    moveBlock: function (li, direction) {
         if (direction) {
             this.target = this.generateGridster({}, 'extra-grid');
         } else {

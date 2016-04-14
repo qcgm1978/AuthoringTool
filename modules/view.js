@@ -9,7 +9,7 @@ $(function () {
     var h = $(window).height();
     $('ul').parent().height(data.height);
     $(".content").css("width", w).css("padding", 20).addClass("gridster");
-    $(".content").css("min-height", data.height).css('min-width',data.minWidth);
+    $(".content").css("min-height", data.height).css('min-width', data.minWidth);
     $(".content").append("<ul/>");
     function getOption($ele) {
         var height = 568;
@@ -17,25 +17,28 @@ $(function () {
             widget_margins: [1, 1],
             widget_base_dimensions: [($ele.width()) / 12 - 2, height / 10 - 2],
             min_cols: 12,
-            min_rows: 10
+            min_rows: 10,
+            resize: {
+                enabled: true
+            }
         };
         return options;
     }
 
     var options = getOption($(".content"));
-    var gridster = $(".content>ul").gridster(options).data('gridster');
-
+    gridster = $(".content>ul").gridster(options).data('gridster');
     function renderData(gridster, widgets) {
         for (var i = 0; i < widgets.length; i++) {
             var widget = widgets[i];
             gridster.add_widget("<li data-id='" + widget.id + "' data-type='" + widget.type + "'>" + data.data.widgetContents[widget.id] + "</li>",
                 widget.size_x, widget.size_y, widget.col, widget.row);
         }
+        gridster.disable().disable_resize();
+        $('[contenteditable]').attr('contenteditable', false)
+        $('.gridster .gs-w').css("border", "none")
     }
 
     renderData(gridster, data.data.singleScreenWidgets);
-    $('.gridster .gs-w').css("border", "none")
-    gridster.disable()/*.disable_resize()*/;
     function isDoubleMode() {
         var doubleSize = [1024, 1280, 1920];
         var doubleWidth = doubleSize.map(function (currentValue) {
