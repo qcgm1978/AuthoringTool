@@ -152,9 +152,7 @@ var Gridster = React.createClass({
             + " data-type='" + type +
             "'>" + li.html() + "</li>",
             li.data("sizex"), li.data("sizey"), 1, 100);
-        //var selector = "li[data-id='" + id + "']";
         this.initBlockEvents(id, type);
-        //this.bindEditor(selector)
     },
     /**
      * When propeties and states change
@@ -251,7 +249,7 @@ var Gridster = React.createClass({
                 });
             }
         });
-        if (type !== 'img') {
+        if (type !== 'img' && type !== 'audio') {
             that.bindEditor(selector);
         }
     },

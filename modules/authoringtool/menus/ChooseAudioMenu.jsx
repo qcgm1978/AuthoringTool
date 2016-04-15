@@ -2,11 +2,12 @@ var React = require('react');
 var Dropzone = require('react-dropzone');
 var request = require('superagent');
 var postal = require("postal");
-var ChooseAudioMenu = React.createClass({
+var ChooseImageMenu = React.createClass({
+    icon: '<span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>',
     getTemplate: function (str) {
-        return "<div class='rtf'><img src='" +
-            str +
-            "'></div>"
+        return "<div class='rtf'>" +
+            this.icon +
+            "</div>"
     },
     getInitialState: function () {
         return {}
@@ -33,7 +34,7 @@ var ChooseAudioMenu = React.createClass({
             channel: "block",
             topic: "add",
             data: {
-                type: "img",
+                type: "audio",
                 html: template,
                 index: this.imgIndex,
                 size_x: Math.ceil(this.widthByUnit),
@@ -48,24 +49,24 @@ var ChooseAudioMenu = React.createClass({
     },
     imgIndex: 0,
     onDrop: function (files) {
-        this.src = files[0].preview
-        var that=this;
+        //this.src = files[0].preview
+        var that = this;
         $('.zone')
             .find('img')
             .remove()
             .end()
             .next('span')
             .addClass('btn-high-color')
-        $('<img>')
-            .attr('src', this.src)
-            .load(function () {
-                that.heightByUnit=$(this).height()/54.8
-                that.widthByUnit=$(this).width()/80
-                $(this)
-                    //.data('src', "path/to/image")
-                    .css('max-height', 280)
-                    .css('max-width', 400)
-            })
+        $(this.icon)
+            //.attr('src', this.src)
+            //.load(function () {
+            //    that.heightByUnit=$(this).height()/54.8
+            //    that.widthByUnit=$(this).width()/80
+            //    $(this)
+            //        //.data('src', "path/to/image")
+            //        .css('max-height', 280)
+            //        .css('max-width', 400)
+            //})
             .appendTo('.zone')
         this.hasImg = true;
         //request.post('/attach/upload')
@@ -87,4 +88,4 @@ var ChooseAudioMenu = React.createClass({
         );
     }
 });
-module.exports = ChooseAudioMenu;
+module.exports = ChooseImageMenu;

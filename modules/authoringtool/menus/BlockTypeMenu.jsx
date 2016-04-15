@@ -1,5 +1,7 @@
 var React = require('react');
 var ChooseImageMenu = require("./ChooseImageMenu.jsx");
+var ChooseAudioMenu = require("./ChooseAudioMenu.jsx");
+
 var AddTextMenu = require("./AddTextMenu.jsx");
 var AddActivityMenu = require("./AddActivityMenu.jsx");
 var BlockTypeMenu = React.createClass({
@@ -23,6 +25,12 @@ var BlockTypeMenu = React.createClass({
         event.stopPropagation();
         this.setState({
             page: "chooseImage"
+        });
+    },
+    showAddAudio: function (event) {
+        event.stopPropagation();
+        this.setState({
+            page: "chooseAudio"
         });
     },
     showAddActivity: function (event) {
@@ -51,7 +59,7 @@ var BlockTypeMenu = React.createClass({
                         <span className={(this.state.page==="chooseImage")?"current":""} onClick={this.showAddImage}>Image</span>
                     </li>
                     <li className="category">
-                        <span>Media</span>
+                        <span onClick={this.showAddAudio}>Media</span>
                     </li>
                     <li className="category">
                         <span className={(this.state.page==="addActivity")?"current":""} onClick={this.showAddActivity}>Activity</span>
@@ -60,6 +68,8 @@ var BlockTypeMenu = React.createClass({
                 <AddTextMenu show={this.state.page==="addText"} addBlock={this.props.addBlock}
                              parentStateChange={this.props.parentStateChange}/>
                 <ChooseImageMenu show={this.state.page==="chooseImage"} addBlock={this.props.addBlock}/>
+                <ChooseAudioMenu show={this.state.page==="chooseAudio"} addBlock={this.props.addBlock}/>
+
                 <AddActivityMenu addActivity={this.adddActivity} show={this.state.page==="addActivity"}/>
 
             </div>

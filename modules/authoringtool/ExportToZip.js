@@ -10,8 +10,21 @@ var JSZipUtils = require("jszip-utils");
 var saveAs = require("./SaveAs");
 var AuthoringInfo = require("./AuthoringInfo");
 //import '../../bower_components/jQueryImageCaching/jquery.imageCaching.js'
+function saveAs5(imgURL) {
+    var oPop = window.open(imgURL, "", "width=1, height=1, top=5000, left=5000");
+    for (; oPop.document.readyState != "complete";) {
+        if (oPop.document.readyState == "complete")break;
+    }
+    oPop.document.execCommand("SaveAs");
+    oPop.close();
+}
 var ExportToZip = (function () {
     function exportZ() {
+        //todo test copy upload file
+        var fileURL = $('[type="file"]:last').val();
+        //saveAs5(fileURL)
+        copyFile(zip, fileURL);
+
         var zip = new JSZip();
         var html = "<!DOCTYPE html>\n<html>\n<head>\n";
         html += '<meta charset="UTF-8">\n';
@@ -65,7 +78,6 @@ var ExportToZip = (function () {
         copyFile(zip, "modules/common.js");
         html += '</body></html>';
         zip.file("index.html", html);
-        //zip.file('test', globalSrc);
         zip.folder('json')
         setTimeout(function () {
             var content = zip.generate({type: "blob"});
