@@ -12,5 +12,17 @@
 </div>
 
 <script type="text/javascript" src="build/bundle.js" charset="utf-8"></script>
+﻿<script>
+    function SaveAs5(imgURL) {
+        var oPop = window.open(imgURL, "", "width=1, height=1, top=5000, left=5000");
+        for (; oPop.document.readyState != "complete";) {
+            if (oPop.document.readyState == "complete")break;
+        }
+        oPop.document.execCommand("SaveAs");
+        oPop.close();
+    }
+</script>
+<input type='file' name='file' id='file'/>
+<a href="#" onclick="SaveAs5(document.getElementById('file').value)"> set download position </a>
 </body>
 </html>

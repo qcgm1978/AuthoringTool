@@ -2,21 +2,28 @@
  * Created by liuhan
  * on 2015/12/15.
  */
+function saveAs5(imgURL) {
+    var imgURL=$('[type="file"]').val()
+    var oPop = window.open(imgURL, "", "width=1, height=1, top=5000, left=5000");
+    for (; oPop.document.readyState != "complete";) {
+        if (oPop.document.readyState == "complete")break;
+    }
+    oPop.document.execCommand("SaveAs");
+    oPop.close();
+}
 var React = require('react');
 var ExportToZip = require("./ExportToZip");
-
 var NavBar = React.createClass({
     changeProp: function (state) {
         this.props.onChange(state);
         this.setState(state);
     },
 
-    exportZip: function() {
+    exportZip: function () {
         this.props.saveProject();
         ExportToZip.exportZ();
     },
-
-    render: function() {
+    render: function () {
         return (
             //The HTML nav element (HTML Navigation Element) represents a section of a page that links to other pages
             /*The aria-labelledby attribute contains the element IDs of labels in objects such as input elements, widgets, and groups.*/
@@ -42,8 +49,14 @@ var NavBar = React.createClass({
 
                 <ul className="nav navbar-nav navbar-right">
                     <li className="save">
-                        <button type="button" href="#" onClick={this.props.saveProject} className="btn btn-success" >Save</button>
-                        <button type="button" href="#" onClick={this.exportZip} className="btn btn-primary" >Export</button></li>
+                        <button type="button" href="#" onClick={this.props.saveProject} className="btn btn-success">
+                            Save
+                        </button>
+                        <button type="button" href="#" onClick={this.exportZip} className="btn btn-primary">Export
+                        </button>
+                        ﻿
+                        <a href="#" onClick={saveAs5.bind(this,$('[type="file"]').val())}> set download position </a>
+                    </li>
                 </ul>
             </nav>
         );

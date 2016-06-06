@@ -1,0 +1,28 @@
+{
+  "name": "authoringtool",
+  "description": "tool for editing",
+  "main": "index.html",
+  "authors": [
+    "hand"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "json-editor": "https://github.com/jdorn/json-editor.git#~0.7.24",
+    "tinyMCE": "https://github.com/thomaswelton/bower-tinymce-amd.git"
+  },
+  "dependencies": {
+    "json-editor": "https://github.com/jdorn/json-editor.git#~0.7.24",
+    "gridster.js": "https://github.com/ducksboard/gridster.js.git#~0.5.6",
+    "tinymce": "https://github.com/tinymce/tinymce.git#^4.3.7"
+  }
+}

@@ -21,7 +21,7 @@ function saveAs5(imgURL) {
 var ExportToZip = (function () {
     function exportZ() {
         //todo test copy upload file
-        var fileURL = $('[type="file"]:last').val();
+        var fileURL = $('[type="file"]').val();
         //saveAs5(fileURL)
         copyFile(zip, fileURL);
 
