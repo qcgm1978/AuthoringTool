@@ -30,7 +30,8 @@
     "react-addons-linked-state-mixin": "^0.14.7",
     "react-dropzone": "^3.3.2",
     "superagent": "^1.7.2",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "url-loader": "^0.5.7"
   },
   "scripts": {
     "test": "jest"
