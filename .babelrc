@@ -1,0 +1,5 @@
+{
+  "presets": ["es2015", "react"],
+  "plugins": ["syntax-object-rest-spread","transform-async-to-generator"],
+  "compact": false
+}
