@@ -24,6 +24,7 @@ var NavBar = React.createClass({
         ExportToZip.exportZ();
     },
     render: function () {
+        //alert(1)
         return (
             //The HTML nav element (HTML Navigation Element) represents a section of a page that links to other pages
             /*The aria-labelledby attribute contains the element IDs of labels in objects such as input elements, widgets, and groups.*/
