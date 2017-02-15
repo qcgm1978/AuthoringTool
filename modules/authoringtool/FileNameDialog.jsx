@@ -46,7 +46,7 @@ var FileNameDialog = React.createClass({
                             <h4 className="modal-title">New Project Name</h4>
                         </div>
                         <div className="modal-body">
-                            <p><input type="text" className="form-control" valueLink={this.linkState('name')}
+                            <p><input type="text" className="form-control" onChange={this.linkState} value={('name')}
                                       onKeyUp={this.handleKeyUp}/></p>
                         </div>
                         <div className="modal-footer">

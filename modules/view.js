@@ -15,7 +15,7 @@ $(function () {
         var height = 568;
         var options = {
             widget_margins: [1, 1],
-            widget_base_dimensions: [($ele.width()) / 12 - 2, height / 10 - 2],
+                widget_base_dimensions: [($ele.width()) / 12 - 2, height / 10 - 2],
             min_cols: 12,
             min_rows: 10,
             resize: {

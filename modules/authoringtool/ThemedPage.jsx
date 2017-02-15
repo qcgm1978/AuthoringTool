@@ -29,7 +29,7 @@ var ThemedPage = React.createClass({
             type: "GET",
             url: "templates/" + this.props.themeName + "/config.json",
             //async: false
-            success: (responseText)=> {
+            success: (responseText) => {
                 var remote = responseText
                 that.themeConfig = remote;
                 dfd.resolve(that.themeConfig);
@@ -40,7 +40,7 @@ var ThemedPage = React.createClass({
     //create a new ajax request
     loadTheme: function () {
         this.getThemeConfig().then(
-            (data)=> {
+            (data) => {
                 var themeConfig = data;
                 $.ajax({
                     type: "GET",
@@ -83,7 +83,7 @@ var ThemedPage = React.createClass({
         postal.subscribe({
             channel: "block",
             topic: "add",
-            callback: (data, envelope)=> {
+            callback: (data, envelope) => {
                 if (that.refs["main-grid"]) {
                     var blockId = _.uniqueId(that.BLOCK_ID_PREFIX);
                     AuthoringInfo.data.widgetJSON[blockId] = data.json;
@@ -138,6 +138,9 @@ var ThemedPage = React.createClass({
         } else {
             this.saveContents($("#main-grid ul>li"));
             AuthoringInfo.data.singleScreenWidgets = this.refs["main-grid"].getGridData();
+            $.each(AuthoringInfo.data.singleScreenWidgets, (i, n) => {
+                n.html=$('[data-id='+n.id+']').html()
+            })
             if (AuthoringInfo.data.doubleScreenLeftWidgets.length === 0) {
                 AuthoringInfo.data.doubleScreenLeftWidgets = AuthoringInfo.data.singleScreenWidgets;
             }
@@ -256,17 +259,16 @@ var ThemedPage = React.createClass({
         return (
             <div className="screen" style={{
                 position: "relative",
-                width: this.props.pageSetting.doubleScreen?(this.props.pageSetting.width*2):this.props.pageSetting.width,
+                width: this.props.pageSetting.doubleScreen ? (this.props.pageSetting.width * 2) : this.props.pageSetting.width,
                 minHeight: this.props.pageSetting.height
             }}>
                 <div className="styles"></div>
                 <div className="header" style={{
-                    display: this.props.pageSetting.showHeader?"inherit": "none"
+                    display: this.props.pageSetting.showHeader ? "inherit" : "none"
                 }}></div>
                 {layout}
                 <div className="footer" style={{
-                    display: this.props.pageSetting.showFooter?"inherit": "none",
-
+                    display: this.props.pageSetting.showFooter ? "inherit" : "none",
                 }}></div>
                 {/*<GridLayout data={this.state} />*/}
             </div>

@@ -6,6 +6,7 @@ var LiveReloadPlugin = require('webpack-livereload-plugin');
 module.exports = {
     entry: "./modules/entry.js",//The entry point for the bundle.
     output: {
+        publicPath: '',
         path: "build",
         filename: "bundle.js"
     },
@@ -32,7 +33,6 @@ module.exports = {
                 //    presets: ['react', 'es2015']
                 //},
                 //"plugins": ["syntax-object-rest-spread"]
-
             },
             {
                 test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,

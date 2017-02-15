@@ -40,7 +40,8 @@ var AddTextMenu = React.createClass({
     render: function () {
         return (
             <div className="textTemplateLists" data-show={this.props.show}>
-                <div onClick={this.addTextBlock} data-template={this.BLOCK_PARAGRAPH}><span
+                <div onClick={this.
+                    addTextBlock} data-template={this.BLOCK_PARAGRAPH}><span
                     className="glyphicon glyphicon-align-justify"/>
 
                     <div className="rtf">Paragraph</div>
