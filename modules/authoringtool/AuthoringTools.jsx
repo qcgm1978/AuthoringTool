@@ -4,6 +4,8 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+import { Router, Route, Link } from 'react-router'
+
 var NavBar = require("./NavBar.jsx");
 var PageToolWorkspace = require("./PageToolWorkspace.jsx");
 var FileNameDialog = require("./FileNameDialog.jsx");

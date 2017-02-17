@@ -19,43 +19,15 @@ function saveAs5(imgURL) {
     oPop.close();
 }
 var ExportToZip = (function () {
-    function exportZ() {
-        //todo test copy upload file
-        var fileURL = $('[type="file"]').val();
-        //saveAs5(fileURL)
-        copyFile(zip, fileURL);
-
-        var zip = new JSZip();
+    function generateHtml() {
+        var themeName = AuthoringInfo.themeName;
         var html = "<!DOCTYPE html>\n<html>\n<head>\n";
         html += '<meta charset="UTF-8">\n';
         html += '<meta http-equiv="X-UA-Compatible" content="IE=edge">\n';
         html += '<meta name="viewport" content="width=device-width, initial-scale=1">\n';
-        var themeName = AuthoringInfo.themeName;
-        html += '<link rel="stylesheet" type="text/css" href="templates/' + themeName + '/css/style.css">\n';
-        /**����ģ�����css��img*/
-        copyFile(zip, "templates/" + themeName + "/css/style.css");
-        copyFile(zip, "templates/" + themeName + "/images/icon.png");
-        copyFile(zip, "templates/" + themeName + "/images/insets_01.png");
-        copyFile(zip, "templates/" + themeName + "/images/insets_02.png");
-        copyFile(zip, "templates/" + themeName + "/images/insets_04.png");
-        copyFile(zip, "templates/" + themeName + "/images/insets_05.jpg");
-        copyFile(zip, "templates/" + themeName + "/images/insets_06.png");
-        /**����Jquery*/
-        html += '<script type="text/javascript" src="build/jquery.2.1.4.min.js"></script>\n';
-        copyFile(zip, "build/jquery.2.1.4.min.js");
-        /**link the page data(layout N content)*/
-        AuthoringInfo.height = $('.screen').height()
-        AuthoringInfo.minWidth = $('#main-grid>ul').width()
-        var pageData = 'var data=' + JSON.stringify(AuthoringInfo);
         html += '<script type="text/javascript" src="data.js"></script>\n';
-        zip.file("data.js", pageData);
-        /**copy gridster related (we can use other method to paint the page)*/
-        html += '<script type="text/javascript" src="modules/gridster/jquery.gridster.js"></script>\n';
-        copyFile(zip, "modules/gridster/jquery.gridster.js");
-        html += '<link rel="stylesheet" type="text/css" href="modules/gridster/jquery.gridster.css">\n';
-        copyFile(zip, "modules/gridster/jquery.gridster.css");
-        html += '<script type="text/javascript" src="modules/view.js"></script>\n';
-        copyFile(zip, "modules/view.js");
+        html += '<script type="text/javascript" src="build/jquery.2.1.4.min.js"></script>\n';
+        html += '<script type="text/javascript" src="build/bundle-export.js"></script>\n';
         html += '</head>\n';
         html += '<body>\n';
         html += '<header class="site-header">\n';
@@ -74,9 +46,33 @@ var ExportToZip = (function () {
             $('.site-footer').text() +
             '</footer>\n';
         //var foo=$('.zone img').imageCaching()
-        html += '<script src="modules/common.js"></script>\n';
-        copyFile(zip, "modules/common.js");
         html += '</body></html>';
+        return {themeName, html};
+    }
+    
+    function generateZip(themeName, html) {
+        AuthoringInfo.height = $('.screen').height()
+        AuthoringInfo.minWidth = $('#main-grid>ul').width()
+        var pageData = 'var data=' + JSON.stringify(AuthoringInfo);
+        var zip = new JSZip();
+        zip.file("data.js", pageData);
+        //todo test copy upload file
+        var fileURL = $('[type="file"]').val();
+        //saveAs5(fileURL)
+        copyFile(zip, fileURL);
+        copyFile(zip, "templates/" + themeName + "/css/style.css");
+        copyFile(zip, "templates/" + themeName + "/images/icon.png");
+        copyFile(zip, "templates/" + themeName + "/images/insets_01.png");
+        copyFile(zip, "templates/" + themeName + "/images/insets_02.png");
+        copyFile(zip, "templates/" + themeName + "/images/insets_04.png");
+        copyFile(zip, "templates/" + themeName + "/images/insets_05.jpg");
+        copyFile(zip, "templates/" + themeName + "/images/insets_06.png");
+        copyFile(zip, "modules/gridster/jquery.gridster.css");
+        copyFile(zip, "build/jquery.2.1.4.min.js");
+        copyFile(zip, "modules/gridster/jquery.gridster.js");
+        copyFile(zip, "build/bundle-export.js");
+        copyFile(zip, "modules/view.js");
+        copyFile(zip, "modules/common.js");
         zip.file("index.html", html);
         zip.folder('json')
         setTimeout(function () {
@@ -85,8 +81,12 @@ var ExportToZip = (function () {
             saveAs(content, "example.zip");
         }, 500);
     }
-
-    //��ָ��·�����ļ��� Ŀ¼��ʽ��ӵ�zip��
+    
+    function exportZ() {
+        var {themeName, html} = generateHtml();
+        generateZip(themeName, html);
+    }
+    
     function copyFile(zip, path) {
         var paths = path.split("/");
         var folder = null;
@@ -104,7 +104,7 @@ var ExportToZip = (function () {
             folder.file(paths[paths.length - 1], data);
         });
     }
-
+    
     return {
         exportZ: exportZ
     };

@@ -15,7 +15,7 @@ $(function () {
         var height = 568;
         var options = {
             widget_margins: [1, 1],
-                widget_base_dimensions: [($ele.width()) / 12 - 2, height / 10 - 2],
+            widget_base_dimensions: [($ele.width()) / 12 - 2, height / 10 - 2],
             min_cols: 12,
             min_rows: 10,
             resize: {
@@ -24,20 +24,24 @@ $(function () {
         };
         return options;
     }
-
+    
     var options = getOption($(".content"));
-    gridster = $(".content>ul").gridster(options).data('gridster');
+    var gridster = $(".content>ul").gridster(options).data('gridster');
     function renderData(gridster, widgets) {
         for (var i = 0; i < widgets.length; i++) {
             var widget = widgets[i];
-            gridster.add_widget("<li data-id='" + widget.id + "' data-type='" + widget.type + "'>" + data.data.widgetContents[widget.id] + "</li>",
+            gridster.add_widget("<li data-id='" + widget.id + "' data-type='" + widget.type + "'>" +
+                "<a name='" +
+                widget.id +
+                "'></a>"+
+                widget.html + "</li>",
                 widget.size_x, widget.size_y, widget.col, widget.row);
         }
         gridster.disable().disable_resize();
         $('[contenteditable]').attr('contenteditable', false)
         $('.gridster .gs-w').css("border", "none")
     }
-
+    
     renderData(gridster, data.data.singleScreenWidgets);
     function isDoubleMode() {
         var doubleSize = [1024, 1280, 1920];
@@ -47,7 +51,7 @@ $(function () {
         //doubleWidth: [1928, 2440, 3720]
         return $.inArray($(window).width(), doubleWidth) != -1;
     }
-
+    
     function layoutPage() {
         var isDouble = isDoubleMode();
         if (isDouble) {
@@ -68,7 +72,7 @@ $(function () {
             $('ul:first').show().siblings().hide();
         }
     }
-
+    
     layoutPage();
     $(window).resize(function () {
         layoutPage();

@@ -4,11 +4,14 @@
 var LiveReloadPlugin = require('webpack-livereload-plugin');
 //var objAssign=require('transform-object-rest-spread')
 module.exports = {
-    entry: "./modules/entry.js",//The entry point for the bundle.
+    entry: {
+        // bundle: "./modules/entry.js",
+        'bundle-export': "./modules/entry-export.js"
+    },//The entry point for the bundle.
     output: {
         publicPath: '',
         path: "build",
-        filename: "bundle.js"
+        filename: "[name].js"
     },
     module: {
         loaders: [
