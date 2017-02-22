@@ -1,0 +1,22 @@
+ul.buttons {
+  float: left;
+}
+ul.buttons  li {
+    float: left;
+    display: inline-block;
+    width: 60px;
+  }
+.f_l{
+       float: left;
+
+}
+.c_b{
+    clear: both;
+}
+.border{
+    height: 120px;
+    border-bottom: 1px solid;
+}
+.no-list{
+        list-style-type: none;
+}

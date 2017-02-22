@@ -7,6 +7,8 @@ module.exports = {
     entry: {
         // bundle: "./modules/entry.js",
         'bundle-export': "./modules/entry-export.js"
+                // 'bundle-quick-start': "./modules/entry-quick-start.js"
+
     },//The entry point for the bundle.
     output: {
         publicPath: '',
