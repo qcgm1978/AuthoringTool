@@ -7,7 +7,6 @@ export default React.createClass({
         Store.dispatch({type: 'INCREMENT'})
         let userName='youth',repo='foo'
         const path = `/repos/${userName}/${repo}`
-        window.State='question'
         browserHistory.push(path)
     },
     render() {

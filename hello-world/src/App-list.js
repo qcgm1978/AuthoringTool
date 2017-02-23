@@ -7,15 +7,14 @@ export default React.createClass({
     getInitialState(){
         return {
             num: [1, 2, 3],
+            section:Store.getState()
         }
     },
     componentDidMount(){
     },
     render(){
         let question=null;
-        if (Store.getState()==='question') {
-            question=<div>{'question'}</div>
-        }
+        question = <div>{this.state.section}</div>
         return (
             <div>
                 {this.props.data.map((item, ind) => {
