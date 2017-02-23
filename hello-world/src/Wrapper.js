@@ -2,18 +2,18 @@
 // Let the wrapping component grab something from the context, and pass it down with props to the wrapped component
 //reference: https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html
 import React from 'react';
-import Store from './routes/redux'
+// import Store from './routes/redux'
 export default (WrappedComponent) => {
     return React.createClass({
         _state: '',
         componentWillMount(){
         },
         componentDidMount(){
-            var that=this;
-            Store.subscribe( ()=> {
-                console.log(Store.getState())
-                that._state = Store.getState()
-            })
+            // var that=this;
+            // Store.subscribe( ()=> {
+            //     console.log(Store.getState())
+            //     that._state = Store.getState()
+            // })
         },
         render: function () {
             // The wrapper component reads something

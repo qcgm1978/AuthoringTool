@@ -1,7 +1,7 @@
 import React from 'react';
 import Contents from './Contents';
 import Buttons from './Buttons';
-import Store from './routes/redux'
+import Store from './routes/redux-states'
 
 export default React.createClass({
     getInitialState(){

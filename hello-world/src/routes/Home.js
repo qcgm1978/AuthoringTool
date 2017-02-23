@@ -1,6 +1,6 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import Store from './redux'
+import Store from './redux-states'
 
 export default React.createClass({
     clickBtn(event) {

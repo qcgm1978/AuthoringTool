@@ -6,11 +6,11 @@ import Repos from './routes/Repos'
 import Repo from './routes/Repo'
 import Home from './routes/Home'
 import NoMatch from './routes/NoMatch'
-import States from './States'
+import Wrapper from './Wrapper'
 
-var List = States(App)
+var AppWrapper = Wrapper(App)
 export default <Router history={browserHistory}>
-    <Route path="/" component={List}>
+    <Route path="/" component={AppWrapper}>
         <IndexRoute component={Home}/>
         
         {/* add it here, as a child of `/` */}
