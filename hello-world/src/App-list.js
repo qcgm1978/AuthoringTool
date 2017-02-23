@@ -1,6 +1,8 @@
 import React from 'react';
 import Contents from './Contents';
 import Buttons from './Buttons';
+import Store from './routes/redux'
+
 export default React.createClass({
     getInitialState(){
         return {
@@ -11,8 +13,8 @@ export default React.createClass({
     },
     render(){
         let question=null;
-        if (this.props.state==='question') {
-            question=<div>{this.props.state}</div>
+        if (Store.getState()==='question') {
+            question=<div>{'question'}</div>
         }
         return (
             <div>

@@ -6,8 +6,11 @@ import Repos from './routes/Repos'
 import Repo from './routes/Repo'
 import Home from './routes/Home'
 import NoMatch from './routes/NoMatch'
+import States from './States'
+
+var List = States(App)
 export default <Router history={browserHistory}>
-    <Route path="/" component={App}>
+    <Route path="/" component={List}>
         <IndexRoute component={Home}/>
         
         {/* add it here, as a child of `/` */}
